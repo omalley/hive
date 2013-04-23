@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.apache.hive</groupId>
+  <artifactId>hive</artifactId>
+  <version>0.12.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>Hive</name>
+  <url>http://hive.apache.org</url>
+  <!-- fix Could not find artifact javax.jdo:jdo2-api:jar:2.3-ec  -->
+  <repositories>
+    <repository>
+      <id>omalley-at-apache-org-datanucleus</id>
+      <name>datanucleus for hive</name>
+      <url>http://people.apache.org/~omalley/datanucleus</url>
+    </repository>
+  </repositories>
+  <prerequisites>
+    <maven>2.2.1</maven>
+  </prerequisites>
+
+  <modules>
+    <module>shims</module>
+    <module>common</module>
+    <module>serde</module>
+    <module>metastore</module>
+<!--
+    <module>ql</module>
+    <module>exec</module>
+    <module>contrib</module>
+    <module>service</module>
+    <module>cli</module>
+    <module>jdbc</module>
+    <module>beeline</module>
+    <module>hwi</module>
+    <module>hbase-handler</module>
+    <module>testutils</module>
+    <module>hcatalog</module>
+-->
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- the versions of libraries that we use -->
+    <apacheant.version>1.7.1</apacheant.version>
+    <ant-contrib.version>1.0b3</ant-contrib.version>
+    <ant-task.version>2.0.10</ant-task.version>
+    <antlr.version>3.4</antlr.version>
+    <asm.version>3.1</asm.version>
+    <avro.version>1.7.1</avro.version>
+    <datanucleus.version>2.0.3</datanucleus.version>
+    <checkstyle.version>5.0</checkstyle.version>
+    <findbugs.version>1.3.9</findbugs.version>
+    <commons-cli.version>1.2</commons-cli.version>
+    <commons-codec.version>1.4</commons-codec.version>
+    <commons-collections.version>3.2.1</commons-collections.version>
+    <commons-compress.version>1.4.1</commons-compress.version>
+    <commons-configuration.version>1.6</commons-configuration.version>
+    <commons-dbcp.version>1.4</commons-dbcp.version>
+    <commons-httpclient.version>3.0.1</commons-httpclient.version>
+    <commons-io.version>2.4</commons-io.version>
+    <commons-lang.version>2.4</commons-lang.version>
+    <commons-logging.version>1.0.4</commons-logging.version>
+    <commons-pool.version>1.5.4</commons-pool.version>
+    <derby.version>10.4.2.0</derby.version>
+    <guava.version>11.0.2</guava.version>
+    <hadoop-20.version>0.20.2</hadoop-20.version>
+    <hadoop-20s.version>1.1.2</hadoop-20s.version>
+    <hadoop-23.version>2.0.3-alpha</hadoop-23.version>
+    <hbase.version>0.92.0</hbase.version>
+    <jackson.version>1.8.8</jackson.version>
+    <javaewah.version>0.3.2</javaewah.version>
+    <javolution.version>5.5.1</javolution.version>
+    <jdo-api.version>2.3-ec</jdo-api.version>
+    <jdom.version>1.1</jdom.version>
+    <jetty.version>6.1.26</jetty.version>
+    <jline.version>0.9.94</jline.version>
+    <json.version>20090211</json.version>
+    <junit.version>4.10</junit.version>
+    <libfb303.version>0.9.0</libfb303.version>
+    <libthrift.version>0.9.0</libthrift.version>
+    <log4j.version>1.2.16</log4j.version>
+    <mockito-all.version>1.8.2</mockito-all.version>
+    <protobuf.version>2.4.1</protobuf.version>
+    <rat.version>0.8</rat.version>
+    <slf4j.version>1.6.1</slf4j.version>
+    <ST4.version>4.0.4</ST4.version>
+    <tempus-fugit.version>1.1</tempus-fugit.version>
+    <snappy.version>0.2</snappy.version>
+    <velocity.version>1.5</velocity.version>
+    <zookeeper.version>3.4.3</zookeeper.version>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.8</version>
+        </plugin>
+        <plugin>
+          <groupId>org.antlr</groupId>
+          <artifactId>antlr3-maven-plugin</artifactId>
+          <version>${antlr.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>
