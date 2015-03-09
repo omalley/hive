@@ -66,6 +66,11 @@ message BinaryStatistics {
   optional sint64 sum = 1;
 }
 
+message EncryptedStatistics {
+  optional bytes iv = 1;
+  optional bytes encrypted = 2;
+}
+
 message ColumnStatistics {
   optional uint64 numberOfValues = 1;
   optional IntegerStatistics intStatistics = 2;
@@ -77,6 +82,7 @@ message ColumnStatistics {
   optional BinaryStatistics binaryStatistics = 8;
   optional TimestampStatistics timestampStatistics = 9;
   optional bool hasNull = 10;
+  optional EncryptedStatistics encrypted = 11;
 }
 
 message RowIndexEntry {
@@ -113,6 +119,8 @@ message Stream {
   optional Kind kind = 1;
   optional uint32 column = 2;
   optional uint64 length = 3;
+  // for encrypted columns, a random IV is generated for each stream
+  optional bytes iv = 4;
 }
 
 message ColumnEncoding {
@@ -181,6 +189,19 @@ message Metadata {
   repeated StripeStatistics stripeStats = 1;
 }
 
+enum EncryptionKind {
+  UNKNOWN = 0;
+  AES_CTR = 1;
+}
+
+// for each set of columns encrypted with the same key
+message ColumnEncryption {
+  repeated uint32 columnId = 1;
+  optional string keyName = 2;
+  optional uint32 keyVersion = 3;
+  optional EncryptionKind algorithm = 4;
+}
+
 message Footer {
   optional uint64 headerLength = 1;
   optional uint64 contentLength = 2;
@@ -190,6 +211,7 @@ message Footer {
   optional uint64 numberOfRows = 6;
   repeated ColumnStatistics statistics = 7;
   optional uint32 rowIndexStride = 8;
+  repeated ColumnEncryption encryption = 9;
 }
 
 enum CompressionKind {

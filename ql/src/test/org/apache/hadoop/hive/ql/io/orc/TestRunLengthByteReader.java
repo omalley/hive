@@ -45,6 +45,14 @@ public class TestRunLengthByteReader {
     ByteBuffer inBuf = ByteBuffer.allocate(collect.buffer.size());
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
+    for(int i=0; i < inBuf.remaining(); ++i) {
+      System.out.println("data " + i + " = 0x" +
+          Integer.toHexString(0xff & inBuf.get(i)));
+    }
+    for(int i=0; i < 2048; i++) {
+      System.out.println(positions[i]);
+    }
+    assertEquals(1, 0);
     RunLengthByteReader in = new RunLengthByteReader(InStream.create("test",
         new ByteBuffer[]{inBuf}, new long[]{0}, inBuf.remaining(), null, 100));
     for(int i=0; i < 2048; ++i) {

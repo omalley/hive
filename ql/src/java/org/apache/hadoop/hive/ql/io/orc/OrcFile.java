@@ -27,6 +27,7 @@ import static org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVE_ORC_DEFAULT_STR
 import static org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVE_ORC_WRITE_FORMAT;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -247,6 +248,40 @@ public final class OrcFile {
   }
 
   /**
+   * Information about a set of columns to encrypt using a given key.
+   */
+  public static class EncryptionOption {
+    public EncryptionOption(String keyName, int keyVersion, ByteBuffer key,
+                            int... columns) {
+      this.keyName = keyName;
+      this.keyVersion = keyVersion;
+      this.key = key;
+      this.columns = columns;
+    }
+
+    public String getKeyName() {
+      return keyName;
+    }
+
+    public int getKeyVersion() {
+      return keyVersion;
+    }
+
+    public ByteBuffer getKey() {
+      return key;
+    }
+
+    public int[] getColumns() {
+      return columns;
+    }
+
+    private String keyName;
+    private int keyVersion;
+    private ByteBuffer key;
+    private int[] columns;
+  }
+
+  /**
    * Options for creating ORC file writers.
    */
   public static class WriterOptions {
@@ -267,6 +302,7 @@ public final class OrcFile {
     private float paddingTolerance;
     private String bloomFilterColumns;
     private double bloomFilterFpp;
+    private EncryptionOption[] encryptionOptions;
 
     WriterOptions(Configuration conf) {
       configuration = conf;
@@ -302,6 +338,7 @@ public final class OrcFile {
       paddingTolerance = conf.getFloat(HiveConf.ConfVars.HIVE_ORC_BLOCK_PADDING_TOLERANCE.varname,
           HiveConf.ConfVars.HIVE_ORC_BLOCK_PADDING_TOLERANCE.defaultFloatVal);
       bloomFilterFpp = BloomFilter.DEFAULT_FPP;
+      encryptionOptions = null;
     }
 
     /**
@@ -423,7 +460,7 @@ public final class OrcFile {
     /**
      * Add a listener for when the stripe and file are about to be closed.
      * @param callback the object to be called when the stripe is closed
-     * @return
+     * @return this
      */
     public WriterOptions callback(WriterCallback callback) {
       this.callback = callback;
@@ -438,6 +475,15 @@ public final class OrcFile {
       return this;
     }
 
+    /**
+     * Set the encryption options.
+     * @param encrypt the list of encryption options to use when writing
+     * @return this
+     */
+    public WriterOptions encrypt(EncryptionOption... encrypt) {
+      encryptionOptions = encrypt;
+      return this;
+    }
   }
 
   /**
@@ -468,7 +514,8 @@ public final class OrcFile {
                           opts.versionValue, opts.callback,
                           opts.encodingStrategy, opts.compressionStrategy,
                           opts.paddingTolerance, opts.blockSizeValue,
-                          opts.bloomFilterColumns, opts.bloomFilterFpp);
+                          opts.bloomFilterColumns, opts.bloomFilterFpp,
+                          opts.encryptionOptions);
   }
 
   /**

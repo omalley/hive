@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 
 import org.apache.commons.logging.Log;
@@ -135,6 +136,8 @@ class WriterImpl implements Writer, MemoryManager.Callback {
   private long rawDataSize = 0;
   private int rowsInIndex = 0;
   private int stripesAtLastFlush = -1;
+  private final List<OrcProto.Type.Builder> types =
+      new ArrayList<Type.Builder>();
   private final List<OrcProto.StripeInformation> stripes =
     new ArrayList<OrcProto.StripeInformation>();
   private final Map<String, ByteString> userMetadata =
@@ -151,6 +154,8 @@ class WriterImpl implements Writer, MemoryManager.Callback {
   private final OrcFile.CompressionStrategy compressionStrategy;
   private final boolean[] bloomFilterColumns;
   private final double bloomFilterFpp;
+  private final OrcFile.EncryptionOption[] encryptionOptions;
+  private final Random random = new Random();
 
   WriterImpl(FileSystem fs,
       Path path,
@@ -169,7 +174,8 @@ class WriterImpl implements Writer, MemoryManager.Callback {
       float paddingTolerance,
       long blockSizeValue,
       String bloomFilterColumnNames,
-      double bloomFilterFpp) throws IOException {
+      double bloomFilterFpp,
+      OrcFile.EncryptionOption[] encryptionOptions) throws IOException {
     this.fs = fs;
     this.path = path;
     this.conf = conf;
@@ -198,6 +204,7 @@ class WriterImpl implements Writer, MemoryManager.Callback {
     this.memoryManager = memoryManager;
     buildIndex = rowIndexStride > 0;
     codec = createCodec(compress);
+    buildTypes(types, inspector);
     String allColumns = conf.get(IOConstants.COLUMNS);
     if (allColumns == null) {
       allColumns = getColumnNamesFromInspector(inspector);
@@ -212,6 +219,18 @@ class WriterImpl implements Writer, MemoryManager.Callback {
           OrcUtils.includeColumns(bloomFilterColumnNames, allColumns, inspector);
     }
     this.bloomFilterFpp = bloomFilterFpp;
+    // convert the encryption options so they match our internal column ids
+    this.encryptionOptions =
+        new OrcFile.EncryptionOption[types.size()];
+    if (encryptionOptions != null) {
+      List<Integer> topLevel = types.get(0).getSubtypesList();
+      for (OrcFile.EncryptionOption opt : encryptionOptions) {
+        for (int topLevelColumn : opt.getColumns()) {
+          recursivelySetEncryption(topLevel.get(topLevelColumn),
+              opt, this.encryptionOptions);
+        }
+      }
+    }
     treeWriter = createTreeWriter(inspector, streamFactory, false);
     if (buildIndex && rowIndexStride < MIN_ROW_INDEX_STRIDE) {
       throw new IllegalArgumentException("Row stride must be at least " +
@@ -220,6 +239,25 @@ class WriterImpl implements Writer, MemoryManager.Callback {
 
     // ensure that we are able to handle callbacks before we register ourselves
     memoryManager.addWriter(path, stripeSize, this);
+  }
+
+  /**
+   * For a column, set the same encryption option for all of the children
+   * @param typeId the id to set
+   * @param opt
+   * @param values
+   */
+  private void recursivelySetEncryption(int typeId,
+                                        OrcFile.EncryptionOption opt,
+                                        OrcFile.EncryptionOption[] values) {
+    if (values[typeId] != null) {
+      throw new IllegalArgumentException("Duplicate encryption options for" +
+          " column " + typeId);
+    }
+    values[typeId] = opt;
+    for(int child: types.get(typeId).getSubtypesList()) {
+      recursivelySetEncryption(child, opt, values);
+    }
   }
 
   private String getColumnNamesFromInspector(ObjectInspector inspector) {
@@ -362,11 +400,33 @@ class WriterImpl implements Writer, MemoryManager.Callback {
    */
   private class BufferedStream implements OutStream.OutputReceiver {
     private final OutStream outStream;
+    private final Cipher cipher;
+    private final OrcFile.EncryptionOption encrypt;
+    private final ByteBuffer iv;
     private final List<ByteBuffer> output = new ArrayList<ByteBuffer>();
 
     BufferedStream(String name, int bufferSize,
-                   CompressionCodec codec) throws IOException {
+                   CompressionCodec codec,
+                   OrcFile.EncryptionOption encrypt) throws IOException {
       outStream = new OutStream(name, bufferSize, codec, this);
+      this.encrypt = encrypt;
+      if (encrypt == null) {
+        cipher = null;
+        iv = null;
+      } else {
+        cipher = Cipher.Factory.get(Cipher.Algorithm.AES_CTR);
+        iv = ByteBuffer.allocate(cipher.getIvLength());
+        random.nextBytes(iv.array());
+        cipher.initialize(Cipher.Mode.ENCRYPT, encrypt.getKey(), iv, 0);
+      }
+    }
+
+    /**
+     * Get the current IV, if encryption is being done.
+     * @return
+     */
+    public ByteBuffer getIv() {
+      return iv;
     }
 
     /**
@@ -376,6 +436,10 @@ class WriterImpl implements Writer, MemoryManager.Callback {
      */
     @Override
     public void output(ByteBuffer buffer) {
+      if (cipher != null) {
+        cipher.update(buffer, buffer);
+        buffer.rewind();
+      }
       output.add(buffer);
     }
 
@@ -406,6 +470,10 @@ class WriterImpl implements Writer, MemoryManager.Callback {
     public void clear() throws IOException {
       outStream.clear();
       output.clear();
+      if (cipher != null) {
+        random.nextBytes(iv.array());
+        cipher.initialize(Cipher.Mode.ENCRYPT, encrypt.getKey(), iv, 0);
+      }
     }
 
     /**
@@ -523,7 +591,8 @@ class WriterImpl implements Writer, MemoryManager.Callback {
       BufferedStream result = streams.get(name);
       if (result == null) {
         result = new BufferedStream(name.toString(), bufferSize,
-            codec == null ? codec : codec.modify(modifiers));
+            codec == null ? codec : codec.modify(modifiers),
+            encryptionOptions[column]);
         streams.put(name, result);
       }
       return result.outStream;
@@ -2000,13 +2069,14 @@ class WriterImpl implements Writer, MemoryManager.Callback {
     }
   }
 
-  private static void writeTypes(OrcProto.Footer.Builder builder,
-                                 TreeWriter treeWriter) {
+  private static int buildTypes(List<OrcProto.Type.Builder> types,
+                                 ObjectInspector inspector) {
     OrcProto.Type.Builder type = OrcProto.Type.newBuilder();
-    switch (treeWriter.inspector.getCategory()) {
+    int id = types.size();
+    types.add(type);
+    switch (inspector.getCategory()) {
       case PRIMITIVE:
-        switch (((PrimitiveObjectInspector) treeWriter.inspector).
-                 getPrimitiveCategory()) {
+        switch (((PrimitiveObjectInspector) inspector).getPrimitiveCategory()) {
           case BOOLEAN:
             type.setKind(OrcProto.Type.Kind.BOOLEAN);
             break;
@@ -2034,14 +2104,16 @@ class WriterImpl implements Writer, MemoryManager.Callback {
           case CHAR:
             // The char length needs to be written to file and should be available
             // from the object inspector
-            CharTypeInfo charTypeInfo = (CharTypeInfo) ((PrimitiveObjectInspector) treeWriter.inspector).getTypeInfo();
+            CharTypeInfo charTypeInfo = (CharTypeInfo)
+                ((PrimitiveObjectInspector) inspector).getTypeInfo();
             type.setKind(Type.Kind.CHAR);
             type.setMaximumLength(charTypeInfo.getLength());
             break;
           case VARCHAR:
             // The varchar length needs to be written to file and should be available
             // from the object inspector
-            VarcharTypeInfo typeInfo = (VarcharTypeInfo) ((PrimitiveObjectInspector) treeWriter.inspector).getTypeInfo();
+            VarcharTypeInfo typeInfo = (VarcharTypeInfo)
+                ((PrimitiveObjectInspector) inspector).getTypeInfo();
             type.setKind(Type.Kind.VARCHAR);
             type.setMaximumLength(typeInfo.getLength());
             break;
@@ -2055,49 +2127,50 @@ class WriterImpl implements Writer, MemoryManager.Callback {
             type.setKind(OrcProto.Type.Kind.DATE);
             break;
           case DECIMAL:
-            DecimalTypeInfo decTypeInfo = (DecimalTypeInfo)((PrimitiveObjectInspector)treeWriter.inspector).getTypeInfo();
+            DecimalTypeInfo decTypeInfo = (DecimalTypeInfo)
+                ((PrimitiveObjectInspector)inspector).getTypeInfo();
             type.setKind(OrcProto.Type.Kind.DECIMAL);
             type.setPrecision(decTypeInfo.precision());
             type.setScale(decTypeInfo.scale());
             break;
           default:
             throw new IllegalArgumentException("Unknown primitive category: " +
-              ((PrimitiveObjectInspector) treeWriter.inspector).
-                getPrimitiveCategory());
+              ((PrimitiveObjectInspector) inspector).getPrimitiveCategory());
         }
         break;
       case LIST:
         type.setKind(OrcProto.Type.Kind.LIST);
-        type.addSubtypes(treeWriter.childrenWriters[0].id);
+        type.addSubtypes(buildTypes(types,
+                ((ListObjectInspector) inspector).
+                    getListElementObjectInspector()));
         break;
       case MAP:
         type.setKind(OrcProto.Type.Kind.MAP);
-        type.addSubtypes(treeWriter.childrenWriters[0].id);
-        type.addSubtypes(treeWriter.childrenWriters[1].id);
+        type.addSubtypes(buildTypes(types, ((MapObjectInspector) inspector)
+            .getMapKeyObjectInspector()));
+        type.addSubtypes(buildTypes(types, ((MapObjectInspector) inspector)
+            .getMapValueObjectInspector()));
         break;
       case STRUCT:
         type.setKind(OrcProto.Type.Kind.STRUCT);
-        for(TreeWriter child: treeWriter.childrenWriters) {
-          type.addSubtypes(child.id);
-        }
-        for(StructField field: ((StructTreeWriter) treeWriter).fields) {
-          type.addFieldNames(field.getFieldName());
+        for(StructField child: ((StructObjectInspector) inspector).
+            getAllStructFieldRefs()) {
+          type.addFieldNames(child.getFieldName());
+          type.addSubtypes(buildTypes(types, child.getFieldObjectInspector()));
         }
         break;
       case UNION:
         type.setKind(OrcProto.Type.Kind.UNION);
-        for(TreeWriter child: treeWriter.childrenWriters) {
-          type.addSubtypes(child.id);
+        for(ObjectInspector child: ((UnionObjectInspector) inspector).
+            getObjectInspectors()) {
+          type.addSubtypes(buildTypes(types, child));
         }
         break;
       default:
         throw new IllegalArgumentException("Unknown category: " +
-          treeWriter.inspector.getCategory());
+          inspector.getCategory());
     }
-    builder.addTypes(type);
-    for(TreeWriter child: treeWriter.childrenWriters) {
-      writeTypes(builder, child);
-    }
+    return id;
   }
 
   @VisibleForTesting
@@ -2108,7 +2181,7 @@ class WriterImpl implements Writer, MemoryManager.Callback {
       rawWriter.writeBytes(OrcFile.MAGIC);
       headerLength = rawWriter.getPos();
       writer = new OutStream("metadata", bufferSize, codec,
-                             new DirectStream(rawWriter));
+          new DirectStream(rawWriter));
       protobufWriter = CodedOutputStream.newInstance(writer);
     }
     return rawWriter;
@@ -2142,10 +2215,15 @@ class WriterImpl implements Writer, MemoryManager.Callback {
           stream.flush();
           StreamName name = pair.getKey();
           long streamSize = pair.getValue().getOutputSize();
-          builder.addStreams(OrcProto.Stream.newBuilder()
-                             .setColumn(name.getColumn())
-                             .setKind(name.getKind())
-                             .setLength(streamSize));
+          OrcProto.Stream.Builder dirEntry = OrcProto.Stream.newBuilder()
+              .setColumn(name.getColumn())
+              .setKind(name.getKind())
+              .setLength(streamSize);
+          ByteBuffer iv = stream.getIv();
+          if (iv != null) {
+            dirEntry.setIv(ByteString.copyFrom(iv));
+          }
+          builder.addStreams(dirEntry);
           if (StreamName.Area.INDEX == name.getArea()) {
             indexSize += streamSize;
           } else {
@@ -2342,7 +2420,9 @@ class WriterImpl implements Writer, MemoryManager.Callback {
     // populate raw data size
     rawDataSize = computeRawDataSize();
     // serialize the types
-    writeTypes(builder, treeWriter);
+    for(OrcProto.Type.Builder type: types) {
+      builder.addTypes(type);
+    }
     // add the stripe information
     for(OrcProto.StripeInformation stripe: stripes) {
       builder.addStripes(stripe);
@@ -2353,6 +2433,25 @@ class WriterImpl implements Writer, MemoryManager.Callback {
     for(Map.Entry<String, ByteString> entry: userMetadata.entrySet()) {
       builder.addMetadata(OrcProto.UserMetadataItem.newBuilder()
         .setName(entry.getKey()).setValue(entry.getValue()));
+    }
+    // add the description of the encrypted columns
+    boolean[] encryptionCovered = new boolean[encryptionOptions.length];
+    for (int i = 0; i < encryptionOptions.length; ++i) {
+      if (encryptionOptions[i] != null && !encryptionCovered[i]) {
+        OrcProto.ColumnEncryption.Builder encryptBuilder =
+            OrcProto.ColumnEncryption.newBuilder();
+        encryptBuilder.setAlgorithm(OrcProto.EncryptionKind.AES_CTR)
+            .addColumnId(i)
+            .setKeyName(encryptionOptions[i].getKeyName())
+            .setKeyVersion(encryptionOptions[i].getKeyVersion());
+        for (int j = i + 1; j < encryptionOptions.length; ++j) {
+          if (encryptionOptions[i] == encryptionOptions[j]) {
+            encryptBuilder.addColumnId(j);
+            encryptionCovered[j] = true;
+          }
+        }
+        builder.addEncryption(encryptBuilder);
+      }
     }
     long startPosn = rawWriter.getPos();
     OrcProto.Footer footer = builder.build();
