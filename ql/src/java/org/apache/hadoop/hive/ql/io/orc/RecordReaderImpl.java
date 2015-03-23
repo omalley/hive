@@ -119,6 +119,8 @@ class RecordReaderImpl implements RecordReader {
   private final ByteBufferAllocatorPool pool = new ByteBufferAllocatorPool();
   private final ZeroCopyReaderShim zcr;
 
+  private final OrcFile.EncryptionOption[] encrypt;
+
   public final static class Index {
     OrcProto.RowIndex[] rowGroupIndex;
     OrcProto.BloomFilterIndex[] bloomFilterIndex;
@@ -261,6 +263,7 @@ class RecordReaderImpl implements RecordReader {
                    Reader.Options options,
                    List<OrcProto.Type> types,
                    CompressionCodec codec,
+                   List<OrcProto.ColumnEncryption> encrypt,
                    int bufferSize,
                    long strideRate,
                    Configuration conf
@@ -314,9 +317,31 @@ class RecordReaderImpl implements RecordReader {
       this.zcr = null;
     }
 
+    this.encrypt = new OrcFile.EncryptionOption[types.size()];
+    for(OrcProto.ColumnEncryption columnEncryption: encrypt) {
+      ByteBuffer key = null;
+      for(Reader.EncryptionKey possibleKey: options.getEncryptionKeys()) {
+        if (possibleKey.getKeyName().equals(columnEncryption.getKeyName()) &&
+            possibleKey.getKeyVersion() == columnEncryption.getKeyVersion()) {
+          key = possibleKey.getKey();
+          break;
+        }
+      }
+
+      // Now we need to expand it out so that each of the columns that use
+      // that key have the same options. Note that if we don't have the key,
+      // there will be an EncryptionOption, but it will have a null key field.
+      OrcFile.EncryptionOption result =
+          new OrcFile.EncryptionOption(columnEncryption.getKeyName(),
+              columnEncryption.getKeyVersion(), key);
+      for(int columnId: columnEncryption.getColumnIdList()) {
+        this.encrypt[columnId] = result;
+      }
+    }
+
     firstRow = skippedRows;
     totalRowCount = rows;
-    reader = createTreeReader(path, 0, types, included, conf);
+    reader = createTreeReader(path, 0, types, included, conf, this.encrypt);
     indexes = new OrcProto.RowIndex[types.size()];
     bloomFilterIndices = new OrcProto.BloomFilterIndex[types.size()];
     rowIndexStride = strideRate;
@@ -448,6 +473,49 @@ class RecordReaderImpl implements RecordReader {
         for (int i = 0; i < batchSize; i++) {
           result.isNull[i] = false;
         }
+      }
+      return previousVector;
+    }
+  }
+
+  /**
+   * This reader is used for encrypted columns when the user didn't supply the
+   * key. The result is a reader that consumes no input and generates an
+   * endless stream of null values.
+   */
+  private static class NullTreeReader extends TreeReader {
+
+    NullTreeReader(Path path, int columnId, Configuration conf) {
+      super(path, columnId, conf);
+    }
+
+    @Override
+    void skipRows(long rows){
+      // PASS
+    }
+
+    void checkEncoding(OrcProto.ColumnEncoding encoding) {
+      // PASS
+    }
+
+    void startStripe(Map<StreamName, InStream> streams,
+                     List<OrcProto.ColumnEncoding> encoding) {
+      // PASS
+    }
+
+    void seek(PositionProvider[] index) {
+      // PASS
+    }
+
+    Object next(Object previous) throws IOException {
+      return null;
+    }
+
+    Object nextVector(Object previousVector, long batchSize) {
+      ColumnVector result = (ColumnVector) previousVector;
+      result.noNulls = false;
+      for(int i=0; i < batchSize; ++i) {
+        result.isNull[i] = true;
       }
       return previousVector;
     }
@@ -1867,7 +1935,9 @@ class RecordReaderImpl implements RecordReader {
 
     StructTreeReader(Path path, int columnId,
                      List<OrcProto.Type> types,
-                     boolean[] included, Configuration conf) throws IOException {
+                     boolean[] included,
+                     Configuration conf,
+                     OrcFile.EncryptionOption[] encrypt) throws IOException {
       super(path, columnId, conf);
       OrcProto.Type type = types.get(columnId);
       int fieldCount = type.getFieldNamesCount();
@@ -1876,7 +1946,8 @@ class RecordReaderImpl implements RecordReader {
       for(int i=0; i < fieldCount; ++i) {
         int subtype = type.getSubtypes(i);
         if (included == null || included[subtype]) {
-          this.fields[i] = createTreeReader(path, subtype, types, included, conf);
+          this.fields[i] = createTreeReader(path, subtype, types, included,
+              conf, encrypt);
         }
         this.fieldNames[i] = type.getFieldNames(i);
       }
@@ -1969,7 +2040,9 @@ class RecordReaderImpl implements RecordReader {
 
     UnionTreeReader(Path path, int columnId,
                     List<OrcProto.Type> types,
-                    boolean[] included, Configuration conf) throws IOException {
+                    boolean[] included,
+                    Configuration conf,
+                    OrcFile.EncryptionOption[] encrypt) throws IOException {
       super(path, columnId, conf);
       OrcProto.Type type = types.get(columnId);
       int fieldCount = type.getSubtypesCount();
@@ -1977,7 +2050,8 @@ class RecordReaderImpl implements RecordReader {
       for(int i=0; i < fieldCount; ++i) {
         int subtype = type.getSubtypes(i);
         if (included == null || included[subtype]) {
-          this.fields[i] = createTreeReader(path, subtype, types, included, conf);
+          this.fields[i] = createTreeReader(path, subtype, types, included,
+              conf, encrypt);
         }
       }
     }
@@ -2048,11 +2122,13 @@ class RecordReaderImpl implements RecordReader {
 
     ListTreeReader(Path path, int columnId,
                    List<OrcProto.Type> types,
-                   boolean[] included, Configuration conf) throws IOException {
+                   boolean[] included,
+                   Configuration conf,
+                   OrcFile.EncryptionOption[] encrypt) throws IOException {
       super(path, columnId, conf);
       OrcProto.Type type = types.get(columnId);
       elementReader = createTreeReader(path, type.getSubtypes(0), types,
-          included, conf);
+          included, conf, encrypt);
     }
 
     @Override
@@ -2139,18 +2215,22 @@ class RecordReaderImpl implements RecordReader {
     MapTreeReader(Path path,
                   int columnId,
                   List<OrcProto.Type> types,
-                  boolean[] included, Configuration conf) throws IOException {
+                  boolean[] included,
+                  Configuration conf,
+                  OrcFile.EncryptionOption[] encrypt) throws IOException {
       super(path, columnId, conf);
       OrcProto.Type type = types.get(columnId);
       int keyColumn = type.getSubtypes(0);
       int valueColumn = type.getSubtypes(1);
       if (included == null || included[keyColumn]) {
-        keyReader = createTreeReader(path, keyColumn, types, included, conf);
+        keyReader = createTreeReader(path, keyColumn, types, included, conf,
+            encrypt);
       } else {
         keyReader = null;
       }
       if (included == null || included[valueColumn]) {
-        valueReader = createTreeReader(path, valueColumn, types, included, conf);
+        valueReader = createTreeReader(path, valueColumn, types, included,
+            conf, encrypt);
       } else {
         valueReader = null;
       }
@@ -2233,9 +2313,13 @@ class RecordReaderImpl implements RecordReader {
                                              int columnId,
                                              List<OrcProto.Type> types,
                                              boolean[] included,
-                                             Configuration conf
+                                             Configuration conf,
+                                             OrcFile.EncryptionOption[] encrypt
                                             ) throws IOException {
     OrcProto.Type type = types.get(columnId);
+    if (encrypt[columnId] != null && encrypt[columnId].getKey() == null) {
+      return new NullTreeReader(path, columnId, conf);
+    }
     switch (type.getKind()) {
       case BOOLEAN:
         return new BooleanTreeReader(path, columnId, conf);
@@ -2274,13 +2358,17 @@ class RecordReaderImpl implements RecordReader {
         int scale =  type.hasScale()? type.getScale() : HiveDecimal.SYSTEM_DEFAULT_SCALE;
         return new DecimalTreeReader(path, columnId, precision, scale, conf);
       case STRUCT:
-        return new StructTreeReader(path, columnId, types, included, conf);
+        return new StructTreeReader(path, columnId, types, included, conf,
+            encrypt);
       case LIST:
-        return new ListTreeReader(path, columnId, types, included, conf);
+        return new ListTreeReader(path, columnId, types, included, conf,
+            encrypt);
       case MAP:
-        return new MapTreeReader(path, columnId, types, included, conf);
+        return new MapTreeReader(path, columnId, types, included, conf,
+            encrypt);
       case UNION:
-        return new UnionTreeReader(path, columnId, types, included, conf);
+        return new UnionTreeReader(path, columnId, types, included, conf,
+            encrypt);
       default:
         throw new IllegalArgumentException("Unsupported type " +
           type.getKind());
@@ -2299,7 +2387,7 @@ class RecordReaderImpl implements RecordReader {
     file.readFully(tailBuf.array(), tailBuf.arrayOffset(), tailLength);
     return OrcProto.StripeFooter.parseFrom(InStream.create("footer",
         new ByteBuffer[]{tailBuf}, new long[]{0}, tailLength, codec,
-        bufferSize));
+        bufferSize, null, null));
   }
 
   static enum Location {
@@ -2812,7 +2900,8 @@ class RecordReaderImpl implements RecordReader {
     DiskRange[] ranges = new DiskRange[]{new DiskRange(start, end)};
     bufferChunks = readDiskRanges(file, stripe.getOffset(), Arrays.asList(ranges));
     List<OrcProto.Stream> streamDescriptions = stripeFooter.getStreamsList();
-    createStreams(streamDescriptions, bufferChunks, null, codec, bufferSize, streams);
+    createStreams(streamDescriptions, bufferChunks, null, codec, bufferSize,
+        streams, encrypt);
   }
 
   /**
@@ -3131,7 +3220,8 @@ class RecordReaderImpl implements RecordReader {
                             boolean[] includeColumn,
                             CompressionCodec codec,
                             int bufferSize,
-                            Map<StreamName, InStream> streams
+                            Map<StreamName, InStream> streams,
+                            OrcFile.EncryptionOption[] encrypt
                            ) throws IOException {
     long offset = 0;
     for(OrcProto.Stream streamDesc: streamDescriptions) {
@@ -3176,7 +3266,9 @@ class RecordReaderImpl implements RecordReader {
         }
         StreamName name = new StreamName(column, streamDesc.getKind());
         streams.put(name, InStream.create(name.toString(), buffers, offsets,
-            length, codec, bufferSize));
+            length, codec, bufferSize, encrypt[column],
+            streamDesc.hasIv() ? streamDesc.getIv().asReadOnlyByteBuffer()
+                : null));
       }
       offset += streamDesc.getLength();
     }
@@ -3198,7 +3290,7 @@ class RecordReaderImpl implements RecordReader {
     }
     bufferChunks = readDiskRanges(file, stripe.getOffset(), chunks);
     createStreams(streamList, bufferChunks, included, codec, bufferSize,
-        streams);
+        streams, encrypt);
   }
 
   @Override
@@ -3383,9 +3475,11 @@ class RecordReaderImpl implements RecordReader {
       }
       int col = stream.getColumn();
       int len = (int) stream.getLength();
-      // row index stream and bloom filter are interlaced, check if the sarg column contains bloom
-      // filter and combine the io to read row index and bloom filters for that column together
-      if (stream.hasKind() && (stream.getKind() == OrcProto.Stream.Kind.ROW_INDEX)) {
+      // row index stream and bloom filter are interlaced, check if the sarg
+      // column contains bloom filter and combine the io to read row index and
+      // bloom filters for that column together
+      if (stream.hasKind() &&
+          (stream.getKind() == OrcProto.Stream.Kind.ROW_INDEX)) {
         boolean readBloomFilter = false;
         if (sargColumns != null && sargColumns[col] &&
             nextStream.getKind() == OrcProto.Stream.Kind.BLOOM_FILTER) {
@@ -3399,12 +3493,16 @@ class RecordReaderImpl implements RecordReader {
           file.readFully(buffer);
           ByteBuffer[] bb = new ByteBuffer[] {ByteBuffer.wrap(buffer)};
           indexes[col] = OrcProto.RowIndex.parseFrom(InStream.create("index",
-              bb, new long[]{0}, stream.getLength(), codec, bufferSize));
+              bb, new long[]{0}, stream.getLength(), codec, bufferSize,
+              encrypt[col], stream.hasIv() ?
+                  stream.getIv().asReadOnlyByteBuffer() : null));
           if (readBloomFilter) {
             bb[0].position((int) stream.getLength());
             bloomFilterIndices[col] = OrcProto.BloomFilterIndex.parseFrom(
-                InStream.create("bloom_filter", bb, new long[]{0}, nextStream.getLength(),
-                    codec, bufferSize));
+                InStream.create("bloom_filter", bb, new long[]{0},
+                    nextStream.getLength(), codec, bufferSize, encrypt[col],
+                    stream.hasIv() ? stream.getIv().asReadOnlyByteBuffer() :
+                    null));
           }
         }
       }

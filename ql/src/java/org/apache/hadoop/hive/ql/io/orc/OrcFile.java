@@ -279,6 +279,23 @@ public final class OrcFile {
     private int keyVersion;
     private ByteBuffer key;
     private int[] columns;
+
+    public String toString() {
+      StringBuilder builder = new StringBuilder();
+      builder.append("{key: ");
+      builder.append(keyName);
+      builder.append(", version: ");
+      builder.append(keyVersion);
+      builder.append(", columns: [");
+      for(int i=0; i < columns.length; ++i) {
+        if (i != 0) {
+          builder.append(", ");
+        }
+        builder.append(columns[i]);
+      }
+      builder.append("]}");
+      return builder.toString();
+    }
   }
 
   /**

@@ -506,14 +506,15 @@ final class ReaderImpl implements Reader {
       int footerBufferSize = footerBuffer.limit() - footerBuffer.position() - metadataSize;
       footerBuffer.limit(position + metadataSize);
 
-      InputStream instream = InStream.create("metadata", new ByteBuffer[]{footerBuffer},
-          new long[]{0L}, metadataSize, codec, bufferSize);
+      InputStream instream = InStream.create("metadata",
+          new ByteBuffer[]{footerBuffer},
+          new long[]{0L}, metadataSize, codec, bufferSize, null, null);
       this.metadata = OrcProto.Metadata.parseFrom(instream);
 
       footerBuffer.position(position + metadataSize);
       footerBuffer.limit(position + metadataSize + footerBufferSize);
       instream = InStream.create("footer", new ByteBuffer[]{footerBuffer},
-          new long[]{0L}, footerBufferSize, codec, bufferSize);
+          new long[]{0L}, footerBufferSize, codec, bufferSize, null, null);
       this.footer = OrcProto.Footer.parseFrom(instream);
 
       footerBuffer.position(position);
@@ -575,8 +576,8 @@ final class ReaderImpl implements Reader {
       options.include(include);
     }
     return new RecordReaderImpl(this.getStripes(), fileSystem, path,
-        options, footer.getTypesList(), codec, bufferSize,
-        footer.getRowIndexStride(), conf);
+        options, footer.getTypesList(), codec, footer.getEncryptionList(),
+        bufferSize, footer.getRowIndexStride(), conf);
   }
 
 

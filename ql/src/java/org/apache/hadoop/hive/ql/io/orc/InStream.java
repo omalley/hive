@@ -33,18 +33,26 @@ abstract class InStream extends InputStream {
     private final ByteBuffer[] bytes;
     private final long[] offsets;
     private final long length;
+    private final Cipher cipher;
     private long currentOffset;
     private ByteBuffer range;
     private int currentRange;
 
     public UncompressedStream(String name, ByteBuffer[] input, long[] offsets,
-                              long length) {
+                              long length, OrcFile.EncryptionOption encrypt,
+                              ByteBuffer iv) {
       this.name = name;
       this.bytes = input;
       this.offsets = offsets;
       this.length = length;
       currentRange = 0;
       currentOffset = 0;
+      if (encrypt != null) {
+        cipher = Cipher.Factory.get(Cipher.Algorithm.AES_CTR);
+        cipher.initialize(Cipher.Mode.DECRYPT, encrypt.getKey(), iv, 0);
+      } else {
+        cipher = null;
+      }
     }
 
     @Override
@@ -56,7 +64,17 @@ abstract class InStream extends InputStream {
         seek(currentOffset);
       }
       currentOffset += 1;
-      return 0xff & range.get();
+      int result;
+      if (cipher == null) {
+        result = range.get();
+      } else {
+        ByteBuffer tmp = ByteBuffer.allocate(1);
+        tmp.put(range.get());
+        tmp.flip();
+        cipher.update(tmp, tmp);
+        result = tmp.get(0);
+      }
+      return 0xff & result;
     }
 
     @Override
@@ -68,7 +86,11 @@ abstract class InStream extends InputStream {
         seek(currentOffset);
       }
       int actualLength = Math.min(length, range.remaining());
-      range.get(data, offset, actualLength);
+      if (cipher == null) {
+        range.get(data, offset, actualLength);
+      } else {
+        cipher.update(range, ByteBuffer.wrap(data, offset, actualLength));
+      }
       currentOffset += actualLength;
       return actualLength;
     }
@@ -100,13 +122,17 @@ abstract class InStream extends InputStream {
       for(int i = 0; i < bytes.length; ++i) {
         if (desired == 0 && bytes[i].remaining() == 0) {
           if (LOG.isWarnEnabled()) {
-            LOG.warn("Attempting seek into empty stream (" + name + ") Skipping stream.");
+            LOG.warn("Attempting seek into empty stream (" + name +
+                ") Skipping stream.");
           }
           return;
         }
         if (offsets[i] <= desired &&
             desired - offsets[i] < bytes[i].remaining()) {
           currentOffset = desired;
+          if (cipher != null) {
+            cipher.seek(currentOffset);
+          }
           currentRange = i;
           this.range = bytes[i].duplicate();
           int pos = range.position();
@@ -123,7 +149,8 @@ abstract class InStream extends InputStream {
     public String toString() {
       return "uncompressed stream " + name + " position: " + currentOffset +
           " length: " + length + " range: " + currentRange +
-          " offset: " + (range == null ? 0 : range.position()) + " limit: " + (range == null ? 0 : range.limit());
+          " offset: " + (range == null ? 0 : range.position()) + " limit: " +
+          (range == null ? 0 : range.limit());
     }
   }
 
@@ -143,7 +170,8 @@ abstract class InStream extends InputStream {
 
     public CompressedStream(String name, ByteBuffer[] input,
                             long[] offsets, long length,
-                            CompressionCodec codec, int bufferSize
+                            CompressionCodec codec, int bufferSize,
+                            OrcFile.EncryptionOption encrypt, ByteBuffer iv
                            ) {
       this.bytes = input;
       this.name = name;
@@ -156,6 +184,17 @@ abstract class InStream extends InputStream {
       this.bufferSize = bufferSize;
       currentOffset = 0;
       currentRange = 0;
+      // decrypt the bytes
+      if (encrypt != null) {
+        Cipher cipher = Cipher.Factory.get(Cipher.Algorithm.AES_CTR);
+        cipher.initialize(Cipher.Mode.DECRYPT, encrypt.getKey(), iv, 0);
+        for(int i=0; i < bytes.length; ++i) {
+          int origPosn = bytes[i].position();
+          cipher.seek(offsets[i]);
+          cipher.update(bytes[i], bytes[i]);
+          bytes[i].position(origPosn);
+        }
+      }
     }
 
     private ByteBuffer allocateBuffer(int size) {
@@ -183,7 +222,8 @@ abstract class InStream extends InputStream {
               bufferSize + " needed = " + chunkLength);
         }
         // read 3 bytes, which should be equal to OutStream.HEADER_SIZE always
-        assert OutStream.HEADER_SIZE == 3 : "The Orc HEADER_SIZE must be the same in OutStream and InStream";
+        assert OutStream.HEADER_SIZE == 3 :
+            "The Orc HEADER_SIZE must be the same in OutStream and InStream";
         currentOffset += OutStream.HEADER_SIZE;
 
         ByteBuffer slice = this.slice(chunkLength);
@@ -300,7 +340,9 @@ abstract class InStream extends InputStream {
 
       while (len > 0 && (++currentRange) < bytes.length) {
         if (LOG.isDebugEnabled()) {
-          LOG.debug(String.format("Read slow-path, >1 cross block reads with %s", this.toString()));
+          LOG.debug(
+              String.format("Read slow-path, >1 cross block reads with %s",
+                  this.toString()));
         }
         compressed = bytes[currentRange].duplicate();
         if (compressed.remaining() >= len) {
@@ -365,7 +407,8 @@ abstract class InStream extends InputStream {
     public String toString() {
       return "compressed stream " + name + " position: " + currentOffset +
           " length: " + length + " range: " + currentRange +
-          " offset: " + (compressed == null ? 0 : compressed.position()) + " limit: " + (compressed == null ? 0 : compressed.limit()) +
+          " offset: " + (compressed == null ? 0 : compressed.position()) +
+          " limit: " + (compressed == null ? 0 : compressed.limit()) +
           rangeString() +
           (uncompressed == null ? "" :
               " uncompressed: " + uncompressed.position() + " to " +
@@ -384,6 +427,8 @@ abstract class InStream extends InputStream {
    * @param length the length in bytes of the stream
    * @param codec the compression codec
    * @param bufferSize the compression buffer size
+   * @param encrypt the encryption options for this column
+   * @param iv the iv value if this stream is encrypted
    * @return an input stream
    * @throws IOException
    */
@@ -392,12 +437,17 @@ abstract class InStream extends InputStream {
                                 long[] offsets,
                                 long length,
                                 CompressionCodec codec,
-                                int bufferSize) throws IOException {
-    if (codec == null) {
-      return new UncompressedStream(name, input, offsets, length);
+                                int bufferSize,
+                                OrcFile.EncryptionOption encrypt,
+                                ByteBuffer iv
+                                ) throws IOException {
+    if (encrypt != null && encrypt.getKey() == null) {
+      return null;
+    } else if (codec == null) {
+      return new UncompressedStream(name, input, offsets, length, encrypt, iv);
     } else {
       return new CompressedStream(name, input, offsets, length, codec,
-          bufferSize);
+          bufferSize, encrypt, iv);
     }
   }
 }

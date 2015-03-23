@@ -94,7 +94,7 @@ public class TestInStream {
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
     InStream in = InStream.create("test", new ByteBuffer[]{inBuf},
-        new long[]{0}, inBuf.remaining(), null, 100);
+        new long[]{0}, inBuf.remaining(), null, 100, null, null);
     assertEquals("uncompressed stream test position: 0 length: 1024" +
                  " range: 0 offset: 0 limit: 0",
                  in.toString());
@@ -126,7 +126,7 @@ public class TestInStream {
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
     InStream in = InStream.create("test", new ByteBuffer[]{inBuf},
-        new long[]{0}, inBuf.remaining(), codec, 300);
+        new long[]{0}, inBuf.remaining(), codec, 300, null, null);
     assertEquals("compressed stream test position: 0 length: 961 range: 0" +
                  " offset: 0 limit: 0 range 0 = 0 to 961",
                  in.toString());
@@ -159,7 +159,7 @@ public class TestInStream {
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
     InStream in = InStream.create("test", new ByteBuffer[]{inBuf},
-        new long[]{0}, inBuf.remaining(), codec, 100);
+        new long[]{0}, inBuf.remaining(), codec, 100, null, null);
     byte[] contents = new byte[1024];
     try {
       in.read(contents);
@@ -174,7 +174,7 @@ public class TestInStream {
     inBuf.put((byte) 0);
     inBuf.flip();
     in = InStream.create("test2", new ByteBuffer[]{inBuf}, new long[]{0},
-        inBuf.remaining(), codec, 300);
+        inBuf.remaining(), codec, 300, null, null);
     try {
       in.read();
       fail();
@@ -210,7 +210,7 @@ public class TestInStream {
       inBuf[i].flip();
     }
     InStream in = InStream.create("test", inBuf,
-        new long[]{0,483, 1625}, 1674, codec, 400);
+        new long[]{0,483, 1625}, 1674, codec, 400, null, null);
     assertEquals("compressed stream test position: 0 length: 1674 range: 0" +
                  " offset: 0 limit: 0 range 0 = 0 to 483;" +
                  "  range 1 = 483 to 1142;  range 2 = 1625 to 49",
@@ -227,7 +227,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[1], inBuf[2]},
-        new long[]{483, 1625}, 1674, codec, 400);
+        new long[]{483, 1625}, 1674, codec, 400, null, null);
     inStream = new DataInputStream(in);
     positions[303].reset();
     in.seek(positions[303]);
@@ -236,7 +236,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[0], inBuf[2]},
-        new long[]{0, 1625}, 1674, codec, 400);
+        new long[]{0, 1625}, 1674, codec, 400, null, null);
     inStream = new DataInputStream(in);
     positions[1001].reset();
     for(int i=0; i < 300; ++i) {
@@ -274,7 +274,7 @@ public class TestInStream {
       inBuf[i].flip();
     }
     InStream in = InStream.create("test", inBuf,
-        new long[]{0, 1024, 3072}, 4096, null, 400);
+        new long[]{0, 1024, 3072}, 4096, null, 400, null, null);
     assertEquals("uncompressed stream test position: 0 length: 4096" +
                  " range: 0 offset: 0 limit: 0",
                  in.toString());
@@ -290,7 +290,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[1], inBuf[2]},
-        new long[]{1024, 3072}, 4096, null, 400);
+        new long[]{1024, 3072}, 4096, null, 400, null, null);
     inStream = new DataInputStream(in);
     positions[256].reset();
     in.seek(positions[256]);
@@ -299,7 +299,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[0], inBuf[2]},
-        new long[]{0, 3072}, 4096, null, 400);
+        new long[]{0, 3072}, 4096, null, 400, null, null);
     inStream = new DataInputStream(in);
     positions[768].reset();
     for(int i=0; i < 256; ++i) {
