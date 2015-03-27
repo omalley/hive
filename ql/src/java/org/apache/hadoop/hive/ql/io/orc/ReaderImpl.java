@@ -211,6 +211,49 @@ public class ReaderImpl implements Reader {
     return writerVersion;
   }
 
+  static class ColumnEncryptionImpl implements ColumnEncryption {
+    private final int[] columnIds;
+    private final String keyName;
+    private final int keyVersion;
+
+    ColumnEncryptionImpl(int[] columnIds, String keyName, int keyVersion) {
+      this.columnIds = columnIds;
+      this.keyName = keyName;
+      this.keyVersion = keyVersion;
+    }
+
+    @Override
+    public int[] getColumns() {
+      return columnIds;
+    }
+
+    @Override
+    public String getKeyName() {
+      return keyName;
+    }
+
+    @Override
+    public int getKeyVersion() {
+      return keyVersion;
+    }
+  }
+
+  @Override
+  public ColumnEncryption[] getColumnEncryptionInformation() {
+    ColumnEncryption[] result =
+        new ColumnEncryption[footer.getEncryptionCount()];
+    for(int i=0; i < footer.getEncryptionCount(); ++i) {
+      OrcProto.ColumnEncryption key = footer.getEncryption(i);
+      int[] columns = new int[key.getColumnIdCount()];
+      for(int c=0; c < key.getColumnIdCount(); ++c) {
+        columns[c] = key.getColumnId(c);
+      }
+      result[i] = new ColumnEncryptionImpl(columns, key.getKeyName(),
+          key.getKeyVersion());
+    }
+    return result;
+  }
+
   @Override
   public int getRowIndexStride() {
     return footer.getRowIndexStride();
