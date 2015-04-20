@@ -215,11 +215,14 @@ public class ReaderImpl implements Reader {
     private final int[] columnIds;
     private final String keyName;
     private final int keyVersion;
+    private final Cipher.Algorithm algorithm;
 
-    ColumnEncryptionImpl(int[] columnIds, String keyName, int keyVersion) {
+    ColumnEncryptionImpl(int[] columnIds, String keyName, int keyVersion,
+                         Cipher.Algorithm algorithm) {
       this.columnIds = columnIds;
       this.keyName = keyName;
       this.keyVersion = keyVersion;
+      this.algorithm = algorithm;
     }
 
     @Override
@@ -236,6 +239,11 @@ public class ReaderImpl implements Reader {
     public int getKeyVersion() {
       return keyVersion;
     }
+
+    @Override
+    public Cipher.Algorithm getAlgorithm() {
+      return algorithm;
+    }
   }
 
   @Override
@@ -249,7 +257,8 @@ public class ReaderImpl implements Reader {
         columns[c] = key.getColumnId(c);
       }
       result[i] = new ColumnEncryptionImpl(columns, key.getKeyName(),
-          key.getKeyVersion());
+          key.getKeyVersion(),
+          RecordReaderImpl.convertAlgorithmFromProtobuf(key.getAlgorithm()));
     }
     return result;
   }
@@ -519,14 +528,17 @@ public class ReaderImpl implements Reader {
       int footerBufferSize = footerBuffer.limit() - footerBuffer.position() - metadataSize;
       footerBuffer.limit(position + metadataSize);
 
-      InputStream instream = InStream.create("metadata", Lists.<DiskRange>newArrayList(
-          new BufferChunk(footerBuffer, 0)), metadataSize, codec, bufferSize);
+      InputStream instream = InStream.create("metadata",
+          Lists.<DiskRange>newArrayList(
+          new BufferChunk(footerBuffer, 0)), metadataSize, codec, bufferSize,
+          null, null, null);
       this.metadata = OrcProto.Metadata.parseFrom(instream);
 
       footerBuffer.position(position + metadataSize);
       footerBuffer.limit(position + metadataSize + footerBufferSize);
       instream = InStream.create("footer", Lists.<DiskRange>newArrayList(
-          new BufferChunk(footerBuffer, 0)), footerBufferSize, codec, bufferSize);
+          new BufferChunk(footerBuffer, 0)), footerBufferSize, codec,
+          bufferSize, null, null, null);
       this.footer = OrcProto.Footer.parseFrom(instream);
 
       footerBuffer.position(position);
@@ -589,7 +601,7 @@ public class ReaderImpl implements Reader {
     }
     return new RecordReaderImpl(this.getStripes(), fileSystem, path,
         options, footer.getTypesList(), codec, bufferSize,
-        footer.getRowIndexStride(), conf);
+        footer.getRowIndexStride(), conf, getColumnEncryptionInformation());
   }
 
 

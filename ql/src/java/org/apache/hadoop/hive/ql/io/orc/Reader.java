@@ -155,6 +155,12 @@ public interface Reader {
     public int[] getColumns();
 
     /**
+     * Get the encryption algorithm used to encrypt this column.
+     * @return the encryption algorithm or null if we don't know it
+     */
+    public Cipher.Algorithm getAlgorithm();
+
+    /**
      * Get the name of the key used to encrypt these columns.
      * @return the key name
      */
@@ -195,7 +201,7 @@ public interface Reader {
     }
 
     public String toString() {
-      return "{key: " + keyName + ", version: " + keyVersion + "}";
+      return keyName + "@" + keyVersion;
     }
 
     private final String keyName;

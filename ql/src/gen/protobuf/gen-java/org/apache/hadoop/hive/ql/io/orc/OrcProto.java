@@ -9,9 +9,9 @@ public final class OrcProto {
       com.google.protobuf.ExtensionRegistry registry) {
   }
   /**
-   * Protobuf enum {@code orc.proto.EncryptionKind}
+   * Protobuf enum {@code orc.proto.EncryptionAlgorithm}
    */
-  public enum EncryptionKind
+  public enum EncryptionAlgorithm
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <code>UNKNOWN = 0;</code>
@@ -35,7 +35,7 @@ public final class OrcProto {
 
     public final int getNumber() { return value; }
 
-    public static EncryptionKind valueOf(int value) {
+    public static EncryptionAlgorithm valueOf(int value) {
       switch (value) {
         case 0: return UNKNOWN;
         case 1: return AES_CTR;
@@ -43,15 +43,15 @@ public final class OrcProto {
       }
     }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<EncryptionKind>
+    public static com.google.protobuf.Internal.EnumLiteMap<EncryptionAlgorithm>
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static com.google.protobuf.Internal.EnumLiteMap<EncryptionKind>
+    private static com.google.protobuf.Internal.EnumLiteMap<EncryptionAlgorithm>
         internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<EncryptionKind>() {
-            public EncryptionKind findValueByNumber(int number) {
-              return EncryptionKind.valueOf(number);
+          new com.google.protobuf.Internal.EnumLiteMap<EncryptionAlgorithm>() {
+            public EncryptionAlgorithm findValueByNumber(int number) {
+              return EncryptionAlgorithm.valueOf(number);
             }
           };
 
@@ -68,9 +68,9 @@ public final class OrcProto {
       return org.apache.hadoop.hive.ql.io.orc.OrcProto.getDescriptor().getEnumTypes().get(0);
     }
 
-    private static final EncryptionKind[] VALUES = values();
+    private static final EncryptionAlgorithm[] VALUES = values();
 
-    public static EncryptionKind valueOf(
+    public static EncryptionAlgorithm valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -82,12 +82,12 @@ public final class OrcProto {
     private final int index;
     private final int value;
 
-    private EncryptionKind(int index, int value) {
+    private EncryptionAlgorithm(int index, int value) {
       this.index = index;
       this.value = value;
     }
 
-    // @@protoc_insertion_point(enum_scope:orc.proto.EncryptionKind)
+    // @@protoc_insertion_point(enum_scope:orc.proto.EncryptionAlgorithm)
   }
 
   /**
@@ -16566,13 +16566,13 @@ public final class OrcProto {
     int getKeyVersion();
 
     /**
-     * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+     * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
      */
     boolean hasAlgorithm();
     /**
-     * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+     * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
      */
-    org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind getAlgorithm();
+    org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm getAlgorithm();
   }
   /**
    * Protobuf type {@code orc.proto.ColumnEncryption}
@@ -16664,7 +16664,7 @@ public final class OrcProto {
             }
             case 32: {
               int rawValue = input.readEnum();
-              org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind value = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind.valueOf(rawValue);
+              org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm value = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(4, rawValue);
               } else {
@@ -16796,17 +16796,17 @@ public final class OrcProto {
     }
 
     public static final int ALGORITHM_FIELD_NUMBER = 4;
-    private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind algorithm_;
+    private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm algorithm_;
     /**
-     * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+     * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
      */
     public boolean hasAlgorithm() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+     * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
      */
-    public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind getAlgorithm() {
+    public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm getAlgorithm() {
       return algorithm_;
     }
 
@@ -16814,7 +16814,7 @@ public final class OrcProto {
       columnId_ = java.util.Collections.emptyList();
       keyName_ = "";
       keyVersion_ = 0;
-      algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind.UNKNOWN;
+      algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm.UNKNOWN;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -16998,7 +16998,7 @@ public final class OrcProto {
         bitField0_ = (bitField0_ & ~0x00000002);
         keyVersion_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
-        algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind.UNKNOWN;
+        algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm.UNKNOWN;
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
@@ -17283,23 +17283,23 @@ public final class OrcProto {
         return this;
       }
 
-      private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind.UNKNOWN;
+      private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm.UNKNOWN;
       /**
-       * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+       * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
        */
       public boolean hasAlgorithm() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+       * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
        */
-      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind getAlgorithm() {
+      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm getAlgorithm() {
         return algorithm_;
       }
       /**
-       * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+       * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
        */
-      public Builder setAlgorithm(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind value) {
+      public Builder setAlgorithm(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -17309,11 +17309,11 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>optional .orc.proto.EncryptionKind algorithm = 4;</code>
+       * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
        */
       public Builder clearAlgorithm() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionKind.UNKNOWN;
+        algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm.UNKNOWN;
         onChanged();
         return this;
       }
@@ -21539,26 +21539,27 @@ public final class OrcProto {
       "tripeStatistics\022-\n\010colStats\030\001 \003(\0132\033.orc." +
       "proto.ColumnStatistics\"<\n\010Metadata\0220\n\013st" +
       "ripeStats\030\001 \003(\0132\033.orc.proto.StripeStatis" +
-      "tics\"w\n\020ColumnEncryption\022\020\n\010columnId\030\001 \003" +
+      "tics\"|\n\020ColumnEncryption\022\020\n\010columnId\030\001 \003" +
       "(\r\022\017\n\007keyName\030\002 \001(\t\022\022\n\nkeyVersion\030\003 \001(\r\022" +
-      ",\n\talgorithm\030\004 \001(\0162\031.orc.proto.Encryptio" +
-      "nKind\"\303\002\n\006Footer\022\024\n\014headerLength\030\001 \001(\004\022\025" +
-      "\n\rcontentLength\030\002 \001(\004\022-\n\007stripes\030\003 \003(\0132\034" +
-      ".orc.proto.StripeInformation\022\036\n\005types\030\004 ",
-      "\003(\0132\017.orc.proto.Type\022-\n\010metadata\030\005 \003(\0132\033" +
-      ".orc.proto.UserMetadataItem\022\024\n\014numberOfR" +
-      "ows\030\006 \001(\004\022/\n\nstatistics\030\007 \003(\0132\033.orc.prot" +
-      "o.ColumnStatistics\022\026\n\016rowIndexStride\030\010 \001" +
-      "(\r\022/\n\nencryption\030\t \003(\0132\033.orc.proto.Colum" +
-      "nEncryption\"\305\001\n\nPostScript\022\024\n\014footerLeng" +
-      "th\030\001 \001(\004\022/\n\013compression\030\002 \001(\0162\032.orc.prot" +
-      "o.CompressionKind\022\034\n\024compressionBlockSiz" +
-      "e\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016metadata" +
-      "Length\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r\022\016\n\005m",
-      "agic\030\300> \001(\t**\n\016EncryptionKind\022\013\n\007UNKNOWN" +
-      "\020\000\022\013\n\007AES_CTR\020\001*:\n\017CompressionKind\022\010\n\004NO" +
-      "NE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003B\"\n o" +
-      "rg.apache.hadoop.hive.ql.io.orc"
+      "1\n\talgorithm\030\004 \001(\0162\036.orc.proto.Encryptio" +
+      "nAlgorithm\"\303\002\n\006Footer\022\024\n\014headerLength\030\001 " +
+      "\001(\004\022\025\n\rcontentLength\030\002 \001(\004\022-\n\007stripes\030\003 " +
+      "\003(\0132\034.orc.proto.StripeInformation\022\036\n\005typ",
+      "es\030\004 \003(\0132\017.orc.proto.Type\022-\n\010metadata\030\005 " +
+      "\003(\0132\033.orc.proto.UserMetadataItem\022\024\n\014numb" +
+      "erOfRows\030\006 \001(\004\022/\n\nstatistics\030\007 \003(\0132\033.orc" +
+      ".proto.ColumnStatistics\022\026\n\016rowIndexStrid" +
+      "e\030\010 \001(\r\022/\n\nencryption\030\t \003(\0132\033.orc.proto." +
+      "ColumnEncryption\"\305\001\n\nPostScript\022\024\n\014foote" +
+      "rLength\030\001 \001(\004\022/\n\013compression\030\002 \001(\0162\032.orc" +
+      ".proto.CompressionKind\022\034\n\024compressionBlo" +
+      "ckSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016met" +
+      "adataLength\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r",
+      "\022\016\n\005magic\030\300> \001(\t*/\n\023EncryptionAlgorithm\022" +
+      "\013\n\007UNKNOWN\020\000\022\013\n\007AES_CTR\020\001*:\n\017Compression" +
+      "Kind\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003" +
+      "LZO\020\003B\"\n org.apache.hadoop.hive.ql.io.or" +
+      "c"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

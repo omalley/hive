@@ -135,9 +135,9 @@ class JavaAesCtrCipher implements Cipher {
     try {
       int outputPosition = output.position();
       int len = cipher.update(input.array(),
-          input.arrayOffset() + input.position(),
-          input.remaining(), output.array(),
-          output.arrayOffset() + output.position());
+                              input.arrayOffset() + input.position(),
+                              input.remaining(), output.array(),
+                              output.arrayOffset() + output.position());
       input.position(len + input.position());
       output.position(outputPosition + len);
     } catch (ShortBufferException sbe) {

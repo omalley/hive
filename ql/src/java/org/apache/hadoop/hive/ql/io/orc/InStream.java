@@ -54,16 +54,23 @@ public abstract class InStream extends InputStream {
   private static class UncompressedStream extends InStream {
     private final List<DiskRange> bytes;
     private final long length;
+    private final Cipher cipher;
     private long currentOffset;
     private ByteBuffer range;
     private int currentRange;
 
-    public UncompressedStream(String name, List<DiskRange> input, long length) {
+    public UncompressedStream(String name, List<DiskRange> input,
+                              long length, Cipher cipher, ByteBuffer key,
+                              ByteBuffer iv) {
       super(name, length);
       this.bytes = input;
       this.length = length;
       currentRange = 0;
       currentOffset = 0;
+      this.cipher = cipher;
+      if (cipher != null) {
+        cipher.initialize(Cipher.Mode.DECRYPT, key, iv, 0);
+      }
     }
 
     @Override
@@ -87,7 +94,11 @@ public abstract class InStream extends InputStream {
         seek(currentOffset);
       }
       int actualLength = Math.min(length, range.remaining());
-      range.get(data, offset, actualLength);
+      if (cipher != null) {
+        cipher.update(range, ByteBuffer.wrap(data, offset, actualLength));
+      } else {
+        range.get(data, offset, actualLength);
+      }
       currentOffset += actualLength;
       return actualLength;
     }
@@ -132,6 +143,9 @@ public abstract class InStream extends InputStream {
           int pos = range.position();
           pos += (int)(desired - curRange.getOffset()); // this is why we duplicate
           this.range.position(pos);
+          if (cipher != null) {
+            cipher.seek(desired);
+          }
           return;
         }
         ++i;
@@ -166,15 +180,25 @@ public abstract class InStream extends InputStream {
     private long currentOffset;
     private int currentRange;
     private boolean isUncompressedOriginal;
+    private final Cipher cipher;
+    private final ByteBuffer decrypted;
 
     public CompressedStream(String name, List<DiskRange> input, long length,
-                            CompressionCodec codec, int bufferSize) {
+                            CompressionCodec codec, int bufferSize,
+                            Cipher cipher, ByteBuffer key, ByteBuffer iv) {
       super(name, length);
       this.bytes = input;
       this.codec = codec;
       this.bufferSize = bufferSize;
       currentOffset = 0;
       currentRange = 0;
+      this.cipher = cipher;
+      if (cipher != null) {
+        cipher.initialize(Cipher.Mode.DECRYPT, key, iv, 0);
+        decrypted = ByteBuffer.allocate(bufferSize);
+      } else {
+        decrypted = null;
+      }
     }
 
     private void readHeader() throws IOException {
@@ -197,7 +221,13 @@ public abstract class InStream extends InputStream {
         assert OutStream.HEADER_SIZE == 3 : "The Orc HEADER_SIZE must be the same in OutStream and InStream";
         currentOffset += OutStream.HEADER_SIZE;
 
-        ByteBuffer slice = this.slice(chunkLength);
+        ByteBuffer slice;
+        if (cipher == null) {
+          slice = this.slice(chunkLength);
+        } else {
+          slice = (ByteBuffer) decrypted.reset();
+          cipher.update(this.slice(chunkLength), slice);
+        }
 
         if (isOriginal) {
           uncompressed = slice;
@@ -418,12 +448,16 @@ public abstract class InStream extends InputStream {
                                 long[] offsets,
                                 long length,
                                 CompressionCodec codec,
-                                int bufferSize) throws IOException {
+                                int bufferSize,
+                                Cipher cipher,
+                                ByteBuffer key,
+                                ByteBuffer iv) throws IOException {
     List<DiskRange> input = new ArrayList<DiskRange>(buffers.length);
     for (int i = 0; i < buffers.length; ++i) {
       input.add(new BufferChunk(buffers[i], offsets[i]));
     }
-    return create(streamName, input, length, codec, bufferSize);
+    return create(streamName, input, length, codec, bufferSize, cipher, key,
+        iv);
   }
 
   /**
@@ -440,11 +474,15 @@ public abstract class InStream extends InputStream {
                                 List<DiskRange> input,
                                 long length,
                                 CompressionCodec codec,
-                                int bufferSize) throws IOException {
+                                int bufferSize,
+                                Cipher cipher,
+                                ByteBuffer key,
+                                ByteBuffer iv) throws IOException {
     if (codec == null) {
-      return new UncompressedStream(name, input, length);
+      return new UncompressedStream(name, input, length, cipher, key, iv);
     } else {
-      return new CompressedStream(name, input, length, codec, bufferSize);
+      return new CompressedStream(name, input, length, codec, bufferSize,
+          cipher, key, iv);
     }
   }
 }

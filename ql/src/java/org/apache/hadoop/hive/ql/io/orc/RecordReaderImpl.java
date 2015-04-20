@@ -86,6 +86,12 @@ class RecordReaderImpl implements RecordReader {
   private final OrcProto.RowIndex[] indexes;
   private final OrcProto.BloomFilterIndex[] bloomFilterIndices;
   private final SargApplier sargApp;
+
+  // expanded array of encryption information for each column
+  private final Reader.ColumnEncryption[] columnEncryption;
+  // expanded array of encryption keys for each column
+  private final ByteBuffer[] encryptionKeys;
+
   // an array about which row groups aren't skipped
   private boolean[] includedRowGroups = null;
   private final Configuration conf;
@@ -162,7 +168,8 @@ class RecordReaderImpl implements RecordReader {
                    CompressionCodec codec,
                    int bufferSize,
                    long strideRate,
-                   Configuration conf
+                   Configuration conf,
+                   Reader.ColumnEncryption[] encryptions
                    ) throws IOException {
     this.path = path;
     this.file = fileSystem.open(path);
@@ -205,6 +212,29 @@ class RecordReaderImpl implements RecordReader {
     indexes = new OrcProto.RowIndex[types.size()];
     bloomFilterIndices = new OrcProto.BloomFilterIndex[types.size()];
     advanceToNextRow(reader, 0L, true);
+    columnEncryption = new Reader.ColumnEncryption[types.size()];
+    encryptionKeys = new ByteBuffer[types.size()];
+    Map<String, ByteBuffer> keyMap = new HashMap<String,ByteBuffer>();
+    for(Reader.EncryptionKey key: options.getEncryptionKeys()) {
+      keyMap.put(key.toString(), key.getKey());
+    }
+    for(Reader.ColumnEncryption colEncrypt: encryptions) {
+      ByteBuffer key = keyMap.get(colEncrypt.getKeyName() + "@" +
+          colEncrypt.getKeyVersion());
+      for(int col: colEncrypt.getColumns()) {
+        recursivelySetKey(col, colEncrypt, key);
+      }
+    }
+  }
+
+  void recursivelySetKey(int columnId,
+                         Reader.ColumnEncryption columnInfo,
+                         ByteBuffer key) {
+    columnEncryption[columnId] = columnInfo;
+    encryptionKeys[columnId] = key;
+    for(int subcolumn: types.get(columnId).getSubtypesList()) {
+      recursivelySetKey(subcolumn, columnInfo, key);
+    }
   }
 
   public static final class PositionProviderImpl implements PositionProvider {
@@ -886,6 +916,14 @@ class RecordReaderImpl implements RecordReader {
     return list.extract();
   }
 
+  static Cipher.Algorithm convertAlgorithmFromProtobuf
+      (OrcProto.EncryptionAlgorithm kind)  {
+    if (kind == OrcProto.EncryptionAlgorithm.AES_CTR) {
+      return Cipher.Algorithm.AES_CTR;
+    }
+    return null;
+  }
+
   void createStreams(List<OrcProto.Stream> streamDescriptions,
                             DiskRangeList ranges,
                             boolean[] includeColumn,
@@ -903,6 +941,9 @@ class RecordReaderImpl implements RecordReader {
       }
       List<DiskRange> buffers = RecordReaderUtils.getStreamBuffers(
           ranges, streamOffset, streamDesc.getLength());
+      if (streamDesc.hasIv()) {
+        Cipher cipher = Cipher.Factory.get(streamDesc.get)
+      }
       StreamName name = new StreamName(column, streamDesc.getKind());
       streams.put(name, InStream.create(name.toString(), buffers,
           streamDesc.getLength(), codec, bufferSize));
