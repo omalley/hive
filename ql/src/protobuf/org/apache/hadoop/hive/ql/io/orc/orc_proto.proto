@@ -194,7 +194,7 @@ message Metadata {
 
 enum EncryptionAlgorithm {
   UNKNOWN = 0;
-  AES_CTR = 1;
+  AES128_CTR = 1;
 }
 
 // for each set of columns encrypted with the same key

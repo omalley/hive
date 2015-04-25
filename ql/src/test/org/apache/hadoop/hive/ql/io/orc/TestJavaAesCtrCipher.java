@@ -32,7 +32,7 @@ public class TestJavaAesCtrCipher {
 
   @Test
   public void TestEncryption() throws Exception {
-    JavaAesCtrCipher cipher = new JavaAesCtrCipher();
+    JavaAes128CtrCipher cipher = new JavaAes128CtrCipher();
     byte[] key = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     byte[] iv = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32};
     cipher.initialize(Cipher.Mode.ENCRYPT, ByteBuffer.wrap(key),
@@ -55,7 +55,7 @@ public class TestJavaAesCtrCipher {
 
   @Test
   public void TestMultipartEncryption() throws Exception {
-    JavaAesCtrCipher cipher = new JavaAesCtrCipher();
+    JavaAes128CtrCipher cipher = new JavaAes128CtrCipher();
     byte[] key = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     byte[] iv = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32};
     cipher.initialize(Cipher.Mode.ENCRYPT, ByteBuffer.wrap(key),
@@ -86,7 +86,7 @@ public class TestJavaAesCtrCipher {
 
   @Test
   public void TestInPlaceEncryption() throws Exception {
-    JavaAesCtrCipher cipher = new JavaAesCtrCipher();
+    JavaAes128CtrCipher cipher = new JavaAes128CtrCipher();
     byte[] key = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     byte[] iv = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32};
     cipher.initialize(Cipher.Mode.ENCRYPT, ByteBuffer.wrap(key),
@@ -116,7 +116,7 @@ public class TestJavaAesCtrCipher {
 
   @Test
   public void TestDecryption() throws Exception {
-    JavaAesCtrCipher cipher = new JavaAesCtrCipher();
+    JavaAes128CtrCipher cipher = new JavaAes128CtrCipher();
     byte[] key = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     byte[] iv = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32};
     cipher.initialize(Cipher.Mode.DECRYPT, ByteBuffer.wrap(key),
@@ -140,7 +140,7 @@ public class TestJavaAesCtrCipher {
 
   @Test
   public void TestEvenOffsetDecryption() throws Exception {
-    JavaAesCtrCipher cipher = new JavaAesCtrCipher();
+    JavaAes128CtrCipher cipher = new JavaAes128CtrCipher();
     byte[] key = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     byte[] iv = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32};
     cipher.initialize(Cipher.Mode.DECRYPT, ByteBuffer.wrap(key),
@@ -163,7 +163,7 @@ public class TestJavaAesCtrCipher {
 
   @Test
   public void TestSkipDecryption() throws Exception {
-    JavaAesCtrCipher cipher = new JavaAesCtrCipher();
+    JavaAes128CtrCipher cipher = new JavaAes128CtrCipher();
     byte[] key = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     byte[] iv = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32};
     cipher.initialize(Cipher.Mode.DECRYPT, ByteBuffer.wrap(key),

@@ -258,7 +258,7 @@ public class ReaderImpl implements Reader {
       }
       result[i] = new ColumnEncryptionImpl(columns, key.getKeyName(),
           key.getKeyVersion(),
-          RecordReaderImpl.convertAlgorithmFromProtobuf(key.getAlgorithm()));
+          WriterImpl.convertAlgorithmFromProtobuf(key.getAlgorithm()));
     }
     return result;
   }
@@ -531,14 +531,14 @@ public class ReaderImpl implements Reader {
       InputStream instream = InStream.create("metadata",
           Lists.<DiskRange>newArrayList(
           new BufferChunk(footerBuffer, 0)), metadataSize, codec, bufferSize,
-          null, null, null);
+          null);
       this.metadata = OrcProto.Metadata.parseFrom(instream);
 
       footerBuffer.position(position + metadataSize);
       footerBuffer.limit(position + metadataSize + footerBufferSize);
       instream = InStream.create("footer", Lists.<DiskRange>newArrayList(
           new BufferChunk(footerBuffer, 0)), footerBufferSize, codec,
-          bufferSize, null, null, null);
+          bufferSize, null);
       this.footer = OrcProto.Footer.parseFrom(instream);
 
       footerBuffer.position(position);

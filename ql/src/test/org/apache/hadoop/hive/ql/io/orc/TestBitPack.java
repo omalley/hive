@@ -113,8 +113,9 @@ public class TestBitPack {
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
     long[] buff = new long[SIZE];
-    utils.readInts(buff, 0, SIZE, fixedWidth, InStream.create("test", new ByteBuffer[] { inBuf },
-        new long[] { 0 }, inBuf.remaining(), null, SIZE));
+    utils.readInts(buff, 0, SIZE, fixedWidth, InStream.create("test",
+        new ByteBuffer[] { inBuf },
+        new long[] { 0 }, inBuf.remaining(), null, SIZE, null));
     for (int i = 0; i < SIZE; i++) {
       buff[i] = utils.zigzagDecode(buff[i]);
     }

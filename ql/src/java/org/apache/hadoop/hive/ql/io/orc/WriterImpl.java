@@ -416,7 +416,7 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
         cipher = null;
         iv = null;
       } else {
-        cipher = Cipher.Factory.get(Cipher.Algorithm.AES_CTR);
+        cipher = Cipher.Factory.get(encrypt.getAlgorithm());
         iv = ByteBuffer.allocate(cipher.getIvLength());
         random.nextBytes(iv.array());
         cipher.initialize(Cipher.Mode.ENCRYPT, encrypt.getKey(), iv, 0);
@@ -2417,6 +2417,26 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     return (int) (rawWriter.getPos() - startPosn);
   }
 
+  static Cipher.Algorithm
+     convertAlgorithmFromProtobuf(OrcProto.EncryptionAlgorithm kind)  {
+    switch (kind) {
+      case AES128_CTR:
+        return Cipher.Algorithm.AES128_CTR;
+      default:
+        return null;
+    }
+  }
+
+  static OrcProto.EncryptionAlgorithm
+     convertAlgorithmToProtobuf(Cipher.Algorithm cipher) {
+    switch (cipher) {
+      case AES128_CTR:
+        return OrcProto.EncryptionAlgorithm.AES128_CTR;
+      default:
+        throw new RuntimeException("Unknown cipher " + cipher);
+    }
+  }
+
   private int writeFooter(long bodyLength) throws IOException {
     getStream();
     OrcProto.Footer.Builder builder = OrcProto.Footer.newBuilder();
@@ -2448,7 +2468,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       if (encryptionOptions[i] != null && !encryptionCovered[i]) {
         OrcProto.ColumnEncryption.Builder encryptBuilder =
             OrcProto.ColumnEncryption.newBuilder();
-        encryptBuilder.setAlgorithm(OrcProto.EncryptionKind.AES_CTR)
+        encryptBuilder
+            .setAlgorithm(convertAlgorithmToProtobuf(encryptionOptions[i]
+                .getAlgorithm()))
             .addColumnId(i)
             .setKeyName(encryptionOptions[i].getKeyName())
             .setKeyVersion(encryptionOptions[i].getKeyVersion());

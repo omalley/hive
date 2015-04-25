@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import io.netty.buffer.ByteBuf;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hive.common.DiskRange;
@@ -55,21 +56,23 @@ public abstract class InStream extends InputStream {
     private final List<DiskRange> bytes;
     private final long length;
     private final Cipher cipher;
+    private final ByteBuffer byteBuffer;
     private long currentOffset;
     private ByteBuffer range;
     private int currentRange;
 
     public UncompressedStream(String name, List<DiskRange> input,
-                              long length, Cipher cipher, ByteBuffer key,
-                              ByteBuffer iv) {
+                              long length, Cipher cipher) {
       super(name, length);
       this.bytes = input;
       this.length = length;
       currentRange = 0;
       currentOffset = 0;
       this.cipher = cipher;
-      if (cipher != null) {
-        cipher.initialize(Cipher.Mode.DECRYPT, key, iv, 0);
+      if (cipher == null) {
+        byteBuffer = null;
+      } else {
+        byteBuffer = ByteBuffer.allocate(1);
       }
     }
 
@@ -82,7 +85,13 @@ public abstract class InStream extends InputStream {
         seek(currentOffset);
       }
       currentOffset += 1;
-      return 0xff & range.get();
+      if (cipher == null) {
+        return 0xff & range.get();
+      } else {
+        byteBuffer.clear();
+        cipher.update(range, byteBuffer);
+        return byteBuffer.get(0) & 0xff;
+      }
     }
 
     @Override
@@ -185,7 +194,7 @@ public abstract class InStream extends InputStream {
 
     public CompressedStream(String name, List<DiskRange> input, long length,
                             CompressionCodec codec, int bufferSize,
-                            Cipher cipher, ByteBuffer key, ByteBuffer iv) {
+                            Cipher cipher) {
       super(name, length);
       this.bytes = input;
       this.codec = codec;
@@ -194,7 +203,6 @@ public abstract class InStream extends InputStream {
       currentRange = 0;
       this.cipher = cipher;
       if (cipher != null) {
-        cipher.initialize(Cipher.Mode.DECRYPT, key, iv, 0);
         decrypted = ByteBuffer.allocate(bufferSize);
       } else {
         decrypted = null;
@@ -205,13 +213,13 @@ public abstract class InStream extends InputStream {
       if (compressed == null || compressed.remaining() <= 0) {
         seek(currentOffset);
       }
-      long originalOffset = currentOffset;
       if (compressed.remaining() > OutStream.HEADER_SIZE) {
         int b0 = compressed.get() & 0xff;
         int b1 = compressed.get() & 0xff;
         int b2 = compressed.get() & 0xff;
         boolean isOriginal = (b0 & 0x01) == 1;
         int chunkLength = (b2 << 15) | (b1 << 7) | (b0 >> 1);
+        System.out.println("header = " + isOriginal + " len " + chunkLength);
 
         if (chunkLength > bufferSize) {
           throw new IllegalArgumentException("Buffer size too small. size = " +
@@ -225,8 +233,9 @@ public abstract class InStream extends InputStream {
         if (cipher == null) {
           slice = this.slice(chunkLength);
         } else {
-          slice = (ByteBuffer) decrypted.reset();
+          slice = (ByteBuffer) decrypted.clear();
           cipher.update(this.slice(chunkLength), slice);
+          slice.flip();
         }
 
         if (isOriginal) {
@@ -294,7 +303,11 @@ public abstract class InStream extends InputStream {
 
     @Override
     public void seek(PositionProvider index) throws IOException {
-      seek(index.getNext());
+      long posn = index.getNext();
+      seek(posn);
+      if (cipher != null) {
+        cipher.seek(posn);
+      }
       long uncompressedBytes = index.getNext();
       if (uncompressedBytes != 0) {
         readHeader();
@@ -326,7 +339,8 @@ public abstract class InStream extends InputStream {
 
       if (LOG.isDebugEnabled()) {
         LOG.debug(String.format(
-            "Crossing into next BufferChunk because compressed only has %d bytes (needs %d)",
+            "Crossing into next BufferChunk because compressed only has %d " +
+                "bytes (needs %d)",
             compressed.remaining(), len));
       }
 
@@ -341,7 +355,8 @@ public abstract class InStream extends InputStream {
       while (len > 0 && iter.hasNext()) {
         ++currentRange;
         if (LOG.isDebugEnabled()) {
-          LOG.debug(String.format("Read slow-path, >1 cross block reads with %s", this.toString()));
+          LOG.debug(String.format("Read slow-path, >1 cross block reads with %s"
+              , this.toString()));
         }
         DiskRange range = iter.next();
         compressed = range.getData().duplicate();
@@ -392,7 +407,8 @@ public abstract class InStream extends InputStream {
         currentOffset = desired;
         return;
       }
-      throw new IOException("Seek outside of data in " + this + " to " + desired);
+      throw new IOException("Seek outside of data in " + this + " to "
+          + desired);
     }
 
     private String rangeString() {
@@ -413,7 +429,8 @@ public abstract class InStream extends InputStream {
     public String toString() {
       return "compressed stream " + name + " position: " + currentOffset +
           " length: " + length + " range: " + currentRange +
-          " offset: " + (compressed == null ? 0 : compressed.position()) + " limit: " + (compressed == null ? 0 : compressed.limit()) +
+          " offset: " + (compressed == null ? 0 : compressed.position()) +
+          " limit: " + (compressed == null ? 0 : compressed.limit()) +
           rangeString() +
           (uncompressed == null ? "" :
               " uncompressed: " + uncompressed.position() + " to " +
@@ -425,7 +442,8 @@ public abstract class InStream extends InputStream {
 
   private static void logEmptySeek(String name) {
     if (LOG.isWarnEnabled()) {
-      LOG.warn("Attempting seek into empty stream (" + name + ") Skipping stream.");
+      LOG.warn("Attempting seek into empty stream (" + name +
+          ") Skipping stream.");
     }
   }
 
@@ -449,15 +467,12 @@ public abstract class InStream extends InputStream {
                                 long length,
                                 CompressionCodec codec,
                                 int bufferSize,
-                                Cipher cipher,
-                                ByteBuffer key,
-                                ByteBuffer iv) throws IOException {
+                                Cipher cipher) throws IOException {
     List<DiskRange> input = new ArrayList<DiskRange>(buffers.length);
     for (int i = 0; i < buffers.length; ++i) {
       input.add(new BufferChunk(buffers[i], offsets[i]));
     }
-    return create(streamName, input, length, codec, bufferSize, cipher, key,
-        iv);
+    return create(streamName, input, length, codec, bufferSize, cipher);
   }
 
   /**
@@ -475,14 +490,12 @@ public abstract class InStream extends InputStream {
                                 long length,
                                 CompressionCodec codec,
                                 int bufferSize,
-                                Cipher cipher,
-                                ByteBuffer key,
-                                ByteBuffer iv) throws IOException {
+                                Cipher cipher) throws IOException {
     if (codec == null) {
-      return new UncompressedStream(name, input, length, cipher, key, iv);
+      return new UncompressedStream(name, input, length, cipher);
     } else {
       return new CompressedStream(name, input, length, codec, bufferSize,
-          cipher, key, iv);
+          cipher);
     }
   }
 }

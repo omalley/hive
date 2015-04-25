@@ -252,10 +252,11 @@ public final class OrcFile {
    */
   public static class EncryptionOption {
     public EncryptionOption(String keyName, int keyVersion, ByteBuffer key,
-                            int... columns) {
+                            Cipher.Algorithm cipher, int... columns) {
       this.keyName = keyName;
       this.keyVersion = keyVersion;
       this.key = key;
+      this.cipher = cipher;
       this.columns = columns;
     }
 
@@ -275,10 +276,15 @@ public final class OrcFile {
       return columns;
     }
 
-    private String keyName;
-    private int keyVersion;
-    private ByteBuffer key;
-    private int[] columns;
+    public Cipher.Algorithm getAlgorithm() {
+      return cipher;
+    }
+
+    private final String keyName;
+    private final int keyVersion;
+    private final ByteBuffer key;
+    private final Cipher.Algorithm cipher;
+    private final int[] columns;
   }
 
   /**

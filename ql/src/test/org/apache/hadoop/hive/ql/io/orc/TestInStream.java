@@ -20,6 +20,7 @@ package org.apache.hadoop.hive.ql.io.orc;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertArrayEquals;
 
 import java.io.DataInputStream;
 import java.io.DataOutput;
@@ -29,6 +30,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.hadoop.hive.common.DiskRange;
 import org.junit.Test;
 
 public class TestInStream {
@@ -94,7 +96,7 @@ public class TestInStream {
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
     InStream in = InStream.create("test", new ByteBuffer[]{inBuf},
-        new long[]{0}, inBuf.remaining(), null, 100);
+        new long[]{0}, inBuf.remaining(), null, 100, null);
     assertEquals("uncompressed stream test position: 0 length: 1024" +
                  " range: 0 offset: 0 limit: 0",
                  in.toString());
@@ -126,7 +128,7 @@ public class TestInStream {
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
     InStream in = InStream.create("test", new ByteBuffer[]{inBuf},
-        new long[]{0}, inBuf.remaining(), codec, 300);
+        new long[]{0}, inBuf.remaining(), codec, 300, null);
     assertEquals("compressed stream test position: 0 length: 961 range: 0" +
                  " offset: 0 limit: 0 range 0 = 0 to 961",
                  in.toString());
@@ -159,7 +161,7 @@ public class TestInStream {
     collect.buffer.setByteBuffer(inBuf, 0, collect.buffer.size());
     inBuf.flip();
     InStream in = InStream.create("test", new ByteBuffer[]{inBuf},
-        new long[]{0}, inBuf.remaining(), codec, 100);
+        new long[]{0}, inBuf.remaining(), codec, 100, null);
     byte[] contents = new byte[1024];
     try {
       in.read(contents);
@@ -174,7 +176,7 @@ public class TestInStream {
     inBuf.put((byte) 0);
     inBuf.flip();
     in = InStream.create("test2", new ByteBuffer[]{inBuf}, new long[]{0},
-        inBuf.remaining(), codec, 300);
+        inBuf.remaining(), codec, 300, null);
     try {
       in.read();
       fail();
@@ -210,7 +212,7 @@ public class TestInStream {
       inBuf[i].flip();
     }
     InStream in = InStream.create("test", inBuf,
-        new long[]{0,483, 1625}, 1674, codec, 400);
+        new long[]{0,483, 1625}, 1674, codec, 400, null);
     assertEquals("compressed stream test position: 0 length: 1674 range: 0" +
                  " offset: 0 limit: 0 range 0 = 0 to 483;" +
                  "  range 1 = 483 to 1142;  range 2 = 1625 to 49",
@@ -227,7 +229,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[1], inBuf[2]},
-        new long[]{483, 1625}, 1674, codec, 400);
+        new long[]{483, 1625}, 1674, codec, 400, null);
     inStream = new DataInputStream(in);
     positions[303].reset();
     in.seek(positions[303]);
@@ -236,7 +238,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[0], inBuf[2]},
-        new long[]{0, 1625}, 1674, codec, 400);
+        new long[]{0, 1625}, 1674, codec, 400, null);
     inStream = new DataInputStream(in);
     positions[1001].reset();
     for(int i=0; i < 300; ++i) {
@@ -274,7 +276,7 @@ public class TestInStream {
       inBuf[i].flip();
     }
     InStream in = InStream.create("test", inBuf,
-        new long[]{0, 1024, 3072}, 4096, null, 400);
+        new long[]{0, 1024, 3072}, 4096, null, 400, null);
     assertEquals("uncompressed stream test position: 0 length: 4096" +
                  " range: 0 offset: 0 limit: 0",
                  in.toString());
@@ -290,7 +292,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[1], inBuf[2]},
-        new long[]{1024, 3072}, 4096, null, 400);
+        new long[]{1024, 3072}, 4096, null, 400, null);
     inStream = new DataInputStream(in);
     positions[256].reset();
     in.seek(positions[256]);
@@ -299,7 +301,7 @@ public class TestInStream {
     }
 
     in = InStream.create("test", new ByteBuffer[]{inBuf[0], inBuf[2]},
-        new long[]{0, 3072}, 4096, null, 400);
+        new long[]{0, 3072}, 4096, null, 400, null);
     inStream = new DataInputStream(in);
     positions[768].reset();
     for(int i=0; i < 256; ++i) {
@@ -309,5 +311,80 @@ public class TestInStream {
     for(int i=768; i < 1024; ++i) {
       assertEquals(i, inStream.readInt());
     }
+  }
+
+  @Test
+  public void testUncompressedEncryptedStream() throws Exception {
+    byte[] key = new byte[16];
+    byte[] iv = new byte[16];
+    for(int i=0; i < 16; ++i) {
+      key[i] = (byte) i;
+      iv[i] = (byte) (10 * i);
+    }
+    Cipher cipher = Cipher.Factory.get(Cipher.Algorithm.AES128_CTR);
+    cipher.initialize(Cipher.Mode.DECRYPT, ByteBuffer.wrap(key),
+        ByteBuffer.wrap(iv), 0);
+    byte[] encrypted = new byte[]{-76, -24, -50, 2, 28, 69, -40, 57, 71, -64,
+        -22, 70, -100, -67, -45, 59, 93, 25, -124, 101, 48, 119, 89, 57, -114,
+        -42, 62, 87, 99, 80, -34, -109, -102, -14, 71, -60, 13, 94, -70, -72,
+        -34, -29, 123, 127, -62, -119, 73, 59, 46, 119, 75, -113, 37, -128, 45,
+        4, -29, -62, -90, -75, -77, 95, -7, 31, -100, 66, 99, -55, 73, 111, -89,
+        88, 33, -7, 55, 41, -88, -55, -7, -111, -110, 67};
+    List<DiskRange> ranges = new ArrayList<>();
+    ranges.add(new RecordReaderImpl.BufferChunk(ByteBuffer.wrap(encrypted), 0));
+    InStream in = InStream.create("test", ranges, encrypted.length, null,
+        10000, cipher);
+    byte[] decrypt = new byte[6];
+    in.read(decrypt);
+    assertArrayEquals("People".getBytes(), decrypt);
+    assertEquals(' ', in.read());
+    decrypt = new byte[encrypted.length - 7];
+    in.read(decrypt);
+    assertArrayEquals(("do stupid stuff all of the time." +
+        " Hadoop lets them do stupid stuff at scale.").getBytes(), decrypt);
+    PositionCollector posn = new PositionCollector();
+    posn.addPosition(0);
+    in.seek(posn);
+    decrypt = new byte[encrypted.length];
+    in.read(decrypt);
+    assertArrayEquals(("People do stupid stuff all of the time." +
+        " Hadoop lets them do stupid stuff at scale.").getBytes(), decrypt);
+  }
+
+  @Test
+  public void testCompressedEncryptedStream() throws Exception {
+    byte[] key = new byte[16];
+    byte[] iv = new byte[16];
+    for(int i=0; i < 16; ++i) {
+      key[i] = (byte) i;
+      iv[i] = (byte) (10 * i);
+    }
+    Cipher cipher = Cipher.Factory.get(Cipher.Algorithm.AES128_CTR);
+    cipher.initialize(Cipher.Mode.DECRYPT, ByteBuffer.wrap(key),
+        ByteBuffer.wrap(iv), 0);
+    byte[] encrypted = new byte[]{96, 0, 0, 23, -60, -19, -68, 38, -24, -73, 14,
+        96, 41, -75, 120, -92, -29, 115, -109, -78, -71, -95, -40, -99, 62, 40,
+        -112, 99, -80, -119, 92, -29, -42, 64, -45, -101, -60, 24, 57, 4, -97,
+        -66, -116, -126, 103, 56, -11, 9, 31, 107, 87};
+    List<DiskRange> ranges = new ArrayList<>();
+    ranges.add(new RecordReaderImpl.BufferChunk(ByteBuffer.wrap(encrypted), 0));
+    InStream in = InStream.create("test", ranges, encrypted.length,
+        new ZlibCodec(), 10000, cipher);
+    byte[] decrypt = new byte[4];
+    in.read(decrypt);
+    assertArrayEquals("Lack".getBytes(), decrypt);
+    assertEquals(' ', in.read());
+    decrypt = new byte[encrypted.length - 5];
+    in.read(decrypt);
+    assertArrayEquals(("of direction, not lack of time, is the problem"
+                       ).getBytes(), decrypt);
+    PositionCollector posn = new PositionCollector();
+    posn.addPosition(0);
+    posn.addPosition(0);
+    in.seek(posn);
+    decrypt = new byte[encrypted.length];
+    in.read(decrypt);
+    assertArrayEquals(("Lack of direction, not lack of time, is the problem"
+                       ).getBytes(), decrypt);
   }
 }

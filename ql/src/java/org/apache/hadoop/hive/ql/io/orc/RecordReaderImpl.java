@@ -810,7 +810,8 @@ class RecordReaderImpl implements RecordReader {
     long end = start + stripe.getDataLength();
     // explicitly trigger 1 big read
     DiskRangeList toRead = new DiskRangeList(start, end);
-    bufferChunks = RecordReaderUtils.readDiskRanges(file, zcr, stripe.getOffset(), toRead, false);
+    bufferChunks = RecordReaderUtils.readDiskRanges(file, zcr,
+        stripe.getOffset(), toRead, false);
     List<OrcProto.Stream> streamDescriptions = stripeFooter.getStreamsList();
     createStreams(
         streamDescriptions, bufferChunks, null, codec, bufferSize, streams);
@@ -916,14 +917,6 @@ class RecordReaderImpl implements RecordReader {
     return list.extract();
   }
 
-  static Cipher.Algorithm convertAlgorithmFromProtobuf
-      (OrcProto.EncryptionAlgorithm kind)  {
-    if (kind == OrcProto.EncryptionAlgorithm.AES_CTR) {
-      return Cipher.Algorithm.AES_CTR;
-    }
-    return null;
-  }
-
   void createStreams(List<OrcProto.Stream> streamDescriptions,
                             DiskRangeList ranges,
                             boolean[] includeColumn,
@@ -941,12 +934,15 @@ class RecordReaderImpl implements RecordReader {
       }
       List<DiskRange> buffers = RecordReaderUtils.getStreamBuffers(
           ranges, streamOffset, streamDesc.getLength());
-      if (streamDesc.hasIv()) {
-        Cipher cipher = Cipher.Factory.get(streamDesc.get)
+      Cipher cipher = null;
+      if (streamDesc.hasIv() && encryptionKeys[column] != null) {
+        cipher = Cipher.Factory.get(columnEncryption[column].getAlgorithm());
+        cipher.initialize(Cipher.Mode.DECRYPT, encryptionKeys[column],
+            ByteBuffer.wrap(streamDesc.getIv().toByteArray()), 0);
       }
       StreamName name = new StreamName(column, streamDesc.getKind());
       streams.put(name, InStream.create(name.toString(), buffers,
-          streamDesc.getLength(), codec, bufferSize));
+          streamDesc.getLength(), codec, bufferSize, cipher));
       streamOffset += streamDesc.getLength();
     }
   }

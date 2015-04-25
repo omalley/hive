@@ -62,17 +62,19 @@ public interface Cipher {
   public void seek(long bytes);
 
   /**
-   * Process another set of bytes.
+   * Process another set of bytes. The number of bytes processed will be the
+   * lesser of the input and output remaining bytes. Both the input and output
+   * buffer positions are moved forward to reflect the processed bytes.
    * @param input the bytes to encrypt or decrypt
-   * @param output the output bytes, which should be the same size
+   * @param output the output bytes
    */
   public void update(ByteBuffer input, ByteBuffer output);
 
-  public enum Algorithm {AES_CTR}
+  public enum Algorithm {AES128_CTR}
 
   public class Factory {
     public static Cipher get(Algorithm algorithm) {
-      return new JavaAesCtrCipher();
+      return new JavaAes128CtrCipher();
     }
   }
 }

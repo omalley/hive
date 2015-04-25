@@ -30,7 +30,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * This class implements AES/CTR using the Java encryption library.
  */
-class JavaAesCtrCipher implements Cipher {
+class JavaAes128CtrCipher implements Cipher {
 
   private static int BLOCK_LENGTH = 16;
   private Mode mode;
@@ -40,7 +40,7 @@ class JavaAesCtrCipher implements Cipher {
   private long[] baseIv = new long[2];
   private ByteBuffer offsetIv = ByteBuffer.allocate(BLOCK_LENGTH);
 
-  public JavaAesCtrCipher() {
+  public JavaAes128CtrCipher() {
     try {
       cipher = javax.crypto.Cipher.getInstance("AES/CTR/NoPadding");
     } catch (NoSuchAlgorithmException e) {
@@ -131,14 +131,16 @@ class JavaAesCtrCipher implements Cipher {
 
   @Override
   public void update(ByteBuffer input, ByteBuffer output) {
-    offset += input.remaining();
+    int consumed = Math.min(input.remaining(), output.remaining());
+    offset += consumed;
     try {
       int outputPosition = output.position();
+      int inputPosition = input.position();
       int len = cipher.update(input.array(),
-                              input.arrayOffset() + input.position(),
-                              input.remaining(), output.array(),
-                              output.arrayOffset() + output.position());
-      input.position(len + input.position());
+                              input.arrayOffset() + inputPosition,
+                              consumed, output.array(),
+                              output.arrayOffset() + outputPosition);
+      input.position(len + inputPosition);
       output.position(outputPosition + len);
     } catch (ShortBufferException sbe) {
       throw new IllegalArgumentException("buffer problem", sbe);

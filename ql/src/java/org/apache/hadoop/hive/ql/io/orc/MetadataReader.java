@@ -86,12 +86,14 @@ public class MetadataReader {
           file.readFully(buffer);
           ByteBuffer[] bb = new ByteBuffer[] {ByteBuffer.wrap(buffer)};
           indexes[col] = OrcProto.RowIndex.parseFrom(InStream.create("index",
-              bb, new long[]{0}, stream.getLength(), codec, bufferSize));
+              bb, new long[]{0}, stream.getLength(), codec, bufferSize,
+              null));
           if (readBloomFilter) {
             bb[0].position((int) stream.getLength());
             bloomFilterIndices[col] = OrcProto.BloomFilterIndex.parseFrom(
-                InStream.create("bloom_filter", bb, new long[]{0}, nextStream.getLength(),
-                    codec, bufferSize));
+                InStream.create("bloom_filter", bb, new long[]{0},
+                    nextStream.getLength(),
+                    codec, bufferSize, null));
           }
         }
       }
@@ -112,7 +114,7 @@ public class MetadataReader {
     file.readFully(tailBuf.array(), tailBuf.arrayOffset(), tailLength);
     return OrcProto.StripeFooter.parseFrom(InStream.create("footer",
         Lists.<DiskRange>newArrayList(new BufferChunk(tailBuf, 0)),
-        tailLength, codec, bufferSize));
+        tailLength, codec, bufferSize, null));
   }
 
   public void close() throws IOException {
