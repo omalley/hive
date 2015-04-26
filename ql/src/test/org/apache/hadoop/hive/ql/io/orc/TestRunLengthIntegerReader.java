@@ -29,7 +29,7 @@ public class TestRunLengthIntegerReader {
   public void runSeekTest(CompressionCodec codec) throws Exception {
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
     RunLengthIntegerWriter out = new RunLengthIntegerWriter(
-        new OutStream("test", 1000, codec, collect), true);
+        new OutStream("test", 1000, codec, collect, null), true);
     TestInStream.PositionCollector[] positions =
         new TestInStream.PositionCollector[4096];
     Random random = new Random(99);
@@ -93,7 +93,7 @@ public class TestRunLengthIntegerReader {
   public void testSkips() throws Exception {
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
     RunLengthIntegerWriter out = new RunLengthIntegerWriter(
-        new OutStream("test", 100, null, collect), true);
+        new OutStream("test", 100, null, collect, null), true);
     for(int i=0; i < 2048; ++i) {
       if (i < 1024) {
         out.write(i);

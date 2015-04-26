@@ -410,7 +410,6 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     BufferedStream(String name, int bufferSize,
                    CompressionCodec codec,
                    OrcFile.EncryptionOption encrypt) throws IOException {
-      outStream = new OutStream(name, bufferSize, codec, this);
       this.encrypt = encrypt;
       if (encrypt == null) {
         cipher = null;
@@ -421,6 +420,7 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
         random.nextBytes(iv.array());
         cipher.initialize(Cipher.Mode.ENCRYPT, encrypt.getKey(), iv, 0);
       }
+      outStream = new OutStream(name, bufferSize, codec, this, cipher);
     }
 
     /**
@@ -438,10 +438,6 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
      */
     @Override
     public void output(ByteBuffer buffer) {
-      if (cipher != null) {
-        cipher.update(buffer, buffer);
-        buffer.rewind();
-      }
       output.add(buffer);
     }
 
@@ -2190,7 +2186,7 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       rawWriter.writeBytes(OrcFile.MAGIC);
       headerLength = rawWriter.getPos();
       writer = new OutStream("metadata", bufferSize, codec,
-          new DirectStream(rawWriter));
+          new DirectStream(rawWriter), null);
       protobufWriter = CodedOutputStream.newInstance(writer);
     }
     return rawWriter;

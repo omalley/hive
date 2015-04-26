@@ -28,8 +28,9 @@ public class TestRunLengthByteReader {
   @Test
   public void testUncompressedSeek() throws Exception {
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
-    RunLengthByteWriter out = new RunLengthByteWriter(new OutStream("test", 100,
-        null, collect));
+    RunLengthByteWriter out =
+        new RunLengthByteWriter(new OutStream("test", 100, null, collect,
+            null));
     TestInStream.PositionCollector[] positions =
         new TestInStream.PositionCollector[2048];
     for(int i=0; i < 2048; ++i) {
@@ -71,8 +72,9 @@ public class TestRunLengthByteReader {
   public void testCompressedSeek() throws Exception {
     CompressionCodec codec = new SnappyCodec();
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
-    RunLengthByteWriter out = new RunLengthByteWriter(new OutStream("test", 500,
-        codec, collect));
+    RunLengthByteWriter out =
+        new RunLengthByteWriter(new OutStream("test", 500, codec, collect,
+            null));
     TestInStream.PositionCollector[] positions =
         new TestInStream.PositionCollector[2048];
     for(int i=0; i < 2048; ++i) {
@@ -113,8 +115,8 @@ public class TestRunLengthByteReader {
   @Test
   public void testSkips() throws Exception {
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
-    RunLengthByteWriter out = new RunLengthByteWriter(new OutStream("test", 100,
-        null, collect));
+    RunLengthByteWriter out =
+        new RunLengthByteWriter(new OutStream("test", 100, null, collect, null));
     for(int i=0; i < 2048; ++i) {
       if (i < 1024) {
         out.write((byte) (i/16));

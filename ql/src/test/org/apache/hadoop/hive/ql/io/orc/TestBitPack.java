@@ -106,7 +106,7 @@ public class TestBitPack {
     SerializationUtils utils = new SerializationUtils();
     int fixedWidth = utils.findClosestNumBits(rangeInput);
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
-    OutStream output = new OutStream("test", SIZE, null, collect);
+    OutStream output = new OutStream("test", SIZE, null, collect, null);
     utils.writeInts(deltaEncoded, 0, deltaEncoded.length, fixedWidth, output);
     output.flush();
     ByteBuffer inBuf = ByteBuffer.allocate(collect.buffer.size());

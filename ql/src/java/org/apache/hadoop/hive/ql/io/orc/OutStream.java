@@ -19,6 +19,7 @@ package org.apache.hadoop.hive.ql.io.orc;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Random;
 
 class OutStream extends PositionedOutputStream {
 
@@ -61,18 +62,21 @@ class OutStream extends PositionedOutputStream {
   private ByteBuffer overflow = null;
   private final int bufferSize;
   private final CompressionCodec codec;
+  private final Cipher cipher;
   private long compressedBytes = 0;
   private long uncompressedBytes = 0;
 
   OutStream(String name,
             int bufferSize,
             CompressionCodec codec,
-            OutputReceiver receiver) throws IOException {
+            OutputReceiver receiver,
+            Cipher cipher) throws IOException {
     this.name = name;
     this.bufferSize = bufferSize;
     this.codec = codec;
     this.receiver = receiver;
     this.suppress = false;
+    this.cipher = cipher;
   }
 
   public void clear() throws IOException {
@@ -161,6 +165,10 @@ class OutStream extends PositionedOutputStream {
     }
     flip();
     if (codec == null) {
+      if (cipher != null) {
+        cipher.update(current, current);
+        current.rewind();
+      }
       receiver.output(current);
       getNewInputBuffer();
     } else {
@@ -170,7 +178,7 @@ class OutStream extends PositionedOutputStream {
         overflow = getNewOutputBuffer();
       }
       int sizePosn = compressed.position();
-      compressed.position(compressed.position() + HEADER_SIZE);
+      compressed.position(sizePosn + HEADER_SIZE);
       if (codec.compress(current, compressed, overflow)) {
         uncompressedBytes = 0;
         // move position back to after the header
@@ -182,6 +190,18 @@ class OutStream extends PositionedOutputStream {
           totalBytes += overflow.position();
         }
         compressedBytes += totalBytes + HEADER_SIZE;
+        if (cipher != null) {
+          // encrypt the compressed bytes
+          ByteBuffer clone = compressed.duplicate();
+          clone.position(sizePosn + HEADER_SIZE);
+          cipher.update(clone, clone);
+          // if there are bytes in overflow, encrypt those too
+          if (overflow != null && overflow.position() != 0) {
+            overflow.flip();
+            cipher.update(overflow, overflow);
+            overflow.limit(overflow.capacity());
+          }
+        }
         writeHeader(compressed, sizePosn, totalBytes, false);
         // if we have less than the next header left, spill it.
         if (compressed.remaining() < HEADER_SIZE) {
@@ -216,6 +236,10 @@ class OutStream extends PositionedOutputStream {
         }
 
         // now add the current buffer into the done list and get a new one.
+        if (cipher != null) {
+          current.position(HEADER_SIZE);
+          cipher.update(current, current);
+        }
         current.position(0);
         // update the header with the current length
         writeHeader(current, 0, current.limit() - HEADER_SIZE, true);

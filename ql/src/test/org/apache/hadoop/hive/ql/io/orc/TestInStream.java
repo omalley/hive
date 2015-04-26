@@ -80,7 +80,7 @@ public class TestInStream {
   @Test
   public void testUncompressed() throws Exception {
     OutputCollector collect = new OutputCollector();
-    OutStream out = new OutStream("test", 100, null, collect);
+    OutStream out = new OutStream("test", 100, null, collect, null);
     PositionCollector[] positions = new PositionCollector[1024];
     for(int i=0; i < 1024; ++i) {
       positions[i] = new PositionCollector();
@@ -114,7 +114,7 @@ public class TestInStream {
   public void testCompressed() throws Exception {
     OutputCollector collect = new OutputCollector();
     CompressionCodec codec = new ZlibCodec();
-    OutStream out = new OutStream("test", 300, codec, collect);
+    OutStream out = new OutStream("test", 300, codec, collect, null);
     PositionCollector[] positions = new PositionCollector[1024];
     for(int i=0; i < 1024; ++i) {
       positions[i] = new PositionCollector();
@@ -147,7 +147,7 @@ public class TestInStream {
   public void testCorruptStream() throws Exception {
     OutputCollector collect = new OutputCollector();
     CompressionCodec codec = new ZlibCodec();
-    OutStream out = new OutStream("test", 500, codec, collect);
+    OutStream out = new OutStream("test", 500, codec, collect, null);
     PositionCollector[] positions = new PositionCollector[1024];
     for(int i=0; i < 1024; ++i) {
       positions[i] = new PositionCollector();
@@ -189,7 +189,7 @@ public class TestInStream {
   public void testDisjointBuffers() throws Exception {
     OutputCollector collect = new OutputCollector();
     CompressionCodec codec = new ZlibCodec();
-    OutStream out = new OutStream("test", 400, codec, collect);
+    OutStream out = new OutStream("test", 400, codec, collect, null);
     PositionCollector[] positions = new PositionCollector[1024];
     DataOutput stream = new DataOutputStream(out);
     for(int i=0; i < 1024; ++i) {
@@ -253,7 +253,7 @@ public class TestInStream {
   @Test
   public void testUncompressedDisjointBuffers() throws Exception {
     OutputCollector collect = new OutputCollector();
-    OutStream out = new OutStream("test", 400, null, collect);
+    OutStream out = new OutStream("test", 400, null, collect, null);
     PositionCollector[] positions = new PositionCollector[1024];
     DataOutput stream = new DataOutputStream(out);
     for(int i=0; i < 1024; ++i) {

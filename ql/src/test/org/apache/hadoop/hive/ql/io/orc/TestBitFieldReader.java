@@ -30,7 +30,7 @@ public class TestBitFieldReader {
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
     final int COUNT = 16384;
     BitFieldWriter out = new BitFieldWriter(
-        new OutStream("test", 500, codec, collect), 1);
+        new OutStream("test", 500, codec, collect, null), 1);
     TestInStream.PositionCollector[] positions =
         new TestInStream.PositionCollector[COUNT];
     for(int i=0; i < COUNT; ++i) {
@@ -84,7 +84,7 @@ public class TestBitFieldReader {
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
     final int COUNT = 16384;
     BitFieldWriter out = new BitFieldWriter(
-        new OutStream("test", 500, null, collect), 3);
+        new OutStream("test", 500, null, collect, null), 3);
     for(int i=0; i < COUNT; ++i) {
       // test runs, non-runs
       if (i < COUNT / 2) {
@@ -114,7 +114,7 @@ public class TestBitFieldReader {
   public void testSkips() throws Exception {
     TestInStream.OutputCollector collect = new TestInStream.OutputCollector();
     BitFieldWriter out = new BitFieldWriter(
-        new OutStream("test", 100, null, collect), 1);
+        new OutStream("test", 100, null, collect, null), 1);
     final int COUNT = 16384;
     for(int i=0; i < COUNT; ++i) {
       if (i < COUNT/2) {
