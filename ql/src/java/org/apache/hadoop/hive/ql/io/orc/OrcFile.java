@@ -29,6 +29,8 @@ import static org.apache.hadoop.hive.conf.HiveConf.ConfVars.HIVE_ORC_WRITE_FORMA
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -41,6 +43,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
  */
 public final class OrcFile {
 
+  private static final Log LOG = LogFactory.getLog(OrcFile.class);
   public static final String MAGIC = "ORC";
 
   /**
@@ -60,9 +63,10 @@ public final class OrcFile {
    */
   public static enum Version {
     V_0_11("0.11", 0, 11),
-      V_0_12("0.12", 0, 12);
+      V_0_12("0.12", 0, 12),
+      V_1_3("1.3", 1, 3);
 
-    public static final Version CURRENT = V_0_12;
+    public static final Version CURRENT = V_1_3;
 
     private final String name;
     private final int major;
@@ -490,6 +494,15 @@ public final class OrcFile {
       encryptionOptions = encrypt;
       return this;
     }
+
+    EncryptionOption[] getEncryptionOptions() {
+      if (versionValue != Version.V_0_11 && versionValue != Version.V_0_12) {
+        return encryptionOptions;
+      }
+      LOG.warn("Version" + versionValue.getName() +
+          " does not support encryption, so it was disabled.");
+      return null;
+    }
   }
 
   /**
@@ -521,7 +534,7 @@ public final class OrcFile {
                           opts.encodingStrategy, opts.compressionStrategy,
                           opts.paddingTolerance, opts.blockSizeValue,
                           opts.bloomFilterColumns, opts.bloomFilterFpp,
-                          opts.encryptionOptions);
+                          opts.getEncryptionOptions());
   }
 
   /**
