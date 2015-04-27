@@ -164,6 +164,14 @@ public class ReaderImpl implements Reader {
   }
 
   @Override
+  public long getConfiguredStripeSize() {
+    if (footer.hasStripeSize()) {
+      return footer.getStripeSize();
+    }
+    return 0;
+  }
+
+  @Override
   public List<StripeInformation> getStripes() {
     List<StripeInformation> result = new ArrayList<StripeInformation>();
     for(OrcProto.StripeInformation info: footer.getStripesList()) {

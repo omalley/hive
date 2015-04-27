@@ -183,6 +183,73 @@ public class TestFileDump {
     checkOutput(outputFilename, workDir + File.separator + outputFilename);
   }
 
+  public static class StringPair {
+    String s1;
+    String s2;
+  }
+
+  @Test
+  public void testDictionarySize() throws Exception {
+    ObjectInspector inspector;
+    synchronized (TestOrcFile.class) {
+      inspector = ObjectInspectorFactory.getReflectionObjectInspector
+          (StringPair.class,
+           ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
+    }
+    Writer writer = OrcFile.createWriter(testFilePath,
+                                         OrcFile.writerOptions(conf)
+                                         .fileSystem(fs)
+                                         .stripeSize(12345)
+                                         .bufferSize(10000)
+                                         .blockPadding(false)
+                                         .inspector(inspector));
+    StringPair pair = new StringPair();
+    for(int i=0; i < 1000; ++i) {
+      pair.s1 = "one";
+      pair.s2 = "one one";
+      writer.addRow(pair);
+      pair.s1 = "two";
+      pair.s2 = "two two";
+      writer.addRow(pair);
+      pair.s1 = "three";
+      pair.s2 = "three three";
+      writer.addRow(pair);
+      pair.s1 = "four";
+      pair.s2 = "four four";
+      writer.addRow(pair);
+      pair.s1 = "five";
+      pair.s2 = "five five";
+      writer.addRow(pair);
+    }
+    for(int i=0; i < 800; ++i) {
+      pair.s1 = "large one";
+      pair.s2 = "small";
+      writer.addRow(pair);
+      pair.s1 = "large two";
+      writer.addRow(pair);
+      pair.s1 = "large three";
+      writer.addRow(pair);
+      pair.s1 = "large four";
+      writer.addRow(pair);
+      pair.s1 = "large five";
+      writer.addRow(pair);
+      pair.s1 = "large six";
+      writer.addRow(pair);
+    }
+    writer.close();
+    PrintStream origOut = System.out;
+    String outputFilename = "orc-file-dump-dict-size.out";
+    FileOutputStream myOut = new FileOutputStream(workDir + File.separator +
+                                                  outputFilename);
+
+    // replace stdout and run command
+    System.setOut(new PrintStream(myOut));
+    FileDump.main(new String[]{testFilePath.toString()});
+    System.out.flush();
+    System.setOut(origOut);
+    checkOutput(outputFilename, workDir + File.separator + outputFilename);
+  }
+
   @Test
   public void testDataDump() throws Exception {
     ObjectInspector inspector;

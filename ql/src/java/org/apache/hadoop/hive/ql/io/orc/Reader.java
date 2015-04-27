@@ -84,6 +84,11 @@ public interface Reader {
   int getCompressionSize();
 
   /**
+   * Get the configured stripe size when the file was written.
+   */
+  long getConfiguredStripeSize();
+
+  /**
    * Get the number of rows per a entry in the row index.
    * @return the number of rows per an entry in the row index or 0 if there
    * is no row index.

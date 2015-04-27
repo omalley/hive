@@ -37,6 +37,8 @@ message StringStatistics {
   optional string maximum = 2;
   // sum will store the total length of all strings in a stripe
   optional sint64 sum = 3;
+  // the number of bytes for the largest dictionary
+  optional uint64 maximumDictionarySize =  4;
 }
 
 message BucketStatistics {
@@ -191,6 +193,8 @@ message Footer {
   optional uint64 numberOfRows = 6;
   repeated ColumnStatistics statistics = 7;
   optional uint32 rowIndexStride = 8;
+  // the configured stripe size
+  optional uint64 stripeSize = 9;
 }
 
 enum CompressionKind {

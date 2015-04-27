@@ -152,6 +152,8 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
   private final OrcFile.CompressionStrategy compressionStrategy;
   private final boolean[] bloomFilterColumns;
   private final double bloomFilterFpp;
+  private final OrcProto.Metadata.Builder metadata =
+    OrcProto.Metadata.newBuilder();
 
   WriterImpl(FileSystem fs,
       Path path,
@@ -644,7 +646,6 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     private final OrcProto.BloomFilter.Builder bloomFilterEntry;
     private boolean foundNulls;
     private OutStream isPresentOutStream;
-    private final List<StripeStatistics.Builder> stripeStatsBuilders;
 
     /**
      * Create a tree writer.
@@ -676,7 +677,6 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       rowIndex = OrcProto.RowIndex.newBuilder();
       rowIndexEntry = OrcProto.RowIndexEntry.newBuilder();
       rowIndexPosition = new RowIndexPositionRecorder(rowIndexEntry);
-      stripeStatsBuilders = Lists.newArrayList();
       if (streamFactory.buildIndex()) {
         rowIndexStream = streamFactory.createStream(id, OrcProto.Stream.Kind.ROW_INDEX);
       } else {
@@ -763,14 +763,16 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     /**
      * Write the stripe out to the file.
      * @param builder the stripe footer that contains the information about the
-     *                layout of the stripe. The TreeWriter is required to update
-     *                the footer with its information.
+     *               layout of the stripe. The TreeWriter is required to update
+     *               the footer with its information.
+     * @param stripeStats the builder for the stripe statistics
      * @param requiredIndexEntries the number of index entries that are
      *                             required. this is to check to make sure the
      *                             row index is well formed.
      * @throws IOException
      */
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
       if (isPresent != null) {
         isPresent.flush();
@@ -786,11 +788,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
         }
       }
 
-      // merge stripe-level column statistics to file statistics and write it to
-      // stripe statistics
-      OrcProto.StripeStatistics.Builder stripeStatsBuilder = OrcProto.StripeStatistics.newBuilder();
-      writeStripeStatistics(stripeStatsBuilder, this);
-      stripeStatsBuilders.add(stripeStatsBuilder);
+      // merge stripe-level column statistics to file statistics and write it
+      // to stripe statistics
+      writeStripeStatistics(stripeStats);
 
       // reset the flag for next stripe
       foundNulls = false;
@@ -800,8 +800,8 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       if (rowIndexStream != null) {
         if (rowIndex.getEntryCount() != requiredIndexEntries) {
           throw new IllegalArgumentException("Column has wrong number of " +
-               "index entries found: " + rowIndex.getEntryCount() + " expected: " +
-               requiredIndexEntries);
+               "index entries found: " + rowIndex.getEntryCount() +
+               " expected: " + requiredIndexEntries);
         }
         rowIndex.build().writeTo(rowIndexStream);
         rowIndexStream.flush();
@@ -818,14 +818,12 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       }
     }
 
-    private void writeStripeStatistics(OrcProto.StripeStatistics.Builder builder,
-        TreeWriter treeWriter) {
-      treeWriter.fileStatistics.merge(treeWriter.stripeColStatistics);
-      builder.addColStats(treeWriter.stripeColStatistics.serialize().build());
-      treeWriter.stripeColStatistics.reset();
-      for (TreeWriter child : treeWriter.getChildrenWriters()) {
-        writeStripeStatistics(builder, child);
-      }
+    private void writeStripeStatistics
+      (OrcProto.StripeStatistics.Builder stripeStats) {
+      System.out.println("Writing stripe statistics for " + this);
+      fileStatistics.merge(stripeColStatistics);
+      stripeStats.addColStats(stripeColStatistics.serialize().build());
+      stripeColStatistics.reset();
     }
 
     TreeWriter[] getChildrenWriters() {
@@ -921,8 +919,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       writer.flush();
       recordPosition(rowIndexPosition);
     }
@@ -962,8 +961,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       writer.flush();
       recordPosition(rowIndexPosition);
     }
@@ -1041,8 +1041,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       writer.flush();
       recordPosition(rowIndexPosition);
     }
@@ -1085,8 +1086,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       stream.flush();
       recordPosition(rowIndexPosition);
     }
@@ -1128,8 +1130,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       stream.flush();
       recordPosition(rowIndexPosition);
     }
@@ -1235,12 +1238,16 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
       // if rows in stripe is less than dictionaryCheckAfterRows, dictionary
       // checking would not have happened. So do it again here.
       checkDictionaryEncoding();
 
       if (useDictionaryEncoding) {
+        // record the dictionary size
+        ((ColumnStatisticsImpl.StringStatisticsImpl) stripeColStatistics
+         ).addDictionarySize(dictionary.getCharacterSize());
         flushDictionary();
       } else {
         // flushout any left over entries from dictionary
@@ -1254,7 +1261,7 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
       // we need to build the rowindex before calling super, since it
       // writes it out.
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       stringOutput.flush();
       lengthOutput.flush();
       rowOutput.flush();
@@ -1281,7 +1288,6 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
         // Write the dictionary by traversing the red-black tree writing out
         // the bytes and lengths; and creating the map from the original order
         // to the final sorted order.
-
         dictionary.visit(new StringRedBlackTree.Visitor() {
           private int currentId = 0;
           @Override
@@ -1489,8 +1495,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       stream.flush();
       length.flush();
       recordPosition(rowIndexPosition);
@@ -1556,8 +1563,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       seconds.flush();
       nanos.flush();
       recordPosition(rowIndexPosition);
@@ -1619,8 +1627,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       writer.flush();
       recordPosition(rowIndexPosition);
     }
@@ -1690,8 +1699,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       valueStream.flush();
       scaleStream.flush();
       recordPosition(rowIndexPosition);
@@ -1738,10 +1748,11 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       for(TreeWriter child: childrenWriters) {
-        child.writeStripe(builder, requiredIndexEntries);
+        child.writeStripe(builder, stripeStats, requiredIndexEntries);
       }
       recordPosition(rowIndexPosition);
     }
@@ -1795,11 +1806,12 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       lengths.flush();
       for(TreeWriter child: childrenWriters) {
-        child.writeStripe(builder, requiredIndexEntries);
+        child.writeStripe(builder, stripeStats, requiredIndexEntries);
       }
       recordPosition(rowIndexPosition);
     }
@@ -1863,11 +1875,12 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       lengths.flush();
       for(TreeWriter child: childrenWriters) {
-        child.writeStripe(builder, requiredIndexEntries);
+        child.writeStripe(builder, stripeStats, requiredIndexEntries);
       }
       recordPosition(rowIndexPosition);
     }
@@ -1915,11 +1928,12 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     @Override
     void writeStripe(OrcProto.StripeFooter.Builder builder,
+                     OrcProto.StripeStatistics.Builder stripeStats,
                      int requiredIndexEntries) throws IOException {
-      super.writeStripe(builder, requiredIndexEntries);
+      super.writeStripe(builder, stripeStats, requiredIndexEntries);
       tags.flush();
       for(TreeWriter child: childrenWriters) {
-        child.writeStripe(builder, requiredIndexEntries);
+        child.writeStripe(builder, stripeStats, requiredIndexEntries);
       }
       recordPosition(rowIndexPosition);
     }
@@ -2130,7 +2144,10 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
           (int) ((rowsInStripe + rowIndexStride - 1) / rowIndexStride);
       OrcProto.StripeFooter.Builder builder =
           OrcProto.StripeFooter.newBuilder();
-      treeWriter.writeStripe(builder, requiredIndexEntries);
+      OrcProto.StripeStatistics.Builder stripeStats =
+        OrcProto.StripeStatistics.newBuilder();
+      treeWriter.writeStripe(builder, stripeStats, requiredIndexEntries);
+      metadata.addStripeStats(stripeStats.build());
       long indexSize = 0;
       long dataSize = 0;
       for(Map.Entry<StreamName, BufferedStream> pair: streams.entrySet()) {
@@ -2316,14 +2333,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
   private int writeMetadata(long bodyLength) throws IOException {
     getStream();
-    OrcProto.Metadata.Builder builder = OrcProto.Metadata.newBuilder();
-    for(OrcProto.StripeStatistics.Builder ssb : treeWriter.stripeStatsBuilders) {
-      builder.addStripeStats(ssb.build());
-    }
-
     long startPosn = rawWriter.getPos();
-    OrcProto.Metadata metadata = builder.build();
-    metadata.writeTo(protobufWriter);
+    OrcProto.Metadata meta = metadata.build();
+    meta.writeTo(protobufWriter);
     protobufWriter.flush();
     writer.flush();
     return (int) (rawWriter.getPos() - startPosn);
@@ -2336,6 +2348,7 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     builder.setHeaderLength(headerLength);
     builder.setNumberOfRows(rowCount);
     builder.setRowIndexStride(rowIndexStride);
+    builder.setStripeSize(defaultStripeSize);
     // populate raw data size
     rawDataSize = computeRawDataSize();
     // serialize the types
@@ -2500,9 +2513,6 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     rawWriter.write(stripe);
     rowsInStripe = stripeStatistics.getColStats(0).getNumberOfValues();
     rowCount += rowsInStripe;
-
-    // since we have already written the stripe, just update stripe statistics
-    treeWriter.stripeStatsBuilders.add(stripeStatistics.toBuilder());
 
     // update file level statistics
     updateFileStatistics(stripeStatistics);

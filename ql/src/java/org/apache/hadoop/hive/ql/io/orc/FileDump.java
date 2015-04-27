@@ -107,6 +107,10 @@ public final class FileDump {
       if (reader.getCompression() != CompressionKind.NONE) {
         System.out.println("Compression size: " + reader.getCompressionSize());
       }
+      long stripeSize = reader.getConfiguredStripeSize();
+      if (stripeSize != 0) {
+        System.out.println("Configured stripe size: " + stripeSize);
+      }
       System.out.println("Type: " + reader.getObjectInspector().getTypeName());
       System.out.println("\nStripe Statistics:");
       Metadata metadata = reader.getMetadata();
@@ -135,7 +139,8 @@ public final class FileDump {
           if (tz == null || tz.isEmpty()) {
             tz = UNKNOWN;
           }
-          System.out.println("  Stripe: " + stripe.toString() + " timezone: " + tz);
+          System.out.println("  Stripe: " + stripe.toString() +
+                             " timezone: " + tz);
         } else {
           System.out.println("  Stripe: " + stripe.toString());
         }

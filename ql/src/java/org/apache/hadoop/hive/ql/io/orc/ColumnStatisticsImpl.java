@@ -341,6 +341,7 @@ class ColumnStatisticsImpl implements ColumnStatistics {
     private Text minimum = null;
     private Text maximum = null;
     private long sum = 0;
+    private long maxDictionarySize = 0;
 
     StringStatisticsImpl() {
     }
@@ -357,6 +358,16 @@ class ColumnStatisticsImpl implements ColumnStatistics {
       if(str.hasSum()) {
         sum = str.getSum();
       }
+      if (str.hasMaximumDictionarySize()) {
+        maxDictionarySize = str.getMaximumDictionarySize();
+      }
+    }
+
+    void addDictionarySize(long dictionarySize) {
+      System.out.println("Setting dictionary size to " + dictionarySize);
+      if (dictionarySize > maxDictionarySize) {
+        maxDictionarySize = dictionarySize;
+      }
     }
 
     @Override
@@ -365,6 +376,7 @@ class ColumnStatisticsImpl implements ColumnStatistics {
       minimum = null;
       maximum = null;
       sum = 0;
+      maxDictionarySize = 0;
     }
 
     @Override
@@ -400,6 +412,8 @@ class ColumnStatisticsImpl implements ColumnStatistics {
         }
       }
       sum += str.sum;
+      maxDictionarySize = Math.max(maxDictionarySize,
+                                   str.getMaximumDictionarySize());
     }
 
     @Override
@@ -411,6 +425,9 @@ class ColumnStatisticsImpl implements ColumnStatistics {
         str.setMinimum(getMinimum());
         str.setMaximum(getMaximum());
         str.setSum(sum);
+        if (maxDictionarySize != 0) {
+          str.setMaximumDictionarySize(maxDictionarySize);
+        }
       }
       result.setStringStatistics(str);
       return result;
@@ -432,6 +449,11 @@ class ColumnStatisticsImpl implements ColumnStatistics {
     }
 
     @Override
+    public long getMaximumDictionarySize() {
+      return maxDictionarySize;
+    }
+
+    @Override
     public String toString() {
       StringBuilder buf = new StringBuilder(super.toString());
       if (getNumberOfValues() != 0) {
@@ -441,6 +463,10 @@ class ColumnStatisticsImpl implements ColumnStatistics {
         buf.append(getMaximum());
         buf.append(" sum: ");
         buf.append(sum);
+        if (maxDictionarySize != 0) {
+          buf.append(" maxDictionary: ");
+          buf.append(maxDictionarySize);
+        }
       }
       return buf.toString();
     }

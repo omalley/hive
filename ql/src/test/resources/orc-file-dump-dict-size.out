@@ -1,0 +1,54 @@
+Structure for TestFileDump.testDump.orc
+File Version: 0.12 with HIVE_8732
+Rows: 9800
+Compression: ZLIB
+Compression size: 10000
+Configured stripe size: 12345
+Type: struct<s1:string,s2:string>
+
+Stripe Statistics:
+  Stripe 1:
+    Column 0: count: 5000 hasNull: false
+    Column 1: count: 5000 hasNull: false min: five max: two sum: 19000 maxDictionary: 19
+    Column 2: count: 5000 hasNull: false min: five five max: two two sum: 43000 maxDictionary: 43
+  Stripe 2:
+    Column 0: count: 4800 hasNull: false
+    Column 1: count: 4800 hasNull: false min: large five max: large two sum: 46400 maxDictionary: 58
+    Column 2: count: 4800 hasNull: false min: small max: small sum: 24000 maxDictionary: 5
+
+File Statistics:
+  Column 0: count: 9800 hasNull: false
+  Column 1: count: 9800 hasNull: false min: five max: two sum: 65400 maxDictionary: 58
+  Column 2: count: 9800 hasNull: false min: five five max: two two sum: 67000 maxDictionary: 43
+
+Stripes:
+  Stripe: offset: 3 data: 196 rows: 5000 tail: 72 index: 87
+    Stream: column 0 section ROW_INDEX start: 3 length 12
+    Stream: column 1 section ROW_INDEX start: 15 length 34
+    Stream: column 2 section ROW_INDEX start: 49 length 41
+    Stream: column 1 section DATA start: 90 length 60
+    Stream: column 1 section LENGTH start: 150 length 8
+    Stream: column 1 section DICTIONARY_DATA start: 158 length 22
+    Stream: column 2 section DATA start: 180 length 60
+    Stream: column 2 section LENGTH start: 240 length 8
+    Stream: column 2 section DICTIONARY_DATA start: 248 length 38
+    Encoding column 0: DIRECT
+    Encoding column 1: DICTIONARY_V2[5]
+    Encoding column 2: DICTIONARY_V2[5]
+  Stripe: offset: 358 data: 135 rows: 4800 tail: 77 index: 91
+    Stream: column 0 section ROW_INDEX start: 358 length 12
+    Stream: column 1 section ROW_INDEX start: 370 length 44
+    Stream: column 2 section ROW_INDEX start: 414 length 35
+    Stream: column 1 section DATA start: 449 length 48
+    Stream: column 1 section LENGTH start: 497 length 8
+    Stream: column 1 section DICTIONARY_DATA start: 505 length 40
+    Stream: column 2 section DATA start: 545 length 25
+    Stream: column 2 section LENGTH start: 570 length 6
+    Stream: column 2 section DICTIONARY_DATA start: 576 length 8
+    Encoding column 0: DIRECT
+    Encoding column 1: DICTIONARY_V2[6]
+    Encoding column 2: DICTIONARY_V2[1]
+
+File length: 921 bytes
+Padding length: 0 bytes
+Padding ratio: 0%

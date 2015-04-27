@@ -1274,6 +1274,24 @@ public final class OrcProto {
      * </pre>
      */
     long getSum();
+
+    // optional uint64 maximumDictionarySize = 4;
+    /**
+     * <code>optional uint64 maximumDictionarySize = 4;</code>
+     *
+     * <pre>
+     * the number of bytes for the largest dictionary
+     * </pre>
+     */
+    boolean hasMaximumDictionarySize();
+    /**
+     * <code>optional uint64 maximumDictionarySize = 4;</code>
+     *
+     * <pre>
+     * the number of bytes for the largest dictionary
+     * </pre>
+     */
+    long getMaximumDictionarySize();
   }
   /**
    * Protobuf type {@code orc.proto.StringStatistics}
@@ -1339,6 +1357,11 @@ public final class OrcProto {
             case 24: {
               bitField0_ |= 0x00000004;
               sum_ = input.readSInt64();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              maximumDictionarySize_ = input.readUInt64();
               break;
             }
           }
@@ -1491,10 +1514,35 @@ public final class OrcProto {
       return sum_;
     }
 
+    // optional uint64 maximumDictionarySize = 4;
+    public static final int MAXIMUMDICTIONARYSIZE_FIELD_NUMBER = 4;
+    private long maximumDictionarySize_;
+    /**
+     * <code>optional uint64 maximumDictionarySize = 4;</code>
+     *
+     * <pre>
+     * the number of bytes for the largest dictionary
+     * </pre>
+     */
+    public boolean hasMaximumDictionarySize() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional uint64 maximumDictionarySize = 4;</code>
+     *
+     * <pre>
+     * the number of bytes for the largest dictionary
+     * </pre>
+     */
+    public long getMaximumDictionarySize() {
+      return maximumDictionarySize_;
+    }
+
     private void initFields() {
       minimum_ = "";
       maximum_ = "";
       sum_ = 0L;
+      maximumDictionarySize_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1517,6 +1565,9 @@ public final class OrcProto {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeSInt64(3, sum_);
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeUInt64(4, maximumDictionarySize_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -1537,6 +1588,10 @@ public final class OrcProto {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeSInt64Size(3, sum_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(4, maximumDictionarySize_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1660,6 +1715,8 @@ public final class OrcProto {
         bitField0_ = (bitField0_ & ~0x00000002);
         sum_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000004);
+        maximumDictionarySize_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -1700,6 +1757,10 @@ public final class OrcProto {
           to_bitField0_ |= 0x00000004;
         }
         result.sum_ = sum_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.maximumDictionarySize_ = maximumDictionarySize_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1728,6 +1789,9 @@ public final class OrcProto {
         }
         if (other.hasSum()) {
           setSum(other.getSum());
+        }
+        if (other.hasMaximumDictionarySize()) {
+          setMaximumDictionarySize(other.getMaximumDictionarySize());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1949,6 +2013,55 @@ public final class OrcProto {
       public Builder clearSum() {
         bitField0_ = (bitField0_ & ~0x00000004);
         sum_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // optional uint64 maximumDictionarySize = 4;
+      private long maximumDictionarySize_ ;
+      /**
+       * <code>optional uint64 maximumDictionarySize = 4;</code>
+       *
+       * <pre>
+       * the number of bytes for the largest dictionary
+       * </pre>
+       */
+      public boolean hasMaximumDictionarySize() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional uint64 maximumDictionarySize = 4;</code>
+       *
+       * <pre>
+       * the number of bytes for the largest dictionary
+       * </pre>
+       */
+      public long getMaximumDictionarySize() {
+        return maximumDictionarySize_;
+      }
+      /**
+       * <code>optional uint64 maximumDictionarySize = 4;</code>
+       *
+       * <pre>
+       * the number of bytes for the largest dictionary
+       * </pre>
+       */
+      public Builder setMaximumDictionarySize(long value) {
+        bitField0_ |= 0x00000008;
+        maximumDictionarySize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint64 maximumDictionarySize = 4;</code>
+       *
+       * <pre>
+       * the number of bytes for the largest dictionary
+       * </pre>
+       */
+      public Builder clearMaximumDictionarySize() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        maximumDictionarySize_ = 0L;
         onChanged();
         return this;
       }
@@ -15737,6 +15850,24 @@ public final class OrcProto {
      * <code>optional uint32 rowIndexStride = 8;</code>
      */
     int getRowIndexStride();
+
+    // optional uint64 stripeSize = 9;
+    /**
+     * <code>optional uint64 stripeSize = 9;</code>
+     *
+     * <pre>
+     * the configured stripe size
+     * </pre>
+     */
+    boolean hasStripeSize();
+    /**
+     * <code>optional uint64 stripeSize = 9;</code>
+     *
+     * <pre>
+     * the configured stripe size
+     * </pre>
+     */
+    long getStripeSize();
   }
   /**
    * Protobuf type {@code orc.proto.Footer}
@@ -15839,6 +15970,11 @@ public final class OrcProto {
             case 64: {
               bitField0_ |= 0x00000008;
               rowIndexStride_ = input.readUInt32();
+              break;
+            }
+            case 72: {
+              bitField0_ |= 0x00000010;
+              stripeSize_ = input.readUInt64();
               break;
             }
           }
@@ -16101,6 +16237,30 @@ public final class OrcProto {
       return rowIndexStride_;
     }
 
+    // optional uint64 stripeSize = 9;
+    public static final int STRIPESIZE_FIELD_NUMBER = 9;
+    private long stripeSize_;
+    /**
+     * <code>optional uint64 stripeSize = 9;</code>
+     *
+     * <pre>
+     * the configured stripe size
+     * </pre>
+     */
+    public boolean hasStripeSize() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional uint64 stripeSize = 9;</code>
+     *
+     * <pre>
+     * the configured stripe size
+     * </pre>
+     */
+    public long getStripeSize() {
+      return stripeSize_;
+    }
+
     private void initFields() {
       headerLength_ = 0L;
       contentLength_ = 0L;
@@ -16110,6 +16270,7 @@ public final class OrcProto {
       numberOfRows_ = 0L;
       statistics_ = java.util.Collections.emptyList();
       rowIndexStride_ = 0;
+      stripeSize_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -16146,6 +16307,9 @@ public final class OrcProto {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeUInt32(8, rowIndexStride_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeUInt64(9, stripeSize_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -16187,6 +16351,10 @@ public final class OrcProto {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(8, rowIndexStride_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(9, stripeSize_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -16340,6 +16508,8 @@ public final class OrcProto {
         }
         rowIndexStride_ = 0;
         bitField0_ = (bitField0_ & ~0x00000080);
+        stripeSize_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000100);
         return this;
       }
 
@@ -16420,6 +16590,10 @@ public final class OrcProto {
           to_bitField0_ |= 0x00000008;
         }
         result.rowIndexStride_ = rowIndexStride_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.stripeSize_ = stripeSize_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -16551,6 +16725,9 @@ public final class OrcProto {
         }
         if (other.hasRowIndexStride()) {
           setRowIndexStride(other.getRowIndexStride());
+        }
+        if (other.hasStripeSize()) {
+          setStripeSize(other.getStripeSize());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -17667,6 +17844,55 @@ public final class OrcProto {
       public Builder clearRowIndexStride() {
         bitField0_ = (bitField0_ & ~0x00000080);
         rowIndexStride_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional uint64 stripeSize = 9;
+      private long stripeSize_ ;
+      /**
+       * <code>optional uint64 stripeSize = 9;</code>
+       *
+       * <pre>
+       * the configured stripe size
+       * </pre>
+       */
+      public boolean hasStripeSize() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>optional uint64 stripeSize = 9;</code>
+       *
+       * <pre>
+       * the configured stripe size
+       * </pre>
+       */
+      public long getStripeSize() {
+        return stripeSize_;
+      }
+      /**
+       * <code>optional uint64 stripeSize = 9;</code>
+       *
+       * <pre>
+       * the configured stripe size
+       * </pre>
+       */
+      public Builder setStripeSize(long value) {
+        bitField0_ |= 0x00000100;
+        stripeSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint64 stripeSize = 9;</code>
+       *
+       * <pre>
+       * the configured stripe size
+       * </pre>
+       */
+      public Builder clearStripeSize() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        stripeSize_ = 0L;
         onChanged();
         return this;
       }
@@ -19044,77 +19270,78 @@ public final class OrcProto {
       "tatistics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum\030\002 " +
       "\001(\022\022\013\n\003sum\030\003 \001(\022\"A\n\020DoubleStatistics\022\017\n\007" +
       "minimum\030\001 \001(\001\022\017\n\007maximum\030\002 \001(\001\022\013\n\003sum\030\003 " +
-      "\001(\001\"A\n\020StringStatistics\022\017\n\007minimum\030\001 \001(\t" +
-      "\022\017\n\007maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\022\"%\n\020Bucket" +
-      "Statistics\022\021\n\005count\030\001 \003(\004B\002\020\001\"B\n\021Decimal" +
-      "Statistics\022\017\n\007minimum\030\001 \001(\t\022\017\n\007maximum\030\002" +
-      " \001(\t\022\013\n\003sum\030\003 \001(\t\"2\n\016DateStatistics\022\017\n\007m" +
-      "inimum\030\001 \001(\021\022\017\n\007maximum\030\002 \001(\021\"7\n\023Timesta",
-      "mpStatistics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum" +
-      "\030\002 \001(\022\"\037\n\020BinaryStatistics\022\013\n\003sum\030\001 \001(\022\"" +
-      "\365\003\n\020ColumnStatistics\022\026\n\016numberOfValues\030\001" +
-      " \001(\004\0223\n\rintStatistics\030\002 \001(\0132\034.orc.proto." +
-      "IntegerStatistics\0225\n\020doubleStatistics\030\003 " +
-      "\001(\0132\033.orc.proto.DoubleStatistics\0225\n\020stri" +
-      "ngStatistics\030\004 \001(\0132\033.orc.proto.StringSta" +
-      "tistics\0225\n\020bucketStatistics\030\005 \001(\0132\033.orc." +
-      "proto.BucketStatistics\0227\n\021decimalStatist" +
-      "ics\030\006 \001(\0132\034.orc.proto.DecimalStatistics\022",
-      "1\n\016dateStatistics\030\007 \001(\0132\031.orc.proto.Date" +
-      "Statistics\0225\n\020binaryStatistics\030\010 \001(\0132\033.o" +
-      "rc.proto.BinaryStatistics\022;\n\023timestampSt" +
-      "atistics\030\t \001(\0132\036.orc.proto.TimestampStat" +
-      "istics\022\017\n\007hasNull\030\n \001(\010\"W\n\rRowIndexEntry" +
-      "\022\025\n\tpositions\030\001 \003(\004B\002\020\001\022/\n\nstatistics\030\002 " +
-      "\001(\0132\033.orc.proto.ColumnStatistics\"3\n\010RowI" +
-      "ndex\022\'\n\005entry\030\001 \003(\0132\030.orc.proto.RowIndex" +
-      "Entry\"7\n\013BloomFilter\022\030\n\020numHashFunctions" +
-      "\030\001 \001(\r\022\016\n\006bitset\030\002 \003(\006\"?\n\020BloomFilterInd",
-      "ex\022+\n\013bloomFilter\030\001 \003(\0132\026.orc.proto.Bloo" +
-      "mFilter\"\325\001\n\006Stream\022$\n\004kind\030\001 \001(\0162\026.orc.p" +
-      "roto.Stream.Kind\022\016\n\006column\030\002 \001(\r\022\016\n\006leng" +
-      "th\030\003 \001(\004\"\204\001\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001" +
-      "\022\n\n\006LENGTH\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DIC" +
-      "TIONARY_COUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_IN" +
-      "DEX\020\006\022\020\n\014BLOOM_FILTER\020\007\"\234\001\n\016ColumnEncodi" +
-      "ng\022,\n\004kind\030\001 \001(\0162\036.orc.proto.ColumnEncod" +
-      "ing.Kind\022\026\n\016dictionarySize\030\002 \001(\r\"D\n\004Kind" +
-      "\022\n\n\006DIRECT\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDIRECT_V",
-      "2\020\002\022\021\n\rDICTIONARY_V2\020\003\"v\n\014StripeFooter\022\"" +
-      "\n\007streams\030\001 \003(\0132\021.orc.proto.Stream\022*\n\007co" +
-      "lumns\030\002 \003(\0132\031.orc.proto.ColumnEncoding\022\026" +
-      "\n\016writerTimezone\030\003 \001(\t\"\341\002\n\004Type\022\"\n\004kind\030" +
-      "\001 \001(\0162\024.orc.proto.Type.Kind\022\024\n\010subtypes\030" +
-      "\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rmaximum" +
-      "Length\030\004 \001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n\005scale" +
-      "\030\006 \001(\r\"\321\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t" +
-      "\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022" +
-      "\n\n\006DOUBLE\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tT",
-      "IMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020" +
-      "\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\022\013\n\007V" +
-      "ARCHAR\020\020\022\010\n\004CHAR\020\021\"x\n\021StripeInformation\022" +
-      "\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\n" +
-      "dataLength\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024" +
-      "\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMetadataItem" +
-      "\022\014\n\004name\030\001 \001(\t\022\r\n\005value\030\002 \001(\014\"A\n\020StripeS" +
-      "tatistics\022-\n\010colStats\030\001 \003(\0132\033.orc.proto." +
-      "ColumnStatistics\"<\n\010Metadata\0220\n\013stripeSt" +
-      "ats\030\001 \003(\0132\033.orc.proto.StripeStatistics\"\222",
-      "\002\n\006Footer\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rconte" +
-      "ntLength\030\002 \001(\004\022-\n\007stripes\030\003 \003(\0132\034.orc.pr" +
-      "oto.StripeInformation\022\036\n\005types\030\004 \003(\0132\017.o" +
-      "rc.proto.Type\022-\n\010metadata\030\005 \003(\0132\033.orc.pr" +
-      "oto.UserMetadataItem\022\024\n\014numberOfRows\030\006 \001" +
-      "(\004\022/\n\nstatistics\030\007 \003(\0132\033.orc.proto.Colum" +
-      "nStatistics\022\026\n\016rowIndexStride\030\010 \001(\r\"\305\001\n\n" +
-      "PostScript\022\024\n\014footerLength\030\001 \001(\004\022/\n\013comp" +
-      "ression\030\002 \001(\0162\032.orc.proto.CompressionKin" +
-      "d\022\034\n\024compressionBlockSize\030\003 \001(\004\022\023\n\007versi",
-      "on\030\004 \003(\rB\002\020\001\022\026\n\016metadataLength\030\005 \001(\004\022\025\n\r" +
-      "writerVersion\030\006 \001(\r\022\016\n\005magic\030\300> \001(\t*:\n\017C" +
-      "ompressionKind\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SN" +
-      "APPY\020\002\022\007\n\003LZO\020\003B\"\n org.apache.hadoop.hiv" +
-      "e.ql.io.orc"
+      "\001(\001\"`\n\020StringStatistics\022\017\n\007minimum\030\001 \001(\t" +
+      "\022\017\n\007maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\022\022\035\n\025maximu" +
+      "mDictionarySize\030\004 \001(\004\"%\n\020BucketStatistic" +
+      "s\022\021\n\005count\030\001 \003(\004B\002\020\001\"B\n\021DecimalStatistic" +
+      "s\022\017\n\007minimum\030\001 \001(\t\022\017\n\007maximum\030\002 \001(\t\022\013\n\003s" +
+      "um\030\003 \001(\t\"2\n\016DateStatistics\022\017\n\007minimum\030\001 ",
+      "\001(\021\022\017\n\007maximum\030\002 \001(\021\"7\n\023TimestampStatist" +
+      "ics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum\030\002 \001(\022\"\037\n" +
+      "\020BinaryStatistics\022\013\n\003sum\030\001 \001(\022\"\365\003\n\020Colum" +
+      "nStatistics\022\026\n\016numberOfValues\030\001 \001(\004\0223\n\ri" +
+      "ntStatistics\030\002 \001(\0132\034.orc.proto.IntegerSt" +
+      "atistics\0225\n\020doubleStatistics\030\003 \001(\0132\033.orc" +
+      ".proto.DoubleStatistics\0225\n\020stringStatist" +
+      "ics\030\004 \001(\0132\033.orc.proto.StringStatistics\0225" +
+      "\n\020bucketStatistics\030\005 \001(\0132\033.orc.proto.Buc" +
+      "ketStatistics\0227\n\021decimalStatistics\030\006 \001(\013",
+      "2\034.orc.proto.DecimalStatistics\0221\n\016dateSt" +
+      "atistics\030\007 \001(\0132\031.orc.proto.DateStatistic" +
+      "s\0225\n\020binaryStatistics\030\010 \001(\0132\033.orc.proto." +
+      "BinaryStatistics\022;\n\023timestampStatistics\030" +
+      "\t \001(\0132\036.orc.proto.TimestampStatistics\022\017\n" +
+      "\007hasNull\030\n \001(\010\"W\n\rRowIndexEntry\022\025\n\tposit" +
+      "ions\030\001 \003(\004B\002\020\001\022/\n\nstatistics\030\002 \001(\0132\033.orc" +
+      ".proto.ColumnStatistics\"3\n\010RowIndex\022\'\n\005e" +
+      "ntry\030\001 \003(\0132\030.orc.proto.RowIndexEntry\"7\n\013" +
+      "BloomFilter\022\030\n\020numHashFunctions\030\001 \001(\r\022\016\n",
+      "\006bitset\030\002 \003(\006\"?\n\020BloomFilterIndex\022+\n\013blo" +
+      "omFilter\030\001 \003(\0132\026.orc.proto.BloomFilter\"\325" +
+      "\001\n\006Stream\022$\n\004kind\030\001 \001(\0162\026.orc.proto.Stre" +
+      "am.Kind\022\016\n\006column\030\002 \001(\r\022\016\n\006length\030\003 \001(\004\"" +
+      "\204\001\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001\022\n\n\006LENGT" +
+      "H\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DICTIONARY_C" +
+      "OUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_INDEX\020\006\022\020\n\014" +
+      "BLOOM_FILTER\020\007\"\234\001\n\016ColumnEncoding\022,\n\004kin" +
+      "d\030\001 \001(\0162\036.orc.proto.ColumnEncoding.Kind\022" +
+      "\026\n\016dictionarySize\030\002 \001(\r\"D\n\004Kind\022\n\n\006DIREC",
+      "T\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDIRECT_V2\020\002\022\021\n\rDI" +
+      "CTIONARY_V2\020\003\"v\n\014StripeFooter\022\"\n\007streams" +
+      "\030\001 \003(\0132\021.orc.proto.Stream\022*\n\007columns\030\002 \003" +
+      "(\0132\031.orc.proto.ColumnEncoding\022\026\n\016writerT" +
+      "imezone\030\003 \001(\t\"\341\002\n\004Type\022\"\n\004kind\030\001 \001(\0162\024.o" +
+      "rc.proto.Type.Kind\022\024\n\010subtypes\030\002 \003(\rB\002\020\001" +
+      "\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rmaximumLength\030\004 " +
+      "\001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n\005scale\030\006 \001(\r\"\321\001" +
+      "\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002" +
+      "\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE",
+      "\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020" +
+      "\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNIO" +
+      "N\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\022\013\n\007VARCHAR\020\020\022" +
+      "\010\n\004CHAR\020\021\"x\n\021StripeInformation\022\016\n\006offset" +
+      "\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\ndataLengt" +
+      "h\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014numberO" +
+      "fRows\030\005 \001(\004\"/\n\020UserMetadataItem\022\014\n\004name\030" +
+      "\001 \001(\t\022\r\n\005value\030\002 \001(\014\"A\n\020StripeStatistics" +
+      "\022-\n\010colStats\030\001 \003(\0132\033.orc.proto.ColumnSta" +
+      "tistics\"<\n\010Metadata\0220\n\013stripeStats\030\001 \003(\013",
+      "2\033.orc.proto.StripeStatistics\"\246\002\n\006Footer" +
+      "\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLength\030" +
+      "\002 \001(\004\022-\n\007stripes\030\003 \003(\0132\034.orc.proto.Strip" +
+      "eInformation\022\036\n\005types\030\004 \003(\0132\017.orc.proto." +
+      "Type\022-\n\010metadata\030\005 \003(\0132\033.orc.proto.UserM" +
+      "etadataItem\022\024\n\014numberOfRows\030\006 \001(\004\022/\n\nsta" +
+      "tistics\030\007 \003(\0132\033.orc.proto.ColumnStatisti" +
+      "cs\022\026\n\016rowIndexStride\030\010 \001(\r\022\022\n\nstripeSize" +
+      "\030\t \001(\004\"\305\001\n\nPostScript\022\024\n\014footerLength\030\001 " +
+      "\001(\004\022/\n\013compression\030\002 \001(\0162\032.orc.proto.Com",
+      "pressionKind\022\034\n\024compressionBlockSize\030\003 \001" +
+      "(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016metadataLengt" +
+      "h\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r\022\016\n\005magic\030" +
+      "\300> \001(\t*:\n\017CompressionKind\022\010\n\004NONE\020\000\022\010\n\004Z" +
+      "LIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003B\"\n org.apache" +
+      ".hadoop.hive.ql.io.orc"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -19138,7 +19365,7 @@ public final class OrcProto {
           internal_static_orc_proto_StringStatistics_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_StringStatistics_descriptor,
-              new java.lang.String[] { "Minimum", "Maximum", "Sum", });
+              new java.lang.String[] { "Minimum", "Maximum", "Sum", "MaximumDictionarySize", });
           internal_static_orc_proto_BucketStatistics_descriptor =
             getDescriptor().getMessageTypes().get(3);
           internal_static_orc_proto_BucketStatistics_fieldAccessorTable = new
@@ -19252,7 +19479,7 @@ public final class OrcProto {
           internal_static_orc_proto_Footer_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_Footer_descriptor,
-              new java.lang.String[] { "HeaderLength", "ContentLength", "Stripes", "Types", "Metadata", "NumberOfRows", "Statistics", "RowIndexStride", });
+              new java.lang.String[] { "HeaderLength", "ContentLength", "Stripes", "Types", "Metadata", "NumberOfRows", "Statistics", "RowIndexStride", "StripeSize", });
           internal_static_orc_proto_PostScript_descriptor =
             getDescriptor().getMessageTypes().get(22);
           internal_static_orc_proto_PostScript_fieldAccessorTable = new

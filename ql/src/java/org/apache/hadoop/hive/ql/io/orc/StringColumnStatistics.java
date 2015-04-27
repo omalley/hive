@@ -38,4 +38,10 @@ public interface StringColumnStatistics extends ColumnStatistics {
    * @return the sum (total length)
    */
   long getSum();
+
+  /**
+   * Get the maximum number of bytes in the dictionary.
+   * @return the maximum number of bytes
+   */
+  long getMaximumDictionarySize();
 }
