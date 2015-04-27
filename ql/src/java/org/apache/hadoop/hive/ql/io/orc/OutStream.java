@@ -193,6 +193,7 @@ class OutStream extends PositionedOutputStream {
         if (cipher != null) {
           // encrypt the compressed bytes
           ByteBuffer clone = compressed.duplicate();
+          clone.flip();
           clone.position(sizePosn + HEADER_SIZE);
           cipher.update(clone, clone);
           // if there are bytes in overflow, encrypt those too
