@@ -364,7 +364,6 @@ class ColumnStatisticsImpl implements ColumnStatistics {
     }
 
     void addDictionarySize(long dictionarySize) {
-      System.out.println("Setting dictionary size to " + dictionarySize);
       if (dictionarySize > maxDictionarySize) {
         maxDictionarySize = dictionarySize;
       }
