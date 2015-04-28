@@ -69,8 +69,10 @@ message BinaryStatistics {
 }
 
 message EncryptedStatistics {
+  // the randomly generated iv
   optional bytes iv = 1;
-  optional bytes encrypted = 2;
+  // the encrypted ColumnStatistics serialization
+  optional bytes columnStatistics = 2;
 }
 
 message ColumnStatistics {
@@ -84,6 +86,11 @@ message ColumnStatistics {
   optional BinaryStatistics binaryStatistics = 8;
   optional TimestampStatistics timestampStatistics = 9;
   optional bool hasNull = 10;
+
+  // If the column is encrypted, the following field will be
+  // the only one defined in the StripeStatistics and Footer.
+  // In the RowIndexEntry the entire stream is encrypted so
+  // we don't use this.
   optional EncryptedStatistics encrypted = 11;
 }
 
@@ -125,6 +132,13 @@ message Stream {
   optional bytes iv = 4;
 }
 
+message EncryptedEncoding {
+  // the random iv
+  optional bytes iv = 1;
+  // the encrypted ColumnEncoding serialization
+  optional bytes columnEncoding = 2;
+}
+
 message ColumnEncoding {
   enum Kind {
     DIRECT = 0;
@@ -134,6 +148,10 @@ message ColumnEncoding {
   }
   optional Kind kind = 1;
   optional uint32 dictionarySize = 2;
+
+  // If the column is encoded, the only field defined will be
+  // this one with the encrypted serialization.
+  optional EncryptedEncoding encrypted = 3;
 }
 
 message StripeFooter {
