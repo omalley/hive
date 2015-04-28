@@ -125,8 +125,8 @@ public class TestOrcNullOptimization {
     assertEquals("a", ((StringColumnStatistics) stats[2]).getMaximum());
     assertEquals("a", ((StringColumnStatistics) stats[2]).getMinimum());
     assertEquals(19998, stats[2].getNumberOfValues());
-    assertEquals("count: 19998 hasNull: true min: a max: a sum: 19998",
-        stats[2].toString());
+    assertEquals(("count: 19998 hasNull: true min: a max: a sum: 19998" +
+            " maxDictionary: 1"), stats[2].toString());
 
     // check the inspectors
     StructObjectInspector readerInspector =
@@ -229,8 +229,8 @@ public class TestOrcNullOptimization {
     assertEquals("b", ((StringColumnStatistics) stats[2]).getMaximum());
     assertEquals("a", ((StringColumnStatistics) stats[2]).getMinimum());
     assertEquals(20000, stats[2].getNumberOfValues());
-    assertEquals("count: 20000 hasNull: false min: a max: b sum: 20000",
-        stats[2].toString());
+    assertEquals(("count: 20000 hasNull: false min: a max: b sum: 20000" +
+            " maxDictionary: 2"), stats[2].toString());
 
     // check the inspectors
     StructObjectInspector readerInspector =

@@ -570,7 +570,8 @@ public class TestOrcSerDeStats {
     assertEquals("bye", ((StringColumnStatistics) stats[9]).getMinimum());
     assertEquals("hi", ((StringColumnStatistics) stats[9]).getMaximum());
     assertEquals(5, ((StringColumnStatistics) stats[9]).getSum());
-    assertEquals("count: 2 hasNull: false min: bye max: hi sum: 5", stats[9].toString());
+    assertEquals(("count: 2 hasNull: false min: bye " +
+        "max: hi sum: 5 maxDictionary: 5"), stats[9].toString());
   }
 
   @Test(expected = ClassCastException.class)

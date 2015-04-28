@@ -47,7 +47,6 @@ import org.apache.hadoop.hive.ql.io.orc.CompressionCodec.Modifier;
 import org.apache.hadoop.hive.ql.io.orc.OrcFile.CompressionStrategy;
 import org.apache.hadoop.hive.ql.io.orc.OrcFile.EncodingStrategy;
 import org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexEntry;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeStatistics;
 import org.apache.hadoop.hive.ql.io.orc.OrcProto.Type;
 import org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItem;
 import org.apache.hadoop.hive.ql.util.JavaDataModel;
@@ -820,7 +819,6 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     private void writeStripeStatistics
       (OrcProto.StripeStatistics.Builder stripeStats) {
-      System.out.println("Writing stripe statistics for " + this);
       fileStatistics.merge(stripeColStatistics);
       stripeStats.addColStats(stripeColStatistics.serialize().build());
       stripeColStatistics.reset();
