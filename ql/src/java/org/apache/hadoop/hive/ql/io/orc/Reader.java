@@ -179,35 +179,12 @@ public interface Reader {
   ColumnEncryption[] getColumnEncryptionInformation();
 
   /**
-   * Stores the encryption keys for the reader.
+   * Add a key for decrypting the file.
    */
-  static class EncryptionKey {
-    EncryptionKey(String keyName, int keyVersion, ByteBuffer key) {
-      this.keyName = keyName;
-      this.keyVersion = keyVersion;
-      this.key = key;
-    }
-
-    public String getKeyName() {
-      return keyName;
-    }
-
-    public int getKeyVersion() {
-      return keyVersion;
-    }
-
-    public ByteBuffer getKey() {
-      return key;
-    }
-
-    public String toString() {
-      return keyName + "@" + keyVersion;
-    }
-
-    private final String keyName;
-    private final int keyVersion;
-    private final ByteBuffer key;
-  }
+  void addKey(Cipher.Algorithm algorithm,
+              String keyName,
+              int keyVersion,
+              ByteBuffer key);
 
   /**
    * Options for creating a RecordReader.
@@ -218,7 +195,6 @@ public interface Reader {
     private long length = Long.MAX_VALUE;
     private SearchArgument sarg = null;
     private String[] columnNames = null;
-    private List<EncryptionKey> encryptionKeys = new ArrayList<>();
 
     /**
      * Set the list of columns to read.
@@ -254,11 +230,6 @@ public interface Reader {
       return this;
     }
 
-    public Options addKey(String keyName, int keyVersion, ByteBuffer key) {
-      this.encryptionKeys.add(new EncryptionKey(keyName, keyVersion, key));
-      return this;
-    }
-
     public boolean[] getInclude() {
       return include;
     }
@@ -287,10 +258,6 @@ public interface Reader {
       return result;
     }
 
-    public List<EncryptionKey> getEncryptionKeys() {
-      return encryptionKeys;
-    }
-
     public Options clone() {
       Options result = new Options();
       result.include = include;
@@ -298,7 +265,6 @@ public interface Reader {
       result.length = length;
       result.sarg = sarg;
       result.columnNames = columnNames;
-      result.encryptionKeys.addAll(encryptionKeys);
       return result;
     }
 
@@ -333,16 +299,6 @@ public interface Reader {
           buffer.append("'");
           buffer.append(columnNames[i]);
           buffer.append("'");
-        }
-        buffer.append("]");
-      }
-      if (!encryptionKeys.isEmpty()) {
-        buffer.append(", keys: [");
-        for(int i=0; i < encryptionKeys.size(); ++i) {
-          if (i != 0) {
-            buffer.append(", ");
-          }
-          buffer.append(encryptionKeys.get(i));
         }
         buffer.append("]");
       }

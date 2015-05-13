@@ -190,10 +190,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(enum_scope:orc.proto.CompressionKind)
   }
 
-  public interface IntegerStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.IntegerStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface IntegerStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional sint64 minimum = 1;
     /**
      * <code>optional sint64 minimum = 1;</code>
      */
@@ -203,6 +203,7 @@ public final class OrcProto {
      */
     long getMinimum();
 
+    // optional sint64 maximum = 2;
     /**
      * <code>optional sint64 maximum = 2;</code>
      */
@@ -212,6 +213,7 @@ public final class OrcProto {
      */
     long getMaximum();
 
+    // optional sint64 sum = 3;
     /**
      * <code>optional sint64 sum = 3;</code>
      */
@@ -225,9 +227,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.IntegerStatistics}
    */
   public static final class IntegerStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.IntegerStatistics)
-      IntegerStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements IntegerStatisticsOrBuilder {
     // Use IntegerStatistics.newBuilder() to construct.
     private IntegerStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -328,6 +329,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional sint64 minimum = 1;
     public static final int MINIMUM_FIELD_NUMBER = 1;
     private long minimum_;
     /**
@@ -343,6 +345,7 @@ public final class OrcProto {
       return minimum_;
     }
 
+    // optional sint64 maximum = 2;
     public static final int MAXIMUM_FIELD_NUMBER = 2;
     private long maximum_;
     /**
@@ -358,6 +361,7 @@ public final class OrcProto {
       return maximum_;
     }
 
+    // optional sint64 sum = 3;
     public static final int SUM_FIELD_NUMBER = 3;
     private long sum_;
     /**
@@ -381,8 +385,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -503,9 +506,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.IntegerStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.IntegerStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_IntegerStatistics_descriptor;
@@ -636,6 +638,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional sint64 minimum = 1;
       private long minimum_ ;
       /**
        * <code>optional sint64 minimum = 1;</code>
@@ -668,6 +671,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional sint64 maximum = 2;
       private long maximum_ ;
       /**
        * <code>optional sint64 maximum = 2;</code>
@@ -700,6 +704,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional sint64 sum = 3;
       private long sum_ ;
       /**
        * <code>optional sint64 sum = 3;</code>
@@ -743,10 +748,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.IntegerStatistics)
   }
 
-  public interface DoubleStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.DoubleStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DoubleStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional double minimum = 1;
     /**
      * <code>optional double minimum = 1;</code>
      */
@@ -756,6 +761,7 @@ public final class OrcProto {
      */
     double getMinimum();
 
+    // optional double maximum = 2;
     /**
      * <code>optional double maximum = 2;</code>
      */
@@ -765,6 +771,7 @@ public final class OrcProto {
      */
     double getMaximum();
 
+    // optional double sum = 3;
     /**
      * <code>optional double sum = 3;</code>
      */
@@ -778,9 +785,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.DoubleStatistics}
    */
   public static final class DoubleStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.DoubleStatistics)
-      DoubleStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DoubleStatisticsOrBuilder {
     // Use DoubleStatistics.newBuilder() to construct.
     private DoubleStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -881,6 +887,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional double minimum = 1;
     public static final int MINIMUM_FIELD_NUMBER = 1;
     private double minimum_;
     /**
@@ -896,6 +903,7 @@ public final class OrcProto {
       return minimum_;
     }
 
+    // optional double maximum = 2;
     public static final int MAXIMUM_FIELD_NUMBER = 2;
     private double maximum_;
     /**
@@ -911,6 +919,7 @@ public final class OrcProto {
       return maximum_;
     }
 
+    // optional double sum = 3;
     public static final int SUM_FIELD_NUMBER = 3;
     private double sum_;
     /**
@@ -934,8 +943,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1056,9 +1064,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.DoubleStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.DoubleStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_DoubleStatistics_descriptor;
@@ -1189,6 +1196,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional double minimum = 1;
       private double minimum_ ;
       /**
        * <code>optional double minimum = 1;</code>
@@ -1221,6 +1229,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional double maximum = 2;
       private double maximum_ ;
       /**
        * <code>optional double maximum = 2;</code>
@@ -1253,6 +1262,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional double sum = 3;
       private double sum_ ;
       /**
        * <code>optional double sum = 3;</code>
@@ -1296,10 +1306,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.DoubleStatistics)
   }
 
-  public interface StringStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.StringStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface StringStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string minimum = 1;
     /**
      * <code>optional string minimum = 1;</code>
      */
@@ -1314,6 +1324,7 @@ public final class OrcProto {
     com.google.protobuf.ByteString
         getMinimumBytes();
 
+    // optional string maximum = 2;
     /**
      * <code>optional string maximum = 2;</code>
      */
@@ -1328,6 +1339,7 @@ public final class OrcProto {
     com.google.protobuf.ByteString
         getMaximumBytes();
 
+    // optional sint64 sum = 3;
     /**
      * <code>optional sint64 sum = 3;</code>
      *
@@ -1367,9 +1379,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.StringStatistics}
    */
   public static final class StringStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.StringStatistics)
-      StringStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements StringStatisticsOrBuilder {
     // Use StringStatistics.newBuilder() to construct.
     private StringStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1416,15 +1427,13 @@ public final class OrcProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              minimum_ = bs;
+              minimum_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              maximum_ = bs;
+              maximum_ = input.readBytes();
               break;
             }
             case 24: {
@@ -1477,6 +1486,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional string minimum = 1;
     public static final int MINIMUM_FIELD_NUMBER = 1;
     private java.lang.Object minimum_;
     /**
@@ -1519,6 +1529,7 @@ public final class OrcProto {
       }
     }
 
+    // optional string maximum = 2;
     public static final int MAXIMUM_FIELD_NUMBER = 2;
     private java.lang.Object maximum_;
     /**
@@ -1561,6 +1572,7 @@ public final class OrcProto {
       }
     }
 
+    // optional sint64 sum = 3;
     public static final int SUM_FIELD_NUMBER = 3;
     private long sum_;
     /**
@@ -1617,8 +1629,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1746,9 +1757,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.StringStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.StringStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_StringStatistics_descriptor;
@@ -1892,6 +1902,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional string minimum = 1;
       private java.lang.Object minimum_ = "";
       /**
        * <code>optional string minimum = 1;</code>
@@ -1905,12 +1916,9 @@ public final class OrcProto {
       public java.lang.String getMinimum() {
         java.lang.Object ref = minimum_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            minimum_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          minimum_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1968,6 +1976,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional string maximum = 2;
       private java.lang.Object maximum_ = "";
       /**
        * <code>optional string maximum = 2;</code>
@@ -1981,12 +1990,9 @@ public final class OrcProto {
       public java.lang.String getMaximum() {
         java.lang.Object ref = maximum_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            maximum_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          maximum_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2044,6 +2050,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional sint64 sum = 3;
       private long sum_ ;
       /**
        * <code>optional sint64 sum = 3;</code>
@@ -2152,10 +2159,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.StringStatistics)
   }
 
-  public interface BucketStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.BucketStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BucketStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated uint64 count = 1 [packed = true];
     /**
      * <code>repeated uint64 count = 1 [packed = true];</code>
      */
@@ -2173,9 +2180,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.BucketStatistics}
    */
   public static final class BucketStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.BucketStatistics)
-      BucketStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BucketStatisticsOrBuilder {
     // Use BucketStatistics.newBuilder() to construct.
     private BucketStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2284,6 +2290,7 @@ public final class OrcProto {
       return PARSER;
     }
 
+    // repeated uint64 count = 1 [packed = true];
     public static final int COUNT_FIELD_NUMBER = 1;
     private java.util.List<java.lang.Long> count_;
     /**
@@ -2313,8 +2320,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -2435,9 +2441,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.BucketStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.BucketStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_BucketStatistics_descriptor;
@@ -2556,6 +2561,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated uint64 count = 1 [packed = true];
       private java.util.List<java.lang.Long> count_ = java.util.Collections.emptyList();
       private void ensureCountIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2607,8 +2613,7 @@ public final class OrcProto {
       public Builder addAllCount(
           java.lang.Iterable<? extends java.lang.Long> values) {
         ensureCountIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, count_);
+        super.addAll(values, count_);
         onChanged();
         return this;
       }
@@ -2633,10 +2638,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.BucketStatistics)
   }
 
-  public interface DecimalStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.DecimalStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DecimalStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string minimum = 1;
     /**
      * <code>optional string minimum = 1;</code>
      */
@@ -2651,6 +2656,7 @@ public final class OrcProto {
     com.google.protobuf.ByteString
         getMinimumBytes();
 
+    // optional string maximum = 2;
     /**
      * <code>optional string maximum = 2;</code>
      */
@@ -2665,6 +2671,7 @@ public final class OrcProto {
     com.google.protobuf.ByteString
         getMaximumBytes();
 
+    // optional string sum = 3;
     /**
      * <code>optional string sum = 3;</code>
      */
@@ -2683,9 +2690,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.DecimalStatistics}
    */
   public static final class DecimalStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.DecimalStatistics)
-      DecimalStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DecimalStatisticsOrBuilder {
     // Use DecimalStatistics.newBuilder() to construct.
     private DecimalStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2732,21 +2738,18 @@ public final class OrcProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              minimum_ = bs;
+              minimum_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              maximum_ = bs;
+              maximum_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              sum_ = bs;
+              sum_ = input.readBytes();
               break;
             }
           }
@@ -2789,6 +2792,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional string minimum = 1;
     public static final int MINIMUM_FIELD_NUMBER = 1;
     private java.lang.Object minimum_;
     /**
@@ -2831,6 +2835,7 @@ public final class OrcProto {
       }
     }
 
+    // optional string maximum = 2;
     public static final int MAXIMUM_FIELD_NUMBER = 2;
     private java.lang.Object maximum_;
     /**
@@ -2873,6 +2878,7 @@ public final class OrcProto {
       }
     }
 
+    // optional string sum = 3;
     public static final int SUM_FIELD_NUMBER = 3;
     private java.lang.Object sum_;
     /**
@@ -2923,8 +2929,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -3045,9 +3050,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.DecimalStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.DecimalStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_DecimalStatistics_descriptor;
@@ -3184,6 +3188,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional string minimum = 1;
       private java.lang.Object minimum_ = "";
       /**
        * <code>optional string minimum = 1;</code>
@@ -3197,12 +3202,9 @@ public final class OrcProto {
       public java.lang.String getMinimum() {
         java.lang.Object ref = minimum_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            minimum_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          minimum_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3260,6 +3262,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional string maximum = 2;
       private java.lang.Object maximum_ = "";
       /**
        * <code>optional string maximum = 2;</code>
@@ -3273,12 +3276,9 @@ public final class OrcProto {
       public java.lang.String getMaximum() {
         java.lang.Object ref = maximum_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            maximum_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          maximum_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3336,6 +3336,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional string sum = 3;
       private java.lang.Object sum_ = "";
       /**
        * <code>optional string sum = 3;</code>
@@ -3349,12 +3350,9 @@ public final class OrcProto {
       public java.lang.String getSum() {
         java.lang.Object ref = sum_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            sum_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          sum_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3423,10 +3421,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.DecimalStatistics)
   }
 
-  public interface DateStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.DateStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DateStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional sint32 minimum = 1;
     /**
      * <code>optional sint32 minimum = 1;</code>
      *
@@ -3444,6 +3442,7 @@ public final class OrcProto {
      */
     int getMinimum();
 
+    // optional sint32 maximum = 2;
     /**
      * <code>optional sint32 maximum = 2;</code>
      */
@@ -3457,9 +3456,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.DateStatistics}
    */
   public static final class DateStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.DateStatistics)
-      DateStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DateStatisticsOrBuilder {
     // Use DateStatistics.newBuilder() to construct.
     private DateStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3555,6 +3553,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional sint32 minimum = 1;
     public static final int MINIMUM_FIELD_NUMBER = 1;
     private int minimum_;
     /**
@@ -3578,6 +3577,7 @@ public final class OrcProto {
       return minimum_;
     }
 
+    // optional sint32 maximum = 2;
     public static final int MAXIMUM_FIELD_NUMBER = 2;
     private int maximum_;
     /**
@@ -3600,8 +3600,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -3715,9 +3714,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.DateStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.DateStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_DateStatistics_descriptor;
@@ -3839,6 +3837,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional sint32 minimum = 1;
       private int minimum_ ;
       /**
        * <code>optional sint32 minimum = 1;</code>
@@ -3887,6 +3886,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional sint32 maximum = 2;
       private int maximum_ ;
       /**
        * <code>optional sint32 maximum = 2;</code>
@@ -3930,10 +3930,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.DateStatistics)
   }
 
-  public interface TimestampStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.TimestampStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TimestampStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional sint64 minimum = 1;
     /**
      * <code>optional sint64 minimum = 1;</code>
      *
@@ -3951,6 +3951,7 @@ public final class OrcProto {
      */
     long getMinimum();
 
+    // optional sint64 maximum = 2;
     /**
      * <code>optional sint64 maximum = 2;</code>
      */
@@ -3964,9 +3965,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.TimestampStatistics}
    */
   public static final class TimestampStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.TimestampStatistics)
-      TimestampStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements TimestampStatisticsOrBuilder {
     // Use TimestampStatistics.newBuilder() to construct.
     private TimestampStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -4062,6 +4062,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional sint64 minimum = 1;
     public static final int MINIMUM_FIELD_NUMBER = 1;
     private long minimum_;
     /**
@@ -4085,6 +4086,7 @@ public final class OrcProto {
       return minimum_;
     }
 
+    // optional sint64 maximum = 2;
     public static final int MAXIMUM_FIELD_NUMBER = 2;
     private long maximum_;
     /**
@@ -4107,8 +4109,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -4222,9 +4223,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.TimestampStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.TimestampStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_TimestampStatistics_descriptor;
@@ -4346,6 +4346,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional sint64 minimum = 1;
       private long minimum_ ;
       /**
        * <code>optional sint64 minimum = 1;</code>
@@ -4394,6 +4395,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional sint64 maximum = 2;
       private long maximum_ ;
       /**
        * <code>optional sint64 maximum = 2;</code>
@@ -4437,10 +4439,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.TimestampStatistics)
   }
 
-  public interface BinaryStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.BinaryStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BinaryStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional sint64 sum = 1;
     /**
      * <code>optional sint64 sum = 1;</code>
      *
@@ -4462,9 +4464,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.BinaryStatistics}
    */
   public static final class BinaryStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.BinaryStatistics)
-      BinaryStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BinaryStatisticsOrBuilder {
     // Use BinaryStatistics.newBuilder() to construct.
     private BinaryStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -4555,6 +4556,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional sint64 sum = 1;
     public static final int SUM_FIELD_NUMBER = 1;
     private long sum_;
     /**
@@ -4584,8 +4586,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -4692,9 +4693,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.BinaryStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.BinaryStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_BinaryStatistics_descriptor;
@@ -4807,6 +4807,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional sint64 sum = 1;
       private long sum_ ;
       /**
        * <code>optional sint64 sum = 1;</code>
@@ -4866,35 +4867,51 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.BinaryStatistics)
   }
 
-  public interface EncryptedStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.EncryptedStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface EncryptedStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional bytes iv = 1;
     /**
      * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the randomly generated iv
+     * </pre>
      */
     boolean hasIv();
     /**
      * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the randomly generated iv
+     * </pre>
      */
     com.google.protobuf.ByteString getIv();
 
+    // optional bytes columnStatistics = 2;
     /**
-     * <code>optional bytes encrypted = 2;</code>
+     * <code>optional bytes columnStatistics = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnStatistics serialization
+     * </pre>
      */
-    boolean hasEncrypted();
+    boolean hasColumnStatistics();
     /**
-     * <code>optional bytes encrypted = 2;</code>
+     * <code>optional bytes columnStatistics = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnStatistics serialization
+     * </pre>
      */
-    com.google.protobuf.ByteString getEncrypted();
+    com.google.protobuf.ByteString getColumnStatistics();
   }
   /**
    * Protobuf type {@code orc.proto.EncryptedStatistics}
    */
   public static final class EncryptedStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.EncryptedStatistics)
-      EncryptedStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements EncryptedStatisticsOrBuilder {
     // Use EncryptedStatistics.newBuilder() to construct.
     private EncryptedStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -4947,7 +4964,7 @@ public final class OrcProto {
             }
             case 18: {
               bitField0_ |= 0x00000002;
-              encrypted_ = input.readBytes();
+              columnStatistics_ = input.readBytes();
               break;
             }
           }
@@ -4990,45 +5007,62 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional bytes iv = 1;
     public static final int IV_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString iv_;
     /**
      * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the randomly generated iv
+     * </pre>
      */
     public boolean hasIv() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the randomly generated iv
+     * </pre>
      */
     public com.google.protobuf.ByteString getIv() {
       return iv_;
     }
 
-    public static final int ENCRYPTED_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString encrypted_;
+    // optional bytes columnStatistics = 2;
+    public static final int COLUMNSTATISTICS_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString columnStatistics_;
     /**
-     * <code>optional bytes encrypted = 2;</code>
+     * <code>optional bytes columnStatistics = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnStatistics serialization
+     * </pre>
      */
-    public boolean hasEncrypted() {
+    public boolean hasColumnStatistics() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional bytes encrypted = 2;</code>
+     * <code>optional bytes columnStatistics = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnStatistics serialization
+     * </pre>
      */
-    public com.google.protobuf.ByteString getEncrypted() {
-      return encrypted_;
+    public com.google.protobuf.ByteString getColumnStatistics() {
+      return columnStatistics_;
     }
 
     private void initFields() {
       iv_ = com.google.protobuf.ByteString.EMPTY;
-      encrypted_ = com.google.protobuf.ByteString.EMPTY;
+      columnStatistics_ = com.google.protobuf.ByteString.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -5041,7 +5075,7 @@ public final class OrcProto {
         output.writeBytes(1, iv_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, encrypted_);
+        output.writeBytes(2, columnStatistics_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -5058,7 +5092,7 @@ public final class OrcProto {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, encrypted_);
+          .computeBytesSize(2, columnStatistics_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -5142,9 +5176,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.EncryptedStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.EncryptedStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_EncryptedStatistics_descriptor;
@@ -5179,7 +5212,7 @@ public final class OrcProto {
         super.clear();
         iv_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000001);
-        encrypted_ = com.google.protobuf.ByteString.EMPTY;
+        columnStatistics_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
@@ -5216,7 +5249,7 @@ public final class OrcProto {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.encrypted_ = encrypted_;
+        result.columnStatistics_ = columnStatistics_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -5236,8 +5269,8 @@ public final class OrcProto {
         if (other.hasIv()) {
           setIv(other.getIv());
         }
-        if (other.hasEncrypted()) {
-          setEncrypted(other.getEncrypted());
+        if (other.hasColumnStatistics()) {
+          setColumnStatistics(other.getColumnStatistics());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -5266,21 +5299,34 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional bytes iv = 1;
       private com.google.protobuf.ByteString iv_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the randomly generated iv
+       * </pre>
        */
       public boolean hasIv() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the randomly generated iv
+       * </pre>
        */
       public com.google.protobuf.ByteString getIv() {
         return iv_;
       }
       /**
        * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the randomly generated iv
+       * </pre>
        */
       public Builder setIv(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -5293,6 +5339,10 @@ public final class OrcProto {
       }
       /**
        * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the randomly generated iv
+       * </pre>
        */
       public Builder clearIv() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -5301,37 +5351,54 @@ public final class OrcProto {
         return this;
       }
 
-      private com.google.protobuf.ByteString encrypted_ = com.google.protobuf.ByteString.EMPTY;
+      // optional bytes columnStatistics = 2;
+      private com.google.protobuf.ByteString columnStatistics_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes encrypted = 2;</code>
+       * <code>optional bytes columnStatistics = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnStatistics serialization
+       * </pre>
        */
-      public boolean hasEncrypted() {
+      public boolean hasColumnStatistics() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional bytes encrypted = 2;</code>
+       * <code>optional bytes columnStatistics = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnStatistics serialization
+       * </pre>
        */
-      public com.google.protobuf.ByteString getEncrypted() {
-        return encrypted_;
+      public com.google.protobuf.ByteString getColumnStatistics() {
+        return columnStatistics_;
       }
       /**
-       * <code>optional bytes encrypted = 2;</code>
+       * <code>optional bytes columnStatistics = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnStatistics serialization
+       * </pre>
        */
-      public Builder setEncrypted(com.google.protobuf.ByteString value) {
+      public Builder setColumnStatistics(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000002;
-        encrypted_ = value;
+        columnStatistics_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional bytes encrypted = 2;</code>
+       * <code>optional bytes columnStatistics = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnStatistics serialization
+       * </pre>
        */
-      public Builder clearEncrypted() {
+      public Builder clearColumnStatistics() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        encrypted_ = getDefaultInstance().getEncrypted();
+        columnStatistics_ = getDefaultInstance().getColumnStatistics();
         onChanged();
         return this;
       }
@@ -5347,10 +5414,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.EncryptedStatistics)
   }
 
-  public interface ColumnStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.ColumnStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ColumnStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional uint64 numberOfValues = 1;
     /**
      * <code>optional uint64 numberOfValues = 1;</code>
      */
@@ -5360,6 +5427,7 @@ public final class OrcProto {
      */
     long getNumberOfValues();
 
+    // optional .orc.proto.IntegerStatistics intStatistics = 2;
     /**
      * <code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>
      */
@@ -5373,6 +5441,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatisticsOrBuilder getIntStatisticsOrBuilder();
 
+    // optional .orc.proto.DoubleStatistics doubleStatistics = 3;
     /**
      * <code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>
      */
@@ -5386,6 +5455,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatisticsOrBuilder getDoubleStatisticsOrBuilder();
 
+    // optional .orc.proto.StringStatistics stringStatistics = 4;
     /**
      * <code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>
      */
@@ -5399,6 +5469,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatisticsOrBuilder getStringStatisticsOrBuilder();
 
+    // optional .orc.proto.BucketStatistics bucketStatistics = 5;
     /**
      * <code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>
      */
@@ -5412,6 +5483,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatisticsOrBuilder getBucketStatisticsOrBuilder();
 
+    // optional .orc.proto.DecimalStatistics decimalStatistics = 6;
     /**
      * <code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>
      */
@@ -5425,6 +5497,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatisticsOrBuilder getDecimalStatisticsOrBuilder();
 
+    // optional .orc.proto.DateStatistics dateStatistics = 7;
     /**
      * <code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>
      */
@@ -5438,6 +5511,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatisticsOrBuilder getDateStatisticsOrBuilder();
 
+    // optional .orc.proto.BinaryStatistics binaryStatistics = 8;
     /**
      * <code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>
      */
@@ -5451,6 +5525,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatisticsOrBuilder getBinaryStatisticsOrBuilder();
 
+    // optional .orc.proto.TimestampStatistics timestampStatistics = 9;
     /**
      * <code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>
      */
@@ -5464,6 +5539,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatisticsOrBuilder getTimestampStatisticsOrBuilder();
 
+    // optional bool hasNull = 10;
     /**
      * <code>optional bool hasNull = 10;</code>
      */
@@ -5473,16 +5549,38 @@ public final class OrcProto {
      */
     boolean getHasNull();
 
+    // optional .orc.proto.EncryptedStatistics encrypted = 11;
     /**
      * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+     *
+     * <pre>
+     * If the column is encrypted, the following field will be
+     * the only one defined in the StripeStatistics and Footer.
+     * In the RowIndexEntry the entire stream is encrypted so
+     * we don't use this.
+     * </pre>
      */
     boolean hasEncrypted();
     /**
      * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+     *
+     * <pre>
+     * If the column is encrypted, the following field will be
+     * the only one defined in the StripeStatistics and Footer.
+     * In the RowIndexEntry the entire stream is encrypted so
+     * we don't use this.
+     * </pre>
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics getEncrypted();
     /**
      * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+     *
+     * <pre>
+     * If the column is encrypted, the following field will be
+     * the only one defined in the StripeStatistics and Footer.
+     * In the RowIndexEntry the entire stream is encrypted so
+     * we don't use this.
+     * </pre>
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder getEncryptedOrBuilder();
   }
@@ -5490,9 +5588,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.ColumnStatistics}
    */
   public static final class ColumnStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.ColumnStatistics)
-      ColumnStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ColumnStatisticsOrBuilder {
     // Use ColumnStatistics.newBuilder() to construct.
     private ColumnStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -5705,6 +5802,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional uint64 numberOfValues = 1;
     public static final int NUMBEROFVALUES_FIELD_NUMBER = 1;
     private long numberOfValues_;
     /**
@@ -5720,6 +5818,7 @@ public final class OrcProto {
       return numberOfValues_;
     }
 
+    // optional .orc.proto.IntegerStatistics intStatistics = 2;
     public static final int INTSTATISTICS_FIELD_NUMBER = 2;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatistics intStatistics_;
     /**
@@ -5741,6 +5840,7 @@ public final class OrcProto {
       return intStatistics_;
     }
 
+    // optional .orc.proto.DoubleStatistics doubleStatistics = 3;
     public static final int DOUBLESTATISTICS_FIELD_NUMBER = 3;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatistics doubleStatistics_;
     /**
@@ -5762,6 +5862,7 @@ public final class OrcProto {
       return doubleStatistics_;
     }
 
+    // optional .orc.proto.StringStatistics stringStatistics = 4;
     public static final int STRINGSTATISTICS_FIELD_NUMBER = 4;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatistics stringStatistics_;
     /**
@@ -5783,6 +5884,7 @@ public final class OrcProto {
       return stringStatistics_;
     }
 
+    // optional .orc.proto.BucketStatistics bucketStatistics = 5;
     public static final int BUCKETSTATISTICS_FIELD_NUMBER = 5;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatistics bucketStatistics_;
     /**
@@ -5804,6 +5906,7 @@ public final class OrcProto {
       return bucketStatistics_;
     }
 
+    // optional .orc.proto.DecimalStatistics decimalStatistics = 6;
     public static final int DECIMALSTATISTICS_FIELD_NUMBER = 6;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatistics decimalStatistics_;
     /**
@@ -5825,6 +5928,7 @@ public final class OrcProto {
       return decimalStatistics_;
     }
 
+    // optional .orc.proto.DateStatistics dateStatistics = 7;
     public static final int DATESTATISTICS_FIELD_NUMBER = 7;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatistics dateStatistics_;
     /**
@@ -5846,6 +5950,7 @@ public final class OrcProto {
       return dateStatistics_;
     }
 
+    // optional .orc.proto.BinaryStatistics binaryStatistics = 8;
     public static final int BINARYSTATISTICS_FIELD_NUMBER = 8;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatistics binaryStatistics_;
     /**
@@ -5867,6 +5972,7 @@ public final class OrcProto {
       return binaryStatistics_;
     }
 
+    // optional .orc.proto.TimestampStatistics timestampStatistics = 9;
     public static final int TIMESTAMPSTATISTICS_FIELD_NUMBER = 9;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatistics timestampStatistics_;
     /**
@@ -5888,6 +5994,7 @@ public final class OrcProto {
       return timestampStatistics_;
     }
 
+    // optional bool hasNull = 10;
     public static final int HASNULL_FIELD_NUMBER = 10;
     private boolean hasNull_;
     /**
@@ -5903,22 +6010,44 @@ public final class OrcProto {
       return hasNull_;
     }
 
+    // optional .orc.proto.EncryptedStatistics encrypted = 11;
     public static final int ENCRYPTED_FIELD_NUMBER = 11;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics encrypted_;
     /**
      * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+     *
+     * <pre>
+     * If the column is encrypted, the following field will be
+     * the only one defined in the StripeStatistics and Footer.
+     * In the RowIndexEntry the entire stream is encrypted so
+     * we don't use this.
+     * </pre>
      */
     public boolean hasEncrypted() {
       return ((bitField0_ & 0x00000400) == 0x00000400);
     }
     /**
      * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+     *
+     * <pre>
+     * If the column is encrypted, the following field will be
+     * the only one defined in the StripeStatistics and Footer.
+     * In the RowIndexEntry the entire stream is encrypted so
+     * we don't use this.
+     * </pre>
      */
     public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics getEncrypted() {
       return encrypted_;
     }
     /**
      * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+     *
+     * <pre>
+     * If the column is encrypted, the following field will be
+     * the only one defined in the StripeStatistics and Footer.
+     * In the RowIndexEntry the entire stream is encrypted so
+     * we don't use this.
+     * </pre>
      */
     public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder getEncryptedOrBuilder() {
       return encrypted_;
@@ -5940,8 +6069,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -6118,9 +6246,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.ColumnStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.ColumnStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_ColumnStatistics_descriptor;
@@ -6404,6 +6531,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional uint64 numberOfValues = 1;
       private long numberOfValues_ ;
       /**
        * <code>optional uint64 numberOfValues = 1;</code>
@@ -6436,6 +6564,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional .orc.proto.IntegerStatistics intStatistics = 2;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatistics intStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatisticsOrBuilder> intStatisticsBuilder_;
@@ -6544,7 +6673,7 @@ public final class OrcProto {
         if (intStatisticsBuilder_ == null) {
           intStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.IntegerStatisticsOrBuilder>(
-                  getIntStatistics(),
+                  intStatistics_,
                   getParentForChildren(),
                   isClean());
           intStatistics_ = null;
@@ -6552,6 +6681,7 @@ public final class OrcProto {
         return intStatisticsBuilder_;
       }
 
+      // optional .orc.proto.DoubleStatistics doubleStatistics = 3;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatistics doubleStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatisticsOrBuilder> doubleStatisticsBuilder_;
@@ -6660,7 +6790,7 @@ public final class OrcProto {
         if (doubleStatisticsBuilder_ == null) {
           doubleStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.DoubleStatisticsOrBuilder>(
-                  getDoubleStatistics(),
+                  doubleStatistics_,
                   getParentForChildren(),
                   isClean());
           doubleStatistics_ = null;
@@ -6668,6 +6798,7 @@ public final class OrcProto {
         return doubleStatisticsBuilder_;
       }
 
+      // optional .orc.proto.StringStatistics stringStatistics = 4;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatistics stringStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatisticsOrBuilder> stringStatisticsBuilder_;
@@ -6776,7 +6907,7 @@ public final class OrcProto {
         if (stringStatisticsBuilder_ == null) {
           stringStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.StringStatisticsOrBuilder>(
-                  getStringStatistics(),
+                  stringStatistics_,
                   getParentForChildren(),
                   isClean());
           stringStatistics_ = null;
@@ -6784,6 +6915,7 @@ public final class OrcProto {
         return stringStatisticsBuilder_;
       }
 
+      // optional .orc.proto.BucketStatistics bucketStatistics = 5;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatistics bucketStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatisticsOrBuilder> bucketStatisticsBuilder_;
@@ -6892,7 +7024,7 @@ public final class OrcProto {
         if (bucketStatisticsBuilder_ == null) {
           bucketStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.BucketStatisticsOrBuilder>(
-                  getBucketStatistics(),
+                  bucketStatistics_,
                   getParentForChildren(),
                   isClean());
           bucketStatistics_ = null;
@@ -6900,6 +7032,7 @@ public final class OrcProto {
         return bucketStatisticsBuilder_;
       }
 
+      // optional .orc.proto.DecimalStatistics decimalStatistics = 6;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatistics decimalStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatisticsOrBuilder> decimalStatisticsBuilder_;
@@ -7008,7 +7141,7 @@ public final class OrcProto {
         if (decimalStatisticsBuilder_ == null) {
           decimalStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.DecimalStatisticsOrBuilder>(
-                  getDecimalStatistics(),
+                  decimalStatistics_,
                   getParentForChildren(),
                   isClean());
           decimalStatistics_ = null;
@@ -7016,6 +7149,7 @@ public final class OrcProto {
         return decimalStatisticsBuilder_;
       }
 
+      // optional .orc.proto.DateStatistics dateStatistics = 7;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatistics dateStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatisticsOrBuilder> dateStatisticsBuilder_;
@@ -7124,7 +7258,7 @@ public final class OrcProto {
         if (dateStatisticsBuilder_ == null) {
           dateStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.DateStatisticsOrBuilder>(
-                  getDateStatistics(),
+                  dateStatistics_,
                   getParentForChildren(),
                   isClean());
           dateStatistics_ = null;
@@ -7132,6 +7266,7 @@ public final class OrcProto {
         return dateStatisticsBuilder_;
       }
 
+      // optional .orc.proto.BinaryStatistics binaryStatistics = 8;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatistics binaryStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatisticsOrBuilder> binaryStatisticsBuilder_;
@@ -7240,7 +7375,7 @@ public final class OrcProto {
         if (binaryStatisticsBuilder_ == null) {
           binaryStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.BinaryStatisticsOrBuilder>(
-                  getBinaryStatistics(),
+                  binaryStatistics_,
                   getParentForChildren(),
                   isClean());
           binaryStatistics_ = null;
@@ -7248,6 +7383,7 @@ public final class OrcProto {
         return binaryStatisticsBuilder_;
       }
 
+      // optional .orc.proto.TimestampStatistics timestampStatistics = 9;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatistics timestampStatistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatisticsOrBuilder> timestampStatisticsBuilder_;
@@ -7356,7 +7492,7 @@ public final class OrcProto {
         if (timestampStatisticsBuilder_ == null) {
           timestampStatisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.TimestampStatisticsOrBuilder>(
-                  getTimestampStatistics(),
+                  timestampStatistics_,
                   getParentForChildren(),
                   isClean());
           timestampStatistics_ = null;
@@ -7364,6 +7500,7 @@ public final class OrcProto {
         return timestampStatisticsBuilder_;
       }
 
+      // optional bool hasNull = 10;
       private boolean hasNull_ ;
       /**
        * <code>optional bool hasNull = 10;</code>
@@ -7396,17 +7533,32 @@ public final class OrcProto {
         return this;
       }
 
+      // optional .orc.proto.EncryptedStatistics encrypted = 11;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics encrypted_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder> encryptedBuilder_;
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public boolean hasEncrypted() {
         return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics getEncrypted() {
         if (encryptedBuilder_ == null) {
@@ -7417,6 +7569,13 @@ public final class OrcProto {
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public Builder setEncrypted(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics value) {
         if (encryptedBuilder_ == null) {
@@ -7433,6 +7592,13 @@ public final class OrcProto {
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public Builder setEncrypted(
           org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics.Builder builderForValue) {
@@ -7447,6 +7613,13 @@ public final class OrcProto {
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public Builder mergeEncrypted(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics value) {
         if (encryptedBuilder_ == null) {
@@ -7466,6 +7639,13 @@ public final class OrcProto {
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public Builder clearEncrypted() {
         if (encryptedBuilder_ == null) {
@@ -7479,6 +7659,13 @@ public final class OrcProto {
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics.Builder getEncryptedBuilder() {
         bitField0_ |= 0x00000400;
@@ -7487,6 +7674,13 @@ public final class OrcProto {
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder getEncryptedOrBuilder() {
         if (encryptedBuilder_ != null) {
@@ -7497,6 +7691,13 @@ public final class OrcProto {
       }
       /**
        * <code>optional .orc.proto.EncryptedStatistics encrypted = 11;</code>
+       *
+       * <pre>
+       * If the column is encrypted, the following field will be
+       * the only one defined in the StripeStatistics and Footer.
+       * In the RowIndexEntry the entire stream is encrypted so
+       * we don't use this.
+       * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder> 
@@ -7504,7 +7705,7 @@ public final class OrcProto {
         if (encryptedBuilder_ == null) {
           encryptedBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedStatisticsOrBuilder>(
-                  getEncrypted(),
+                  encrypted_,
                   getParentForChildren(),
                   isClean());
           encrypted_ = null;
@@ -7523,10 +7724,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.ColumnStatistics)
   }
 
-  public interface RowIndexEntryOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.RowIndexEntry)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RowIndexEntryOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated uint64 positions = 1 [packed = true];
     /**
      * <code>repeated uint64 positions = 1 [packed = true];</code>
      */
@@ -7540,6 +7741,7 @@ public final class OrcProto {
      */
     long getPositions(int index);
 
+    // optional .orc.proto.ColumnStatistics statistics = 2;
     /**
      * <code>optional .orc.proto.ColumnStatistics statistics = 2;</code>
      */
@@ -7557,9 +7759,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.RowIndexEntry}
    */
   public static final class RowIndexEntry extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.RowIndexEntry)
-      RowIndexEntryOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RowIndexEntryOrBuilder {
     // Use RowIndexEntry.newBuilder() to construct.
     private RowIndexEntry(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -7682,6 +7883,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // repeated uint64 positions = 1 [packed = true];
     public static final int POSITIONS_FIELD_NUMBER = 1;
     private java.util.List<java.lang.Long> positions_;
     /**
@@ -7705,6 +7907,7 @@ public final class OrcProto {
     }
     private int positionsMemoizedSerializedSize = -1;
 
+    // optional .orc.proto.ColumnStatistics statistics = 2;
     public static final int STATISTICS_FIELD_NUMBER = 2;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics statistics_;
     /**
@@ -7733,8 +7936,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -7862,9 +8064,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.RowIndexEntry}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.RowIndexEntry)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexEntryOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexEntryOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_RowIndexEntry_descriptor;
@@ -8003,6 +8204,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated uint64 positions = 1 [packed = true];
       private java.util.List<java.lang.Long> positions_ = java.util.Collections.emptyList();
       private void ensurePositionsIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -8054,8 +8256,7 @@ public final class OrcProto {
       public Builder addAllPositions(
           java.lang.Iterable<? extends java.lang.Long> values) {
         ensurePositionsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, positions_);
+        super.addAll(values, positions_);
         onChanged();
         return this;
       }
@@ -8069,6 +8270,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional .orc.proto.ColumnStatistics statistics = 2;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics statistics_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatisticsOrBuilder> statisticsBuilder_;
@@ -8177,7 +8379,7 @@ public final class OrcProto {
         if (statisticsBuilder_ == null) {
           statisticsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatisticsOrBuilder>(
-                  getStatistics(),
+                  statistics_,
                   getParentForChildren(),
                   isClean());
           statistics_ = null;
@@ -8196,10 +8398,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.RowIndexEntry)
   }
 
-  public interface RowIndexOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.RowIndex)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RowIndexOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .orc.proto.RowIndexEntry entry = 1;
     /**
      * <code>repeated .orc.proto.RowIndexEntry entry = 1;</code>
      */
@@ -8228,9 +8430,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.RowIndex}
    */
   public static final class RowIndex extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.RowIndex)
-      RowIndexOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RowIndexOrBuilder {
     // Use RowIndex.newBuilder() to construct.
     private RowIndex(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -8326,6 +8527,7 @@ public final class OrcProto {
       return PARSER;
     }
 
+    // repeated .orc.proto.RowIndexEntry entry = 1;
     public static final int ENTRY_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexEntry> entry_;
     /**
@@ -8367,8 +8569,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -8475,9 +8676,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.RowIndex}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.RowIndex)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_RowIndex_descriptor;
@@ -8621,6 +8821,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated .orc.proto.RowIndexEntry entry = 1;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexEntry> entry_ =
         java.util.Collections.emptyList();
       private void ensureEntryIsMutable() {
@@ -8762,8 +8963,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexEntry> values) {
         if (entryBuilder_ == null) {
           ensureEntryIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, entry_);
+          super.addAll(values, entry_);
           onChanged();
         } else {
           entryBuilder_.addAllMessages(values);
@@ -8872,10 +9072,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.RowIndex)
   }
 
-  public interface BloomFilterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.BloomFilter)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BloomFilterOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional uint32 numHashFunctions = 1;
     /**
      * <code>optional uint32 numHashFunctions = 1;</code>
      */
@@ -8885,6 +9085,7 @@ public final class OrcProto {
      */
     int getNumHashFunctions();
 
+    // repeated fixed64 bitset = 2;
     /**
      * <code>repeated fixed64 bitset = 2;</code>
      */
@@ -8902,9 +9103,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.BloomFilter}
    */
   public static final class BloomFilter extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.BloomFilter)
-      BloomFilterOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BloomFilterOrBuilder {
     // Use BloomFilter.newBuilder() to construct.
     private BloomFilter(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -9019,6 +9219,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional uint32 numHashFunctions = 1;
     public static final int NUMHASHFUNCTIONS_FIELD_NUMBER = 1;
     private int numHashFunctions_;
     /**
@@ -9034,6 +9235,7 @@ public final class OrcProto {
       return numHashFunctions_;
     }
 
+    // repeated fixed64 bitset = 2;
     public static final int BITSET_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Long> bitset_;
     /**
@@ -9063,8 +9265,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -9180,9 +9381,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.BloomFilter}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.BloomFilter)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilterOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilterOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_BloomFilter_descriptor;
@@ -9312,6 +9512,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional uint32 numHashFunctions = 1;
       private int numHashFunctions_ ;
       /**
        * <code>optional uint32 numHashFunctions = 1;</code>
@@ -9344,6 +9545,7 @@ public final class OrcProto {
         return this;
       }
 
+      // repeated fixed64 bitset = 2;
       private java.util.List<java.lang.Long> bitset_ = java.util.Collections.emptyList();
       private void ensureBitsetIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -9395,8 +9597,7 @@ public final class OrcProto {
       public Builder addAllBitset(
           java.lang.Iterable<? extends java.lang.Long> values) {
         ensureBitsetIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, bitset_);
+        super.addAll(values, bitset_);
         onChanged();
         return this;
       }
@@ -9421,10 +9622,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.BloomFilter)
   }
 
-  public interface BloomFilterIndexOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.BloomFilterIndex)
-      com.google.protobuf.MessageOrBuilder {
+  public interface BloomFilterIndexOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .orc.proto.BloomFilter bloomFilter = 1;
     /**
      * <code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>
      */
@@ -9453,9 +9654,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.BloomFilterIndex}
    */
   public static final class BloomFilterIndex extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.BloomFilterIndex)
-      BloomFilterIndexOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements BloomFilterIndexOrBuilder {
     // Use BloomFilterIndex.newBuilder() to construct.
     private BloomFilterIndex(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -9551,6 +9751,7 @@ public final class OrcProto {
       return PARSER;
     }
 
+    // repeated .orc.proto.BloomFilter bloomFilter = 1;
     public static final int BLOOMFILTER_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilter> bloomFilter_;
     /**
@@ -9592,8 +9793,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -9700,9 +9900,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.BloomFilterIndex}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.BloomFilterIndex)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilterIndexOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilterIndexOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_BloomFilterIndex_descriptor;
@@ -9846,6 +10045,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated .orc.proto.BloomFilter bloomFilter = 1;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilter> bloomFilter_ =
         java.util.Collections.emptyList();
       private void ensureBloomFilterIsMutable() {
@@ -9987,8 +10187,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilter> values) {
         if (bloomFilterBuilder_ == null) {
           ensureBloomFilterIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, bloomFilter_);
+          super.addAll(values, bloomFilter_);
           onChanged();
         } else {
           bloomFilterBuilder_.addAllMessages(values);
@@ -10097,10 +10296,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.BloomFilterIndex)
   }
 
-  public interface StreamOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.Stream)
-      com.google.protobuf.MessageOrBuilder {
+  public interface StreamOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional .orc.proto.Stream.Kind kind = 1;
     /**
      * <code>optional .orc.proto.Stream.Kind kind = 1;</code>
      */
@@ -10110,6 +10309,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.Stream.Kind getKind();
 
+    // optional uint32 column = 2;
     /**
      * <code>optional uint32 column = 2;</code>
      */
@@ -10119,6 +10319,7 @@ public final class OrcProto {
      */
     int getColumn();
 
+    // optional uint64 length = 3;
     /**
      * <code>optional uint64 length = 3;</code>
      */
@@ -10128,6 +10329,7 @@ public final class OrcProto {
      */
     long getLength();
 
+    // optional bytes iv = 4;
     /**
      * <code>optional bytes iv = 4;</code>
      *
@@ -10149,9 +10351,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.Stream}
    */
   public static final class Stream extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.Stream)
-      StreamOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements StreamOrBuilder {
     // Use Stream.newBuilder() to construct.
     private Stream(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10404,6 +10605,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional .orc.proto.Stream.Kind kind = 1;
     public static final int KIND_FIELD_NUMBER = 1;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.Stream.Kind kind_;
     /**
@@ -10419,6 +10621,7 @@ public final class OrcProto {
       return kind_;
     }
 
+    // optional uint32 column = 2;
     public static final int COLUMN_FIELD_NUMBER = 2;
     private int column_;
     /**
@@ -10434,6 +10637,7 @@ public final class OrcProto {
       return column_;
     }
 
+    // optional uint64 length = 3;
     public static final int LENGTH_FIELD_NUMBER = 3;
     private long length_;
     /**
@@ -10449,6 +10653,7 @@ public final class OrcProto {
       return length_;
     }
 
+    // optional bytes iv = 4;
     public static final int IV_FIELD_NUMBER = 4;
     private com.google.protobuf.ByteString iv_;
     /**
@@ -10481,8 +10686,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -10610,9 +10814,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.Stream}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.Stream)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.StreamOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.StreamOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_Stream_descriptor;
@@ -10752,6 +10955,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional .orc.proto.Stream.Kind kind = 1;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.Stream.Kind kind_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.Stream.Kind.PRESENT;
       /**
        * <code>optional .orc.proto.Stream.Kind kind = 1;</code>
@@ -10787,6 +10991,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint32 column = 2;
       private int column_ ;
       /**
        * <code>optional uint32 column = 2;</code>
@@ -10819,6 +11024,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 length = 3;
       private long length_ ;
       /**
        * <code>optional uint64 length = 3;</code>
@@ -10851,6 +11057,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional bytes iv = 4;
       private com.google.protobuf.ByteString iv_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes iv = 4;</code>
@@ -10913,10 +11120,557 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.Stream)
   }
 
-  public interface ColumnEncodingOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.ColumnEncoding)
-      com.google.protobuf.MessageOrBuilder {
+  public interface EncryptedEncodingOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional bytes iv = 1;
+    /**
+     * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the random iv
+     * </pre>
+     */
+    boolean hasIv();
+    /**
+     * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the random iv
+     * </pre>
+     */
+    com.google.protobuf.ByteString getIv();
+
+    // optional bytes columnEncoding = 2;
+    /**
+     * <code>optional bytes columnEncoding = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnEncoding serialization
+     * </pre>
+     */
+    boolean hasColumnEncoding();
+    /**
+     * <code>optional bytes columnEncoding = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnEncoding serialization
+     * </pre>
+     */
+    com.google.protobuf.ByteString getColumnEncoding();
+  }
+  /**
+   * Protobuf type {@code orc.proto.EncryptedEncoding}
+   */
+  public static final class EncryptedEncoding extends
+      com.google.protobuf.GeneratedMessage
+      implements EncryptedEncodingOrBuilder {
+    // Use EncryptedEncoding.newBuilder() to construct.
+    private EncryptedEncoding(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private EncryptedEncoding(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final EncryptedEncoding defaultInstance;
+    public static EncryptedEncoding getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public EncryptedEncoding getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private EncryptedEncoding(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              iv_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              columnEncoding_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_EncryptedEncoding_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_EncryptedEncoding_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.class, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<EncryptedEncoding> PARSER =
+        new com.google.protobuf.AbstractParser<EncryptedEncoding>() {
+      public EncryptedEncoding parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new EncryptedEncoding(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<EncryptedEncoding> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // optional bytes iv = 1;
+    public static final int IV_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString iv_;
+    /**
+     * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the random iv
+     * </pre>
+     */
+    public boolean hasIv() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional bytes iv = 1;</code>
+     *
+     * <pre>
+     * the random iv
+     * </pre>
+     */
+    public com.google.protobuf.ByteString getIv() {
+      return iv_;
+    }
+
+    // optional bytes columnEncoding = 2;
+    public static final int COLUMNENCODING_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString columnEncoding_;
+    /**
+     * <code>optional bytes columnEncoding = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnEncoding serialization
+     * </pre>
+     */
+    public boolean hasColumnEncoding() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional bytes columnEncoding = 2;</code>
+     *
+     * <pre>
+     * the encrypted ColumnEncoding serialization
+     * </pre>
+     */
+    public com.google.protobuf.ByteString getColumnEncoding() {
+      return columnEncoding_;
+    }
+
+    private void initFields() {
+      iv_ = com.google.protobuf.ByteString.EMPTY;
+      columnEncoding_ = com.google.protobuf.ByteString.EMPTY;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, iv_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, columnEncoding_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, iv_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, columnEncoding_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code orc.proto.EncryptedEncoding}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncodingOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_EncryptedEncoding_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_EncryptedEncoding_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.class, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder.class);
+      }
+
+      // Construct using org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        iv_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        columnEncoding_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_EncryptedEncoding_descriptor;
+      }
+
+      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding getDefaultInstanceForType() {
+        return org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.getDefaultInstance();
+      }
+
+      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding build() {
+        org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding buildPartial() {
+        org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding result = new org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.iv_ = iv_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.columnEncoding_ = columnEncoding_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding) {
+          return mergeFrom((org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding other) {
+        if (other == org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.getDefaultInstance()) return this;
+        if (other.hasIv()) {
+          setIv(other.getIv());
+        }
+        if (other.hasColumnEncoding()) {
+          setColumnEncoding(other.getColumnEncoding());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // optional bytes iv = 1;
+      private com.google.protobuf.ByteString iv_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the random iv
+       * </pre>
+       */
+      public boolean hasIv() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the random iv
+       * </pre>
+       */
+      public com.google.protobuf.ByteString getIv() {
+        return iv_;
+      }
+      /**
+       * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the random iv
+       * </pre>
+       */
+      public Builder setIv(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        iv_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes iv = 1;</code>
+       *
+       * <pre>
+       * the random iv
+       * </pre>
+       */
+      public Builder clearIv() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        iv_ = getDefaultInstance().getIv();
+        onChanged();
+        return this;
+      }
+
+      // optional bytes columnEncoding = 2;
+      private com.google.protobuf.ByteString columnEncoding_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes columnEncoding = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnEncoding serialization
+       * </pre>
+       */
+      public boolean hasColumnEncoding() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional bytes columnEncoding = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnEncoding serialization
+       * </pre>
+       */
+      public com.google.protobuf.ByteString getColumnEncoding() {
+        return columnEncoding_;
+      }
+      /**
+       * <code>optional bytes columnEncoding = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnEncoding serialization
+       * </pre>
+       */
+      public Builder setColumnEncoding(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        columnEncoding_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes columnEncoding = 2;</code>
+       *
+       * <pre>
+       * the encrypted ColumnEncoding serialization
+       * </pre>
+       */
+      public Builder clearColumnEncoding() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        columnEncoding_ = getDefaultInstance().getColumnEncoding();
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:orc.proto.EncryptedEncoding)
+    }
+
+    static {
+      defaultInstance = new EncryptedEncoding(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:orc.proto.EncryptedEncoding)
+  }
+
+  public interface ColumnEncodingOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // optional .orc.proto.ColumnEncoding.Kind kind = 1;
     /**
      * <code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>
      */
@@ -10926,6 +11680,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding.Kind getKind();
 
+    // optional uint32 dictionarySize = 2;
     /**
      * <code>optional uint32 dictionarySize = 2;</code>
      */
@@ -10934,14 +11689,42 @@ public final class OrcProto {
      * <code>optional uint32 dictionarySize = 2;</code>
      */
     int getDictionarySize();
+
+    // optional .orc.proto.EncryptedEncoding encrypted = 3;
+    /**
+     * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+     *
+     * <pre>
+     * If the column is encoded, the only field defined will be
+     * this one with the encrypted serialization.
+     * </pre>
+     */
+    boolean hasEncrypted();
+    /**
+     * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+     *
+     * <pre>
+     * If the column is encoded, the only field defined will be
+     * this one with the encrypted serialization.
+     * </pre>
+     */
+    org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding getEncrypted();
+    /**
+     * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+     *
+     * <pre>
+     * If the column is encoded, the only field defined will be
+     * this one with the encrypted serialization.
+     * </pre>
+     */
+    org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncodingOrBuilder getEncryptedOrBuilder();
   }
   /**
    * Protobuf type {@code orc.proto.ColumnEncoding}
    */
   public static final class ColumnEncoding extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.ColumnEncoding)
-      ColumnEncodingOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ColumnEncodingOrBuilder {
     // Use ColumnEncoding.newBuilder() to construct.
     private ColumnEncoding(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11001,6 +11784,19 @@ public final class OrcProto {
             case 16: {
               bitField0_ |= 0x00000002;
               dictionarySize_ = input.readUInt32();
+              break;
+            }
+            case 26: {
+              org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                subBuilder = encrypted_.toBuilder();
+              }
+              encrypted_ = input.readMessage(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(encrypted_);
+                encrypted_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000004;
               break;
             }
           }
@@ -11143,6 +11939,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional .orc.proto.ColumnEncoding.Kind kind = 1;
     public static final int KIND_FIELD_NUMBER = 1;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding.Kind kind_;
     /**
@@ -11158,6 +11955,7 @@ public final class OrcProto {
       return kind_;
     }
 
+    // optional uint32 dictionarySize = 2;
     public static final int DICTIONARYSIZE_FIELD_NUMBER = 2;
     private int dictionarySize_;
     /**
@@ -11173,15 +11971,52 @@ public final class OrcProto {
       return dictionarySize_;
     }
 
+    // optional .orc.proto.EncryptedEncoding encrypted = 3;
+    public static final int ENCRYPTED_FIELD_NUMBER = 3;
+    private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding encrypted_;
+    /**
+     * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+     *
+     * <pre>
+     * If the column is encoded, the only field defined will be
+     * this one with the encrypted serialization.
+     * </pre>
+     */
+    public boolean hasEncrypted() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+     *
+     * <pre>
+     * If the column is encoded, the only field defined will be
+     * this one with the encrypted serialization.
+     * </pre>
+     */
+    public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding getEncrypted() {
+      return encrypted_;
+    }
+    /**
+     * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+     *
+     * <pre>
+     * If the column is encoded, the only field defined will be
+     * this one with the encrypted serialization.
+     * </pre>
+     */
+    public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncodingOrBuilder getEncryptedOrBuilder() {
+      return encrypted_;
+    }
+
     private void initFields() {
       kind_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding.Kind.DIRECT;
       dictionarySize_ = 0;
+      encrypted_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -11195,6 +12030,9 @@ public final class OrcProto {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeUInt32(2, dictionarySize_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeMessage(3, encrypted_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -11212,6 +12050,10 @@ public final class OrcProto {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(2, dictionarySize_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, encrypted_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -11295,9 +12137,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.ColumnEncoding}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.ColumnEncoding)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncodingOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncodingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_ColumnEncoding_descriptor;
@@ -11322,6 +12163,7 @@ public final class OrcProto {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getEncryptedFieldBuilder();
         }
       }
       private static Builder create() {
@@ -11334,6 +12176,12 @@ public final class OrcProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         dictionarySize_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
+        if (encryptedBuilder_ == null) {
+          encrypted_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.getDefaultInstance();
+        } else {
+          encryptedBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -11370,6 +12218,14 @@ public final class OrcProto {
           to_bitField0_ |= 0x00000002;
         }
         result.dictionarySize_ = dictionarySize_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        if (encryptedBuilder_ == null) {
+          result.encrypted_ = encrypted_;
+        } else {
+          result.encrypted_ = encryptedBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -11391,6 +12247,9 @@ public final class OrcProto {
         }
         if (other.hasDictionarySize()) {
           setDictionarySize(other.getDictionarySize());
+        }
+        if (other.hasEncrypted()) {
+          mergeEncrypted(other.getEncrypted());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -11419,6 +12278,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional .orc.proto.ColumnEncoding.Kind kind = 1;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding.Kind kind_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding.Kind.DIRECT;
       /**
        * <code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>
@@ -11454,6 +12314,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint32 dictionarySize = 2;
       private int dictionarySize_ ;
       /**
        * <code>optional uint32 dictionarySize = 2;</code>
@@ -11486,6 +12347,168 @@ public final class OrcProto {
         return this;
       }
 
+      // optional .orc.proto.EncryptedEncoding encrypted = 3;
+      private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding encrypted_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncodingOrBuilder> encryptedBuilder_;
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public boolean hasEncrypted() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding getEncrypted() {
+        if (encryptedBuilder_ == null) {
+          return encrypted_;
+        } else {
+          return encryptedBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public Builder setEncrypted(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding value) {
+        if (encryptedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          encrypted_ = value;
+          onChanged();
+        } else {
+          encryptedBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public Builder setEncrypted(
+          org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder builderForValue) {
+        if (encryptedBuilder_ == null) {
+          encrypted_ = builderForValue.build();
+          onChanged();
+        } else {
+          encryptedBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public Builder mergeEncrypted(org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding value) {
+        if (encryptedBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              encrypted_ != org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.getDefaultInstance()) {
+            encrypted_ =
+              org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.newBuilder(encrypted_).mergeFrom(value).buildPartial();
+          } else {
+            encrypted_ = value;
+          }
+          onChanged();
+        } else {
+          encryptedBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public Builder clearEncrypted() {
+        if (encryptedBuilder_ == null) {
+          encrypted_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.getDefaultInstance();
+          onChanged();
+        } else {
+          encryptedBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder getEncryptedBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getEncryptedFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      public org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncodingOrBuilder getEncryptedOrBuilder() {
+        if (encryptedBuilder_ != null) {
+          return encryptedBuilder_.getMessageOrBuilder();
+        } else {
+          return encrypted_;
+        }
+      }
+      /**
+       * <code>optional .orc.proto.EncryptedEncoding encrypted = 3;</code>
+       *
+       * <pre>
+       * If the column is encoded, the only field defined will be
+       * this one with the encrypted serialization.
+       * </pre>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncodingOrBuilder> 
+          getEncryptedFieldBuilder() {
+        if (encryptedBuilder_ == null) {
+          encryptedBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncoding.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptedEncodingOrBuilder>(
+                  encrypted_,
+                  getParentForChildren(),
+                  isClean());
+          encrypted_ = null;
+        }
+        return encryptedBuilder_;
+      }
+
       // @@protoc_insertion_point(builder_scope:orc.proto.ColumnEncoding)
     }
 
@@ -11497,10 +12520,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.ColumnEncoding)
   }
 
-  public interface StripeFooterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.StripeFooter)
-      com.google.protobuf.MessageOrBuilder {
+  public interface StripeFooterOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .orc.proto.Stream streams = 1;
     /**
      * <code>repeated .orc.proto.Stream streams = 1;</code>
      */
@@ -11525,6 +12548,7 @@ public final class OrcProto {
     org.apache.hadoop.hive.ql.io.orc.OrcProto.StreamOrBuilder getStreamsOrBuilder(
         int index);
 
+    // repeated .orc.proto.ColumnEncoding columns = 2;
     /**
      * <code>repeated .orc.proto.ColumnEncoding columns = 2;</code>
      */
@@ -11549,6 +12573,7 @@ public final class OrcProto {
     org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncodingOrBuilder getColumnsOrBuilder(
         int index);
 
+    // optional string writerTimezone = 3;
     /**
      * <code>optional string writerTimezone = 3;</code>
      */
@@ -11567,9 +12592,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.StripeFooter}
    */
   public static final class StripeFooter extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.StripeFooter)
-      StripeFooterOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements StripeFooterOrBuilder {
     // Use StripeFooter.newBuilder() to construct.
     private StripeFooter(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11632,9 +12656,8 @@ public final class OrcProto {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              writerTimezone_ = bs;
+              writerTimezone_ = input.readBytes();
               break;
             }
           }
@@ -11683,6 +12706,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // repeated .orc.proto.Stream streams = 1;
     public static final int STREAMS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.Stream> streams_;
     /**
@@ -11718,6 +12742,7 @@ public final class OrcProto {
       return streams_.get(index);
     }
 
+    // repeated .orc.proto.ColumnEncoding columns = 2;
     public static final int COLUMNS_FIELD_NUMBER = 2;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding> columns_;
     /**
@@ -11753,6 +12778,7 @@ public final class OrcProto {
       return columns_.get(index);
     }
 
+    // optional string writerTimezone = 3;
     public static final int WRITERTIMEZONE_FIELD_NUMBER = 3;
     private java.lang.Object writerTimezone_;
     /**
@@ -11803,8 +12829,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -11925,9 +12950,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.StripeFooter}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.StripeFooter)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeFooterOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeFooterOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_StripeFooter_descriptor;
@@ -12126,6 +13150,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated .orc.proto.Stream streams = 1;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.Stream> streams_ =
         java.util.Collections.emptyList();
       private void ensureStreamsIsMutable() {
@@ -12267,8 +13292,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.Stream> values) {
         if (streamsBuilder_ == null) {
           ensureStreamsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, streams_);
+          super.addAll(values, streams_);
           onChanged();
         } else {
           streamsBuilder_.addAllMessages(values);
@@ -12366,6 +13390,7 @@ public final class OrcProto {
         return streamsBuilder_;
       }
 
+      // repeated .orc.proto.ColumnEncoding columns = 2;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding> columns_ =
         java.util.Collections.emptyList();
       private void ensureColumnsIsMutable() {
@@ -12507,8 +13532,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncoding> values) {
         if (columnsBuilder_ == null) {
           ensureColumnsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, columns_);
+          super.addAll(values, columns_);
           onChanged();
         } else {
           columnsBuilder_.addAllMessages(values);
@@ -12606,6 +13630,7 @@ public final class OrcProto {
         return columnsBuilder_;
       }
 
+      // optional string writerTimezone = 3;
       private java.lang.Object writerTimezone_ = "";
       /**
        * <code>optional string writerTimezone = 3;</code>
@@ -12619,12 +13644,9 @@ public final class OrcProto {
       public java.lang.String getWriterTimezone() {
         java.lang.Object ref = writerTimezone_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            writerTimezone_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          writerTimezone_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -12693,10 +13715,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.StripeFooter)
   }
 
-  public interface TypeOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.Type)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TypeOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional .orc.proto.Type.Kind kind = 1;
     /**
      * <code>optional .orc.proto.Type.Kind kind = 1;</code>
      */
@@ -12706,6 +13728,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.Type.Kind getKind();
 
+    // repeated uint32 subtypes = 2 [packed = true];
     /**
      * <code>repeated uint32 subtypes = 2 [packed = true];</code>
      */
@@ -12719,11 +13742,12 @@ public final class OrcProto {
      */
     int getSubtypes(int index);
 
+    // repeated string fieldNames = 3;
     /**
      * <code>repeated string fieldNames = 3;</code>
      */
-    com.google.protobuf.ProtocolStringList
-        getFieldNamesList();
+    java.util.List<java.lang.String>
+    getFieldNamesList();
     /**
      * <code>repeated string fieldNames = 3;</code>
      */
@@ -12738,6 +13762,7 @@ public final class OrcProto {
     com.google.protobuf.ByteString
         getFieldNamesBytes(int index);
 
+    // optional uint32 maximumLength = 4;
     /**
      * <code>optional uint32 maximumLength = 4;</code>
      */
@@ -12747,6 +13772,7 @@ public final class OrcProto {
      */
     int getMaximumLength();
 
+    // optional uint32 precision = 5;
     /**
      * <code>optional uint32 precision = 5;</code>
      */
@@ -12756,6 +13782,7 @@ public final class OrcProto {
      */
     int getPrecision();
 
+    // optional uint32 scale = 6;
     /**
      * <code>optional uint32 scale = 6;</code>
      */
@@ -12769,9 +13796,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.Type}
    */
   public static final class Type extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.Type)
-      TypeOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements TypeOrBuilder {
     // Use Type.newBuilder() to construct.
     private Type(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -12850,12 +13876,11 @@ public final class OrcProto {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 fieldNames_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000004;
               }
-              fieldNames_.add(bs);
+              fieldNames_.add(input.readBytes());
               break;
             }
             case 32: {
@@ -12885,7 +13910,7 @@ public final class OrcProto {
           subtypes_ = java.util.Collections.unmodifiableList(subtypes_);
         }
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          fieldNames_ = fieldNames_.getUnmodifiableView();
+          fieldNames_ = new com.google.protobuf.UnmodifiableLazyStringList(fieldNames_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -13145,6 +14170,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional .orc.proto.Type.Kind kind = 1;
     public static final int KIND_FIELD_NUMBER = 1;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.Type.Kind kind_;
     /**
@@ -13160,6 +14186,7 @@ public final class OrcProto {
       return kind_;
     }
 
+    // repeated uint32 subtypes = 2 [packed = true];
     public static final int SUBTYPES_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Integer> subtypes_;
     /**
@@ -13183,12 +14210,13 @@ public final class OrcProto {
     }
     private int subtypesMemoizedSerializedSize = -1;
 
+    // repeated string fieldNames = 3;
     public static final int FIELDNAMES_FIELD_NUMBER = 3;
     private com.google.protobuf.LazyStringList fieldNames_;
     /**
      * <code>repeated string fieldNames = 3;</code>
      */
-    public com.google.protobuf.ProtocolStringList
+    public java.util.List<java.lang.String>
         getFieldNamesList() {
       return fieldNames_;
     }
@@ -13212,6 +14240,7 @@ public final class OrcProto {
       return fieldNames_.getByteString(index);
     }
 
+    // optional uint32 maximumLength = 4;
     public static final int MAXIMUMLENGTH_FIELD_NUMBER = 4;
     private int maximumLength_;
     /**
@@ -13227,6 +14256,7 @@ public final class OrcProto {
       return maximumLength_;
     }
 
+    // optional uint32 precision = 5;
     public static final int PRECISION_FIELD_NUMBER = 5;
     private int precision_;
     /**
@@ -13242,6 +14272,7 @@ public final class OrcProto {
       return precision_;
     }
 
+    // optional uint32 scale = 6;
     public static final int SCALE_FIELD_NUMBER = 6;
     private int scale_;
     /**
@@ -13268,8 +14299,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -13430,9 +14460,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.Type}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.Type)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.TypeOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.TypeOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_Type_descriptor;
@@ -13515,7 +14544,8 @@ public final class OrcProto {
         }
         result.subtypes_ = subtypes_;
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          fieldNames_ = fieldNames_.getUnmodifiableView();
+          fieldNames_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              fieldNames_);
           bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.fieldNames_ = fieldNames_;
@@ -13606,6 +14636,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional .orc.proto.Type.Kind kind = 1;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.Type.Kind kind_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.Type.Kind.BOOLEAN;
       /**
        * <code>optional .orc.proto.Type.Kind kind = 1;</code>
@@ -13641,6 +14672,7 @@ public final class OrcProto {
         return this;
       }
 
+      // repeated uint32 subtypes = 2 [packed = true];
       private java.util.List<java.lang.Integer> subtypes_ = java.util.Collections.emptyList();
       private void ensureSubtypesIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
@@ -13692,8 +14724,7 @@ public final class OrcProto {
       public Builder addAllSubtypes(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureSubtypesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, subtypes_);
+        super.addAll(values, subtypes_);
         onChanged();
         return this;
       }
@@ -13707,6 +14738,7 @@ public final class OrcProto {
         return this;
       }
 
+      // repeated string fieldNames = 3;
       private com.google.protobuf.LazyStringList fieldNames_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureFieldNamesIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
@@ -13717,9 +14749,9 @@ public final class OrcProto {
       /**
        * <code>repeated string fieldNames = 3;</code>
        */
-      public com.google.protobuf.ProtocolStringList
+      public java.util.List<java.lang.String>
           getFieldNamesList() {
-        return fieldNames_.getUnmodifiableView();
+        return java.util.Collections.unmodifiableList(fieldNames_);
       }
       /**
        * <code>repeated string fieldNames = 3;</code>
@@ -13772,8 +14804,7 @@ public final class OrcProto {
       public Builder addAllFieldNames(
           java.lang.Iterable<java.lang.String> values) {
         ensureFieldNamesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, fieldNames_);
+        super.addAll(values, fieldNames_);
         onChanged();
         return this;
       }
@@ -13800,6 +14831,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint32 maximumLength = 4;
       private int maximumLength_ ;
       /**
        * <code>optional uint32 maximumLength = 4;</code>
@@ -13832,6 +14864,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint32 precision = 5;
       private int precision_ ;
       /**
        * <code>optional uint32 precision = 5;</code>
@@ -13864,6 +14897,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint32 scale = 6;
       private int scale_ ;
       /**
        * <code>optional uint32 scale = 6;</code>
@@ -13907,10 +14941,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.Type)
   }
 
-  public interface StripeInformationOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.StripeInformation)
-      com.google.protobuf.MessageOrBuilder {
+  public interface StripeInformationOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional uint64 offset = 1;
     /**
      * <code>optional uint64 offset = 1;</code>
      */
@@ -13920,6 +14954,7 @@ public final class OrcProto {
      */
     long getOffset();
 
+    // optional uint64 indexLength = 2;
     /**
      * <code>optional uint64 indexLength = 2;</code>
      */
@@ -13929,6 +14964,7 @@ public final class OrcProto {
      */
     long getIndexLength();
 
+    // optional uint64 dataLength = 3;
     /**
      * <code>optional uint64 dataLength = 3;</code>
      */
@@ -13938,6 +14974,7 @@ public final class OrcProto {
      */
     long getDataLength();
 
+    // optional uint64 footerLength = 4;
     /**
      * <code>optional uint64 footerLength = 4;</code>
      */
@@ -13947,6 +14984,7 @@ public final class OrcProto {
      */
     long getFooterLength();
 
+    // optional uint64 numberOfRows = 5;
     /**
      * <code>optional uint64 numberOfRows = 5;</code>
      */
@@ -13960,9 +14998,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.StripeInformation}
    */
   public static final class StripeInformation extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.StripeInformation)
-      StripeInformationOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements StripeInformationOrBuilder {
     // Use StripeInformation.newBuilder() to construct.
     private StripeInformation(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -14073,6 +15110,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional uint64 offset = 1;
     public static final int OFFSET_FIELD_NUMBER = 1;
     private long offset_;
     /**
@@ -14088,6 +15126,7 @@ public final class OrcProto {
       return offset_;
     }
 
+    // optional uint64 indexLength = 2;
     public static final int INDEXLENGTH_FIELD_NUMBER = 2;
     private long indexLength_;
     /**
@@ -14103,6 +15142,7 @@ public final class OrcProto {
       return indexLength_;
     }
 
+    // optional uint64 dataLength = 3;
     public static final int DATALENGTH_FIELD_NUMBER = 3;
     private long dataLength_;
     /**
@@ -14118,6 +15158,7 @@ public final class OrcProto {
       return dataLength_;
     }
 
+    // optional uint64 footerLength = 4;
     public static final int FOOTERLENGTH_FIELD_NUMBER = 4;
     private long footerLength_;
     /**
@@ -14133,6 +15174,7 @@ public final class OrcProto {
       return footerLength_;
     }
 
+    // optional uint64 numberOfRows = 5;
     public static final int NUMBEROFROWS_FIELD_NUMBER = 5;
     private long numberOfRows_;
     /**
@@ -14158,8 +15200,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -14294,9 +15335,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.StripeInformation}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.StripeInformation)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeInformationOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeInformationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_StripeInformation_descriptor;
@@ -14445,6 +15485,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional uint64 offset = 1;
       private long offset_ ;
       /**
        * <code>optional uint64 offset = 1;</code>
@@ -14477,6 +15518,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 indexLength = 2;
       private long indexLength_ ;
       /**
        * <code>optional uint64 indexLength = 2;</code>
@@ -14509,6 +15551,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 dataLength = 3;
       private long dataLength_ ;
       /**
        * <code>optional uint64 dataLength = 3;</code>
@@ -14541,6 +15584,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 footerLength = 4;
       private long footerLength_ ;
       /**
        * <code>optional uint64 footerLength = 4;</code>
@@ -14573,6 +15617,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 numberOfRows = 5;
       private long numberOfRows_ ;
       /**
        * <code>optional uint64 numberOfRows = 5;</code>
@@ -14616,10 +15661,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.StripeInformation)
   }
 
-  public interface UserMetadataItemOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.UserMetadataItem)
-      com.google.protobuf.MessageOrBuilder {
+  public interface UserMetadataItemOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string name = 1;
     /**
      * <code>optional string name = 1;</code>
      */
@@ -14634,6 +15679,7 @@ public final class OrcProto {
     com.google.protobuf.ByteString
         getNameBytes();
 
+    // optional bytes value = 2;
     /**
      * <code>optional bytes value = 2;</code>
      */
@@ -14647,9 +15693,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.UserMetadataItem}
    */
   public static final class UserMetadataItem extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.UserMetadataItem)
-      UserMetadataItemOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements UserMetadataItemOrBuilder {
     // Use UserMetadataItem.newBuilder() to construct.
     private UserMetadataItem(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -14696,9 +15741,8 @@ public final class OrcProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              name_ = bs;
+              name_ = input.readBytes();
               break;
             }
             case 18: {
@@ -14746,6 +15790,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional string name = 1;
     public static final int NAME_FIELD_NUMBER = 1;
     private java.lang.Object name_;
     /**
@@ -14788,6 +15833,7 @@ public final class OrcProto {
       }
     }
 
+    // optional bytes value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString value_;
     /**
@@ -14810,8 +15856,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -14925,9 +15970,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.UserMetadataItem}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.UserMetadataItem)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItemOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItemOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_UserMetadataItem_descriptor;
@@ -15051,6 +16095,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional string name = 1;
       private java.lang.Object name_ = "";
       /**
        * <code>optional string name = 1;</code>
@@ -15064,12 +16109,9 @@ public final class OrcProto {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            name_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          name_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -15127,6 +16169,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional bytes value = 2;
       private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes value = 2;</code>
@@ -15173,10 +16216,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.UserMetadataItem)
   }
 
-  public interface StripeStatisticsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.StripeStatistics)
-      com.google.protobuf.MessageOrBuilder {
+  public interface StripeStatisticsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .orc.proto.ColumnStatistics colStats = 1;
     /**
      * <code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>
      */
@@ -15205,9 +16248,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.StripeStatistics}
    */
   public static final class StripeStatistics extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.StripeStatistics)
-      StripeStatisticsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements StripeStatisticsOrBuilder {
     // Use StripeStatistics.newBuilder() to construct.
     private StripeStatistics(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -15303,6 +16345,7 @@ public final class OrcProto {
       return PARSER;
     }
 
+    // repeated .orc.proto.ColumnStatistics colStats = 1;
     public static final int COLSTATS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics> colStats_;
     /**
@@ -15344,8 +16387,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -15452,9 +16494,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.StripeStatistics}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.StripeStatistics)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeStatisticsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeStatisticsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_StripeStatistics_descriptor;
@@ -15598,6 +16639,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated .orc.proto.ColumnStatistics colStats = 1;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics> colStats_ =
         java.util.Collections.emptyList();
       private void ensureColStatsIsMutable() {
@@ -15739,8 +16781,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics> values) {
         if (colStatsBuilder_ == null) {
           ensureColStatsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, colStats_);
+          super.addAll(values, colStats_);
           onChanged();
         } else {
           colStatsBuilder_.addAllMessages(values);
@@ -15849,10 +16890,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.StripeStatistics)
   }
 
-  public interface MetadataOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.Metadata)
-      com.google.protobuf.MessageOrBuilder {
+  public interface MetadataOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .orc.proto.StripeStatistics stripeStats = 1;
     /**
      * <code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>
      */
@@ -15881,9 +16922,8 @@ public final class OrcProto {
    * Protobuf type {@code orc.proto.Metadata}
    */
   public static final class Metadata extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.Metadata)
-      MetadataOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements MetadataOrBuilder {
     // Use Metadata.newBuilder() to construct.
     private Metadata(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -15979,6 +17019,7 @@ public final class OrcProto {
       return PARSER;
     }
 
+    // repeated .orc.proto.StripeStatistics stripeStats = 1;
     public static final int STRIPESTATS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeStatistics> stripeStats_;
     /**
@@ -16020,8 +17061,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -16128,9 +17168,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.Metadata}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.Metadata)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.MetadataOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.MetadataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_Metadata_descriptor;
@@ -16274,6 +17313,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated .orc.proto.StripeStatistics stripeStats = 1;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeStatistics> stripeStats_ =
         java.util.Collections.emptyList();
       private void ensureStripeStatsIsMutable() {
@@ -16415,8 +17455,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeStatistics> values) {
         if (stripeStatsBuilder_ == null) {
           ensureStripeStatsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, stripeStats_);
+          super.addAll(values, stripeStats_);
           onChanged();
         } else {
           stripeStatsBuilder_.addAllMessages(values);
@@ -16525,10 +17564,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.Metadata)
   }
 
-  public interface ColumnEncryptionOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.ColumnEncryption)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ColumnEncryptionOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated uint32 columnId = 1;
     /**
      * <code>repeated uint32 columnId = 1;</code>
      */
@@ -16542,6 +17581,7 @@ public final class OrcProto {
      */
     int getColumnId(int index);
 
+    // optional string keyName = 2;
     /**
      * <code>optional string keyName = 2;</code>
      */
@@ -16556,6 +17596,7 @@ public final class OrcProto {
     com.google.protobuf.ByteString
         getKeyNameBytes();
 
+    // optional uint32 keyVersion = 3;
     /**
      * <code>optional uint32 keyVersion = 3;</code>
      */
@@ -16565,6 +17606,7 @@ public final class OrcProto {
      */
     int getKeyVersion();
 
+    // optional .orc.proto.EncryptionAlgorithm algorithm = 4;
     /**
      * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
      */
@@ -16582,9 +17624,8 @@ public final class OrcProto {
    * </pre>
    */
   public static final class ColumnEncryption extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.ColumnEncryption)
-      ColumnEncryptionOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ColumnEncryptionOrBuilder {
     // Use ColumnEncryption.newBuilder() to construct.
     private ColumnEncryption(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -16652,9 +17693,8 @@ public final class OrcProto {
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              keyName_ = bs;
+              keyName_ = input.readBytes();
               break;
             }
             case 24: {
@@ -16716,6 +17756,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // repeated uint32 columnId = 1;
     public static final int COLUMNID_FIELD_NUMBER = 1;
     private java.util.List<java.lang.Integer> columnId_;
     /**
@@ -16738,6 +17779,7 @@ public final class OrcProto {
       return columnId_.get(index);
     }
 
+    // optional string keyName = 2;
     public static final int KEYNAME_FIELD_NUMBER = 2;
     private java.lang.Object keyName_;
     /**
@@ -16780,6 +17822,7 @@ public final class OrcProto {
       }
     }
 
+    // optional uint32 keyVersion = 3;
     public static final int KEYVERSION_FIELD_NUMBER = 3;
     private int keyVersion_;
     /**
@@ -16795,6 +17838,7 @@ public final class OrcProto {
       return keyVersion_;
     }
 
+    // optional .orc.proto.EncryptionAlgorithm algorithm = 4;
     public static final int ALGORITHM_FIELD_NUMBER = 4;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm algorithm_;
     /**
@@ -16819,8 +17863,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -16957,9 +18000,8 @@ public final class OrcProto {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.ColumnEncryption)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_ColumnEncryption_descriptor;
@@ -17109,6 +18151,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // repeated uint32 columnId = 1;
       private java.util.List<java.lang.Integer> columnId_ = java.util.Collections.emptyList();
       private void ensureColumnIdIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -17160,8 +18203,7 @@ public final class OrcProto {
       public Builder addAllColumnId(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureColumnIdIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, columnId_);
+        super.addAll(values, columnId_);
         onChanged();
         return this;
       }
@@ -17175,6 +18217,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional string keyName = 2;
       private java.lang.Object keyName_ = "";
       /**
        * <code>optional string keyName = 2;</code>
@@ -17188,12 +18231,9 @@ public final class OrcProto {
       public java.lang.String getKeyName() {
         java.lang.Object ref = keyName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            keyName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          keyName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -17251,6 +18291,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint32 keyVersion = 3;
       private int keyVersion_ ;
       /**
        * <code>optional uint32 keyVersion = 3;</code>
@@ -17283,6 +18324,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional .orc.proto.EncryptionAlgorithm algorithm = 4;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm algorithm_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.EncryptionAlgorithm.UNKNOWN;
       /**
        * <code>optional .orc.proto.EncryptionAlgorithm algorithm = 4;</code>
@@ -17329,10 +18371,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.ColumnEncryption)
   }
 
-  public interface FooterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.Footer)
-      com.google.protobuf.MessageOrBuilder {
+  public interface FooterOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional uint64 headerLength = 1;
     /**
      * <code>optional uint64 headerLength = 1;</code>
      */
@@ -17342,6 +18384,7 @@ public final class OrcProto {
      */
     long getHeaderLength();
 
+    // optional uint64 contentLength = 2;
     /**
      * <code>optional uint64 contentLength = 2;</code>
      */
@@ -17351,6 +18394,7 @@ public final class OrcProto {
      */
     long getContentLength();
 
+    // repeated .orc.proto.StripeInformation stripes = 3;
     /**
      * <code>repeated .orc.proto.StripeInformation stripes = 3;</code>
      */
@@ -17375,6 +18419,7 @@ public final class OrcProto {
     org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeInformationOrBuilder getStripesOrBuilder(
         int index);
 
+    // repeated .orc.proto.Type types = 4;
     /**
      * <code>repeated .orc.proto.Type types = 4;</code>
      */
@@ -17399,6 +18444,7 @@ public final class OrcProto {
     org.apache.hadoop.hive.ql.io.orc.OrcProto.TypeOrBuilder getTypesOrBuilder(
         int index);
 
+    // repeated .orc.proto.UserMetadataItem metadata = 5;
     /**
      * <code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>
      */
@@ -17423,6 +18469,7 @@ public final class OrcProto {
     org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItemOrBuilder getMetadataOrBuilder(
         int index);
 
+    // optional uint64 numberOfRows = 6;
     /**
      * <code>optional uint64 numberOfRows = 6;</code>
      */
@@ -17432,6 +18479,7 @@ public final class OrcProto {
      */
     long getNumberOfRows();
 
+    // repeated .orc.proto.ColumnStatistics statistics = 7;
     /**
      * <code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>
      */
@@ -17456,6 +18504,7 @@ public final class OrcProto {
     org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatisticsOrBuilder getStatisticsOrBuilder(
         int index);
 
+    // optional uint32 rowIndexStride = 8;
     /**
      * <code>optional uint32 rowIndexStride = 8;</code>
      */
@@ -17465,7 +18514,6 @@ public final class OrcProto {
      */
     int getRowIndexStride();
 
-<<<<<<< HEAD
     // optional uint64 stripeSize = 9;
     /**
      * <code>optional uint64 stripeSize = 9;</code>
@@ -17483,39 +18531,38 @@ public final class OrcProto {
      * </pre>
      */
     long getStripeSize();
-=======
+
+    // repeated .orc.proto.ColumnEncryption encryption = 10;
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption> 
         getEncryptionList();
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption getEncryption(int index);
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     int getEncryptionCount();
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     java.util.List<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder> 
         getEncryptionOrBuilderList();
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder getEncryptionOrBuilder(
         int index);
->>>>>>> 1411187... work in progress
   }
   /**
    * Protobuf type {@code orc.proto.Footer}
    */
   public static final class Footer extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.Footer)
-      FooterOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements FooterOrBuilder {
     // Use Footer.newBuilder() to construct.
     private Footer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -17613,18 +18660,17 @@ public final class OrcProto {
               rowIndexStride_ = input.readUInt32();
               break;
             }
-<<<<<<< HEAD
             case 72: {
               bitField0_ |= 0x00000010;
               stripeSize_ = input.readUInt64();
-=======
-            case 74: {
-              if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+              break;
+            }
+            case 82: {
+              if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
                 encryption_ = new java.util.ArrayList<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption>();
-                mutable_bitField0_ |= 0x00000100;
+                mutable_bitField0_ |= 0x00000200;
               }
               encryption_.add(input.readMessage(org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.PARSER, extensionRegistry));
->>>>>>> 1411187... work in progress
               break;
             }
           }
@@ -17647,7 +18693,7 @@ public final class OrcProto {
         if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
           statistics_ = java.util.Collections.unmodifiableList(statistics_);
         }
-        if (((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+        if (((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
           encryption_ = java.util.Collections.unmodifiableList(encryption_);
         }
         this.unknownFields = unknownFields.build();
@@ -17682,6 +18728,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional uint64 headerLength = 1;
     public static final int HEADERLENGTH_FIELD_NUMBER = 1;
     private long headerLength_;
     /**
@@ -17697,6 +18744,7 @@ public final class OrcProto {
       return headerLength_;
     }
 
+    // optional uint64 contentLength = 2;
     public static final int CONTENTLENGTH_FIELD_NUMBER = 2;
     private long contentLength_;
     /**
@@ -17712,6 +18760,7 @@ public final class OrcProto {
       return contentLength_;
     }
 
+    // repeated .orc.proto.StripeInformation stripes = 3;
     public static final int STRIPES_FIELD_NUMBER = 3;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeInformation> stripes_;
     /**
@@ -17747,6 +18796,7 @@ public final class OrcProto {
       return stripes_.get(index);
     }
 
+    // repeated .orc.proto.Type types = 4;
     public static final int TYPES_FIELD_NUMBER = 4;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.Type> types_;
     /**
@@ -17782,6 +18832,7 @@ public final class OrcProto {
       return types_.get(index);
     }
 
+    // repeated .orc.proto.UserMetadataItem metadata = 5;
     public static final int METADATA_FIELD_NUMBER = 5;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItem> metadata_;
     /**
@@ -17817,6 +18868,7 @@ public final class OrcProto {
       return metadata_.get(index);
     }
 
+    // optional uint64 numberOfRows = 6;
     public static final int NUMBEROFROWS_FIELD_NUMBER = 6;
     private long numberOfRows_;
     /**
@@ -17832,6 +18884,7 @@ public final class OrcProto {
       return numberOfRows_;
     }
 
+    // repeated .orc.proto.ColumnStatistics statistics = 7;
     public static final int STATISTICS_FIELD_NUMBER = 7;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics> statistics_;
     /**
@@ -17867,6 +18920,7 @@ public final class OrcProto {
       return statistics_.get(index);
     }
 
+    // optional uint32 rowIndexStride = 8;
     public static final int ROWINDEXSTRIDE_FIELD_NUMBER = 8;
     private int rowIndexStride_;
     /**
@@ -17882,7 +18936,6 @@ public final class OrcProto {
       return rowIndexStride_;
     }
 
-<<<<<<< HEAD
     // optional uint64 stripeSize = 9;
     public static final int STRIPESIZE_FIELD_NUMBER = 9;
     private long stripeSize_;
@@ -17905,41 +18958,42 @@ public final class OrcProto {
      */
     public long getStripeSize() {
       return stripeSize_;
-=======
-    public static final int ENCRYPTION_FIELD_NUMBER = 9;
+    }
+
+    // repeated .orc.proto.ColumnEncryption encryption = 10;
+    public static final int ENCRYPTION_FIELD_NUMBER = 10;
     private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption> encryption_;
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     public java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption> getEncryptionList() {
       return encryption_;
     }
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     public java.util.List<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder> 
         getEncryptionOrBuilderList() {
       return encryption_;
     }
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     public int getEncryptionCount() {
       return encryption_.size();
     }
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     public org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption getEncryption(int index) {
       return encryption_.get(index);
     }
     /**
-     * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+     * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
      */
     public org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder getEncryptionOrBuilder(
         int index) {
       return encryption_.get(index);
->>>>>>> 1411187... work in progress
     }
 
     private void initFields() {
@@ -17951,17 +19005,13 @@ public final class OrcProto {
       numberOfRows_ = 0L;
       statistics_ = java.util.Collections.emptyList();
       rowIndexStride_ = 0;
-<<<<<<< HEAD
       stripeSize_ = 0L;
-=======
       encryption_ = java.util.Collections.emptyList();
->>>>>>> 1411187... work in progress
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -17994,13 +19044,11 @@ public final class OrcProto {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeUInt32(8, rowIndexStride_);
       }
-<<<<<<< HEAD
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeUInt64(9, stripeSize_);
-=======
+      }
       for (int i = 0; i < encryption_.size(); i++) {
-        output.writeMessage(9, encryption_.get(i));
->>>>>>> 1411187... work in progress
+        output.writeMessage(10, encryption_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -18043,15 +19091,13 @@ public final class OrcProto {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(8, rowIndexStride_);
       }
-<<<<<<< HEAD
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(9, stripeSize_);
-=======
+      }
       for (int i = 0; i < encryption_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, encryption_.get(i));
->>>>>>> 1411187... work in progress
+          .computeMessageSize(10, encryption_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -18135,9 +19181,8 @@ public final class OrcProto {
      * Protobuf type {@code orc.proto.Footer}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.Footer)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.FooterOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.FooterOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_Footer_descriptor;
@@ -18207,17 +19252,14 @@ public final class OrcProto {
         }
         rowIndexStride_ = 0;
         bitField0_ = (bitField0_ & ~0x00000080);
-<<<<<<< HEAD
         stripeSize_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000100);
-=======
         if (encryptionBuilder_ == null) {
           encryption_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000100);
+          bitField0_ = (bitField0_ & ~0x00000200);
         } else {
           encryptionBuilder_.clear();
         }
->>>>>>> 1411187... work in progress
         return this;
       }
 
@@ -18298,22 +19340,19 @@ public final class OrcProto {
           to_bitField0_ |= 0x00000008;
         }
         result.rowIndexStride_ = rowIndexStride_;
-<<<<<<< HEAD
         if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
           to_bitField0_ |= 0x00000010;
         }
         result.stripeSize_ = stripeSize_;
-=======
         if (encryptionBuilder_ == null) {
-          if (((bitField0_ & 0x00000100) == 0x00000100)) {
+          if (((bitField0_ & 0x00000200) == 0x00000200)) {
             encryption_ = java.util.Collections.unmodifiableList(encryption_);
-            bitField0_ = (bitField0_ & ~0x00000100);
+            bitField0_ = (bitField0_ & ~0x00000200);
           }
           result.encryption_ = encryption_;
         } else {
           result.encryption_ = encryptionBuilder_.build();
         }
->>>>>>> 1411187... work in progress
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -18446,15 +19485,14 @@ public final class OrcProto {
         if (other.hasRowIndexStride()) {
           setRowIndexStride(other.getRowIndexStride());
         }
-<<<<<<< HEAD
         if (other.hasStripeSize()) {
           setStripeSize(other.getStripeSize());
-=======
+        }
         if (encryptionBuilder_ == null) {
           if (!other.encryption_.isEmpty()) {
             if (encryption_.isEmpty()) {
               encryption_ = other.encryption_;
-              bitField0_ = (bitField0_ & ~0x00000100);
+              bitField0_ = (bitField0_ & ~0x00000200);
             } else {
               ensureEncryptionIsMutable();
               encryption_.addAll(other.encryption_);
@@ -18467,7 +19505,7 @@ public final class OrcProto {
               encryptionBuilder_.dispose();
               encryptionBuilder_ = null;
               encryption_ = other.encryption_;
-              bitField0_ = (bitField0_ & ~0x00000100);
+              bitField0_ = (bitField0_ & ~0x00000200);
               encryptionBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getEncryptionFieldBuilder() : null;
@@ -18475,7 +19513,6 @@ public final class OrcProto {
               encryptionBuilder_.addAllMessages(other.encryption_);
             }
           }
->>>>>>> 1411187... work in progress
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -18504,6 +19541,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional uint64 headerLength = 1;
       private long headerLength_ ;
       /**
        * <code>optional uint64 headerLength = 1;</code>
@@ -18536,6 +19574,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 contentLength = 2;
       private long contentLength_ ;
       /**
        * <code>optional uint64 contentLength = 2;</code>
@@ -18568,6 +19607,7 @@ public final class OrcProto {
         return this;
       }
 
+      // repeated .orc.proto.StripeInformation stripes = 3;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeInformation> stripes_ =
         java.util.Collections.emptyList();
       private void ensureStripesIsMutable() {
@@ -18709,8 +19749,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeInformation> values) {
         if (stripesBuilder_ == null) {
           ensureStripesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, stripes_);
+          super.addAll(values, stripes_);
           onChanged();
         } else {
           stripesBuilder_.addAllMessages(values);
@@ -18808,6 +19847,7 @@ public final class OrcProto {
         return stripesBuilder_;
       }
 
+      // repeated .orc.proto.Type types = 4;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.Type> types_ =
         java.util.Collections.emptyList();
       private void ensureTypesIsMutable() {
@@ -18949,8 +19989,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.Type> values) {
         if (typesBuilder_ == null) {
           ensureTypesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, types_);
+          super.addAll(values, types_);
           onChanged();
         } else {
           typesBuilder_.addAllMessages(values);
@@ -19048,6 +20087,7 @@ public final class OrcProto {
         return typesBuilder_;
       }
 
+      // repeated .orc.proto.UserMetadataItem metadata = 5;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItem> metadata_ =
         java.util.Collections.emptyList();
       private void ensureMetadataIsMutable() {
@@ -19189,8 +20229,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItem> values) {
         if (metadataBuilder_ == null) {
           ensureMetadataIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, metadata_);
+          super.addAll(values, metadata_);
           onChanged();
         } else {
           metadataBuilder_.addAllMessages(values);
@@ -19288,6 +20327,7 @@ public final class OrcProto {
         return metadataBuilder_;
       }
 
+      // optional uint64 numberOfRows = 6;
       private long numberOfRows_ ;
       /**
        * <code>optional uint64 numberOfRows = 6;</code>
@@ -19320,6 +20360,7 @@ public final class OrcProto {
         return this;
       }
 
+      // repeated .orc.proto.ColumnStatistics statistics = 7;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics> statistics_ =
         java.util.Collections.emptyList();
       private void ensureStatisticsIsMutable() {
@@ -19461,8 +20502,7 @@ public final class OrcProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnStatistics> values) {
         if (statisticsBuilder_ == null) {
           ensureStatisticsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, statistics_);
+          super.addAll(values, statistics_);
           onChanged();
         } else {
           statisticsBuilder_.addAllMessages(values);
@@ -19560,6 +20600,7 @@ public final class OrcProto {
         return statisticsBuilder_;
       }
 
+      // optional uint32 rowIndexStride = 8;
       private int rowIndexStride_ ;
       /**
        * <code>optional uint32 rowIndexStride = 8;</code>
@@ -19592,7 +20633,6 @@ public final class OrcProto {
         return this;
       }
 
-<<<<<<< HEAD
       // optional uint64 stripeSize = 9;
       private long stripeSize_ ;
       /**
@@ -19641,13 +20681,14 @@ public final class OrcProto {
         onChanged();
         return this;
       }
-=======
+
+      // repeated .orc.proto.ColumnEncryption encryption = 10;
       private java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption> encryption_ =
         java.util.Collections.emptyList();
       private void ensureEncryptionIsMutable() {
-        if (!((bitField0_ & 0x00000100) == 0x00000100)) {
+        if (!((bitField0_ & 0x00000200) == 0x00000200)) {
           encryption_ = new java.util.ArrayList<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption>(encryption_);
-          bitField0_ |= 0x00000100;
+          bitField0_ |= 0x00000200;
          }
       }
 
@@ -19655,7 +20696,7 @@ public final class OrcProto {
           org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder> encryptionBuilder_;
 
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption> getEncryptionList() {
         if (encryptionBuilder_ == null) {
@@ -19665,7 +20706,7 @@ public final class OrcProto {
         }
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public int getEncryptionCount() {
         if (encryptionBuilder_ == null) {
@@ -19675,7 +20716,7 @@ public final class OrcProto {
         }
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption getEncryption(int index) {
         if (encryptionBuilder_ == null) {
@@ -19685,7 +20726,7 @@ public final class OrcProto {
         }
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder setEncryption(
           int index, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption value) {
@@ -19702,7 +20743,7 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder setEncryption(
           int index, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder builderForValue) {
@@ -19716,7 +20757,7 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder addEncryption(org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption value) {
         if (encryptionBuilder_ == null) {
@@ -19732,7 +20773,7 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder addEncryption(
           int index, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption value) {
@@ -19749,7 +20790,7 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder addEncryption(
           org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder builderForValue) {
@@ -19763,7 +20804,7 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder addEncryption(
           int index, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder builderForValue) {
@@ -19777,14 +20818,13 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder addAllEncryption(
           java.lang.Iterable<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption> values) {
         if (encryptionBuilder_ == null) {
           ensureEncryptionIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, encryption_);
+          super.addAll(values, encryption_);
           onChanged();
         } else {
           encryptionBuilder_.addAllMessages(values);
@@ -19792,12 +20832,12 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder clearEncryption() {
         if (encryptionBuilder_ == null) {
           encryption_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000100);
+          bitField0_ = (bitField0_ & ~0x00000200);
           onChanged();
         } else {
           encryptionBuilder_.clear();
@@ -19805,7 +20845,7 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public Builder removeEncryption(int index) {
         if (encryptionBuilder_ == null) {
@@ -19818,14 +20858,14 @@ public final class OrcProto {
         return this;
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder getEncryptionBuilder(
           int index) {
         return getEncryptionFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder getEncryptionOrBuilder(
           int index) {
@@ -19835,7 +20875,7 @@ public final class OrcProto {
         }
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public java.util.List<? extends org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder> 
            getEncryptionOrBuilderList() {
@@ -19846,14 +20886,14 @@ public final class OrcProto {
         }
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder addEncryptionBuilder() {
         return getEncryptionFieldBuilder().addBuilder(
             org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.getDefaultInstance());
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder addEncryptionBuilder(
           int index) {
@@ -19861,7 +20901,7 @@ public final class OrcProto {
             index, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.getDefaultInstance());
       }
       /**
-       * <code>repeated .orc.proto.ColumnEncryption encryption = 9;</code>
+       * <code>repeated .orc.proto.ColumnEncryption encryption = 10;</code>
        */
       public java.util.List<org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder> 
            getEncryptionBuilderList() {
@@ -19874,14 +20914,13 @@ public final class OrcProto {
           encryptionBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryption.Builder, org.apache.hadoop.hive.ql.io.orc.OrcProto.ColumnEncryptionOrBuilder>(
                   encryption_,
-                  ((bitField0_ & 0x00000100) == 0x00000100),
+                  ((bitField0_ & 0x00000200) == 0x00000200),
                   getParentForChildren(),
                   isClean());
           encryption_ = null;
         }
         return encryptionBuilder_;
       }
->>>>>>> 1411187... work in progress
 
       // @@protoc_insertion_point(builder_scope:orc.proto.Footer)
     }
@@ -19894,10 +20933,10 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.Footer)
   }
 
-  public interface PostScriptOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:orc.proto.PostScript)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PostScriptOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional uint64 footerLength = 1;
     /**
      * <code>optional uint64 footerLength = 1;</code>
      */
@@ -19907,6 +20946,7 @@ public final class OrcProto {
      */
     long getFooterLength();
 
+    // optional .orc.proto.CompressionKind compression = 2;
     /**
      * <code>optional .orc.proto.CompressionKind compression = 2;</code>
      */
@@ -19916,6 +20956,7 @@ public final class OrcProto {
      */
     org.apache.hadoop.hive.ql.io.orc.OrcProto.CompressionKind getCompression();
 
+    // optional uint64 compressionBlockSize = 3;
     /**
      * <code>optional uint64 compressionBlockSize = 3;</code>
      */
@@ -19925,6 +20966,7 @@ public final class OrcProto {
      */
     long getCompressionBlockSize();
 
+    // repeated uint32 version = 4 [packed = true];
     /**
      * <code>repeated uint32 version = 4 [packed = true];</code>
      *
@@ -19932,6 +20974,7 @@ public final class OrcProto {
      * the version of the file format
      *   [0, 11] = Hive 0.11
      *   [0, 12] = Hive 0.12
+     *   [1, 3] = Hive 1.3
      * </pre>
      */
     java.util.List<java.lang.Integer> getVersionList();
@@ -19942,6 +20985,7 @@ public final class OrcProto {
      * the version of the file format
      *   [0, 11] = Hive 0.11
      *   [0, 12] = Hive 0.12
+     *   [1, 3] = Hive 1.3
      * </pre>
      */
     int getVersionCount();
@@ -19952,10 +20996,12 @@ public final class OrcProto {
      * the version of the file format
      *   [0, 11] = Hive 0.11
      *   [0, 12] = Hive 0.12
+     *   [1, 3] = Hive 1.3
      * </pre>
      */
     int getVersion(int index);
 
+    // optional uint64 metadataLength = 5;
     /**
      * <code>optional uint64 metadataLength = 5;</code>
      */
@@ -19965,6 +21011,7 @@ public final class OrcProto {
      */
     long getMetadataLength();
 
+    // optional uint32 writerVersion = 6;
     /**
      * <code>optional uint32 writerVersion = 6;</code>
      *
@@ -19986,6 +21033,7 @@ public final class OrcProto {
      */
     int getWriterVersion();
 
+    // optional string magic = 8000;
     /**
      * <code>optional string magic = 8000;</code>
      *
@@ -20020,9 +21068,8 @@ public final class OrcProto {
    * </pre>
    */
   public static final class PostScript extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:orc.proto.PostScript)
-      PostScriptOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements PostScriptOrBuilder {
     // Use PostScript.newBuilder() to construct.
     private PostScript(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -20121,9 +21168,8 @@ public final class OrcProto {
               break;
             }
             case 64002: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000020;
-              magic_ = bs;
+              magic_ = input.readBytes();
               break;
             }
           }
@@ -20169,6 +21215,7 @@ public final class OrcProto {
     }
 
     private int bitField0_;
+    // optional uint64 footerLength = 1;
     public static final int FOOTERLENGTH_FIELD_NUMBER = 1;
     private long footerLength_;
     /**
@@ -20184,6 +21231,7 @@ public final class OrcProto {
       return footerLength_;
     }
 
+    // optional .orc.proto.CompressionKind compression = 2;
     public static final int COMPRESSION_FIELD_NUMBER = 2;
     private org.apache.hadoop.hive.ql.io.orc.OrcProto.CompressionKind compression_;
     /**
@@ -20199,6 +21247,7 @@ public final class OrcProto {
       return compression_;
     }
 
+    // optional uint64 compressionBlockSize = 3;
     public static final int COMPRESSIONBLOCKSIZE_FIELD_NUMBER = 3;
     private long compressionBlockSize_;
     /**
@@ -20214,6 +21263,7 @@ public final class OrcProto {
       return compressionBlockSize_;
     }
 
+    // repeated uint32 version = 4 [packed = true];
     public static final int VERSION_FIELD_NUMBER = 4;
     private java.util.List<java.lang.Integer> version_;
     /**
@@ -20223,6 +21273,7 @@ public final class OrcProto {
      * the version of the file format
      *   [0, 11] = Hive 0.11
      *   [0, 12] = Hive 0.12
+     *   [1, 3] = Hive 1.3
      * </pre>
      */
     public java.util.List<java.lang.Integer>
@@ -20236,6 +21287,7 @@ public final class OrcProto {
      * the version of the file format
      *   [0, 11] = Hive 0.11
      *   [0, 12] = Hive 0.12
+     *   [1, 3] = Hive 1.3
      * </pre>
      */
     public int getVersionCount() {
@@ -20248,6 +21300,7 @@ public final class OrcProto {
      * the version of the file format
      *   [0, 11] = Hive 0.11
      *   [0, 12] = Hive 0.12
+     *   [1, 3] = Hive 1.3
      * </pre>
      */
     public int getVersion(int index) {
@@ -20255,6 +21308,7 @@ public final class OrcProto {
     }
     private int versionMemoizedSerializedSize = -1;
 
+    // optional uint64 metadataLength = 5;
     public static final int METADATALENGTH_FIELD_NUMBER = 5;
     private long metadataLength_;
     /**
@@ -20270,6 +21324,7 @@ public final class OrcProto {
       return metadataLength_;
     }
 
+    // optional uint32 writerVersion = 6;
     public static final int WRITERVERSION_FIELD_NUMBER = 6;
     private int writerVersion_;
     /**
@@ -20297,6 +21352,7 @@ public final class OrcProto {
       return writerVersion_;
     }
 
+    // optional string magic = 8000;
     public static final int MAGIC_FIELD_NUMBER = 8000;
     private java.lang.Object magic_;
     /**
@@ -20363,8 +21419,7 @@ public final class OrcProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -20531,9 +21586,8 @@ public final class OrcProto {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:orc.proto.PostScript)
-        org.apache.hadoop.hive.ql.io.orc.OrcProto.PostScriptOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.ql.io.orc.OrcProto.PostScriptOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.ql.io.orc.OrcProto.internal_static_orc_proto_PostScript_descriptor;
@@ -20710,6 +21764,7 @@ public final class OrcProto {
       }
       private int bitField0_;
 
+      // optional uint64 footerLength = 1;
       private long footerLength_ ;
       /**
        * <code>optional uint64 footerLength = 1;</code>
@@ -20742,6 +21797,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional .orc.proto.CompressionKind compression = 2;
       private org.apache.hadoop.hive.ql.io.orc.OrcProto.CompressionKind compression_ = org.apache.hadoop.hive.ql.io.orc.OrcProto.CompressionKind.NONE;
       /**
        * <code>optional .orc.proto.CompressionKind compression = 2;</code>
@@ -20777,6 +21833,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 compressionBlockSize = 3;
       private long compressionBlockSize_ ;
       /**
        * <code>optional uint64 compressionBlockSize = 3;</code>
@@ -20809,6 +21866,7 @@ public final class OrcProto {
         return this;
       }
 
+      // repeated uint32 version = 4 [packed = true];
       private java.util.List<java.lang.Integer> version_ = java.util.Collections.emptyList();
       private void ensureVersionIsMutable() {
         if (!((bitField0_ & 0x00000008) == 0x00000008)) {
@@ -20823,6 +21881,7 @@ public final class OrcProto {
        * the version of the file format
        *   [0, 11] = Hive 0.11
        *   [0, 12] = Hive 0.12
+       *   [1, 3] = Hive 1.3
        * </pre>
        */
       public java.util.List<java.lang.Integer>
@@ -20836,6 +21895,7 @@ public final class OrcProto {
        * the version of the file format
        *   [0, 11] = Hive 0.11
        *   [0, 12] = Hive 0.12
+       *   [1, 3] = Hive 1.3
        * </pre>
        */
       public int getVersionCount() {
@@ -20848,6 +21908,7 @@ public final class OrcProto {
        * the version of the file format
        *   [0, 11] = Hive 0.11
        *   [0, 12] = Hive 0.12
+       *   [1, 3] = Hive 1.3
        * </pre>
        */
       public int getVersion(int index) {
@@ -20860,6 +21921,7 @@ public final class OrcProto {
        * the version of the file format
        *   [0, 11] = Hive 0.11
        *   [0, 12] = Hive 0.12
+       *   [1, 3] = Hive 1.3
        * </pre>
        */
       public Builder setVersion(
@@ -20876,6 +21938,7 @@ public final class OrcProto {
        * the version of the file format
        *   [0, 11] = Hive 0.11
        *   [0, 12] = Hive 0.12
+       *   [1, 3] = Hive 1.3
        * </pre>
        */
       public Builder addVersion(int value) {
@@ -20891,13 +21954,13 @@ public final class OrcProto {
        * the version of the file format
        *   [0, 11] = Hive 0.11
        *   [0, 12] = Hive 0.12
+       *   [1, 3] = Hive 1.3
        * </pre>
        */
       public Builder addAllVersion(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureVersionIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, version_);
+        super.addAll(values, version_);
         onChanged();
         return this;
       }
@@ -20908,6 +21971,7 @@ public final class OrcProto {
        * the version of the file format
        *   [0, 11] = Hive 0.11
        *   [0, 12] = Hive 0.12
+       *   [1, 3] = Hive 1.3
        * </pre>
        */
       public Builder clearVersion() {
@@ -20917,6 +21981,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint64 metadataLength = 5;
       private long metadataLength_ ;
       /**
        * <code>optional uint64 metadataLength = 5;</code>
@@ -20949,6 +22014,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional uint32 writerVersion = 6;
       private int writerVersion_ ;
       /**
        * <code>optional uint32 writerVersion = 6;</code>
@@ -21005,6 +22071,7 @@ public final class OrcProto {
         return this;
       }
 
+      // optional string magic = 8000;
       private java.lang.Object magic_ = "";
       /**
        * <code>optional string magic = 8000;</code>
@@ -21026,12 +22093,9 @@ public final class OrcProto {
       public java.lang.String getMagic() {
         java.lang.Object ref = magic_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            magic_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          magic_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -21116,127 +22180,132 @@ public final class OrcProto {
     // @@protoc_insertion_point(class_scope:orc.proto.PostScript)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_IntegerStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_IntegerStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_DoubleStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_DoubleStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_StringStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_StringStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_BucketStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_BucketStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_DecimalStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_DecimalStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_DateStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_DateStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_TimestampStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_TimestampStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_BinaryStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_BinaryStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_EncryptedStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_EncryptedStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_ColumnStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_ColumnStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_RowIndexEntry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_RowIndexEntry_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_RowIndex_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_RowIndex_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_BloomFilter_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_BloomFilter_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_BloomFilterIndex_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_BloomFilterIndex_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_Stream_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_Stream_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_orc_proto_EncryptedEncoding_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_orc_proto_EncryptedEncoding_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_ColumnEncoding_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_ColumnEncoding_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_StripeFooter_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_StripeFooter_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_Type_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_Type_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_StripeInformation_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_StripeInformation_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_UserMetadataItem_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_UserMetadataItem_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_StripeStatistics_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_StripeStatistics_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_Metadata_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_Metadata_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_ColumnEncryption_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_ColumnEncryption_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_Footer_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_orc_proto_Footer_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_orc_proto_PostScript_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -21250,15 +22319,10 @@ public final class OrcProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c173005... get reading compressed encrypted streams working
       "\n\017orc_proto.proto\022\torc.proto\"B\n\021IntegerS" +
       "tatistics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum\030\002 " +
       "\001(\022\022\013\n\003sum\030\003 \001(\022\"A\n\020DoubleStatistics\022\017\n\007" +
       "minimum\030\001 \001(\001\022\017\n\007maximum\030\002 \001(\001\022\013\n\003sum\030\003 " +
-<<<<<<< HEAD
       "\001(\001\"`\n\020StringStatistics\022\017\n\007minimum\030\001 \001(\t" +
       "\022\017\n\007maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\022\022\035\n\025maximu" +
       "mDictionarySize\030\004 \001(\004\"%\n\020BucketStatistic" +
@@ -21267,70 +22331,81 @@ public final class OrcProto {
       "um\030\003 \001(\t\"2\n\016DateStatistics\022\017\n\007minimum\030\001 ",
       "\001(\021\022\017\n\007maximum\030\002 \001(\021\"7\n\023TimestampStatist" +
       "ics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum\030\002 \001(\022\"\037\n" +
-      "\020BinaryStatistics\022\013\n\003sum\030\001 \001(\022\"\365\003\n\020Colum" +
-      "nStatistics\022\026\n\016numberOfValues\030\001 \001(\004\0223\n\ri" +
-      "ntStatistics\030\002 \001(\0132\034.orc.proto.IntegerSt" +
-      "atistics\0225\n\020doubleStatistics\030\003 \001(\0132\033.orc" +
-      ".proto.DoubleStatistics\0225\n\020stringStatist" +
-      "ics\030\004 \001(\0132\033.orc.proto.StringStatistics\0225" +
-      "\n\020bucketStatistics\030\005 \001(\0132\033.orc.proto.Buc" +
-      "ketStatistics\0227\n\021decimalStatistics\030\006 \001(\013",
-      "2\034.orc.proto.DecimalStatistics\0221\n\016dateSt" +
-      "atistics\030\007 \001(\0132\031.orc.proto.DateStatistic" +
-      "s\0225\n\020binaryStatistics\030\010 \001(\0132\033.orc.proto." +
-      "BinaryStatistics\022;\n\023timestampStatistics\030" +
-      "\t \001(\0132\036.orc.proto.TimestampStatistics\022\017\n" +
-      "\007hasNull\030\n \001(\010\"W\n\rRowIndexEntry\022\025\n\tposit" +
-      "ions\030\001 \003(\004B\002\020\001\022/\n\nstatistics\030\002 \001(\0132\033.orc" +
-      ".proto.ColumnStatistics\"3\n\010RowIndex\022\'\n\005e" +
-      "ntry\030\001 \003(\0132\030.orc.proto.RowIndexEntry\"7\n\013" +
-      "BloomFilter\022\030\n\020numHashFunctions\030\001 \001(\r\022\016\n",
-      "\006bitset\030\002 \003(\006\"?\n\020BloomFilterIndex\022+\n\013blo" +
-      "omFilter\030\001 \003(\0132\026.orc.proto.BloomFilter\"\325" +
-      "\001\n\006Stream\022$\n\004kind\030\001 \001(\0162\026.orc.proto.Stre" +
-      "am.Kind\022\016\n\006column\030\002 \001(\r\022\016\n\006length\030\003 \001(\004\"" +
-      "\204\001\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001\022\n\n\006LENGT" +
-      "H\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DICTIONARY_C" +
-      "OUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_INDEX\020\006\022\020\n\014" +
-      "BLOOM_FILTER\020\007\"\234\001\n\016ColumnEncoding\022,\n\004kin" +
-      "d\030\001 \001(\0162\036.orc.proto.ColumnEncoding.Kind\022" +
-      "\026\n\016dictionarySize\030\002 \001(\r\"D\n\004Kind\022\n\n\006DIREC",
-      "T\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDIRECT_V2\020\002\022\021\n\rDI" +
-      "CTIONARY_V2\020\003\"v\n\014StripeFooter\022\"\n\007streams" +
-      "\030\001 \003(\0132\021.orc.proto.Stream\022*\n\007columns\030\002 \003" +
-      "(\0132\031.orc.proto.ColumnEncoding\022\026\n\016writerT" +
-      "imezone\030\003 \001(\t\"\341\002\n\004Type\022\"\n\004kind\030\001 \001(\0162\024.o" +
-      "rc.proto.Type.Kind\022\024\n\010subtypes\030\002 \003(\rB\002\020\001" +
-      "\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rmaximumLength\030\004 " +
-      "\001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n\005scale\030\006 \001(\r\"\321\001" +
-      "\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002" +
-      "\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE",
-      "\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020" +
-      "\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNIO" +
-      "N\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\022\013\n\007VARCHAR\020\020\022" +
-      "\010\n\004CHAR\020\021\"x\n\021StripeInformation\022\016\n\006offset" +
-      "\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\ndataLengt" +
-      "h\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014numberO" +
-      "fRows\030\005 \001(\004\"/\n\020UserMetadataItem\022\014\n\004name\030" +
-      "\001 \001(\t\022\r\n\005value\030\002 \001(\014\"A\n\020StripeStatistics" +
-      "\022-\n\010colStats\030\001 \003(\0132\033.orc.proto.ColumnSta" +
-      "tistics\"<\n\010Metadata\0220\n\013stripeStats\030\001 \003(\013",
-      "2\033.orc.proto.StripeStatistics\"\246\002\n\006Footer" +
-      "\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLength\030" +
-      "\002 \001(\004\022-\n\007stripes\030\003 \003(\0132\034.orc.proto.Strip" +
-      "eInformation\022\036\n\005types\030\004 \003(\0132\017.orc.proto." +
-      "Type\022-\n\010metadata\030\005 \003(\0132\033.orc.proto.UserM" +
-      "etadataItem\022\024\n\014numberOfRows\030\006 \001(\004\022/\n\nsta" +
-      "tistics\030\007 \003(\0132\033.orc.proto.ColumnStatisti" +
-      "cs\022\026\n\016rowIndexStride\030\010 \001(\r\022\022\n\nstripeSize" +
-      "\030\t \001(\004\"\305\001\n\nPostScript\022\024\n\014footerLength\030\001 " +
-      "\001(\004\022/\n\013compression\030\002 \001(\0162\032.orc.proto.Com",
-      "pressionKind\022\034\n\024compressionBlockSize\030\003 \001" +
-      "(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016metadataLengt" +
-      "h\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r\022\016\n\005magic\030" +
-      "\300> \001(\t*:\n\017CompressionKind\022\010\n\004NONE\020\000\022\010\n\004Z" +
-      "LIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003B\"\n org.apache" +
-      ".hadoop.hive.ql.io.orc"
+      "\020BinaryStatistics\022\013\n\003sum\030\001 \001(\022\";\n\023Encryp" +
+      "tedStatistics\022\n\n\002iv\030\001 \001(\014\022\030\n\020columnStati" +
+      "stics\030\002 \001(\014\"\250\004\n\020ColumnStatistics\022\026\n\016numb" +
+      "erOfValues\030\001 \001(\004\0223\n\rintStatistics\030\002 \001(\0132" +
+      "\034.orc.proto.IntegerStatistics\0225\n\020doubleS" +
+      "tatistics\030\003 \001(\0132\033.orc.proto.DoubleStatis" +
+      "tics\0225\n\020stringStatistics\030\004 \001(\0132\033.orc.pro" +
+      "to.StringStatistics\0225\n\020bucketStatistics\030",
+      "\005 \001(\0132\033.orc.proto.BucketStatistics\0227\n\021de" +
+      "cimalStatistics\030\006 \001(\0132\034.orc.proto.Decima" +
+      "lStatistics\0221\n\016dateStatistics\030\007 \001(\0132\031.or" +
+      "c.proto.DateStatistics\0225\n\020binaryStatisti" +
+      "cs\030\010 \001(\0132\033.orc.proto.BinaryStatistics\022;\n" +
+      "\023timestampStatistics\030\t \001(\0132\036.orc.proto.T" +
+      "imestampStatistics\022\017\n\007hasNull\030\n \001(\010\0221\n\te" +
+      "ncrypted\030\013 \001(\0132\036.orc.proto.EncryptedStat" +
+      "istics\"W\n\rRowIndexEntry\022\025\n\tpositions\030\001 \003" +
+      "(\004B\002\020\001\022/\n\nstatistics\030\002 \001(\0132\033.orc.proto.C",
+      "olumnStatistics\"3\n\010RowIndex\022\'\n\005entry\030\001 \003" +
+      "(\0132\030.orc.proto.RowIndexEntry\"7\n\013BloomFil" +
+      "ter\022\030\n\020numHashFunctions\030\001 \001(\r\022\016\n\006bitset\030" +
+      "\002 \003(\006\"?\n\020BloomFilterIndex\022+\n\013bloomFilter" +
+      "\030\001 \003(\0132\026.orc.proto.BloomFilter\"\341\001\n\006Strea" +
+      "m\022$\n\004kind\030\001 \001(\0162\026.orc.proto.Stream.Kind\022" +
+      "\016\n\006column\030\002 \001(\r\022\016\n\006length\030\003 \001(\004\022\n\n\002iv\030\004 " +
+      "\001(\014\"\204\001\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001\022\n\n\006L" +
+      "ENGTH\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DICTIONA" +
+      "RY_COUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_INDEX\020\006",
+      "\022\020\n\014BLOOM_FILTER\020\007\"7\n\021EncryptedEncoding\022" +
+      "\n\n\002iv\030\001 \001(\014\022\026\n\016columnEncoding\030\002 \001(\014\"\315\001\n\016" +
+      "ColumnEncoding\022,\n\004kind\030\001 \001(\0162\036.orc.proto" +
+      ".ColumnEncoding.Kind\022\026\n\016dictionarySize\030\002" +
+      " \001(\r\022/\n\tencrypted\030\003 \001(\0132\034.orc.proto.Encr" +
+      "yptedEncoding\"D\n\004Kind\022\n\n\006DIRECT\020\000\022\016\n\nDIC" +
+      "TIONARY\020\001\022\r\n\tDIRECT_V2\020\002\022\021\n\rDICTIONARY_V" +
+      "2\020\003\"v\n\014StripeFooter\022\"\n\007streams\030\001 \003(\0132\021.o" +
+      "rc.proto.Stream\022*\n\007columns\030\002 \003(\0132\031.orc.p" +
+      "roto.ColumnEncoding\022\026\n\016writerTimezone\030\003 ",
+      "\001(\t\"\341\002\n\004Type\022\"\n\004kind\030\001 \001(\0162\024.orc.proto.T" +
+      "ype.Kind\022\024\n\010subtypes\030\002 \003(\rB\002\020\001\022\022\n\nfieldN" +
+      "ames\030\003 \003(\t\022\025\n\rmaximumLength\030\004 \001(\r\022\021\n\tpre" +
+      "cision\030\005 \001(\r\022\r\n\005scale\030\006 \001(\r\"\321\001\n\004Kind\022\013\n\007" +
+      "BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022" +
+      "\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006STRI" +
+      "NG\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020" +
+      "\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DEC" +
+      "IMAL\020\016\022\010\n\004DATE\020\017\022\013\n\007VARCHAR\020\020\022\010\n\004CHAR\020\021\"" +
+      "x\n\021StripeInformation\022\016\n\006offset\030\001 \001(\004\022\023\n\013",
+      "indexLength\030\002 \001(\004\022\022\n\ndataLength\030\003 \001(\004\022\024\n" +
+      "\014footerLength\030\004 \001(\004\022\024\n\014numberOfRows\030\005 \001(" +
+      "\004\"/\n\020UserMetadataItem\022\014\n\004name\030\001 \001(\t\022\r\n\005v" +
+      "alue\030\002 \001(\014\"A\n\020StripeStatistics\022-\n\010colSta" +
+      "ts\030\001 \003(\0132\033.orc.proto.ColumnStatistics\"<\n" +
+      "\010Metadata\0220\n\013stripeStats\030\001 \003(\0132\033.orc.pro" +
+      "to.StripeStatistics\"|\n\020ColumnEncryption\022" +
+      "\020\n\010columnId\030\001 \003(\r\022\017\n\007keyName\030\002 \001(\t\022\022\n\nke" +
+      "yVersion\030\003 \001(\r\0221\n\talgorithm\030\004 \001(\0162\036.orc." +
+      "proto.EncryptionAlgorithm\"\327\002\n\006Footer\022\024\n\014",
+      "headerLength\030\001 \001(\004\022\025\n\rcontentLength\030\002 \001(" +
+      "\004\022-\n\007stripes\030\003 \003(\0132\034.orc.proto.StripeInf" +
+      "ormation\022\036\n\005types\030\004 \003(\0132\017.orc.proto.Type" +
+      "\022-\n\010metadata\030\005 \003(\0132\033.orc.proto.UserMetad" +
+      "ataItem\022\024\n\014numberOfRows\030\006 \001(\004\022/\n\nstatist" +
+      "ics\030\007 \003(\0132\033.orc.proto.ColumnStatistics\022\026" +
+      "\n\016rowIndexStride\030\010 \001(\r\022\022\n\nstripeSize\030\t \001" +
+      "(\004\022/\n\nencryption\030\n \003(\0132\033.orc.proto.Colum" +
+      "nEncryption\"\305\001\n\nPostScript\022\024\n\014footerLeng" +
+      "th\030\001 \001(\004\022/\n\013compression\030\002 \001(\0162\032.orc.prot",
+      "o.CompressionKind\022\034\n\024compressionBlockSiz" +
+      "e\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016metadata" +
+      "Length\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r\022\016\n\005m" +
+      "agic\030\300> \001(\t*2\n\023EncryptionAlgorithm\022\013\n\007UN" +
+      "KNOWN\020\000\022\016\n\nAES128_CTR\020\001*:\n\017CompressionKi" +
+      "nd\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZ" +
+      "O\020\003B\"\n org.apache.hadoop.hive.ql.io.orc"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -21385,92 +22460,110 @@ public final class OrcProto {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_BinaryStatistics_descriptor,
               new java.lang.String[] { "Sum", });
-          internal_static_orc_proto_ColumnStatistics_descriptor =
+          internal_static_orc_proto_EncryptedStatistics_descriptor =
             getDescriptor().getMessageTypes().get(8);
+          internal_static_orc_proto_EncryptedStatistics_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_orc_proto_EncryptedStatistics_descriptor,
+              new java.lang.String[] { "Iv", "ColumnStatistics", });
+          internal_static_orc_proto_ColumnStatistics_descriptor =
+            getDescriptor().getMessageTypes().get(9);
           internal_static_orc_proto_ColumnStatistics_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_ColumnStatistics_descriptor,
-              new java.lang.String[] { "NumberOfValues", "IntStatistics", "DoubleStatistics", "StringStatistics", "BucketStatistics", "DecimalStatistics", "DateStatistics", "BinaryStatistics", "TimestampStatistics", "HasNull", });
+              new java.lang.String[] { "NumberOfValues", "IntStatistics", "DoubleStatistics", "StringStatistics", "BucketStatistics", "DecimalStatistics", "DateStatistics", "BinaryStatistics", "TimestampStatistics", "HasNull", "Encrypted", });
           internal_static_orc_proto_RowIndexEntry_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_orc_proto_RowIndexEntry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_RowIndexEntry_descriptor,
               new java.lang.String[] { "Positions", "Statistics", });
           internal_static_orc_proto_RowIndex_descriptor =
-            getDescriptor().getMessageTypes().get(10);
+            getDescriptor().getMessageTypes().get(11);
           internal_static_orc_proto_RowIndex_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_RowIndex_descriptor,
               new java.lang.String[] { "Entry", });
           internal_static_orc_proto_BloomFilter_descriptor =
-            getDescriptor().getMessageTypes().get(11);
+            getDescriptor().getMessageTypes().get(12);
           internal_static_orc_proto_BloomFilter_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_BloomFilter_descriptor,
               new java.lang.String[] { "NumHashFunctions", "Bitset", });
           internal_static_orc_proto_BloomFilterIndex_descriptor =
-            getDescriptor().getMessageTypes().get(12);
+            getDescriptor().getMessageTypes().get(13);
           internal_static_orc_proto_BloomFilterIndex_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_BloomFilterIndex_descriptor,
               new java.lang.String[] { "BloomFilter", });
           internal_static_orc_proto_Stream_descriptor =
-            getDescriptor().getMessageTypes().get(13);
+            getDescriptor().getMessageTypes().get(14);
           internal_static_orc_proto_Stream_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_Stream_descriptor,
-              new java.lang.String[] { "Kind", "Column", "Length", });
+              new java.lang.String[] { "Kind", "Column", "Length", "Iv", });
+          internal_static_orc_proto_EncryptedEncoding_descriptor =
+            getDescriptor().getMessageTypes().get(15);
+          internal_static_orc_proto_EncryptedEncoding_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_orc_proto_EncryptedEncoding_descriptor,
+              new java.lang.String[] { "Iv", "ColumnEncoding", });
           internal_static_orc_proto_ColumnEncoding_descriptor =
-            getDescriptor().getMessageTypes().get(14);
+            getDescriptor().getMessageTypes().get(16);
           internal_static_orc_proto_ColumnEncoding_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_ColumnEncoding_descriptor,
-              new java.lang.String[] { "Kind", "DictionarySize", });
+              new java.lang.String[] { "Kind", "DictionarySize", "Encrypted", });
           internal_static_orc_proto_StripeFooter_descriptor =
-            getDescriptor().getMessageTypes().get(15);
+            getDescriptor().getMessageTypes().get(17);
           internal_static_orc_proto_StripeFooter_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_StripeFooter_descriptor,
               new java.lang.String[] { "Streams", "Columns", "WriterTimezone", });
           internal_static_orc_proto_Type_descriptor =
-            getDescriptor().getMessageTypes().get(16);
+            getDescriptor().getMessageTypes().get(18);
           internal_static_orc_proto_Type_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_Type_descriptor,
               new java.lang.String[] { "Kind", "Subtypes", "FieldNames", "MaximumLength", "Precision", "Scale", });
           internal_static_orc_proto_StripeInformation_descriptor =
-            getDescriptor().getMessageTypes().get(17);
+            getDescriptor().getMessageTypes().get(19);
           internal_static_orc_proto_StripeInformation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_StripeInformation_descriptor,
               new java.lang.String[] { "Offset", "IndexLength", "DataLength", "FooterLength", "NumberOfRows", });
           internal_static_orc_proto_UserMetadataItem_descriptor =
-            getDescriptor().getMessageTypes().get(18);
+            getDescriptor().getMessageTypes().get(20);
           internal_static_orc_proto_UserMetadataItem_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_UserMetadataItem_descriptor,
               new java.lang.String[] { "Name", "Value", });
           internal_static_orc_proto_StripeStatistics_descriptor =
-            getDescriptor().getMessageTypes().get(19);
+            getDescriptor().getMessageTypes().get(21);
           internal_static_orc_proto_StripeStatistics_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_StripeStatistics_descriptor,
               new java.lang.String[] { "ColStats", });
           internal_static_orc_proto_Metadata_descriptor =
-            getDescriptor().getMessageTypes().get(20);
+            getDescriptor().getMessageTypes().get(22);
           internal_static_orc_proto_Metadata_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_Metadata_descriptor,
               new java.lang.String[] { "StripeStats", });
+          internal_static_orc_proto_ColumnEncryption_descriptor =
+            getDescriptor().getMessageTypes().get(23);
+          internal_static_orc_proto_ColumnEncryption_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_orc_proto_ColumnEncryption_descriptor,
+              new java.lang.String[] { "ColumnId", "KeyName", "KeyVersion", "Algorithm", });
           internal_static_orc_proto_Footer_descriptor =
-            getDescriptor().getMessageTypes().get(21);
+            getDescriptor().getMessageTypes().get(24);
           internal_static_orc_proto_Footer_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_Footer_descriptor,
-              new java.lang.String[] { "HeaderLength", "ContentLength", "Stripes", "Types", "Metadata", "NumberOfRows", "Statistics", "RowIndexStride", "StripeSize", });
+              new java.lang.String[] { "HeaderLength", "ContentLength", "Stripes", "Types", "Metadata", "NumberOfRows", "Statistics", "RowIndexStride", "StripeSize", "Encryption", });
           internal_static_orc_proto_PostScript_descriptor =
-            getDescriptor().getMessageTypes().get(22);
+            getDescriptor().getMessageTypes().get(25);
           internal_static_orc_proto_PostScript_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_PostScript_descriptor,
@@ -21478,337 +22571,10 @@ public final class OrcProto {
           return null;
         }
       };
-=======
-      "\n@ql/src/protobuf/org/apache/hadoop/hive" +
-      "/ql/io/orc/orc_proto.proto\022\torc.proto\"B\n" +
-      "\021IntegerStatistics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007m" +
-      "aximum\030\002 \001(\022\022\013\n\003sum\030\003 \001(\022\"A\n\020DoubleStati" +
-      "stics\022\017\n\007minimum\030\001 \001(\001\022\017\n\007maximum\030\002 \001(\001\022" +
-      "\013\n\003sum\030\003 \001(\001\"A\n\020StringStatistics\022\017\n\007mini" +
-      "mum\030\001 \001(\t\022\017\n\007maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\022\"" +
-      "%\n\020BucketStatistics\022\021\n\005count\030\001 \003(\004B\002\020\001\"B" +
-      "\n\021DecimalStatistics\022\017\n\007minimum\030\001 \001(\t\022\017\n\007" +
-      "maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\t\"2\n\016DateStatis",
-      "tics\022\017\n\007minimum\030\001 \001(\021\022\017\n\007maximum\030\002 \001(\021\"7" +
-      "\n\023TimestampStatistics\022\017\n\007minimum\030\001 \001(\022\022\017" +
-      "\n\007maximum\030\002 \001(\022\"\037\n\020BinaryStatistics\022\013\n\003s" +
-      "um\030\001 \001(\022\"4\n\023EncryptedStatistics\022\n\n\002iv\030\001 " +
-      "\001(\014\022\021\n\tencrypted\030\002 \001(\014\"\250\004\n\020ColumnStatist" +
-      "ics\022\026\n\016numberOfValues\030\001 \001(\004\0223\n\rintStatis" +
-      "tics\030\002 \001(\0132\034.orc.proto.IntegerStatistics" +
-      "\0225\n\020doubleStatistics\030\003 \001(\0132\033.orc.proto.D" +
-      "oubleStatistics\0225\n\020stringStatistics\030\004 \001(" +
-      "\0132\033.orc.proto.StringStatistics\0225\n\020bucket",
-      "Statistics\030\005 \001(\0132\033.orc.proto.BucketStati" +
-      "stics\0227\n\021decimalStatistics\030\006 \001(\0132\034.orc.p" +
-      "roto.DecimalStatistics\0221\n\016dateStatistics" +
-      "\030\007 \001(\0132\031.orc.proto.DateStatistics\0225\n\020bin" +
-      "aryStatistics\030\010 \001(\0132\033.orc.proto.BinarySt" +
-      "atistics\022;\n\023timestampStatistics\030\t \001(\0132\036." +
-      "orc.proto.TimestampStatistics\022\017\n\007hasNull" +
-      "\030\n \001(\010\0221\n\tencrypted\030\013 \001(\0132\036.orc.proto.En" +
-      "cryptedStatistics\"W\n\rRowIndexEntry\022\025\n\tpo" +
-      "sitions\030\001 \003(\004B\002\020\001\022/\n\nstatistics\030\002 \001(\0132\033.",
-      "orc.proto.ColumnStatistics\"3\n\010RowIndex\022\'" +
-      "\n\005entry\030\001 \003(\0132\030.orc.proto.RowIndexEntry\"" +
-      "7\n\013BloomFilter\022\030\n\020numHashFunctions\030\001 \001(\r" +
-      "\022\016\n\006bitset\030\002 \003(\006\"?\n\020BloomFilterIndex\022+\n\013" +
-      "bloomFilter\030\001 \003(\0132\026.orc.proto.BloomFilte" +
-      "r\"\341\001\n\006Stream\022$\n\004kind\030\001 \001(\0162\026.orc.proto.S" +
-      "tream.Kind\022\016\n\006column\030\002 \001(\r\022\016\n\006length\030\003 \001" +
-      "(\004\022\n\n\002iv\030\004 \001(\014\"\204\001\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004" +
-      "DATA\020\001\022\n\n\006LENGTH\020\002\022\023\n\017DICTIONARY_DATA\020\003\022" +
-      "\024\n\020DICTIONARY_COUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\t",
-      "ROW_INDEX\020\006\022\020\n\014BLOOM_FILTER\020\007\"\234\001\n\016Column" +
-      "Encoding\022,\n\004kind\030\001 \001(\0162\036.orc.proto.Colum" +
-      "nEncoding.Kind\022\026\n\016dictionarySize\030\002 \001(\r\"D" +
-      "\n\004Kind\022\n\n\006DIRECT\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDI" +
-      "RECT_V2\020\002\022\021\n\rDICTIONARY_V2\020\003\"v\n\014StripeFo" +
-      "oter\022\"\n\007streams\030\001 \003(\0132\021.orc.proto.Stream" +
-      "\022*\n\007columns\030\002 \003(\0132\031.orc.proto.ColumnEnco" +
-      "ding\022\026\n\016writerTimezone\030\003 \001(\t\"\341\002\n\004Type\022\"\n" +
-      "\004kind\030\001 \001(\0162\024.orc.proto.Type.Kind\022\024\n\010sub" +
-      "types\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rm",
-      "aximumLength\030\004 \001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n" +
-      "\005scale\030\006 \001(\r\"\321\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BY" +
-      "TE\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FL" +
-      "OAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020" +
-      "\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006S" +
-      "TRUCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020" +
-      "\017\022\013\n\007VARCHAR\020\020\022\010\n\004CHAR\020\021\"x\n\021StripeInform" +
-      "ation\022\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001" +
-      "(\004\022\022\n\ndataLength\030\003 \001(\004\022\024\n\014footerLength\030\004" +
-      " \001(\004\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMetada",
-      "taItem\022\014\n\004name\030\001 \001(\t\022\r\n\005value\030\002 \001(\014\"A\n\020S" +
-      "tripeStatistics\022-\n\010colStats\030\001 \003(\0132\033.orc." +
-      "proto.ColumnStatistics\"<\n\010Metadata\0220\n\013st" +
-      "ripeStats\030\001 \003(\0132\033.orc.proto.StripeStatis" +
-      "tics\"|\n\020ColumnEncryption\022\020\n\010columnId\030\001 \003" +
-      "(\r\022\017\n\007keyName\030\002 \001(\t\022\022\n\nkeyVersion\030\003 \001(\r\022" +
-      "1\n\talgorithm\030\004 \001(\0162\036.orc.proto.Encryptio" +
-      "nAlgorithm\"\303\002\n\006Footer\022\024\n\014headerLength\030\001 " +
-      "\001(\004\022\025\n\rcontentLength\030\002 \001(\004\022-\n\007stripes\030\003 " +
-      "\003(\0132\034.orc.proto.StripeInformation\022\036\n\005typ",
-      "es\030\004 \003(\0132\017.orc.proto.Type\022-\n\010metadata\030\005 " +
-      "\003(\0132\033.orc.proto.UserMetadataItem\022\024\n\014numb" +
-      "erOfRows\030\006 \001(\004\022/\n\nstatistics\030\007 \003(\0132\033.orc" +
-      ".proto.ColumnStatistics\022\026\n\016rowIndexStrid" +
-      "e\030\010 \001(\r\022/\n\nencryption\030\t \003(\0132\033.orc.proto." +
-      "ColumnEncryption\"\305\001\n\nPostScript\022\024\n\014foote" +
-      "rLength\030\001 \001(\004\022/\n\013compression\030\002 \001(\0162\032.orc" +
-      ".proto.CompressionKind\022\034\n\024compressionBlo" +
-      "ckSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016met" +
-      "adataLength\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r",
-      "\022\016\n\005magic\030\300> \001(\t*/\n\023EncryptionAlgorithm\022" +
-      "\013\n\007UNKNOWN\020\000\022\013\n\007AES_CTR\020\001*:\n\017Compression" +
-      "Kind\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003" +
-      "LZO\020\003B\"\n org.apache.hadoop.hive.ql.io.or" +
-      "c"
-=======
-      "\001(\001\"A\n\020StringStatistics\022\017\n\007minimum\030\001 \001(\t" +
-      "\022\017\n\007maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\022\"%\n\020Bucket" +
-      "Statistics\022\021\n\005count\030\001 \003(\004B\002\020\001\"B\n\021Decimal" +
-      "Statistics\022\017\n\007minimum\030\001 \001(\t\022\017\n\007maximum\030\002" +
-      " \001(\t\022\013\n\003sum\030\003 \001(\t\"2\n\016DateStatistics\022\017\n\007m" +
-      "inimum\030\001 \001(\021\022\017\n\007maximum\030\002 \001(\021\"7\n\023Timesta",
-      "mpStatistics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum" +
-      "\030\002 \001(\022\"\037\n\020BinaryStatistics\022\013\n\003sum\030\001 \001(\022\"" +
-      "4\n\023EncryptedStatistics\022\n\n\002iv\030\001 \001(\014\022\021\n\ten" +
-      "crypted\030\002 \001(\014\"\250\004\n\020ColumnStatistics\022\026\n\016nu" +
-      "mberOfValues\030\001 \001(\004\0223\n\rintStatistics\030\002 \001(" +
-      "\0132\034.orc.proto.IntegerStatistics\0225\n\020doubl" +
-      "eStatistics\030\003 \001(\0132\033.orc.proto.DoubleStat" +
-      "istics\0225\n\020stringStatistics\030\004 \001(\0132\033.orc.p" +
-      "roto.StringStatistics\0225\n\020bucketStatistic" +
-      "s\030\005 \001(\0132\033.orc.proto.BucketStatistics\0227\n\021",
-      "decimalStatistics\030\006 \001(\0132\034.orc.proto.Deci" +
-      "malStatistics\0221\n\016dateStatistics\030\007 \001(\0132\031." +
-      "orc.proto.DateStatistics\0225\n\020binaryStatis" +
-      "tics\030\010 \001(\0132\033.orc.proto.BinaryStatistics\022" +
-      ";\n\023timestampStatistics\030\t \001(\0132\036.orc.proto" +
-      ".TimestampStatistics\022\017\n\007hasNull\030\n \001(\010\0221\n" +
-      "\tencrypted\030\013 \001(\0132\036.orc.proto.EncryptedSt" +
-      "atistics\"W\n\rRowIndexEntry\022\025\n\tpositions\030\001" +
-      " \003(\004B\002\020\001\022/\n\nstatistics\030\002 \001(\0132\033.orc.proto" +
-      ".ColumnStatistics\"3\n\010RowIndex\022\'\n\005entry\030\001",
-      " \003(\0132\030.orc.proto.RowIndexEntry\"7\n\013BloomF" +
-      "ilter\022\030\n\020numHashFunctions\030\001 \001(\r\022\016\n\006bitse" +
-      "t\030\002 \003(\006\"?\n\020BloomFilterIndex\022+\n\013bloomFilt" +
-      "er\030\001 \003(\0132\026.orc.proto.BloomFilter\"\341\001\n\006Str" +
-      "eam\022$\n\004kind\030\001 \001(\0162\026.orc.proto.Stream.Kin" +
-      "d\022\016\n\006column\030\002 \001(\r\022\016\n\006length\030\003 \001(\004\022\n\n\002iv\030" +
-      "\004 \001(\014\"\204\001\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001\022\n\n" +
-      "\006LENGTH\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DICTIO" +
-      "NARY_COUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_INDEX" +
-      "\020\006\022\020\n\014BLOOM_FILTER\020\007\"\234\001\n\016ColumnEncoding\022",
-      ",\n\004kind\030\001 \001(\0162\036.orc.proto.ColumnEncoding" +
-      ".Kind\022\026\n\016dictionarySize\030\002 \001(\r\"D\n\004Kind\022\n\n" +
-      "\006DIRECT\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDIRECT_V2\020\002" +
-      "\022\021\n\rDICTIONARY_V2\020\003\"v\n\014StripeFooter\022\"\n\007s" +
-      "treams\030\001 \003(\0132\021.orc.proto.Stream\022*\n\007colum" +
-      "ns\030\002 \003(\0132\031.orc.proto.ColumnEncoding\022\026\n\016w" +
-      "riterTimezone\030\003 \001(\t\"\341\002\n\004Type\022\"\n\004kind\030\001 \001" +
-      "(\0162\024.orc.proto.Type.Kind\022\024\n\010subtypes\030\002 \003" +
-      "(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rmaximumLen" +
-      "gth\030\004 \001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n\005scale\030\006 ",
-      "\001(\r\"\321\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005S" +
-      "HORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006" +
-      "DOUBLE\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIME" +
-      "STAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t" +
-      "\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\022\013\n\007VARC" +
-      "HAR\020\020\022\010\n\004CHAR\020\021\"x\n\021StripeInformation\022\016\n\006" +
-      "offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\ndat" +
-      "aLength\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014n" +
-      "umberOfRows\030\005 \001(\004\"/\n\020UserMetadataItem\022\014\n" +
-      "\004name\030\001 \001(\t\022\r\n\005value\030\002 \001(\014\"A\n\020StripeStat",
-      "istics\022-\n\010colStats\030\001 \003(\0132\033.orc.proto.Col" +
-      "umnStatistics\"<\n\010Metadata\0220\n\013stripeStats" +
-      "\030\001 \003(\0132\033.orc.proto.StripeStatistics\"|\n\020C" +
-      "olumnEncryption\022\020\n\010columnId\030\001 \003(\r\022\017\n\007key" +
-      "Name\030\002 \001(\t\022\022\n\nkeyVersion\030\003 \001(\r\0221\n\talgori" +
-      "thm\030\004 \001(\0162\036.orc.proto.EncryptionAlgorith" +
-      "m\"\303\002\n\006Footer\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rco" +
-      "ntentLength\030\002 \001(\004\022-\n\007stripes\030\003 \003(\0132\034.orc" +
-      ".proto.StripeInformation\022\036\n\005types\030\004 \003(\0132" +
-      "\017.orc.proto.Type\022-\n\010metadata\030\005 \003(\0132\033.orc",
-      ".proto.UserMetadataItem\022\024\n\014numberOfRows\030" +
-      "\006 \001(\004\022/\n\nstatistics\030\007 \003(\0132\033.orc.proto.Co" +
-      "lumnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r\022/" +
-      "\n\nencryption\030\t \003(\0132\033.orc.proto.ColumnEnc" +
-      "ryption\"\305\001\n\nPostScript\022\024\n\014footerLength\030\001" +
-      " \001(\004\022/\n\013compression\030\002 \001(\0162\032.orc.proto.Co" +
-      "mpressionKind\022\034\n\024compressionBlockSize\030\003 " +
-      "\001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016metadataLeng" +
-      "th\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r\022\016\n\005magic" +
-      "\030\300> \001(\t*2\n\023EncryptionAlgorithm\022\013\n\007UNKNOW",
-      "N\020\000\022\016\n\nAES128_CTR\020\001*:\n\017CompressionKind\022\010" +
-      "\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003B" +
-      "\"\n org.apache.hadoop.hive.ql.io.orc"
->>>>>>> c173005... get reading compressed encrypted streams working
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
->>>>>>> 1411187... work in progress
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_orc_proto_IntegerStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_orc_proto_IntegerStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_IntegerStatistics_descriptor,
-        new java.lang.String[] { "Minimum", "Maximum", "Sum", });
-    internal_static_orc_proto_DoubleStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_orc_proto_DoubleStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_DoubleStatistics_descriptor,
-        new java.lang.String[] { "Minimum", "Maximum", "Sum", });
-    internal_static_orc_proto_StringStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_orc_proto_StringStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_StringStatistics_descriptor,
-        new java.lang.String[] { "Minimum", "Maximum", "Sum", });
-    internal_static_orc_proto_BucketStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_orc_proto_BucketStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_BucketStatistics_descriptor,
-        new java.lang.String[] { "Count", });
-    internal_static_orc_proto_DecimalStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_orc_proto_DecimalStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_DecimalStatistics_descriptor,
-        new java.lang.String[] { "Minimum", "Maximum", "Sum", });
-    internal_static_orc_proto_DateStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_orc_proto_DateStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_DateStatistics_descriptor,
-        new java.lang.String[] { "Minimum", "Maximum", });
-    internal_static_orc_proto_TimestampStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_orc_proto_TimestampStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_TimestampStatistics_descriptor,
-        new java.lang.String[] { "Minimum", "Maximum", });
-    internal_static_orc_proto_BinaryStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_orc_proto_BinaryStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_BinaryStatistics_descriptor,
-        new java.lang.String[] { "Sum", });
-    internal_static_orc_proto_EncryptedStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_orc_proto_EncryptedStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_EncryptedStatistics_descriptor,
-        new java.lang.String[] { "Iv", "Encrypted", });
-    internal_static_orc_proto_ColumnStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(9);
-    internal_static_orc_proto_ColumnStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_ColumnStatistics_descriptor,
-        new java.lang.String[] { "NumberOfValues", "IntStatistics", "DoubleStatistics", "StringStatistics", "BucketStatistics", "DecimalStatistics", "DateStatistics", "BinaryStatistics", "TimestampStatistics", "HasNull", "Encrypted", });
-    internal_static_orc_proto_RowIndexEntry_descriptor =
-      getDescriptor().getMessageTypes().get(10);
-    internal_static_orc_proto_RowIndexEntry_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_RowIndexEntry_descriptor,
-        new java.lang.String[] { "Positions", "Statistics", });
-    internal_static_orc_proto_RowIndex_descriptor =
-      getDescriptor().getMessageTypes().get(11);
-    internal_static_orc_proto_RowIndex_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_RowIndex_descriptor,
-        new java.lang.String[] { "Entry", });
-    internal_static_orc_proto_BloomFilter_descriptor =
-      getDescriptor().getMessageTypes().get(12);
-    internal_static_orc_proto_BloomFilter_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_BloomFilter_descriptor,
-        new java.lang.String[] { "NumHashFunctions", "Bitset", });
-    internal_static_orc_proto_BloomFilterIndex_descriptor =
-      getDescriptor().getMessageTypes().get(13);
-    internal_static_orc_proto_BloomFilterIndex_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_BloomFilterIndex_descriptor,
-        new java.lang.String[] { "BloomFilter", });
-    internal_static_orc_proto_Stream_descriptor =
-      getDescriptor().getMessageTypes().get(14);
-    internal_static_orc_proto_Stream_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_Stream_descriptor,
-        new java.lang.String[] { "Kind", "Column", "Length", "Iv", });
-    internal_static_orc_proto_ColumnEncoding_descriptor =
-      getDescriptor().getMessageTypes().get(15);
-    internal_static_orc_proto_ColumnEncoding_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_ColumnEncoding_descriptor,
-        new java.lang.String[] { "Kind", "DictionarySize", });
-    internal_static_orc_proto_StripeFooter_descriptor =
-      getDescriptor().getMessageTypes().get(16);
-    internal_static_orc_proto_StripeFooter_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_StripeFooter_descriptor,
-        new java.lang.String[] { "Streams", "Columns", "WriterTimezone", });
-    internal_static_orc_proto_Type_descriptor =
-      getDescriptor().getMessageTypes().get(17);
-    internal_static_orc_proto_Type_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_Type_descriptor,
-        new java.lang.String[] { "Kind", "Subtypes", "FieldNames", "MaximumLength", "Precision", "Scale", });
-    internal_static_orc_proto_StripeInformation_descriptor =
-      getDescriptor().getMessageTypes().get(18);
-    internal_static_orc_proto_StripeInformation_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_StripeInformation_descriptor,
-        new java.lang.String[] { "Offset", "IndexLength", "DataLength", "FooterLength", "NumberOfRows", });
-    internal_static_orc_proto_UserMetadataItem_descriptor =
-      getDescriptor().getMessageTypes().get(19);
-    internal_static_orc_proto_UserMetadataItem_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_UserMetadataItem_descriptor,
-        new java.lang.String[] { "Name", "Value", });
-    internal_static_orc_proto_StripeStatistics_descriptor =
-      getDescriptor().getMessageTypes().get(20);
-    internal_static_orc_proto_StripeStatistics_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_StripeStatistics_descriptor,
-        new java.lang.String[] { "ColStats", });
-    internal_static_orc_proto_Metadata_descriptor =
-      getDescriptor().getMessageTypes().get(21);
-    internal_static_orc_proto_Metadata_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_Metadata_descriptor,
-        new java.lang.String[] { "StripeStats", });
-    internal_static_orc_proto_ColumnEncryption_descriptor =
-      getDescriptor().getMessageTypes().get(22);
-    internal_static_orc_proto_ColumnEncryption_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_ColumnEncryption_descriptor,
-        new java.lang.String[] { "ColumnId", "KeyName", "KeyVersion", "Algorithm", });
-    internal_static_orc_proto_Footer_descriptor =
-      getDescriptor().getMessageTypes().get(23);
-    internal_static_orc_proto_Footer_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_Footer_descriptor,
-        new java.lang.String[] { "HeaderLength", "ContentLength", "Stripes", "Types", "Metadata", "NumberOfRows", "Statistics", "RowIndexStride", "Encryption", });
-    internal_static_orc_proto_PostScript_descriptor =
-      getDescriptor().getMessageTypes().get(24);
-    internal_static_orc_proto_PostScript_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_orc_proto_PostScript_descriptor,
-        new java.lang.String[] { "FooterLength", "Compression", "CompressionBlockSize", "Version", "MetadataLength", "WriterVersion", "Magic", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

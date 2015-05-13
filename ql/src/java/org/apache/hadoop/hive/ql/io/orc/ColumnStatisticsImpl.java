@@ -17,6 +17,8 @@
  */
 package org.apache.hadoop.hive.ql.io.orc;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.serde2.io.DateWritable;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
@@ -24,7 +26,9 @@ import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.Text;
 
+import java.nio.ByteBuffer;
 import java.sql.Timestamp;
+import java.util.Random;
 
 class ColumnStatisticsImpl implements ColumnStatistics {
 
@@ -923,6 +927,23 @@ class ColumnStatisticsImpl implements ColumnStatistics {
     return "count: " + count + " hasNull: " + hasNull;
   }
 
+  OrcProto.ColumnStatistics.Builder encrypt(OrcFile.EncryptionOption encrypt,
+                                            Random random) {
+    ByteBuffer buffer = ByteBuffer.wrap(serialize().build().toByteArray());
+    Cipher cipher = Cipher.Factory.get(encrypt.getAlgorithm());
+    byte[] iv = new byte[cipher.getIvLength()];
+    random.nextBytes(iv);
+    cipher.initialize(Cipher.Mode.ENCRYPT, encrypt.getKey(),
+        ByteBuffer.wrap(iv), 0);
+    cipher.update(buffer, buffer);
+    buffer.rewind();
+    OrcProto.EncryptedStatistics.Builder crypt =
+        OrcProto.EncryptedStatistics.newBuilder();
+    crypt.setIv(ByteString.copyFrom(iv));
+    crypt.setColumnStatistics(ByteString.copyFrom(buffer));
+    return OrcProto.ColumnStatistics.newBuilder().setEncrypted(crypt);
+  }
+
   OrcProto.ColumnStatistics.Builder serialize() {
     OrcProto.ColumnStatistics.Builder builder =
       OrcProto.ColumnStatistics.newBuilder();
@@ -965,7 +986,24 @@ class ColumnStatisticsImpl implements ColumnStatistics {
     }
   }
 
-  static ColumnStatisticsImpl deserialize(OrcProto.ColumnStatistics stats) {
+  static ColumnStatisticsImpl deserialize(OrcProto.ColumnStatistics stats,
+                                          ReaderImpl.EncryptionKey key) {
+    // if it is encrypted and we have the key, decrypt it
+    if (stats.hasEncrypted() && key != null) {
+      Cipher cipher = Cipher.Factory.get(key.getAlgorithm());
+      OrcProto.EncryptedStatistics encrypt = stats.getEncrypted();
+      cipher.initialize(Cipher.Mode.DECRYPT, key.getKey(),
+          encrypt.getIv().asReadOnlyByteBuffer(), 0);
+      ByteBuffer buffer =
+          ByteBuffer.wrap(encrypt.getColumnStatistics().toByteArray());
+      cipher.update(buffer, buffer);
+      buffer.rewind();
+      try {
+        stats = OrcProto.ColumnStatistics.parseFrom(buffer.array());
+      } catch (InvalidProtocolBufferException e) {
+        throw new IllegalArgumentException("Bad encryption", e);
+      }
+    }
     if (stats.hasBucketStatistics()) {
       return new BooleanStatisticsImpl(stats);
     } else if (stats.hasIntStatistics()) {

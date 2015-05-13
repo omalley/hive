@@ -682,6 +682,17 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     public OrcFile.Version getVersion() {
       return version;
     }
+
+    /**
+     * Get the encryption options.
+     */
+    public OrcFile.EncryptionOption[] getEncryption() {
+      return encryptionOptions;
+    }
+
+    public Random getRandom() {
+      return random;
+    }
   }
 
   /**
@@ -710,6 +721,8 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     private final OrcProto.BloomFilter.Builder bloomFilterEntry;
     private boolean foundNulls;
     private OutStream isPresentOutStream;
+    protected final OrcFile.EncryptionOption encryption;
+    protected final Random random;
 
     /**
      * Create a tree writer.
@@ -757,6 +770,16 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
         bloomFilterIndex = null;
         bloomFilterStream = null;
         bloomFilter = null;
+      }
+      // get the encryption options for this column.
+      OrcFile.EncryptionOption[] encryptionOptions =
+          streamFactory.getEncryption();
+      if (encryptionOptions != null) {
+        encryption = encryptionOptions[id];
+        random = streamFactory.getRandom();
+      } else {
+        encryption = null;
+        random = null;
       }
     }
 
@@ -859,7 +882,23 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       // reset the flag for next stripe
       foundNulls = false;
 
-      builder.addColumns(getEncoding());
+      OrcProto.ColumnEncoding encoding = getEncoding();
+      // if the column is encrypted, encrypt the encoding
+      if (encryption != null) {
+        ByteBuffer serial = ByteBuffer.wrap(encoding.toByteArray());
+        Cipher cipher = Cipher.Factory.get(encryption.getAlgorithm());
+        byte[] iv = new byte[cipher.getIvLength()];
+        cipher.update(serial, serial);
+        serial.rewind();
+        OrcProto.EncryptedEncoding.Builder encrypt =
+            OrcProto.EncryptedEncoding.newBuilder();
+        encrypt.setIv(ByteString.copyFrom(iv));
+        encrypt.setColumnEncoding(ByteString.copyFrom(serial));
+        encoding = OrcProto.ColumnEncoding.newBuilder()
+            .setEncrypted(encrypt).build();
+      }
+      builder.addColumns(encoding);
+
       builder.setWriterTimezone(TimeZone.getDefault().getID());
       if (rowIndexStream != null) {
         if (rowIndex.getEntryCount() != requiredIndexEntries) {
@@ -885,7 +924,11 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     private void writeStripeStatistics
       (OrcProto.StripeStatistics.Builder stripeStats) {
       fileStatistics.merge(stripeColStatistics);
-      stripeStats.addColStats(stripeColStatistics.serialize().build());
+      if (encryption != null) {
+        stripeStats.addColStats(stripeColStatistics.encrypt(encryption, random));
+      } else {
+        stripeStats.addColStats(stripeColStatistics.serialize());
+      }
       stripeColStatistics.reset();
     }
 
@@ -2265,7 +2308,8 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
             : correction;
 
         // adjust next stripe size based on current stripe estimate correction
-        adjustedStripeSize = (long) ((1.0f - correction) * (availRatio * defaultStripeSize));
+        adjustedStripeSize =
+            (long) ((1.0f - correction) * (availRatio * defaultStripeSize));
       } else if (availRatio >= 1.0) {
         adjustedStripeSize = defaultStripeSize;
       }
@@ -2397,7 +2441,12 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
   private void writeFileStatistics(OrcProto.Footer.Builder builder,
                                    TreeWriter writer) throws IOException {
-    builder.addStatistics(writer.fileStatistics.serialize());
+    if (writer.encryption != null) {
+      builder.addStatistics(writer.fileStatistics.encrypt(writer.encryption,
+          random));
+    } else {
+      builder.addStatistics(writer.fileStatistics.serialize());
+    }
     for(TreeWriter child: writer.getChildrenWriters()) {
       writeFileStatistics(builder, child);
     }

@@ -26,7 +26,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -68,11 +70,50 @@ public class ReaderImpl implements Reader {
   protected final Configuration conf;
   private final List<Integer> versionList;
   private final OrcFile.WriterVersion writerVersion;
+  private final EncryptionKey[] keys;
 
   //serialized footer - Keeping this around for use by getFileMetaInfo()
   // will help avoid cpu cycles spend in deserializing at cost of increased
   // memory footprint.
   private final ByteBuffer footerByteBuffer;
+
+  /**
+   * Stores the encryption keys for the reader.
+   */
+  static class EncryptionKey {
+    EncryptionKey(String keyName, int keyVersion,
+                  Cipher.Algorithm algorithm,  ByteBuffer key) {
+      this.keyName = keyName;
+      this.keyVersion = keyVersion;
+      this.key = key;
+      this.algorithm = algorithm;
+    }
+
+    public String getKeyName() {
+      return keyName;
+    }
+
+    public int getKeyVersion() {
+      return keyVersion;
+    }
+
+    public ByteBuffer getKey() {
+      return key;
+    }
+
+    public Cipher.Algorithm getAlgorithm() {
+      return algorithm;
+    }
+
+    public String toString() {
+      return keyName + "@" + keyVersion;
+    }
+
+    private final String keyName;
+    private final int keyVersion;
+    private final ByteBuffer key;
+    private final Cipher.Algorithm algorithm;
+  }
 
   static class StripeInformationImpl
       implements StripeInformation {
@@ -263,6 +304,31 @@ public class ReaderImpl implements Reader {
     return result;
   }
 
+  void recursivelySetColumnKey(int id, EncryptionKey key) {
+    keys[id] = key;
+    for(int child: footer.getTypes(id).getSubtypesList()) {
+      recursivelySetColumnKey(child, key);
+    }
+  }
+
+  @Override
+  public void addKey(Cipher.Algorithm algorithm, String keyName, int keyVersion,
+                     ByteBuffer key) {
+    OrcProto.EncryptionAlgorithm algo =
+        WriterImpl.convertAlgorithmToProtobuf(algorithm);
+    for(OrcProto.ColumnEncryption encrypt: footer.getEncryptionList()) {
+      if ((encrypt.hasKeyName() && encrypt.getKeyName().equals(keyName)) &&
+          (encrypt.hasKeyVersion() && encrypt.getKeyVersion() == keyVersion) &&
+          (encrypt.hasAlgorithm() && encrypt.getAlgorithm() == algo)) {
+        EncryptionKey newKey = new EncryptionKey(keyName, keyVersion, algorithm,
+            key);
+        for(int root: encrypt.getColumnIdList()) {
+          recursivelySetColumnKey(root, newKey);
+        }
+      }
+    }
+  }
+
   @Override
   public int getRowIndexStride() {
     return footer.getRowIndexStride();
@@ -272,7 +338,8 @@ public class ReaderImpl implements Reader {
   public ColumnStatistics[] getStatistics() {
     ColumnStatistics[] result = new ColumnStatistics[footer.getTypesCount()];
     for(int i=0; i < result.length; ++i) {
-      result[i] = ColumnStatisticsImpl.deserialize(footer.getStatistics(i));
+      result[i] = ColumnStatisticsImpl.deserialize(footer.getStatistics(i),
+          keys[i]);
     }
     return result;
   }
@@ -392,6 +459,7 @@ public class ReaderImpl implements Reader {
     this.inspector = rInfo.inspector;
     this.versionList = footerMetaData.versionList;
     this.writerVersion = footerMetaData.writerVersion;
+    this.keys = new EncryptionKey[footer.getTypesCount()];
   }
 
   /**
@@ -601,7 +669,7 @@ public class ReaderImpl implements Reader {
     }
     return new RecordReaderImpl(this.getStripes(), fileSystem, path,
         options, footer.getTypesList(), codec, bufferSize,
-        footer.getRowIndexStride(), conf, getColumnEncryptionInformation());
+        footer.getRowIndexStride(), conf, keys);
   }
 
 
