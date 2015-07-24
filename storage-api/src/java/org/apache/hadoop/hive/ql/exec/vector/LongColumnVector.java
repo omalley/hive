@@ -186,4 +186,20 @@ public class LongColumnVector extends ColumnVector {
       buffer.append("null");
     }
   }
+
+  @Override
+  public void ensureSize(int size, boolean preserveData) {
+    if (size > vector.length) {
+      super.ensureSize(size, preserveData);
+      long[] oldArray = vector;
+      vector = new long[size];
+      if (preserveData) {
+        if (isRepeating) {
+          vector[0] = oldArray[0];
+        } else {
+          System.arraycopy(oldArray, 0, vector, 0 , oldArray.length);
+        }
+      }
+    }
+  }
 }

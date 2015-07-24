@@ -103,4 +103,20 @@ public class DecimalColumnVector extends ColumnVector {
     HiveDecimal minimumNonZeroValue = HiveDecimal.create(BigInteger.ONE, scale);
     vector[elementNum].set(minimumNonZeroValue);
   }
+
+  @Override
+  public void ensureSize(int size, boolean preserveData) {
+    if (size > vector.length) {
+      super.ensureSize(size, preserveData);
+      HiveDecimalWritable[] oldArray = vector;
+      vector = new HiveDecimalWritable[size];
+      if (preserveData) {
+        // we copy all of the values to avoid creating more objects
+        System.arraycopy(oldArray, 0, vector, 0 , oldArray.length);
+        for(int i= oldArray.length; i < vector.length; ++i) {
+          vector[i] = new HiveDecimalWritable(HiveDecimal.ZERO);
+        }
+      }
+    }
+  }
 }

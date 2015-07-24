@@ -319,4 +319,28 @@ public class BytesColumnVector extends ColumnVector {
       buffer.append("null");
     }
   }
+
+  @Override
+  public void ensureSize(int size, boolean preserveData) {
+    if (size > vector.length) {
+      super.ensureSize(size, preserveData);
+      int[] oldStart = start;
+      start = new int[size];
+      int[] oldLength = length;
+      length = new int[size];
+      byte[][] oldVector = vector;
+      vector = new byte[size][];
+      if (preserveData) {
+        if (isRepeating) {
+          vector[0] = oldVector[0];
+          start[0] = oldStart[0];
+          length[0] = oldLength[0];
+        } else {
+          System.arraycopy(oldVector, 0, vector, 0, oldVector.length);
+          System.arraycopy(oldStart, 0, start, 0 , oldStart.length);
+          System.arraycopy(oldLength, 0, length, 0, oldLength.length);
+        }
+      }
+    }
+  }
 }
