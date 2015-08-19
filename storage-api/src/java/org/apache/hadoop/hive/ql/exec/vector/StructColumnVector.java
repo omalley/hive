@@ -77,4 +77,9 @@ public class StructColumnVector extends ColumnVector {
       buffer.append("null");
     }
   }
+
+  @Override
+  public void ensureSize(int size, boolean preserveData) {
+    super.ensureSize(size, preserveData);
+  }
 }

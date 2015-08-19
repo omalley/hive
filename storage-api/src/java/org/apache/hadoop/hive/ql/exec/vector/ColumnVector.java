@@ -39,7 +39,11 @@ public abstract class ColumnVector {
     LONG,
     DOUBLE,
     BYTES,
-    DECIMAL
+    DECIMAL,
+    STRUCT,
+    LIST,
+    MAP,
+    UNION
   }
 
   /*
@@ -121,8 +125,7 @@ public abstract class ColumnVector {
         noNulls = false;
         if (selectedInUse) {
           for (int j = 0; j < size; j++) {
-            int i = sel[j];
-            isNull[i] = false;
+            isNull[sel[j]] = false;
           }
         } else {
           Arrays.fill(isNull, 0, size, false);
@@ -161,6 +164,27 @@ public abstract class ColumnVector {
      */
     public void init() {
       // Do nothing by default
+    }
+
+    /**
+     * Ensure the ColumnVector can hold at least size values.
+     * This method is deliberately *not* recursive because the complex types
+     * can easily have more (or less) children than the upper levels.
+     * @param size the new minimum size
+     * @param presesrveData should the old data be preserved?
+     */
+    public void ensureSize(int size, boolean presesrveData) {
+      if (isNull.length < size) {
+        boolean[] oldArray = isNull;
+        isNull = new boolean[size];
+        if (presesrveData && !noNulls) {
+          if (isRepeating) {
+            isNull[0] = oldArray[0];
+          } else {
+            System.arraycopy(oldArray, 0, isNull, 0, oldArray.length);
+          }
+        }
+      }
     }
 
     /**
