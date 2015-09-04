@@ -348,7 +348,7 @@ public class ReaderImpl implements Reader {
         return version;
       }
     }
-    return OrcFile.WriterVersion.ORIGINAL;
+    return OrcFile.WriterVersion.FUTURE;
   }
 
   /** Extracts the necessary metadata from an externally store buffer (fullFooterBuffer). */
