@@ -82,4 +82,20 @@ public class StructColumnVector extends ColumnVector {
   public void ensureSize(int size, boolean preserveData) {
     super.ensureSize(size, preserveData);
   }
+
+  @Override
+  public void reset() {
+    super.reset();
+    for(int i =0; i < fields.length; ++i) {
+      fields[i].reset();
+    }
+  }
+
+  @Override
+  public void init() {
+    super.init();
+    for(int i =0; i < fields.length; ++i) {
+      fields[i].init();
+    }
+  }
 }

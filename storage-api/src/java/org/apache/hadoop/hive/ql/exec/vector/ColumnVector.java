@@ -85,7 +85,7 @@ public abstract class ColumnVector {
      *  - sets isRepeating to false
      */
     public void reset() {
-      if (false == noNulls) {
+      if (!noNulls) {
         Arrays.fill(isNull, false);
       }
       noNulls = true;

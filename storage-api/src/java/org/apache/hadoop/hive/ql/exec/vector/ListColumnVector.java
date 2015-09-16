@@ -205,4 +205,16 @@ public class ListColumnVector extends ColumnVector {
       }
     }
   }
+
+  @Override
+  public void init() {
+    super.init();
+    child.init();
+  }
+
+  @Override
+  public void reset() {
+    super.reset();
+    child.reset();
+  }
 }
