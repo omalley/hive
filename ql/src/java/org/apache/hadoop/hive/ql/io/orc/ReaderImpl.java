@@ -33,13 +33,9 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.common.DiskRange;
+import org.apache.hadoop.hive.storage.DiskRange;
 import org.apache.hadoop.hive.ql.io.FileFormatException;
 import org.apache.hadoop.hive.ql.io.orc.OrcFile.WriterVersion;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.Footer;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.Type;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItem;
-import org.apache.hadoop.hive.ql.io.orc.RecordReaderImpl.BufferChunk;
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
 import org.apache.hadoop.hive.ql.util.JavaDataModel;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
@@ -49,6 +45,14 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.InvalidProtocolBufferException;
+import org.apache.orc.BufferChunk;
+import org.apache.orc.ColumnStatistics;
+import org.apache.orc.ColumnStatisticsImpl;
+import org.apache.orc.CompressionCodec;
+import org.apache.orc.CompressionKind;
+import org.apache.orc.InStream;
+import org.apache.orc.OrcProto;
+import org.apache.orc.StripeInformation;
 
 public class ReaderImpl implements Reader {
 
@@ -389,7 +393,7 @@ public class ReaderImpl implements Reader {
     bb.position(footerAbsPos);
     bb.limit(footerAbsPos + footerSize);
     InputStream instream = InStream.create("footer", Lists.<DiskRange>newArrayList(
-          new BufferChunk(bb, 0)), footerSize, codec, bufferSize);
+        new BufferChunk(bb, 0)), footerSize, codec, bufferSize);
     return OrcProto.Footer.parseFrom(instream);
   }
 
@@ -671,7 +675,7 @@ public class ReaderImpl implements Reader {
       Arrays.fill(include, true);
       options.include(include);
     }
-    return new RecordReaderImpl(this.getStripes(), fileSystem, path,
+    return new RecordReaderImpl(getStripes(), fileSystem, path,
         options, footer.getTypesList(), codec, bufferSize,
         footer.getRowIndexStride(), conf);
   }
@@ -729,7 +733,7 @@ public class ReaderImpl implements Reader {
   private static long getRawDataSizeOfColumn(int colIdx, OrcProto.Footer footer) {
     OrcProto.ColumnStatistics colStat = footer.getStatistics(colIdx);
     long numVals = colStat.getNumberOfValues();
-    Type type = footer.getTypes(colIdx);
+    OrcProto.Type type = footer.getTypes(colIdx);
 
     switch (type.getKind()) {
     case BINARY:
@@ -778,7 +782,7 @@ public class ReaderImpl implements Reader {
 
   private List<Integer> getColumnIndicesFromNames(List<String> colNames) {
     // top level struct
-    Type type = footer.getTypesList().get(0);
+    OrcProto.Type type = footer.getTypesList().get(0);
     List<Integer> colIndices = Lists.newArrayList();
     List<String> fieldNames = type.getFieldNamesList();
     int fieldIdx = 0;
@@ -825,7 +829,7 @@ public class ReaderImpl implements Reader {
 
   private int getLastIdx() {
     Set<Integer> indices = Sets.newHashSet();
-    for (Type type : footer.getTypesList()) {
+    for (OrcProto.Type type : footer.getTypesList()) {
       indices.addAll(type.getSubtypesList());
     }
     return Collections.max(indices);
@@ -840,7 +844,7 @@ public class ReaderImpl implements Reader {
     return metadata.getStripeStatsList();
   }
 
-  public List<UserMetadataItem> getOrcProtoUserMetadata() {
+  public List<OrcProto.UserMetadataItem> getOrcProtoUserMetadata() {
     return footer.getMetadataList();
   }
 
@@ -850,7 +854,7 @@ public class ReaderImpl implements Reader {
   }
 
   @Override
-  public Footer getFooter() {
+  public OrcProto.Footer getFooter() {
     return footer;
   }
 }

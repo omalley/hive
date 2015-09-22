@@ -24,7 +24,9 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.sql.Date;
@@ -38,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.google.common.primitives.Longs;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -77,6 +80,19 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hive.common.util.HiveTestUtils;
+import org.apache.orc.BinaryColumnStatistics;
+import org.apache.orc.BooleanColumnStatistics;
+import org.apache.orc.ColumnStatistics;
+import org.apache.orc.CompressionKind;
+import org.apache.orc.DecimalColumnStatistics;
+import org.apache.orc.DoubleColumnStatistics;
+import org.apache.orc.IntegerColumnStatistics;
+import org.apache.orc.MemoryManager;
+import org.apache.orc.OrcProto;
+import org.apache.orc.StringColumnStatistics;
+import org.apache.orc.StripeInformation;
+import org.apache.orc.StripeStatistics;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -1796,31 +1812,31 @@ public class TestOrcFile {
     }
 
     @Override
-    void addWriter(Path path, long requestedAllocation,
-                   MemoryManager.Callback callback) {
+    public void addWriter(Path path, long requestedAllocation,
+                          MemoryManager.Callback callback) {
       this.path = path;
       this.lastAllocation = requestedAllocation;
       this.callback = callback;
     }
 
     @Override
-    synchronized void removeWriter(Path path) {
+    public synchronized void removeWriter(Path path) {
       this.path = null;
       this.lastAllocation = 0;
     }
 
     @Override
-    long getTotalMemoryPool() {
+    public long getTotalMemoryPool() {
       return totalSpace;
     }
 
     @Override
-    double getAllocationScale() {
+    public double getAllocationScale() {
       return rate;
     }
 
     @Override
-    void addedRow() throws IOException {
+    public void addedRow() throws IOException {
       if (++rows % 100 == 0) {
         callback.checkMemory(rate);
       }
@@ -1986,5 +2002,38 @@ public class TestOrcFile {
     }
     assertTrue(!rows.hasNext());
     assertEquals(3500, rows.getRowNumber());
+  }
+
+
+  @Test
+  public void testBitPack64Large() throws Exception {
+    ObjectInspector inspector;
+    synchronized (TestOrcFile.class) {
+      inspector = ObjectInspectorFactory.getReflectionObjectInspector(Long.class,
+          ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
+    }
+
+    int size = 1080832;
+    long[] inp = new long[size];
+    Random rand = new Random(1234);
+    for (int i = 0; i < size; i++) {
+      inp[i] = rand.nextLong();
+    }
+    List<Long> input = Lists.newArrayList(Longs.asList(inp));
+
+    Writer writer = OrcFile.createWriter(testFilePath,
+        OrcFile.writerOptions(conf).inspector(inspector).compress(CompressionKind.ZLIB));
+    for (Long l : input) {
+      writer.addRow(l);
+    }
+    writer.close();
+
+    Reader reader = OrcFile.createReader(testFilePath, OrcFile.readerOptions(conf).filesystem(fs));
+    RecordReader rows = reader.rows();
+    int idx = 0;
+    while (rows.hasNext()) {
+      Object row = rows.next(null);
+      Assert.assertEquals(input.get(idx++).longValue(), ((LongWritable) row).get());
+    }
   }
 }

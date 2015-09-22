@@ -19,7 +19,6 @@ package org.apache.hadoop.hive.ql.io.orc;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.ByteBuffer;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,14 +34,15 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.common.DiskRange;
-import org.apache.hadoop.hive.common.DiskRangeList;
-import org.apache.hadoop.hive.common.DiskRangeList.DiskRangeListCreateHelper;
+import org.apache.hadoop.hive.storage.DiskRange;
+import org.apache.hadoop.hive.storage.DiskRangeList;
+import org.apache.hadoop.hive.storage.DiskRangeList.DiskRangeListCreateHelper;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.ql.exec.vector.ColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.hadoop.hive.ql.io.filters.BloomFilterIO;
-import org.apache.hadoop.hive.ql.io.orc.RecordReaderUtils.ByteBufferAllocatorPool;
+import org.apache.orc.RecordReaderUtils;
+import org.apache.orc.RecordReaderUtils.ByteBufferAllocatorPool;
 import org.apache.hadoop.hive.ql.io.orc.TreeReaderFactory.TreeReader;
 import org.apache.hadoop.hive.ql.io.sarg.PredicateLeaf;
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
@@ -50,8 +50,26 @@ import org.apache.hadoop.hive.ql.io.sarg.SearchArgument.TruthValue;
 import org.apache.hadoop.hive.serde2.io.DateWritable;
 import org.apache.hadoop.hive.serde2.io.HiveDecimalWritable;
 import org.apache.hadoop.hive.serde2.io.TimestampWritable;
-import org.apache.hadoop.hive.shims.HadoopShims.ZeroCopyReaderShim;
+import org.apache.orc.BooleanColumnStatistics;
+import org.apache.orc.ColumnStatistics;
+import org.apache.orc.ColumnStatisticsImpl;
+import org.apache.orc.DateColumnStatistics;
+import org.apache.orc.DecimalColumnStatistics;
+import org.apache.orc.DoubleColumnStatistics;
+import org.apache.orc.HadoopShims.ZeroCopyReaderShim;
 import org.apache.hadoop.io.Text;
+import org.apache.orc.BufferChunk;
+import org.apache.orc.CompressionCodec;
+import org.apache.orc.InStream;
+import org.apache.orc.IntegerColumnStatistics;
+import org.apache.orc.OrcConf;
+import org.apache.orc.OrcProto;
+import org.apache.orc.PositionProvider;
+import org.apache.orc.PositionProviderImpl;
+import org.apache.orc.StreamName;
+import org.apache.orc.StringColumnStatistics;
+import org.apache.orc.StripeInformation;
+import org.apache.orc.TimestampColumnStatistics;
 
 class RecordReaderImpl implements RecordReader {
 
@@ -62,7 +80,7 @@ class RecordReaderImpl implements RecordReader {
   private final FSDataInputStream file;
   private final long firstRow;
   private final List<StripeInformation> stripes =
-    new ArrayList<StripeInformation>();
+      new ArrayList<StripeInformation>();
   private OrcProto.StripeFooter stripeFooter;
   private final long totalRowCount;
   private final CompressionCodec codec;
@@ -208,26 +226,8 @@ class RecordReaderImpl implements RecordReader {
     advanceToNextRow(reader, 0L, true);
   }
 
-  public static final class PositionProviderImpl implements PositionProvider {
-    private final OrcProto.RowIndexEntry entry;
-    private int index;
-
-    public PositionProviderImpl(OrcProto.RowIndexEntry entry) {
-      this(entry, 0);
-    }
-
-    public PositionProviderImpl(OrcProto.RowIndexEntry entry, int startPos) {
-      this.entry = entry;
-      this.index = startPos;
-    }
-
-    @Override
-    public long getNext() {
-      return entry.getPositions(index++);
-    }
-  }
-
-  OrcProto.StripeFooter readStripeFooter(StripeInformation stripe) throws IOException {
+  OrcProto.StripeFooter readStripeFooter(StripeInformation stripe
+                                         ) throws IOException {
     return metadata.readStripeFooter(stripe);
   }
 
@@ -781,7 +781,7 @@ class RecordReaderImpl implements RecordReader {
       if (zcr != null) {
         for (DiskRangeList range = bufferChunks; range != null; range = range.next) {
           if (!(range instanceof BufferChunk)) continue;
-          zcr.releaseBuffer(((BufferChunk)range).chunk);
+          zcr.releaseBuffer(((BufferChunk)range).getData());
         }
       }
       bufferChunks = null;
@@ -848,56 +848,6 @@ class RecordReaderImpl implements RecordReader {
     List<OrcProto.Stream> streamDescriptions = stripeFooter.getStreamsList();
     createStreams(
         streamDescriptions, bufferChunks, null, codec, bufferSize, streams);
-  }
-
-  /**
-   * The sections of stripe that we have read.
-   * This might not match diskRange - 1 disk range can be multiple buffer chunks, depending on DFS block boundaries.
-   */
-  public static class BufferChunk extends DiskRangeList {
-    final ByteBuffer chunk;
-
-    BufferChunk(ByteBuffer chunk, long offset) {
-      super(offset, offset + chunk.remaining());
-      this.chunk = chunk;
-    }
-
-    @Override
-    public boolean hasData() {
-      return chunk != null;
-    }
-
-    @Override
-    public final String toString() {
-      boolean makesSense = chunk.remaining() == (end - offset);
-      return "data range [" + offset + ", " + end + "), size: " + chunk.remaining()
-          + (makesSense ? "" : "(!)") + " type: " + (chunk.isDirect() ? "direct" : "array-backed");
-    }
-
-    @Override
-    public DiskRange sliceAndShift(long offset, long end, long shiftBy) {
-      assert offset <= end && offset >= this.offset && end <= this.end;
-      assert offset + shiftBy >= 0;
-      ByteBuffer sliceBuf = chunk.slice();
-      int newPos = (int)(offset - this.offset);
-      int newLimit = newPos + (int)(end - offset);
-      try {
-        sliceBuf.position(newPos);
-        sliceBuf.limit(newLimit);
-      } catch (Throwable t) {
-        LOG.error("Failed to slice buffer chunk with range" + " [" + this.offset + ", " + this.end
-            + "), position: " + chunk.position() + " limit: " + chunk.limit() + ", "
-            + (chunk.isDirect() ? "direct" : "array") + "; to [" + offset + ", " + end + ") "
-            + t.getClass());
-        throw new RuntimeException(t);
-      }
-      return new BufferChunk(sliceBuf, offset + shiftBy);
-    }
-
-    @Override
-    public ByteBuffer getData() {
-      return chunk;
-    }
   }
 
   /**
@@ -974,7 +924,8 @@ class RecordReaderImpl implements RecordReader {
     }
   }
 
-  private void readPartialDataStreams(StripeInformation stripe) throws IOException {
+  private void readPartialDataStreams(StripeInformation stripe
+                                      ) throws IOException {
     List<OrcProto.Stream> streamList = stripeFooter.getStreamsList();
     DiskRangeList toRead = planReadPartialDataStreams(streamList,
             indexes, included, includedRowGroups, codec != null,

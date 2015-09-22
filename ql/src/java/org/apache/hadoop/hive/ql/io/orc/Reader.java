@@ -22,9 +22,12 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.Footer;
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
+import org.apache.orc.ColumnStatistics;
+import org.apache.orc.CompressionKind;
+import org.apache.orc.OrcProto;
+import org.apache.orc.StripeInformation;
 
 /**
  * The interface for reading ORC files.
@@ -363,5 +366,5 @@ public interface Reader {
   /** Gets serialized file metadata read from disk for the purposes of caching, etc. */
   ByteBuffer getSerializedFileFooter();
 
-  Footer getFooter();
+  OrcProto.Footer getFooter();
 }

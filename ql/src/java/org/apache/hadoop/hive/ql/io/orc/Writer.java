@@ -18,6 +18,9 @@
 
 package org.apache.hadoop.hive.ql.io.orc;
 
+import org.apache.orc.OrcProto;
+import org.apache.orc.StripeInformation;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;

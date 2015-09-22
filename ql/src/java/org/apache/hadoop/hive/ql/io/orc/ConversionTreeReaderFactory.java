@@ -17,6 +17,8 @@
  */
 package org.apache.hadoop.hive.ql.io.orc;
 
+import org.apache.orc.OrcProto;
+
 import java.io.IOException;
 import java.util.List;
 

@@ -44,6 +44,10 @@ import org.apache.hadoop.mapred.InputFormat;
 import org.apache.hadoop.mapred.InputSplit;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.Reporter;
+import org.apache.orc.CompressionKind;
+import org.apache.orc.MemoryManager;
+import org.apache.orc.OrcProto;
+import org.apache.orc.StripeInformation;
 import org.junit.Test;
 import org.mockito.MockSettings;
 import org.mockito.Mockito;
@@ -815,7 +819,7 @@ public class TestOrcRawRecordMerger {
     MemoryManager mgr = new MemoryManager(conf){
       int rowsAddedSinceCheck = 0;
 
-      synchronized void addedRow() throws IOException {
+      public synchronized void addedRow() throws IOException {
         if (++rowsAddedSinceCheck >= 2) {
           notifyWriters();
           rowsAddedSinceCheck = 0;
@@ -912,7 +916,7 @@ public class TestOrcRawRecordMerger {
     MemoryManager mgr = new MemoryManager(conf){
       int rowsAddedSinceCheck = 0;
 
-      synchronized void addedRow() throws IOException {
+      public synchronized void addedRow() throws IOException {
         if (++rowsAddedSinceCheck >= 2) {
           notifyWriters();
           rowsAddedSinceCheck = 0;

@@ -24,10 +24,14 @@ import java.util.List;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.common.DiskRange;
-import org.apache.hadoop.hive.ql.io.orc.RecordReaderImpl.BufferChunk;
+import org.apache.hadoop.hive.storage.DiskRange;
+import org.apache.orc.BufferChunk;
 
 import com.google.common.collect.Lists;
+import org.apache.orc.CompressionCodec;
+import org.apache.orc.InStream;
+import org.apache.orc.OrcProto;
+import org.apache.orc.StripeInformation;
 
 public class MetadataReader {
   private final FSDataInputStream file;
@@ -48,7 +52,8 @@ public class MetadataReader {
     this.typeCount = typeCount;
   }
 
-  public RecordReaderImpl.Index readRowIndex(StripeInformation stripe, OrcProto.StripeFooter footer,
+  public RecordReaderImpl.Index readRowIndex(StripeInformation stripe,
+                                             OrcProto.StripeFooter footer,
       boolean[] included, OrcProto.RowIndex[] indexes, boolean[] sargColumns,
       OrcProto.BloomFilterIndex[] bloomFilterIndices) throws IOException {
     if (footer == null) {

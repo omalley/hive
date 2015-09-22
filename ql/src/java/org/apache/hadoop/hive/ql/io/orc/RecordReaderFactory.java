@@ -40,6 +40,7 @@ import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
 import org.apache.hadoop.hive.serde2.typeinfo.VarcharTypeInfo;
 
 import com.google.common.collect.Lists;
+import org.apache.orc.OrcProto;
 
 /**
  * Factory to create ORC tree readers. It also compares file schema with schema specified on read

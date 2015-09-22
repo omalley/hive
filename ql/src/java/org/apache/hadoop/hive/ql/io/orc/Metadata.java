@@ -21,6 +21,8 @@ package org.apache.hadoop.hive.ql.io.orc;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import org.apache.orc.OrcProto;
+import org.apache.orc.StripeStatistics;
 
 public class Metadata {
 

@@ -42,13 +42,13 @@ import org.apache.hadoop.hive.common.JavaUtils;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.ql.io.IOConstants;
 import org.apache.hadoop.hive.ql.io.filters.BloomFilterIO;
-import org.apache.hadoop.hive.ql.io.orc.CompressionCodec.Modifier;
+import org.apache.orc.BinaryColumnStatistics;
+import org.apache.orc.BitFieldWriter;
+import org.apache.orc.ColumnStatisticsImpl;
+import org.apache.orc.CompressionCodec;
+import org.apache.orc.CompressionCodec.Modifier;
 import org.apache.hadoop.hive.ql.io.orc.OrcFile.CompressionStrategy;
 import org.apache.hadoop.hive.ql.io.orc.OrcFile.EncodingStrategy;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.RowIndexEntry;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.StripeStatistics;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.Type;
-import org.apache.hadoop.hive.ql.io.orc.OrcProto.UserMetadataItem;
 import org.apache.hadoop.hive.ql.util.JavaDataModel;
 import org.apache.hadoop.hive.serde2.io.DateWritable;
 import org.apache.hadoop.hive.serde2.objectinspector.ListObjectInspector;
@@ -86,6 +86,25 @@ import com.google.common.collect.Lists;
 import com.google.common.primitives.Longs;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedOutputStream;
+import org.apache.orc.CompressionKind;
+import org.apache.orc.DynamicIntArray;
+import org.apache.orc.IntegerWriter;
+import org.apache.orc.MemoryManager;
+import org.apache.orc.OrcConf;
+import org.apache.orc.OrcProto;
+import org.apache.orc.OutStream;
+import org.apache.orc.PositionRecorder;
+import org.apache.orc.PositionedOutputStream;
+import org.apache.orc.RunLengthByteWriter;
+import org.apache.orc.RunLengthIntegerWriter;
+import org.apache.orc.RunLengthIntegerWriterV2;
+import org.apache.orc.SerializationUtils;
+import org.apache.orc.SnappyCodec;
+import org.apache.orc.StreamName;
+import org.apache.orc.StringColumnStatistics;
+import org.apache.orc.StringRedBlackTree;
+import org.apache.orc.StripeInformation;
+import org.apache.orc.ZlibCodec;
 
 /**
  * An ORC file writer. The file is divided into stripes, which is the natural
@@ -659,8 +678,42 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
     private final OrcProto.BloomFilter.Builder bloomFilterEntry;
     private boolean foundNulls;
     private OutStream isPresentOutStream;
-    private final List<StripeStatistics.Builder> stripeStatsBuilders;
+    private final List<OrcProto.StripeStatistics.Builder> stripeStatsBuilders;
     private final StreamFactory streamFactory;
+
+    static ColumnStatisticsImpl create(ObjectInspector inspector) {
+      switch (inspector.getCategory()) {
+        case PRIMITIVE:
+          switch (((PrimitiveObjectInspector) inspector).getPrimitiveCategory()) {
+            case BOOLEAN:
+              return new ColumnStatisticsImpl.BooleanStatisticsImpl();
+            case BYTE:
+            case SHORT:
+            case INT:
+            case LONG:
+              return new ColumnStatisticsImpl.IntegerStatisticsImpl();
+            case FLOAT:
+            case DOUBLE:
+              return new ColumnStatisticsImpl.DoubleStatisticsImpl();
+            case STRING:
+            case CHAR:
+            case VARCHAR:
+              return new ColumnStatisticsImpl.StringStatisticsImpl();
+            case DECIMAL:
+              return new ColumnStatisticsImpl.DecimalStatisticsImpl();
+            case DATE:
+              return new ColumnStatisticsImpl.DateStatisticsImpl();
+            case TIMESTAMP:
+              return new ColumnStatisticsImpl.TimestampStatisticsImpl();
+            case BINARY:
+              return new ColumnStatisticsImpl.BinaryStatisticsImpl();
+            default:
+              return new ColumnStatisticsImpl();
+          }
+        default:
+          return new ColumnStatisticsImpl();
+      }
+    }
 
     /**
      * Create a tree writer.
@@ -686,9 +739,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       }
       this.foundNulls = false;
       createBloomFilter = streamFactory.getBloomFilterColumns()[columnId];
-      indexStatistics = ColumnStatisticsImpl.create(inspector);
-      stripeColStatistics = ColumnStatisticsImpl.create(inspector);
-      fileStatistics = ColumnStatisticsImpl.create(inspector);
+      indexStatistics = create(inspector);
+      stripeColStatistics = create(inspector);
+      fileStatistics = create(inspector);
       childrenWriters = new TreeWriter[0];
       rowIndex = OrcProto.RowIndex.newBuilder();
       rowIndexEntry = OrcProto.RowIndexEntry.newBuilder();
@@ -768,7 +821,7 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
 
     private void removeIsPresentPositions() {
       for(int i=0; i < rowIndex.getEntryCount(); ++i) {
-        RowIndexEntry.Builder entry = rowIndex.getEntryBuilder(i);
+        OrcProto.RowIndexEntry.Builder entry = rowIndex.getEntryBuilder(i);
         List<Long> positions = entry.getPositionsList();
         // bit streams use 3 positions if uncompressed, 4 if compressed
         positions = positions.subList(isCompressed ? 4 : 3, positions.size());
@@ -1626,7 +1679,7 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
       if (obj != null) {
         // Using the Writable here as it's used directly for writing as well as for stats.
         DateWritable val = ((DateObjectInspector) inspector).getPrimitiveWritableObject(obj);
-        indexStatistics.updateDate(val);
+        indexStatistics.updateDate(val.getDays());
         writer.write(val.getDays());
         if (createBloomFilter) {
           bloomFilter.addLong(val.getDays());
@@ -2049,14 +2102,14 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
             // The char length needs to be written to file and should be available
             // from the object inspector
             CharTypeInfo charTypeInfo = (CharTypeInfo) ((PrimitiveObjectInspector) treeWriter.inspector).getTypeInfo();
-            type.setKind(Type.Kind.CHAR);
+            type.setKind(OrcProto.Type.Kind.CHAR);
             type.setMaximumLength(charTypeInfo.getLength());
             break;
           case VARCHAR:
             // The varchar length needs to be written to file and should be available
             // from the object inspector
             VarcharTypeInfo typeInfo = (VarcharTypeInfo) ((PrimitiveObjectInspector) treeWriter.inspector).getTypeInfo();
-            type.setKind(Type.Kind.VARCHAR);
+            type.setKind(OrcProto.Type.Kind.VARCHAR);
             type.setMaximumLength(typeInfo.getLength());
             break;
           case BINARY:
@@ -2559,9 +2612,9 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
   }
 
   @Override
-  public void appendUserMetadata(List<UserMetadataItem> userMetadata) {
+  public void appendUserMetadata(List<OrcProto.UserMetadataItem> userMetadata) {
     if (userMetadata != null) {
-      for (UserMetadataItem item : userMetadata) {
+      for (OrcProto.UserMetadataItem item : userMetadata) {
         this.userMetadata.put(item.getName(), item.getValue());
       }
     }

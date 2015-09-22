@@ -18,7 +18,6 @@
 package org.apache.hadoop.hive.shims;
 
 import java.io.IOException;
-import java.lang.Override;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -545,18 +544,6 @@ public class Hadoop20SShims extends HadoopShimsSecure {
   }
 
   @Override
-  public ZeroCopyReaderShim getZeroCopyReader(FSDataInputStream in, ByteBufferPoolShim pool) throws IOException {
-    /* not supported */
-    return null;
-  }
-
-  @Override
-  public DirectDecompressorShim getDirectDecompressor(DirectCompressionType codec) {
-    /* not supported */
-    return null;
-  }
-
-  @Override
   public Configuration getConfiguration(org.apache.hadoop.mapreduce.JobContext context) {
     return context.getConfiguration();
   }
@@ -691,27 +678,6 @@ public class Hadoop20SShims extends HadoopShimsSecure {
   @Override
   public Path getPathWithoutSchemeAndAuthority(Path path) {
     return path;
-  }
-
-  @Override
-  public int readByteBuffer(FSDataInputStream file, ByteBuffer dest) throws IOException {
-    // Inefficient for direct buffers; only here for compat.
-    int pos = dest.position();
-    if (dest.hasArray()) {
-      int result = file.read(dest.array(), dest.arrayOffset(), dest.remaining());
-      if (result > 0) {
-        dest.position(pos + result);
-      }
-      return result;
-    } else {
-      byte[] arr = new byte[dest.remaining()];
-      int result = file.read(arr, 0, arr.length);
-      if (result > 0) {
-        dest.put(arr, 0, result);
-        dest.position(pos + result);
-      }
-      return result;
-    }
   }
 
   @Override

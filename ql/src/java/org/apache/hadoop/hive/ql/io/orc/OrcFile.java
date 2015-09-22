@@ -25,6 +25,9 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
+import org.apache.orc.CompressionKind;
+import org.apache.orc.MemoryManager;
+import org.apache.orc.OrcConf;
 
 /**
  * Contains factory methods to read or write ORC files.

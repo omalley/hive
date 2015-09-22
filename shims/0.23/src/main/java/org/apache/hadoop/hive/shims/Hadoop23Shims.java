@@ -977,24 +977,6 @@ public class Hadoop23Shims extends HadoopShimsSecure {
  }
 
   @Override
-  public ZeroCopyReaderShim getZeroCopyReader(FSDataInputStream in, ByteBufferPoolShim pool) throws IOException {
-    if(zeroCopy) {
-      return ZeroCopyShims.getZeroCopyReader(in, pool);
-    }
-    /* not supported */
-    return null;
-  }
-
-  @Override
-  public DirectDecompressorShim getDirectDecompressor(DirectCompressionType codec) {
-    if(zeroCopy) {
-      return ZeroCopyShims.getDirectDecompressor(codec);
-    }
-    /* not supported */
-    return null;
-  }
-
-  @Override
   public Configuration getConfiguration(org.apache.hadoop.mapreduce.JobContext context) {
     return context.getConfiguration();
   }
@@ -1405,16 +1387,6 @@ public class Hadoop23Shims extends HadoopShimsSecure {
     return Path.getPathWithoutSchemeAndAuthority(path);
   }
 
-  @Override
-  public int readByteBuffer(FSDataInputStream file, ByteBuffer dest) throws IOException {
-    int pos = dest.position();
-    int result = file.read(dest);
-    if (result > 0) {
-      // Ensure this explicitly since versions before 2.7 read doesn't do it.
-      dest.position(pos + result);
-    }
-    return result;
-  }
   @Override
   public void addDelegationTokens(FileSystem fs, Credentials cred, String uname) throws IOException {
     // Use method addDelegationTokens instead of getDelegationToken to get all the tokens including KMS.
