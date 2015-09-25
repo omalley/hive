@@ -18,6 +18,8 @@
 
 package org.apache.hadoop.hive.ql.exec.vector;
 
+import java.util.Arrays;
+
 /**
  * The representation of a vectorized column of list objects.
  *
@@ -44,27 +46,6 @@ public class ListColumnVector extends ColumnVector {
     childCount = 0;
     offsets = new long[len];
     lengths = new long[len];
-  }
-
-  /**
-   * For the simple cases, find the number of children elements. The simple case
-   * is where each of the lists is laid out end to end in order in the children
-   * array.
-   * @param offsets the start of each list
-   * @param lengths the length of each list
-   * @param size the number of lists
-   * @return If the list is simple, it will be the number of children, otherwise
-   *   a -1 is returned.
-   */
-  static int findChildLength(long[] offsets, long[] lengths, int size) {
-    int result = 0;
-    for(int i=0; i < size; ++i) {
-      if (offsets[i] != result) {
-        return -1;
-      }
-      result += lengths[i];
-    }
-    return result;
   }
 
   /**
@@ -98,48 +79,54 @@ public class ListColumnVector extends ColumnVector {
   public void flatten(boolean selectedInUse, int[] sel, int size) {
     flattenPush();
 
-    // figure out if the layout is the simple one and make it simple if not
-    int numChildren = -1;
-    int[] childSelection = null;
-    if (!selectedInUse) {
-      numChildren = findChildLength(offsets, lengths, size);
-      if (numChildren == -1) {
-        selectedInUse = true;
-        sel = new int[size];
-        for (int i = 0; i < size; ++i) {
-          sel[i] = i;
+    if (isRepeating) {
+      if (noNulls || !isNull[0]) {
+        if (selectedInUse) {
+          for (int i = 0; i < size; ++i) {
+            int row = sel[i];
+            offsets[row] = offsets[0];
+            lengths[row] = lengths[0];
+            isNull[row] = false;
+          }
+        } else {
+          Arrays.fill(offsets, 0, size, offsets[0]);
+          Arrays.fill(lengths, 0, size, lengths[0]);
+          Arrays.fill(isNull, 0, size, false);
+        }
+        int[] childSelection = new int[(int) lengths[0]];
+        for(int i=0; i < lengths[0]; ++i) {
+          childSelection[i] = (int) offsets[0] + i;
+        }
+        child.flatten(true, childSelection, childSelection.length);
+      } else {
+        if (selectedInUse) {
+          for(int i=0; i < size; ++i) {
+            isNull[sel[i]] = true;
+          }
+        } else {
+          Arrays.fill(isNull, 0, size, true);
         }
       }
-    }
-
-    // flatten the children
-    if (selectedInUse) {
-      childSelection = projectSelectedList(offsets, lengths, sel, size);
-      numChildren = childSelection.length;
-      child.flatten(true, childSelection, numChildren);
-    } else {
-      child.flatten(false, null, numChildren);
-    }
-
-    if (isRepeating) {
       isRepeating = false;
+      noNulls = false;
+    } else {
       if (selectedInUse) {
-        int cur = 0;
+        int childSize = 0;
+        for(int i=0; i < size; ++i) {
+          childSize += lengths[sel[i]];
+        }
+        int[] childSelection = new int[childSize];
+        int idx = 0;
         for(int i=0; i < size; ++i) {
           int row = sel[i];
-          offsets[row] = childSelection[cur];
-          lengths[row] = lengths[0];
-          cur += lengths[0];
+          for(int elem=0; elem < lengths[row]; ++elem) {
+            childSelection[idx++] = (int) (offsets[row] + elem);
+          }
         }
+        child.flatten(true, childSelection, childSize);
       } else {
-        int cur = 0;
-        for(int i=0; i < size; ++i) {
-          offsets[i] = cur;
-          lengths[i] = lengths[0];
-          cur += lengths[0];
-        }
+        child.flatten(false, null, childCount);
       }
-      flattenRepeatingNulls(selectedInUse, sel, size);
     }
     flattenNoNulls(selectedInUse, sel, size);
   }
