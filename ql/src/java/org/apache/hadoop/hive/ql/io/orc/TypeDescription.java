@@ -126,8 +126,8 @@ public class TypeDescription {
       throw new IllegalArgumentException("precision is only allowed on decimal"+
          " and not " + category.name);
     } else if (precision < 1 || precision > MAX_PRECISION || scale > precision){
-      throw new IllegalArgumentException("precision is out of range at " +
-          precision);
+      throw new IllegalArgumentException("precision " + precision +
+          " is out of range 1 .. " + scale);
     }
     this.precision = precision;
     return this;

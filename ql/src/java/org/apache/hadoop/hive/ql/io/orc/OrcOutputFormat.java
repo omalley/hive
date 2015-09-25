@@ -98,8 +98,8 @@ public class OrcOutputFormat extends FileOutputFormat<NullWritable, OrcSerdeRow>
           case DECIMAL: {
             DecimalTypeInfo dinfo = (DecimalTypeInfo) pinfo;
             return TypeDescription.createDecimal()
-                .withPrecision(dinfo.getPrecision())
-                .withScale(dinfo.getScale());
+                .withScale(dinfo.getScale())
+                .withPrecision(dinfo.getPrecision());
           }
           case VARCHAR: {
             BaseCharTypeInfo cinfo = (BaseCharTypeInfo) pinfo;
