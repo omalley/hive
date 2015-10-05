@@ -57,12 +57,18 @@ public class DecimalColumnVector extends ColumnVector {
 
   @Override
   public void setElement(int outElementNum, int inputElementNum, ColumnVector inputVector) {
-    HiveDecimal hiveDec = ((DecimalColumnVector) inputVector).vector[inputElementNum].getHiveDecimal(precision, scale);
-    if (hiveDec == null) {
-      noNulls = false;
-      isNull[outElementNum] = true;
-    } else {
+    if (inputVector.isRepeating) {
+      inputElementNum = 0;
+    }
+    if (inputVector.noNulls || !inputVector.isNull[inputElementNum]) {
+      isNull[outElementNum] = false;
+      HiveDecimal hiveDec =
+          ((DecimalColumnVector) inputVector).vector[inputElementNum]
+              .getHiveDecimal(precision, scale);
       vector[outElementNum].set(hiveDec);
+    } else {
+      isNull[outElementNum] = true;
+      noNulls = false;
     }
   }
 

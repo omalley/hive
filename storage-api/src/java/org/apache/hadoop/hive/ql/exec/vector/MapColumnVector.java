@@ -19,47 +19,51 @@
 package org.apache.hadoop.hive.ql.exec.vector;
 
 /**
- * The representation of a vectorized column of list objects.
+ * The representation of a vectorized column of map objects.
  *
- * Each list is composed of a range of elements in the underlying child
- * ColumnVector. The range for list i is
+ * Each map is composed of a range of elements in the underlying child
+ * ColumnVector. The range for map i is
  * offsets[i]..offsets[i]+lengths[i]-1 inclusive.
  */
-public class ListColumnVector extends MultiValuedColumnVector {
+public class MapColumnVector extends MultiValuedColumnVector {
 
-  public ColumnVector child;
+  public ColumnVector keys;
+  public ColumnVector values;
 
-  public ListColumnVector() {
-    this(VectorizedRowBatch.DEFAULT_SIZE, null);
+  public MapColumnVector() {
+    this(VectorizedRowBatch.DEFAULT_SIZE, null, null);
   }
 
   /**
-   * Constructor for ListColumnVector.
+   * Constructor for MapColumnVector
    *
    * @param len Vector length
-   * @param child The child vector
+   * @param keys The keys column vector
+   * @param values The values column vector
    */
-  public ListColumnVector(int len, ColumnVector child) {
+  public MapColumnVector(int len, ColumnVector keys, ColumnVector values) {
     super(len);
-    this.child = child;
+    this.keys = keys;
+    this.values = values;
   }
 
   @Override
   protected void childFlatten(boolean useSelected, int[] selected, int size) {
-    child.flatten(useSelected, selected, size);
+    keys.flatten(useSelected, selected, size);
+    values.flatten(useSelected, selected, size);
   }
 
   @Override
   public void setElement(int outElementNum, int inputElementNum,
                          ColumnVector inputVector) {
-    ListColumnVector input = (ListColumnVector) inputVector;
-    if (input.isRepeating) {
+    if (inputVector.isRepeating) {
       inputElementNum = 0;
     }
-    if (!input.noNulls && input.isNull[inputElementNum]) {
+    if (!inputVector.noNulls && inputVector.isNull[inputElementNum]) {
       isNull[outElementNum] = true;
       noNulls = false;
     } else {
+      MapColumnVector input = (MapColumnVector) inputVector;
       isNull[outElementNum] = false;
       int offset = childCount;
       int length = (int) input.lengths[inputElementNum];
@@ -67,9 +71,11 @@ public class ListColumnVector extends MultiValuedColumnVector {
       offsets[outElementNum] = offset;
       childCount += length;
       lengths[outElementNum] = length;
-      child.ensureSize(childCount, true);
+      keys.ensureSize(childCount, true);
+      values.ensureSize(childCount, true);
       for (int i = 0; i < length; ++i) {
-        child.setElement(i + offset, inputOffset + i, input.child);
+        keys.setElement(i + offset, inputOffset + i, input.keys);
+        values.setElement(i + offset, inputOffset + i, input.values);
       }
     }
   }
@@ -88,7 +94,11 @@ public class ListColumnVector extends MultiValuedColumnVector {
         } else {
           buffer.append(", ");
         }
-        child.stringifyValue(buffer, (int) i);
+        buffer.append("{\"key\": ");
+        keys.stringifyValue(buffer, (int) i);
+        buffer.append(", \"value\": ");
+        values.stringifyValue(buffer, (int) i);
+        buffer.append('}');
       }
       buffer.append(']');
     } else {
@@ -99,21 +109,23 @@ public class ListColumnVector extends MultiValuedColumnVector {
   @Override
   public void init() {
     super.init();
-    child.init();
+    keys.init();
+    values.init();
   }
 
   @Override
   public void reset() {
     super.reset();
-    child.reset();
+    keys.reset();
+    values.reset();
   }
 
   @Override
   public void unFlatten() {
     super.unFlatten();
     if (!(isRepeating && !noNulls & isNull[0])) {
-      child.unFlatten();
+      keys.unFlatten();
+      values.unFlatten();
     }
   }
-
 }

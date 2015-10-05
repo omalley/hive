@@ -76,6 +76,8 @@ public abstract class ColumnVector {
     isNull = new boolean[len];
     noNulls = true;
     isRepeating = false;
+    preFlattenNoNulls = true;
+    preFlattenIsRepeating = false;
   }
 
   /**
@@ -90,6 +92,8 @@ public abstract class ColumnVector {
       }
       noNulls = true;
       isRepeating = false;
+      preFlattenNoNulls = true;
+      preFlattenIsRepeating = false;
     }
 
     abstract public void flatten(boolean selectedInUse, int[] sel, int size);
@@ -154,8 +158,10 @@ public abstract class ColumnVector {
 
     /**
      * Set the element in this column vector from the given input vector.
+     * This method can assume that the output does not have isRepeating set.
      */
-    public abstract void setElement(int outElementNum, int inputElementNum, ColumnVector inputVector);
+    public abstract void setElement(int outElementNum, int inputElementNum,
+                                    ColumnVector inputVector);
 
     /**
      * Initialize the column vector. This method can be overridden by specific column vector types.

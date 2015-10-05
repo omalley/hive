@@ -18,6 +18,8 @@
 
 package org.apache.hadoop.hive.ql.exec.vector;
 
+import java.util.Arrays;
+
 /**
  * The representation of a vectorized column of struct objects.
  *
@@ -25,22 +27,24 @@ package org.apache.hadoop.hive.ql.exec.vector;
  * ColumnVector doesn't own any per row data other that the isNull flag, the
  * isRepeating only covers the isNull array.
  */
-public class StructColumnVector extends ColumnVector {
+public class UnionColumnVector extends ColumnVector {
 
+  public int[] tags;
   public ColumnVector[] fields;
 
-  public StructColumnVector() {
+  public UnionColumnVector() {
     this(VectorizedRowBatch.DEFAULT_SIZE);
   }
 
   /**
-   * Constructor for StructColumnVector
+   * Constructor for UnionColumnVector
    *
    * @param len Vector length
    * @param fields the field column vectors
    */
-  public StructColumnVector(int len, ColumnVector... fields) {
+  public UnionColumnVector(int len, ColumnVector... fields) {
     super(len);
+    tags = new int[len];
     this.fields = fields;
   }
 
@@ -61,10 +65,10 @@ public class StructColumnVector extends ColumnVector {
     }
     if (inputVector.noNulls || !inputVector.isNull[inputElementNum]) {
       isNull[outElementNum] = false;
-      ColumnVector[] inputFields = ((StructColumnVector) inputVector).fields;
-      for (int i = 0; i < inputFields.length; ++i) {
-        fields[i].setElement(outElementNum, inputElementNum, inputFields[i]);
-      }
+      UnionColumnVector input = (UnionColumnVector) inputVector;
+      tags[outElementNum] = input.tags[inputElementNum];
+      fields[tags[outElementNum]].setElement(outElementNum, inputElementNum,
+          input.fields[tags[outElementNum]]);
     } else {
       noNulls = false;
       isNull[outElementNum] = true;
@@ -77,14 +81,11 @@ public class StructColumnVector extends ColumnVector {
       row = 0;
     }
     if (noNulls || !isNull[row]) {
-      buffer.append('[');
-      for(int i=0; i < fields.length; ++i) {
-        if (i != 0) {
-          buffer.append(", ");
-        }
-        fields[i].stringifyValue(buffer, row);
-      }
-      buffer.append(']');
+      buffer.append("{\"tag\": ");
+      buffer.append(tags[row]);
+      buffer.append(", \"value\": ");
+      fields[tags[row]].stringifyValue(buffer, row);
+      buffer.append('}');
     } else {
       buffer.append("null");
     }
@@ -93,8 +94,17 @@ public class StructColumnVector extends ColumnVector {
   @Override
   public void ensureSize(int size, boolean preserveData) {
     super.ensureSize(size, preserveData);
-    for(int i=0; i < fields.length; ++i) {
-      fields[i].ensureSize(size, preserveData);
+    if (tags.length < size) {
+      if (preserveData) {
+        int[] oldTags = tags;
+        tags = new int[size];
+        System.arraycopy(oldTags, 0, tags, 0, oldTags.length);
+      } else {
+        tags = new int[size];
+      }
+      for(int i=0; i < fields.length; ++i) {
+        fields[i].ensureSize(size, preserveData);
+      }
     }
   }
 
