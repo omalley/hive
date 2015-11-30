@@ -449,4 +449,80 @@ public class OrcUtils {
     return columnId;
   }
 
+  public static TypeDescription createDescription(List<OrcProto.Type> types,
+                                                  int columnId) {
+    OrcProto.Type type = types.get(columnId);
+    switch (type.getKind()) {
+      case BINARY:
+        return TypeDescription.createBinary();
+      case BOOLEAN:
+        return TypeDescription.createBoolean();
+      case BYTE:
+        return TypeDescription.createByte();
+      case CHAR: {
+        TypeDescription result = TypeDescription.createChar();
+        if (type.hasMaximumLength()) {
+          result.withMaxLength(type.getMaximumLength());
+        }
+        return result;
+      }
+      case DATE:
+        return TypeDescription.createDate();
+      case DECIMAL: {
+        TypeDescription result = TypeDescription.createDecimal();
+        if (type.hasScale()) {
+          result.withScale(type.getScale());
+        }
+        if (type.hasPrecision()) {
+          result.withPrecision(type.getPrecision());
+        }
+        return result;
+      }
+      case DOUBLE:
+        return TypeDescription.createDouble();
+      case FLOAT:
+        return TypeDescription.createFloat();
+      case INT:
+        return TypeDescription.createInt();
+      case LIST:
+        return TypeDescription.createList(createDescription(types,
+            type.getSubtypes(0)));
+      case LONG:
+        return TypeDescription.createLong();
+      case MAP:
+        return TypeDescription.createMap(
+            createDescription(types, type.getSubtypes(0)),
+            createDescription(types, type.getSubtypes(1)));
+      case SHORT:
+        return TypeDescription.createShort();
+      case STRING:
+        return TypeDescription.createString();
+      case STRUCT: {
+        TypeDescription result = TypeDescription.createStruct();
+        for(int f=0; f < type.getSubtypesCount(); ++f) {
+          result.addField(type.getFieldNamesBytes(f).toStringUtf8(),
+              createDescription(types, type.getSubtypes(f)));
+        }
+        return result;
+      }
+      case TIMESTAMP:
+        return TypeDescription.createTimestamp();
+      case UNION: {
+        TypeDescription result = TypeDescription.createUnion();
+        for(int f=0; f < type.getSubtypesCount(); ++f) {
+          result.addUnionChild(createDescription(types, type.getSubtypes(f)));
+        }
+        return result;
+      }
+      case VARCHAR: {
+        TypeDescription result = TypeDescription.createVarchar();
+        if (type.hasMaximumLength()) {
+          result.withMaxLength(type.getMaximumLength());
+        }
+        return result;
+      }
+      default:
+        throw new IllegalArgumentException("Unknown type " + type);
+    }
+  }
 }

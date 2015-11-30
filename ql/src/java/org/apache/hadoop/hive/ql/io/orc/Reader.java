@@ -19,9 +19,11 @@
 package org.apache.hadoop.hive.ql.io.orc;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
+import org.apache.orc.OrcProto;
 
 /**
  * The interface for reading ORC files.
@@ -40,6 +42,13 @@ public interface Reader extends org.apache.orc.Reader {
    * Get the Compression kind in the compatibility mode.
    */
   CompressionKind getCompression();
+
+  /**
+   * Get the list of types contained in the file. The root type is the first
+   * type in the list.
+   * @return the list of flattened types
+   */
+  List<OrcProto.Type> getTypes();
 
   /**
    * Create a RecordReader that reads everything with the default options.

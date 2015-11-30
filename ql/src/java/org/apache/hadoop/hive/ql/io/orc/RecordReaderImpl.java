@@ -30,6 +30,7 @@ import java.util.Map;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.orc.BooleanColumnStatistics;
 import org.apache.orc.OrcUtils;
+import org.apache.orc.TypeDescription;
 import org.apache.orc.impl.BufferChunk;
 import org.apache.orc.ColumnStatistics;
 import org.apache.orc.impl.ColumnStatisticsImpl;
@@ -81,7 +82,7 @@ public class RecordReaderImpl implements RecordReader {
   private OrcProto.StripeFooter stripeFooter;
   private final long totalRowCount;
   private final CompressionCodec codec;
-  private final List<OrcProto.Type> types;
+  private final TypeDescription types;
   private final int bufferSize;
   private final boolean[] included;
   private final long rowIndexStride;
@@ -145,7 +146,7 @@ public class RecordReaderImpl implements RecordReader {
                              FileSystem fileSystem,
                              Path path,
                              Reader.Options options,
-                             List<OrcProto.Type> types,
+                             TypeDescription types,
                              CompressionCodec codec,
                              int bufferSize,
                              long strideRate,
@@ -154,14 +155,14 @@ public class RecordReaderImpl implements RecordReader {
 
     TreeReaderFactory.TreeReaderSchema treeReaderSchema;
     if (options.getSchema() == null) {
-      treeReaderSchema = new TreeReaderFactory.TreeReaderSchema().fileTypes(types).schemaTypes(types);
+      treeReaderSchema = new TreeReaderFactory.TreeReaderSchema()
+          .fileTypes(types).schemaTypes(types);
     } else {
 
       // Now that we are creating a record reader for a file, validate that the schema to read
       // is compatible with the file schema.
       //
-      List<OrcProto.Type> schemaTypes = OrcUtils.getOrcTypes(options.getSchema());
-      treeReaderSchema = SchemaEvolution.validateAndCreate(types, schemaTypes);
+      treeReaderSchema = SchemaEvolution.validateAndCreate(types, options.getSchema());
     }
     this.path = path;
     this.codec = codec;
@@ -170,11 +171,11 @@ public class RecordReaderImpl implements RecordReader {
     this.included = options.getInclude();
     this.conf = conf;
     this.rowIndexStride = strideRate;
-    this.metadata = new MetadataReaderImpl(fileSystem, path, codec, bufferSize, types.size());
+    this.metadata = new MetadataReaderImpl(fileSystem, path, codec, bufferSize, types.getMaximumId() + 1);
     SearchArgument sarg = options.getSearchArgument();
     if (sarg != null && strideRate != 0) {
       sargApp = new SargApplier(
-          sarg, options.getColumnNames(), strideRate, types, included.length);
+          sarg, options.getColumnNames(), strideRate, included.length);
     } else {
       sargApp = null;
     }
@@ -208,8 +209,8 @@ public class RecordReaderImpl implements RecordReader {
     }
 
     reader = TreeReaderFactory.createTreeReader(0, treeReaderSchema, included, skipCorrupt);
-    indexes = new OrcProto.RowIndex[types.size()];
-    bloomFilterIndices = new OrcProto.BloomFilterIndex[types.size()];
+    indexes = new OrcProto.RowIndex[types.getMaximumId() + 1];
+    bloomFilterIndices = new OrcProto.BloomFilterIndex[types.getMaximumId() + 1];
     advanceToNextRow(reader, 0L, true);
   }
 
@@ -701,7 +702,7 @@ public class RecordReaderImpl implements RecordReader {
     private final boolean[] sargColumns;
 
     public SargApplier(SearchArgument sarg, String[] columnNames, long rowIndexStride,
-        List<OrcProto.Type> types, int includedCount) {
+                       int includedCount) {
       this.sarg = sarg;
       sargLeaves = sarg.getLeaves();
       filterColumns = mapSargColumnsToOrcInternalColIdx(sargLeaves, columnNames, 0);
@@ -887,7 +888,7 @@ public class RecordReaderImpl implements RecordReader {
       boolean[] includedRowGroups,
       boolean isCompressed,
       List<OrcProto.ColumnEncoding> encodings,
-      List<OrcProto.Type> types,
+      TypeDescription types,
       int compressionSize,
       boolean doMergeBuffers) {
     long offset = 0;

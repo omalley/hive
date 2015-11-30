@@ -52,7 +52,7 @@ public interface FileMetadata {
 
   int getWriterVersionNum();
 
-  List<OrcProto.Type> getTypes();
+  TypeDescription getTypes();
 
   List<OrcProto.StripeStatistics> getStripeStats();
 

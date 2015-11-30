@@ -236,10 +236,16 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
    * Get the root column for the row. In ACID format files, it is offset by
    * the extra metadata columns.
    * @param isOriginal is the file in the original format?
+   * @param schema the schema for each row
    * @return the column number for the root of row.
    */
-  private static int getRootColumn(boolean isOriginal) {
-    return isOriginal ? 0 : (OrcRecordUpdater.ROW + 1);
+  private static TypeDescription getRootColumn(boolean isOriginal,
+                                               TypeDescription schema) {
+    if (isOriginal) {
+      return schema;
+    } else {
+      return schema.getChildren().get(OrcRecordUpdater.ROW);
+    }
   }
 
   public static RecordReader createReaderFromFile(Reader file,
@@ -255,7 +261,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     Reader.Options options = new Reader.Options().range(offset, length);
     options.schema(schema);
     boolean isOriginal = isOriginal(file);
-    List<OrcProto.Type> types = file.getTypes();
+    TypeDescription types = file.getSchema();
     options.include(genIncludedColumns(types, conf, isOriginal));
     setSearchArgument(options, types, conf, isOriginal);
     return (RecordReader) file.rowsOptions(options);
@@ -324,8 +330,12 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
   }
 
   public static boolean[] genIncludedColumns(
-      List<OrcProto.Type> types, List<Integer> included, boolean isOriginal) {
-    int rootColumn = getRootColumn(isOriginal);
+      TypeDescription types, List<Integer> included, boolean isOriginal) {
+    TypeDescription rootColumn = getRootColumn(isOriginal, types);
+    int columns = rootColumn.getChildren().size();
+    if (rootColumn.getCategory() == TypeDescription.Category.STRUCT) {
+      return root
+    }
     int numColumns = types.size() - rootColumn;
     boolean[] result = new boolean[numColumns];
     result[0] = true;
@@ -345,7 +355,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
    * @param isOriginal is the file in the original format?
    */
   public static boolean[] genIncludedColumns(
-      List<OrcProto.Type> types, Configuration conf, boolean isOriginal) {
+      TypeDescription types, Configuration conf, boolean isOriginal) {
      if (!ColumnProjectionUtils.isReadAllColumns(conf)) {
       List<Integer> included = ColumnProjectionUtils.getReadColumnIDs(conf);
       return genIncludedColumns(types, included, isOriginal);
@@ -355,9 +365,9 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
   }
 
   public static String[] getSargColumnNames(String[] originalColumnNames,
-      List<OrcProto.Type> types, boolean[] includedColumns, boolean isOriginal) {
+      TypeDescription types, boolean[] includedColumns, boolean isOriginal) {
     int rootColumn = getRootColumn(isOriginal);
-    String[] columnNames = new String[types.size() - rootColumn];
+    String[] columnNames = new String[types.getMaximumId() + 1 - rootColumn];
     int i = 0;
     // The way this works is as such. originalColumnNames is the equivalent on getNeededColumns
     // from TSOP. They are assumed to be in the same order as the columns in ORC file, AND they are
@@ -377,7 +387,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
   }
 
   static void setSearchArgument(Reader.Options options,
-                                List<OrcProto.Type> types,
+                                TypeDescription types,
                                 Configuration conf,
                                 boolean isOriginal) {
     String neededColumnNames = getNeededColumnNamesString(conf);
@@ -1372,12 +1382,12 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     private FileMetaInfo fileMetaInfo;
     private final List<StripeStatistics> stripeStats;
     private final List<OrcProto.ColumnStatistics> fileStats;
-    private final List<OrcProto.Type> types;
+    private final TypeDescription types;
     private final OrcFile.WriterVersion writerVersion;
 
 
     FileInfo(long modificationTime, long size, List<StripeInformation> stripeInfos,
-             List<StripeStatistics> stripeStats, List<OrcProto.Type> types,
+             List<StripeStatistics> stripeStats, TypeDescription types,
              List<OrcProto.ColumnStatistics> fileStats, FileMetaInfo fileMetaInfo,
              OrcFile.WriterVersion writerVersion, Long fileId) {
       this.modificationTime = modificationTime;

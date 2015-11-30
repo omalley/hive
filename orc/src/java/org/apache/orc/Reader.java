@@ -52,13 +52,6 @@ public interface Reader {
   long getRawDataSizeOfColumns(List<String> colNames);
 
   /**
-   * Get the deserialized data size of the specified columns ids
-   * @param colIds - internal column id (check orcfiledump for column ids)
-   * @return raw data size of columns
-   */
-  long getRawDataSizeFromColIndices(List<Integer> colIds);
-
-  /**
    * Get the user metadata keys.
    * @return the set of metadata keys
    */
@@ -116,11 +109,10 @@ public interface Reader {
   ColumnStatistics[] getStatistics();
 
   /**
-   * Get the list of types contained in the file. The root type is the first
-   * type in the list.
-   * @return the list of flattened types
+   * Get the schema of the objects in this file.
+   * @return the description of the type
    */
-  List<OrcProto.Type> getTypes();
+  TypeDescription getSchema();
 
   /**
    * Get the file format version.

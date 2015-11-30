@@ -35,6 +35,7 @@ import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 import org.apache.hadoop.hive.serde2.typeinfo.UnionTypeInfo;
 import org.apache.hadoop.io.Writable;
 import org.apache.orc.OrcProto;
+import org.apache.orc.TypeDescription;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -188,24 +189,12 @@ final public class OrcStruct implements Writable {
       this.fields = fields;
     }
 
-    OrcStructInspector(StructTypeInfo info) {
-      ArrayList<String> fieldNames = info.getAllStructFieldNames();
-      ArrayList<TypeInfo> fieldTypes = info.getAllStructFieldTypeInfos();
+    OrcStructInspector(List<String> fieldNames,
+                       List<TypeDescription> childTypes) {
       fields = new ArrayList<StructField>(fieldNames.size());
       for(int i=0; i < fieldNames.size(); ++i) {
         fields.add(new Field(fieldNames.get(i),
-          createObjectInspector(fieldTypes.get(i)), i));
-      }
-    }
-
-    OrcStructInspector(int columnId, List<OrcProto.Type> types) {
-      OrcProto.Type type = types.get(columnId);
-      int fieldCount = type.getSubtypesCount();
-      fields = new ArrayList<StructField>(fieldCount);
-      for(int i=0; i < fieldCount; ++i) {
-        int fieldType = type.getSubtypes(i);
-        fields.add(new Field(type.getFieldNames(i),
-          createObjectInspector(fieldType, types), i));
+          createObjectInspector(childTypes.get(i)), i));
       }
     }
 
@@ -324,15 +313,10 @@ final public class OrcStruct implements Writable {
     private OrcMapObjectInspector() {
       super();
     }
-    OrcMapObjectInspector(MapTypeInfo info) {
-      key = createObjectInspector(info.getMapKeyTypeInfo());
-      value = createObjectInspector(info.getMapValueTypeInfo());
-    }
 
-    OrcMapObjectInspector(int columnId, List<OrcProto.Type> types) {
-      OrcProto.Type type = types.get(columnId);
-      key = createObjectInspector(type.getSubtypes(0), types);
-      value = createObjectInspector(type.getSubtypes(1), types);
+    OrcMapObjectInspector(TypeDescription keyType, TypeDescription valueType) {
+      key = createObjectInspector(keyType);
+      value = createObjectInspector(valueType);
     }
 
     @Override
@@ -420,13 +404,9 @@ final public class OrcStruct implements Writable {
     private OrcListObjectInspector() {
       super();
     }
-    OrcListObjectInspector(ListTypeInfo info) {
-      child = createObjectInspector(info.getListElementTypeInfo());
-    }
 
-    OrcListObjectInspector(int columnId, List<OrcProto.Type> types) {
-      OrcProto.Type type = types.get(columnId);
-      child = createObjectInspector(type.getSubtypes(0), types);
+    OrcListObjectInspector(TypeDescription childType) {
+      child = createObjectInspector(childType);
     }
 
     @Override
@@ -507,63 +487,8 @@ final public class OrcStruct implements Writable {
     }
   }
 
-  static public ObjectInspector createObjectInspector(TypeInfo info) {
-    switch (info.getCategory()) {
-      case PRIMITIVE:
-        switch (((PrimitiveTypeInfo) info).getPrimitiveCategory()) {
-          case FLOAT:
-            return PrimitiveObjectInspectorFactory.writableFloatObjectInspector;
-          case DOUBLE:
-            return PrimitiveObjectInspectorFactory.writableDoubleObjectInspector;
-          case BOOLEAN:
-            return PrimitiveObjectInspectorFactory.writableBooleanObjectInspector;
-          case BYTE:
-            return PrimitiveObjectInspectorFactory.writableByteObjectInspector;
-          case SHORT:
-            return PrimitiveObjectInspectorFactory.writableShortObjectInspector;
-          case INT:
-            return PrimitiveObjectInspectorFactory.writableIntObjectInspector;
-          case LONG:
-            return PrimitiveObjectInspectorFactory.writableLongObjectInspector;
-          case BINARY:
-            return PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
-          case STRING:
-            return PrimitiveObjectInspectorFactory.writableStringObjectInspector;
-          case CHAR:
-            return PrimitiveObjectInspectorFactory.getPrimitiveWritableObjectInspector(
-                (PrimitiveTypeInfo) info);
-          case VARCHAR:
-            return PrimitiveObjectInspectorFactory.getPrimitiveWritableObjectInspector(
-                (PrimitiveTypeInfo) info);
-          case TIMESTAMP:
-            return PrimitiveObjectInspectorFactory.writableTimestampObjectInspector;
-          case DATE:
-            return PrimitiveObjectInspectorFactory.writableDateObjectInspector;
-          case DECIMAL:
-            return PrimitiveObjectInspectorFactory.getPrimitiveWritableObjectInspector(
-                (PrimitiveTypeInfo)info);
-          default:
-            throw new IllegalArgumentException("Unknown primitive type " +
-              ((PrimitiveTypeInfo) info).getPrimitiveCategory());
-        }
-      case STRUCT:
-        return new OrcStructInspector((StructTypeInfo) info);
-      case UNION:
-        return new OrcUnion.OrcUnionObjectInspector((UnionTypeInfo) info);
-      case MAP:
-        return new OrcMapObjectInspector((MapTypeInfo) info);
-      case LIST:
-        return new OrcListObjectInspector((ListTypeInfo) info);
-      default:
-        throw new IllegalArgumentException("Unknown type " +
-          info.getCategory());
-    }
-  }
-
-  static ObjectInspector createObjectInspector(int columnId,
-                                               List<OrcProto.Type> types){
-    OrcProto.Type type = types.get(columnId);
-    switch (type.getKind()) {
+  static ObjectInspector createObjectInspector(TypeDescription type){
+    switch (type.getCategory()) {
       case FLOAT:
         return PrimitiveObjectInspectorFactory.writableFloatObjectInspector;
       case DOUBLE:
@@ -583,39 +508,31 @@ final public class OrcStruct implements Writable {
       case STRING:
         return PrimitiveObjectInspectorFactory.writableStringObjectInspector;
       case CHAR:
-        if (!type.hasMaximumLength()) {
-          throw new UnsupportedOperationException(
-              "Illegal use of char type without length in ORC type definition.");
-        }
         return PrimitiveObjectInspectorFactory.getPrimitiveWritableObjectInspector(
-            TypeInfoFactory.getCharTypeInfo(type.getMaximumLength()));
+            TypeInfoFactory.getCharTypeInfo(type.getMaxLength()));
       case VARCHAR:
-        if (!type.hasMaximumLength()) {
-          throw new UnsupportedOperationException(
-              "Illegal use of varchar type without length in ORC type definition.");
-        }
         return PrimitiveObjectInspectorFactory.getPrimitiveWritableObjectInspector(
-            TypeInfoFactory.getVarcharTypeInfo(type.getMaximumLength()));
+            TypeInfoFactory.getVarcharTypeInfo(type.getMaxLength()));
       case TIMESTAMP:
         return PrimitiveObjectInspectorFactory.writableTimestampObjectInspector;
       case DATE:
         return PrimitiveObjectInspectorFactory.writableDateObjectInspector;
       case DECIMAL:
-        int precision = type.hasPrecision() ? type.getPrecision() : HiveDecimal.SYSTEM_DEFAULT_PRECISION;
-        int scale =  type.hasScale()? type.getScale() : HiveDecimal.SYSTEM_DEFAULT_SCALE;
         return PrimitiveObjectInspectorFactory.getPrimitiveWritableObjectInspector(
-            TypeInfoFactory.getDecimalTypeInfo(precision, scale));
+            TypeInfoFactory.getDecimalTypeInfo(type.getPrecision(),
+                type.getScale()));
       case STRUCT:
-        return new OrcStructInspector(columnId, types);
+        return new OrcStructInspector(type.getFieldNames(), type.getChildren());
       case UNION:
-        return new OrcUnion.OrcUnionObjectInspector(columnId, types);
+        return new OrcUnion.OrcUnionObjectInspector(type.getChildren());
       case MAP:
-        return new OrcMapObjectInspector(columnId, types);
+        return new OrcMapObjectInspector(type.getChildren().get(0),
+            type.getChildren().get(1));
       case LIST:
-        return new OrcListObjectInspector(columnId, types);
+        return new OrcListObjectInspector(type.getChildren().get(0));
       default:
         throw new UnsupportedOperationException("Unknown type " +
-          type.getKind());
+          type.getCategory());
     }
   }
 }

@@ -35,6 +35,7 @@ import org.apache.orc.StripeInformation;
 import org.apache.orc.OrcProto;
 
 import com.google.common.annotations.VisibleForTesting;
+import org.apache.orc.TypeDescription;
 
 /** ORC file metadata. Currently contains some duplicate info due to how different parts
  * of ORC use different info. Ideally we would get rid of protobuf structs in code beyond reading,
@@ -44,7 +45,7 @@ public final class OrcFileMetadata extends LlapCacheableBuffer implements FileMe
   private final List<StripeInformation> stripes;
   private final List<Integer> versionList;
   private final List<OrcProto.StripeStatistics> stripeStats;
-  private final List<OrcProto.Type> types;
+  private final TypeDescription types;
   private final List<OrcProto.ColumnStatistics> fileStats;
   private final long fileId;
   private final CompressionKind compressionKind;
@@ -75,7 +76,6 @@ public final class OrcFileMetadata extends LlapCacheableBuffer implements FileMe
         OrcProto.StripeInformation.getDefaultInstance()));
     ofm.fileStats.add(OrcProto.ColumnStatistics.getDefaultInstance());
     ofm.stripeStats.add(OrcProto.StripeStatistics.newBuilder().addColStats(createStatsDummy()).build());
-    ofm.types.add(OrcProto.Type.newBuilder().addFieldNames("a").addSubtypes(0).build());
     ofm.versionList.add(0);
     return ofm;
   }
@@ -93,7 +93,7 @@ public final class OrcFileMetadata extends LlapCacheableBuffer implements FileMe
     versionList = new ArrayList<Integer>();
     fileStats = new ArrayList<>();
     stripeStats = new ArrayList<>();
-    types = new ArrayList<>();
+    types = TypeDescription.createStruct();
     writerVersionNum = metadataSize = compressionBufferSize = rowIndexStride = 0;
     contentLength = numberOfRows = 0;
     estimatedMemUsage = 0;
@@ -111,7 +111,7 @@ public final class OrcFileMetadata extends LlapCacheableBuffer implements FileMe
     this.writerVersionNum = reader.getWriterVersion().getId();
     this.versionList = reader.getVersionList();
     this.metadataSize = reader.getMetadataSize();
-    this.types = reader.getTypes();
+    this.types = reader.getSchema();
     this.rowIndexStride = reader.getRowIndexStride();
     this.contentLength = reader.getContentLength();
     this.numberOfRows = reader.getNumberOfRows();
@@ -143,7 +143,7 @@ public final class OrcFileMetadata extends LlapCacheableBuffer implements FileMe
 
   // FileMetadata
   @Override
-  public List<OrcProto.Type> getTypes() {
+  public TypeDescription getTypes() {
     return types;
   }
 
@@ -174,12 +174,18 @@ public final class OrcFileMetadata extends LlapCacheableBuffer implements FileMe
 
   @Override
   public int getColumnCount() {
-    return types.size();
+    return types.getMaximumId() + 1;
   }
 
   @Override
   public int getFlattenedColumnCount() {
-    return types.get(0).getSubtypesCount();
+    switch (types.getCategory()) {
+      default:
+        return 1;
+      case STRUCT:
+      case UNION:
+        return types.getChildren().size();
+    }
   }
 
   @Override

@@ -551,8 +551,9 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
    * Puts all column indexes from metadata to make a column list to read all column.
    */
   private static List<Integer> createColumnIds(OrcFileMetadata metadata) {
-    List<Integer> columnIds = new ArrayList<Integer>(metadata.getTypes().size());
-    for (int i = 1; i < metadata.getTypes().size(); ++i) {
+    int numTypes = metadata.getTypes().getMaximumId() + 1;
+    List<Integer> columnIds = new ArrayList<Integer>(numTypes);
+    for (int i = 1; i < numTypes; ++i) {
       columnIds.add(i);
     }
     return columnIds;

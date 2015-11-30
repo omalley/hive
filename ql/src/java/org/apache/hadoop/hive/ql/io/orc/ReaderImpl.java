@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+import org.apache.orc.OrcUtils;
+import org.apache.orc.TypeDescription;
 import org.apache.orc.impl.BufferChunk;
 import org.apache.orc.ColumnStatistics;
 import org.apache.orc.impl.ColumnStatisticsImpl;
@@ -53,7 +53,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.orc.OrcProto;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.protobuf.CodedInputStream;
 
 public class ReaderImpl implements Reader {
@@ -70,7 +69,7 @@ public class ReaderImpl implements Reader {
   protected final int bufferSize;
   private final List<OrcProto.StripeStatistics> stripeStats;
   private final int metadataSize;
-  protected final List<OrcProto.Type> types;
+  protected final TypeDescription types;
   private final List<OrcProto.UserMetadataItem> userMetadata;
   private final List<OrcProto.ColumnStatistics> fileStats;
   private final List<StripeInformation> stripes;
@@ -78,7 +77,6 @@ public class ReaderImpl implements Reader {
   private final long contentLength, numberOfRows;
 
 
-  private final ObjectInspector inspector;
   private long deserializedSize = -1;
   protected final Configuration conf;
   private final List<Integer> versionList;
@@ -199,7 +197,7 @@ public class ReaderImpl implements Reader {
 
   @Override
   public ObjectInspector getObjectInspector() {
-    return inspector;
+    return OrcStruct.createObjectInspector(types);
   }
 
   @Override
@@ -209,6 +207,12 @@ public class ReaderImpl implements Reader {
 
   @Override
   public List<OrcProto.Type> getTypes() {
+    List<OrcProto.Type> result = new ArrayList<>(types.getMaximumId() + 1);
+    OrcUtils.appendOrcTypesRebuildSubtypes(result, types);
+    return result;
+  }
+
+  public TypeDescription getSchema() {
     return types;
   }
 
@@ -235,7 +239,7 @@ public class ReaderImpl implements Reader {
 
   @Override
   public ColumnStatistics[] getStatistics() {
-    ColumnStatistics[] result = new ColumnStatistics[types.size()];
+    ColumnStatistics[] result = new ColumnStatistics[types.getMaximumId() + 1];
     for(int i=0; i < result.length; ++i) {
       result[i] = ColumnStatisticsImpl.deserialize(fileStats.get(i));
     }
@@ -347,7 +351,6 @@ public class ReaderImpl implements Reader {
       this.numberOfRows = fileMetadata.getNumberOfRows();
       this.fileStats = fileMetadata.getFileStats();
       this.stripes = fileMetadata.getStripes();
-      this.inspector =  OrcStruct.createObjectInspector(0, fileMetadata.getTypes());
       this.footerByteBuffer = null; // not cached and not needed here
       this.userMetadata = null; // not cached and not needed here
       this.footerMetaAndPsBuffer = null;
@@ -373,13 +376,12 @@ public class ReaderImpl implements Reader {
       this.bufferSize = rInfo.bufferSize;
       this.metadataSize = rInfo.metadataSize;
       this.stripeStats = rInfo.metadata.getStripeStatsList();
-      this.types = rInfo.footer.getTypesList();
+      this.types = OrcUtils.createDescription(rInfo.footer.getTypesList(), 0);
       this.rowIndexStride = rInfo.footer.getRowIndexStride();
       this.contentLength = rInfo.footer.getContentLength();
       this.numberOfRows = rInfo.footer.getNumberOfRows();
       this.userMetadata = rInfo.footer.getMetadataList();
       this.fileStats = rInfo.footer.getStatisticsList();
-      this.inspector = rInfo.inspector;
       this.versionList = footerMetaData.versionList;
       this.writerVersion = footerMetaData.writerVersion;
       this.stripes = convertProtoStripesToStripes(rInfo.footer.getStripesList());
@@ -579,7 +581,6 @@ public class ReaderImpl implements Reader {
     final int metadataSize;
     final OrcProto.Metadata metadata;
     final OrcProto.Footer footer;
-    final ObjectInspector inspector;
 
     MetaInfoObjExtractor(String codecStr, int bufferSize, int metadataSize, 
         ByteBuffer footerBuffer) throws IOException {
@@ -597,7 +598,6 @@ public class ReaderImpl implements Reader {
           footerBuffer, position + metadataSize, footerBufferSize, codec, bufferSize);
 
       footerBuffer.position(position);
-      this.inspector = OrcStruct.createObjectInspector(0, footer.getTypesList());
     }
   }
 
@@ -655,7 +655,7 @@ public class ReaderImpl implements Reader {
     boolean[] include = options.getInclude();
     // if included columns is null, then include all columns
     if (include == null) {
-      include = new boolean[types.size()];
+      include = new boolean[types.getMaximumId() + 1];
       Arrays.fill(include, true);
       options.include(include);
     }
@@ -689,69 +689,58 @@ public class ReaderImpl implements Reader {
     // return the already computed size. since we are reading from the footer
     // we don't have to compute deserialized size repeatedly
     if (deserializedSize == -1) {
-      List<Integer> indices = Lists.newArrayList();
-      for (int i = 0; i < fileStats.size(); ++i) {
-        indices.add(i);
-      }
-      deserializedSize = getRawDataSizeFromColIndices(indices);
+      deserializedSize = getRawDataSizeOfColumn(types, fileStats);
     }
     return deserializedSize;
   }
-
-  @Override
-  public long getRawDataSizeFromColIndices(List<Integer> colIndices) {
-    return getRawDataSizeFromColIndices(colIndices, types, fileStats);
-  }
-
-  public static long getRawDataSizeFromColIndices(
-      List<Integer> colIndices, List<OrcProto.Type> types,
+  private static long getRawDataSizeOfColumn(TypeDescription type,
       List<OrcProto.ColumnStatistics> stats) {
-    long result = 0;
-    for (int colIdx : colIndices) {
-      result += getRawDataSizeOfColumn(colIdx, types, stats);
-    }
-    return result;
-  }
-
-  private static long getRawDataSizeOfColumn(int colIdx, List<OrcProto.Type> types,
-      List<OrcProto.ColumnStatistics> stats) {
-    OrcProto.ColumnStatistics colStat = stats.get(colIdx);
+    OrcProto.ColumnStatistics colStat = stats.get(type.getId());
     long numVals = colStat.getNumberOfValues();
-    OrcProto.Type type = types.get(colIdx);
 
-    switch (type.getKind()) {
-    case BINARY:
-      // old orc format doesn't support binary statistics. checking for binary
-      // statistics is not required as protocol buffers takes care of it.
-      return colStat.getBinaryStatistics().getSum();
-    case STRING:
-    case CHAR:
-    case VARCHAR:
-      // old orc format doesn't support sum for string statistics. checking for
-      // existence is not required as protocol buffers takes care of it.
+    switch (type.getCategory()) {
+      case BINARY:
+        // old orc format doesn't support binary statistics. checking for binary
+        // statistics is not required as protocol buffers takes care of it.
+        return colStat.getBinaryStatistics().getSum();
+      case STRING:
+      case CHAR:
+      case VARCHAR:
+        // old orc format doesn't support sum for string statistics. checking for
+        // existence is not required as protocol buffers takes care of it.
 
-      // ORC strings are deserialized to java strings. so use java data model's
-      // string size
-      numVals = numVals == 0 ? 1 : numVals;
-      int avgStrLen = (int) (colStat.getStringStatistics().getSum() / numVals);
-      return numVals * JavaDataModel.get().lengthForStringOfLength(avgStrLen);
-    case TIMESTAMP:
-      return numVals * JavaDataModel.get().lengthOfTimestamp();
-    case DATE:
-      return numVals * JavaDataModel.get().lengthOfDate();
-    case DECIMAL:
-      return numVals * JavaDataModel.get().lengthOfDecimal();
-    case DOUBLE:
-    case LONG:
-      return numVals * JavaDataModel.get().primitive2();
-    case FLOAT:
-    case INT:
-    case SHORT:
-    case BOOLEAN:
-    case BYTE:
-      return numVals * JavaDataModel.get().primitive1();
+        // ORC strings are deserialized to java strings. so use java data model's
+        // string size
+        numVals = numVals == 0 ? 1 : numVals;
+        int avgStrLen = (int) (colStat.getStringStatistics().getSum() / numVals);
+        return numVals * JavaDataModel.get().lengthForStringOfLength(avgStrLen);
+      case TIMESTAMP:
+        return numVals * JavaDataModel.get().lengthOfTimestamp();
+      case DATE:
+        return numVals * JavaDataModel.get().lengthOfDate();
+      case DECIMAL:
+        return numVals * JavaDataModel.get().lengthOfDecimal();
+      case DOUBLE:
+      case LONG:
+        return numVals * JavaDataModel.get().primitive2();
+      case FLOAT:
+      case INT:
+      case SHORT:
+      case BOOLEAN:
+      case BYTE:
+        return numVals * JavaDataModel.get().primitive1();
+      case STRUCT:
+      case UNION:
+      case MAP:
+      case LIST: {
+        long sum = 0;
+        for(TypeDescription child: type.getChildren()) {
+          sum += getRawDataSizeOfColumn(child, stats);
+        }
+        return sum;
+      }
     default:
-      LOG.debug("Unknown primitive category: " + type.getKind());
+      LOG.debug("Unknown type category: " + type.getCategory());
       break;
     }
 
@@ -760,63 +749,34 @@ public class ReaderImpl implements Reader {
 
   @Override
   public long getRawDataSizeOfColumns(List<String> colNames) {
-    List<Integer> colIndices = getColumnIndicesFromNames(colNames);
-    return getRawDataSizeFromColIndices(colIndices);
+    long sum = 0;
+    for(TypeDescription column: getColumnsFromNames(colNames)) {
+      sum += getRawDataSizeOfColumn(column, fileStats);
+    }
+    return sum;
   }
 
-  private List<Integer> getColumnIndicesFromNames(List<String> colNames) {
-    // top level struct
-    OrcProto.Type type = types.get(0);
-    List<Integer> colIndices = Lists.newArrayList();
-    List<String> fieldNames = type.getFieldNamesList();
-    int fieldIdx = 0;
-    for (String colName : colNames) {
-      if (fieldNames.contains(colName)) {
-        fieldIdx = fieldNames.indexOf(colName);
-      } else {
-        String s = "Cannot find field for: " + colName + " in ";
-        for (String fn : fieldNames) {
-          s += fn + ", ";
-        }
-        LOG.warn(s);
-        continue;
-      }
-
-      // a single field may span multiple columns. find start and end column
-      // index for the requested field
-      int idxStart = type.getSubtypes(fieldIdx);
-
-      int idxEnd;
-
-      // if the specified is the last field and then end index will be last
-      // column index
-      if (fieldIdx + 1 > fieldNames.size() - 1) {
-        idxEnd = getLastIdx() + 1;
-      } else {
-        idxEnd = type.getSubtypes(fieldIdx + 1);
-      }
-
-      // if start index and end index are same then the field is a primitive
-      // field else complex field (like map, list, struct, union)
-      if (idxStart == idxEnd) {
-        // simple field
-        colIndices.add(idxStart);
-      } else {
-        // complex fields spans multiple columns
-        for (int i = idxStart; i < idxEnd; i++) {
-          colIndices.add(i);
+  /**
+   * Find the column types for a given list of top level column names.
+   * @param colNames the column names that we are interested in
+   * @return
+   */
+  List<TypeDescription> getColumnsFromNames(List<String> colNames) {
+    List<TypeDescription> result =
+        new ArrayList<TypeDescription>(colNames.size());
+    if (types.getCategory() == TypeDescription.Category.STRUCT) {
+      List<String> fieldNames = types.getFieldNames();
+      List<TypeDescription> fieldTypes = types.getChildren();
+      for (String columnName : colNames) {
+        int idx = fieldNames.indexOf(columnName);
+        if (idx == -1) {
+          LOG.warn("Can't find field for " + columnName + " in " + types);
+        } else {
+          result.add(fieldTypes.get(idx));
         }
       }
     }
-    return colIndices;
-  }
-
-  private int getLastIdx() {
-    Set<Integer> indices = Sets.newHashSet();
-    for (OrcProto.Type type : types) {
-      indices.addAll(type.getSubtypesList());
-    }
-    return Collections.max(indices);
+    return result;
   }
 
   @Override
@@ -844,7 +804,8 @@ public class ReaderImpl implements Reader {
 
   @Override
   public MetadataReader metadata() throws IOException {
-    return new MetadataReaderImpl(fileSystem, path, codec, bufferSize, types.size());
+    return new MetadataReaderImpl(fileSystem, path, codec, bufferSize,
+        types.getMaximumId() + 1);
   }
 
   @Override

@@ -23,6 +23,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.UnionObjectInspector;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfo;
 import org.apache.hadoop.hive.serde2.typeinfo.UnionTypeInfo;
 import org.apache.orc.OrcProto;
+import org.apache.orc.TypeDescription;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,23 +85,13 @@ final class OrcUnion implements UnionObject {
     protected OrcUnionObjectInspector() {
       super();
     }
-    OrcUnionObjectInspector(int columnId,
-                            List<OrcProto.Type> types) {
-      OrcProto.Type type = types.get(columnId);
-      children = new ArrayList<ObjectInspector>(type.getSubtypesCount());
-      for(int i=0; i < type.getSubtypesCount(); ++i) {
-        children.add(OrcStruct.createObjectInspector(type.getSubtypes(i),
-            types));
+    OrcUnionObjectInspector(List<TypeDescription> kids) {
+      children = new ArrayList<>(kids.size());
+      for(TypeDescription child: kids) {
+        children.add(OrcStruct.createObjectInspector(child));
       }
     }
 
-    OrcUnionObjectInspector(UnionTypeInfo info) {
-      List<TypeInfo> unionChildren = info.getAllUnionObjectTypeInfos();
-      this.children = new ArrayList<ObjectInspector>(unionChildren.size());
-      for(TypeInfo child: info.getAllUnionObjectTypeInfos()) {
-        this.children.add(OrcStruct.createObjectInspector(child));
-      }
-    }
 
     @Override
     public List<ObjectInspector> getObjectInspectors() {
