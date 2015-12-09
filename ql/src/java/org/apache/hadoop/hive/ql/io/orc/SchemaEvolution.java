@@ -37,7 +37,7 @@ public class SchemaEvolution {
 
   private static final Log LOG = LogFactory.getLog(SchemaEvolution.class);
 
-  public static TreeReaderSchema validateAndCreate(List<OrcProto.Type> fileTypes,
+  public static TypeDescription validateAndCreate(List<OrcProto.Type> fileTypes,
       List<OrcProto.Type> schemaTypes) throws IOException {
 
     // For ACID, the row is the ROW field in the outer STRUCT.
@@ -136,33 +136,6 @@ public class SchemaEvolution {
       }
     }
     return false;
-  }
-
-  /**
-   * @param typeDescr
-   * @return ORC types for the ACID event based on the row's type description
-   */
-  public static List<OrcProto.Type> createEventSchema(TypeDescription typeDescr) {
-
-    List<OrcProto.Type> result = new ArrayList<OrcProto.Type>();
-
-    OrcProto.Type.Builder type = OrcProto.Type.newBuilder();
-    type.setKind(OrcProto.Type.Kind.STRUCT);
-    type.addAllFieldNames(acidEventFieldNames);
-    for (int i = 0; i < acidEventFieldNames.size(); i++) {
-      type.addSubtypes(i + 1);
-    }
-    result.add(type.build());
-
-    // Automatically add all fields except the last (ROW).
-    for (int i = 0; i < acidEventOrcTypeKinds.size() - 1; i ++) {
-      type.clear();
-      type.setKind(acidEventOrcTypeKinds.get(i));
-      result.add(type.build());
-    }
-
-    OrcUtils.appendOrcTypesRebuildSubtypes(result, typeDescr);
-    return result;
   }
 
   public static final List<String> acidEventFieldNames= new ArrayList<String>();

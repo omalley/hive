@@ -333,9 +333,14 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
       TypeDescription types, List<Integer> included, boolean isOriginal) {
     TypeDescription rootColumn = getRootColumn(isOriginal, types);
     int columns = rootColumn.getChildren().size();
+    boolean result[] =
+        new boolean[rootColumn.getMaximumId() - rootColumn.getId() + 1];
     if (rootColumn.getCategory() == TypeDescription.Category.STRUCT) {
-      return root
+      result[0] = true;
+    } else {
+      Arrays.fill(result, true);
     }
+    return result;
     int numColumns = types.size() - rootColumn;
     boolean[] result = new boolean[numColumns];
     result[0] = true;
