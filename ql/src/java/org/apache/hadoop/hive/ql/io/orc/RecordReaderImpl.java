@@ -29,7 +29,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.orc.BooleanColumnStatistics;
-import org.apache.orc.OrcUtils;
 import org.apache.orc.TypeDescription;
 import org.apache.orc.impl.BufferChunk;
 import org.apache.orc.ColumnStatistics;
@@ -82,9 +81,10 @@ public class RecordReaderImpl implements RecordReader {
   private OrcProto.StripeFooter stripeFooter;
   private final long totalRowCount;
   private final CompressionCodec codec;
-  private final TypeDescription types;
+  private final SchemaEvolution schema;
   private final int bufferSize;
   private final boolean[] included;
+  private final TypeDescription.Category[] columnCategory;
   private final long rowIndexStride;
   private long rowInStripe = 0;
   private int currentStripe = -1;
@@ -153,22 +153,17 @@ public class RecordReaderImpl implements RecordReader {
                              Configuration conf
                              ) throws IOException {
 
-    TreeReaderFactory.TreeReaderSchema treeReaderSchema;
     if (options.getSchema() == null) {
-      treeReaderSchema = new TreeReaderFactory.TreeReaderSchema()
-          .fileTypes(types).schemaTypes(types);
+      schema = new SchemaEvolution(types);
+      included = options.getInclude();
     } else {
-
-      // Now that we are creating a record reader for a file, validate that the schema to read
-      // is compatible with the file schema.
-      //
-      treeReaderSchema = SchemaEvolution.validateAndCreate(types, options.getSchema());
+      // Validate that the schema to read  is compatible with the file schema.
+      schema = new SchemaEvolution(types, options.getSchema());
+      included = convertIncludeToFile(options.getInclude(), schema);
     }
     this.path = path;
     this.codec = codec;
-    this.types = types;
     this.bufferSize = bufferSize;
-    this.included = options.getInclude();
     this.conf = conf;
     this.rowIndexStride = strideRate;
     this.metadata = new MetadataReaderImpl(fileSystem, path, codec, bufferSize, types.getMaximumId() + 1);
@@ -199,7 +194,7 @@ public class RecordReaderImpl implements RecordReader {
     }
     // TODO: we could change the ctor to pass this externally
     this.dataReader = RecordReaderUtils.createDefaultDataReader(fileSystem, path, zeroCopy, codec);
-    this.dataReader.open();
+    this.dataReader.open(); n
 
     firstRow = skippedRows;
     totalRowCount = rows;
@@ -208,10 +203,48 @@ public class RecordReaderImpl implements RecordReader {
       skipCorrupt = OrcConf.SKIP_CORRUPT_DATA.getBoolean(conf);
     }
 
-    reader = TreeReaderFactory.createTreeReader(0, treeReaderSchema, included, skipCorrupt);
+    reader = TreeReaderFactory.createTreeReader(0, schema, included, skipCorrupt);
     indexes = new OrcProto.RowIndex[types.getMaximumId() + 1];
+    columnCategory = new TypeDescription.Category[types.getMaximumId() + 1];
+    recurseOverColumns(columnCategory, types);
     bloomFilterIndices = new OrcProto.BloomFilterIndex[types.getMaximumId() + 1];
     advanceToNextRow(reader, 0L, true);
+  }
+
+  /**
+   * Flatten the schema into the column categories by id.
+   * @param categories the output array of categories
+   * @param schema the schema to flatten
+   */
+  static void recurseOverColumns(TypeDescription.Category[] categories,
+                                 TypeDescription schema) {
+    categories[schema.getId()] = schema.getCategory();
+    for(TypeDescription child: schema.getChildren()) {
+      recurseOverColumns(categories, child);
+    }
+  }
+
+  /**
+   * Translate the include array from the reader's schema to the file's schema,
+   * which is what the reader actually needs.
+   * @param readerInclude the columns selected in the reader's schema
+   * @param schema the mapping from the reader's schema to the file schema
+   * @return the columns selected in the file's schema
+   */
+  static boolean[] convertIncludeToFile(boolean[] readerInclude,
+                                        SchemaEvolution schema) {
+    if (readerInclude == null) {
+      return null;
+    }
+    boolean[] result = new boolean[schema.getFileType(0).getMaximumId() + 1];
+    result[0] = true;
+    for(int c=1; c < readerInclude.length; ++c) {
+      int fileId = schema.getFileColumnId(c);
+      if (fileId != -1 && readerInclude[c]) {
+        result[fileId] = true;
+      }
+    }
+    return result;
   }
 
   public static final class PositionProviderImpl implements PositionProvider {
@@ -888,12 +921,13 @@ public class RecordReaderImpl implements RecordReader {
       boolean[] includedRowGroups,
       boolean isCompressed,
       List<OrcProto.ColumnEncoding> encodings,
-      TypeDescription types,
+      TypeDescription.Category[] types,
       int compressionSize,
       boolean doMergeBuffers) {
     long offset = 0;
     // figure out which columns have a present stream
-    boolean[] hasNull = RecordReaderUtils.findPresentStreamsByColumn(streamList, types);
+    boolean[] hasNull = RecordReaderUtils.findPresentStreamsByColumn(streamList,
+        types.length);
     CreateHelper list = new CreateHelper();
     for (OrcProto.Stream stream : streamList) {
       long length = stream.getLength();
@@ -909,7 +943,7 @@ public class RecordReaderImpl implements RecordReader {
           RecordReaderUtils.addEntireStreamToRanges(offset, length, list, doMergeBuffers);
         } else {
           RecordReaderUtils.addRgFilteredStreamToRanges(stream, includedRowGroups,
-              isCompressed, indexes[column], encodings.get(column), types.get(column),
+              isCompressed, indexes[column], encodings.get(column), types[column],
               compressionSize, hasNull[column], offset, length, list, doMergeBuffers);
         }
       }
@@ -946,7 +980,7 @@ public class RecordReaderImpl implements RecordReader {
     List<OrcProto.Stream> streamList = stripeFooter.getStreamsList();
     DiskRangeList toRead = planReadPartialDataStreams(streamList,
         indexes, included, includedRowGroups, codec != null,
-        stripeFooter.getColumnsList(), types, bufferSize, true);
+        stripeFooter.getColumnsList(), schema.getFileType(0), bufferSize, true);
     if (LOG.isDebugEnabled()) {
       LOG.debug("chunks = " + RecordReaderUtils.stringifyDiskRanges(toRead));
     }

@@ -56,8 +56,6 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.orc.TypeDescription;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.orc.impl.BitFieldReader;
 import org.apache.orc.impl.DynamicByteArray;
 import org.apache.orc.impl.InStream;
@@ -2023,24 +2021,20 @@ public class TreeReaderFactory {
     protected final TreeReader[] fields;
     private final String[] fieldNames;
 
-    protected StructTreeReader(TypeDescription fileSchema,
-                               TypeDescription readerSchema,
+    protected StructTreeReader(int columnId,
+                               SchemaEvolution schema,
                                boolean[] included,
                                boolean skipCorrupt) throws IOException {
-      super(readerSchema.getId());
-
-      this.fields = new TreeReader[readerSchema.getChildren().size()];
-      this.fieldNames = new String[readerSchema.getChildren().size()];
-      List<TypeDescription> fileChildren = fileSchema.getChildren();
+      super(schema.getFileColumnId(columnId));
+      TypeDescription readerSchema = schema.getReaderType(columnId);
+      int children = readerSchema.getChildren().size();
+      this.fields = new TreeReader[children];
+      this.fieldNames = new String[children];
       List<TypeDescription> readerChildren = readerSchema.getChildren();
       for(int i=0; i < fields.length; ++i) {
         fieldNames[i] = readerSchema.getFieldNames().get(i);
-        if (i < fileChildren.size()) {
-          fields[i] = createTreeReader(fileChildren.get(i),
-              readerChildren.get(i), included, skipCorrupt);
-        } else {
-          fields[i] = new VoidTreeReader(readerChildren.get(i).getId());
-        }
+        fields[i] = createTreeReader(readerChildren.get(i).getId(),
+              schema, included, skipCorrupt);
       }
     }
 
@@ -2129,22 +2123,17 @@ public class TreeReaderFactory {
     protected final TreeReader[] fields;
     protected RunLengthByteReader tags;
 
-    protected UnionTreeReader(TypeDescription fileSchema,
-                              TypeDescription readerSchema,
+    protected UnionTreeReader(int columnId,
+                              SchemaEvolution schema,
                               boolean[] included,
                               boolean skipCorrupt) throws IOException {
-      super(readerSchema.getId());
-      List<TypeDescription> fileChildren = fileSchema.getChildren();
-      List<TypeDescription> readerChildren = readerSchema.getChildren();
+      super(schema.getFileColumnId(columnId));
+      List<TypeDescription> readerChildren =
+          schema.getReaderType(columnId).getChildren();
       fields = new TreeReader[readerChildren.size()];
       for (int i = 0; i < fields.length; ++i) {
-        TypeDescription readerChild = readerChildren.get(i);
-        if (i < fileChildren.size()) {
-          this.fields[i] = createTreeReader(fileChildren.get(i), readerChild,
-              included, skipCorrupt);
-        } else {
-          this.fields[i] = new VoidTreeReader(readerChild.getId());
-        }
+        this.fields[i] = createTreeReader(readerChildren.get(i).getId(),
+            schema, included, skipCorrupt);
       }
     }
 
@@ -2212,13 +2201,14 @@ public class TreeReaderFactory {
     protected final TreeReader elementReader;
     protected IntegerReader lengths = null;
 
-    protected ListTreeReader(TypeDescription fileSchema,
-                             TypeDescription readerSchema,
+    protected ListTreeReader(int columnId,
+                             SchemaEvolution schema,
                              boolean[] included,
                              boolean skipCorrupt) throws IOException {
-      super(readerSchema.getId());
-      elementReader = createTreeReader(fileSchema.getChildren().get(0),
-          readerSchema.getChildren().get(0), included, skipCorrupt);
+      super(schema.getFileColumnId(columnId));
+      elementReader = createTreeReader(
+          schema.getReaderType(columnId).getChildren().get(0).getId(),
+          schema, included, skipCorrupt);
     }
 
     @Override
@@ -2302,15 +2292,17 @@ public class TreeReaderFactory {
     protected final TreeReader valueReader;
     protected IntegerReader lengths = null;
 
-    protected MapTreeReader(TypeDescription fileSchema,
-                            TypeDescription readerSchema,
+    protected MapTreeReader(int columnId,
+                            SchemaEvolution schema,
                             boolean[] included,
                             boolean skipCorrupt) throws IOException {
-      super(readerSchema.getId());
-      keyReader = createTreeReader(fileSchema.getChildren().get(0),
-          readerSchema.getChildren().get(0),included, skipCorrupt);
-      valueReader = createTreeReader(fileSchema.getChildren().get(1),
-          readerSchema.getChildren().get(1), included, skipCorrupt);
+      super(schema.getFileColumnId(columnId));
+      List<TypeDescription> children =
+          schema.getReaderType(columnId).getChildren();
+      keyReader = createTreeReader(children.get(0).getId(),
+          schema,included, skipCorrupt);
+      valueReader = createTreeReader(children.get(1).getId(),
+          schema, included, skipCorrupt);
     }
 
     @Override
@@ -2386,57 +2378,60 @@ public class TreeReaderFactory {
     }
   }
 
-  public static TreeReader createTreeReader(TypeDescription fileSchema,
-                                            TypeDescription readerSchema,
+  public static TreeReader createTreeReader(int columnId,
+                                            SchemaEvolution schema,
                                             boolean[] included,
                                             boolean skipCorrupt
                                             ) throws IOException {
     // if the file doesn't have this column or the reader didn't include
     // it, we use a VoidTreeReader that always returns null.
+    TypeDescription fileSchema = schema.getFileType(columnId);
     if (fileSchema == null ||
-        (included != null && !included[readerSchema.getId()])) {
-      return new VoidTreeReader(readerSchema.getId());
+        (included != null && !included[columnId])) {
+      return new VoidTreeReader(columnId);
     }
+    int fileColumnId = fileSchema.getId();
+    TypeDescription readerSchema = schema.getReaderType(columnId);
     switch (readerSchema.getCategory()) {
       case BOOLEAN:
-        return new BooleanTreeReader(readerSchema.getId());
+        return new BooleanTreeReader(fileColumnId);
       case BYTE:
-        return new ByteTreeReader(readerSchema.getId());
+        return new ByteTreeReader(fileColumnId);
       case DOUBLE:
-        return new DoubleTreeReader(readerSchema.getId());
+        return new DoubleTreeReader(fileColumnId);
       case FLOAT:
-        return new FloatTreeReader(readerSchema.getId());
+        return new FloatTreeReader(fileColumnId);
       case SHORT:
-        return new ShortTreeReader(readerSchema.getId());
+        return new ShortTreeReader(fileColumnId);
       case INT:
-        return new IntTreeReader(readerSchema.getId());
+        return new IntTreeReader(fileColumnId);
       case LONG:
-        return new LongTreeReader(readerSchema.getId(), skipCorrupt);
+        return new LongTreeReader(fileColumnId, skipCorrupt);
       case STRING:
-        return new StringTreeReader(readerSchema.getId());
+        return new StringTreeReader(fileColumnId);
       case CHAR:
-        return new CharTreeReader(readerSchema.getId(),
+        return new CharTreeReader(fileColumnId,
             readerSchema.getMaxLength());
       case VARCHAR:
-        return new VarcharTreeReader(readerSchema.getId(),
+        return new VarcharTreeReader(fileColumnId,
             readerSchema.getMaxLength());
       case BINARY:
-        return new BinaryTreeReader(readerSchema.getId());
+        return new BinaryTreeReader(fileColumnId);
       case TIMESTAMP:
-        return new TimestampTreeReader(readerSchema.getId(), skipCorrupt);
+        return new TimestampTreeReader(fileColumnId, skipCorrupt);
       case DATE:
-        return new DateTreeReader(readerSchema.getId());
+        return new DateTreeReader(fileColumnId);
       case DECIMAL:
-        return new DecimalTreeReader(readerSchema.getId(),
+        return new DecimalTreeReader(fileColumnId,
             readerSchema.getPrecision(), readerSchema.getScale());
       case STRUCT:
-        return new StructTreeReader(fileSchema, readerSchema, included, skipCorrupt);
+        return new StructTreeReader(columnId, schema, included, skipCorrupt);
       case LIST:
-        return new ListTreeReader(fileSchema, readerSchema, included, skipCorrupt);
+        return new ListTreeReader(columnId, schema, included, skipCorrupt);
       case MAP:
-        return new MapTreeReader(fileSchema, readerSchema, included, skipCorrupt);
+        return new MapTreeReader(columnId, schema, included, skipCorrupt);
       case UNION:
-        return new UnionTreeReader(fileSchema, readerSchema, included, skipCorrupt);
+        return new UnionTreeReader(columnId, schema, included, skipCorrupt);
       default:
         throw new IllegalArgumentException("Unsupported type " +
             readerSchema.getCategory());

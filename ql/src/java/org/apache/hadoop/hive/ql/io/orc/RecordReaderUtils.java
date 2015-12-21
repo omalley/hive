@@ -36,6 +36,7 @@ import org.apache.hadoop.hive.shims.HadoopShims;
 import org.apache.hadoop.hive.shims.ShimLoader;
 import org.apache.hadoop.hive.shims.HadoopShims.ByteBufferPoolShim;
 import org.apache.hadoop.hive.shims.HadoopShims.ZeroCopyReaderShim;
+import org.apache.orc.TypeDescription;
 import org.apache.orc.impl.BufferChunk;
 import org.apache.orc.CompressionCodec;
 import org.apache.orc.DataReader;
@@ -114,8 +115,8 @@ public class RecordReaderUtils {
   }
 
   public static boolean[] findPresentStreamsByColumn(
-      List<OrcProto.Stream> streamList, List<OrcProto.Type> types) {
-    boolean[] hasNull = new boolean[types.size()];
+      List<OrcProto.Stream> streamList, int typeCount) {
+    boolean[] hasNull = new boolean[typeCount];
     for(OrcProto.Stream stream: streamList) {
       if (stream.hasKind() && (stream.getKind() == OrcProto.Stream.Kind.PRESENT)) {
         hasNull[stream.getColumn()] = true;
@@ -146,12 +147,13 @@ public class RecordReaderUtils {
 
   public static void addRgFilteredStreamToRanges(OrcProto.Stream stream,
       boolean[] includedRowGroups, boolean isCompressed, OrcProto.RowIndex index,
-      OrcProto.ColumnEncoding encoding, OrcProto.Type type, int compressionSize, boolean hasNull,
+      OrcProto.ColumnEncoding encoding, TypeDescription.Category type,
+      int compressionSize, boolean hasNull,
       long offset, long length, CreateHelper list, boolean doMergeBuffers) {
     for (int group = 0; group < includedRowGroups.length; ++group) {
       if (!includedRowGroups[group]) continue;
       int posn = getIndexPosition(
-          encoding.getKind(), type.getKind(), stream.getKind(), isCompressed, hasNull);
+          encoding.getKind(), type, stream.getKind(), isCompressed, hasNull);
       long start = index.getEntry(group).getPositions(posn);
       final long nextGroupOffset;
       boolean isLast = group == (includedRowGroups.length - 1);
@@ -190,7 +192,7 @@ public class RecordReaderUtils {
    * @return the number of positions that will be used for that stream
    */
   public static int getIndexPosition(OrcProto.ColumnEncoding.Kind columnEncoding,
-                              OrcProto.Type.Kind columnType,
+                              TypeDescription.Category columnType,
                               OrcProto.Stream.Kind streamType,
                               boolean isCompressed,
                               boolean hasNulls) {

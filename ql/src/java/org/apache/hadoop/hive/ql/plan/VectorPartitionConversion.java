@@ -71,11 +71,19 @@ public class VectorPartitionConversion  {
       new HashMap<PrimitiveCategory, PrimitiveCategory[]>();
   static {
     validFromPrimitiveMap.put(
+        PrimitiveCategory.BYTE,
+        new PrimitiveCategory[] { PrimitiveCategory.SHORT,
+            PrimitiveCategory.INT, PrimitiveCategory.LONG });
+    validFromPrimitiveMap.put(
         PrimitiveCategory.SHORT,
-        new PrimitiveCategory[] { PrimitiveCategory.INT, PrimitiveCategory.LONG });
+        new PrimitiveCategory[] { PrimitiveCategory.INT,
+            PrimitiveCategory.LONG });
     validFromPrimitiveMap.put(
         PrimitiveCategory.INT,
         new PrimitiveCategory[] { PrimitiveCategory.LONG });
+    validFromPrimitiveMap.put(
+        PrimitiveCategory.FLOAT,
+        new PrimitiveCategory[] { PrimitiveCategory.DOUBLE });
   }
 
   private boolean validateOne(TypeInfo fromTypeInfo, TypeInfo toTypeInfo) {

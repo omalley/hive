@@ -1183,9 +1183,9 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
           OrcFile.readerOptions(context.conf).filesystem(fs));
     }
 
-    private long computeProjectionSize(List<OrcProto.Type> types,
+    private long computeProjectionSize(TypeDescription types,
         List<OrcProto.ColumnStatistics> stats, boolean[] includedCols, boolean isOriginal) {
-      final int rootIdx = getRootColumn(isOriginal);
+      final int rootIdx = getRootColumn(isOriginal, types);
       List<Integer> internalColIds = Lists.newArrayList();
       if (includedCols != null) {
         for (int i = 0; i < includedCols.length; i++) {
