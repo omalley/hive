@@ -19,6 +19,7 @@
 package org.apache.orc;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
@@ -138,7 +139,9 @@ public class OrcFile {
     }
 
     public static WriterVersion from(int val) {
-      if (val == FUTURE.id) return FUTURE; // Special handling for the magic value.
+      if (val == FUTURE.id || val >= values.length) {
+        return FUTURE; // Special handling for the magic value.
+      }
       return values[val];
     }
   }
@@ -158,17 +161,12 @@ public class OrcFile {
   public static class ReaderOptions {
     private final Configuration conf;
     private FileSystem filesystem;
-    private FileMetaInfo fileMetaInfo; // TODO: this comes from some place.
     private long maxLength = Long.MAX_VALUE;
-    private FileMetadata fullFileMetadata; // Propagate from LLAP cache.
+    private ByteBuffer fileFooter;
+    private ByteBuffer stripeStatistics;
 
     public ReaderOptions(Configuration conf) {
       this.conf = conf;
-    }
-
-    public ReaderOptions fileMetaInfo(FileMetaInfo info) {
-      fileMetaInfo = info;
-      return this;
     }
 
     public ReaderOptions filesystem(FileSystem fs) {
@@ -181,8 +179,13 @@ public class OrcFile {
       return this;
     }
 
-    public ReaderOptions fileMetadata(FileMetadata metadata) {
-      this.fullFileMetadata = metadata;
+    public ReaderOptions fileFooter(ByteBuffer metadata) {
+      this.fileFooter = metadata;
+      return this;
+    }
+
+    public ReaderOptions stripeStatistics(ByteBuffer serialized) {
+      this.stripeStatistics = serialized;
       return this;
     }
 
@@ -194,16 +197,16 @@ public class OrcFile {
       return filesystem;
     }
 
-    public FileMetaInfo getFileMetaInfo() {
-      return fileMetaInfo;
-    }
-
     public long getMaxLength() {
       return maxLength;
     }
 
-    public FileMetadata getFileMetadata() {
-      return fullFileMetadata;
+    public ByteBuffer getFileFooter() {
+      return fileFooter;
+    }
+
+    public ByteBuffer getStripeStatistics() {
+      return stripeStatistics;
     }
   }
 

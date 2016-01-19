@@ -23,5 +23,10 @@ package org.apache.orc;
  * can be applied to ORC files.
  */
 public enum CompressionKind {
-  NONE, ZLIB, SNAPPY, LZO
+  // same order as the protobuf
+  NONE, ZLIB, SNAPPY, LZO;
+
+  public static CompressionKind byId(int id) {
+    return values()[id];
+  }
 }

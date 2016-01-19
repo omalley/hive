@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.hadoop.hive.ql.io.orc.ReaderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.hadoop.conf.Configuration;
@@ -147,7 +148,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
 
   // Read state.
   private int stripeIxFrom;
-  private OrcFileMetadata fileMetadata;
+  private ByteBuffer fileMetadata;
   private Reader orcReader;
   private MetadataReader metadataReader;
   private EncodedReader stripeReader;
@@ -610,7 +611,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
       LOG.info("Creating reader for " + path + " (" + split.getPath() + ")");
     }
     long startTime = counters.startTimeCounter();
-    ReaderOptions opts = OrcFile.readerOptions(conf).filesystem(fs).fileMetadata(fileMetadata);
+    ReaderOptions opts = OrcFile.readerOptions(conf).filesystem(fs).fileFooter(fileMetadata);
     orcReader = EncodedOrcFile.createReader(path, opts);
     counters.incrTimeCounter(Counter.HDFS_TIME_US, startTime);
   }
@@ -618,8 +619,8 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
   /**
    *  Gets file metadata for the split from cache, or reads it from the file.
    */
-  private OrcFileMetadata getOrReadFileMetadata() throws IOException {
-    OrcFileMetadata metadata = null;
+  private ByteBuffer getOrReadFileMetadata() throws IOException {
+    ByteBuffer metadata = null;
     if (fileId != null && metadataCache != null) {
       metadata = metadataCache.getFileMetadata(fileId);
       if (metadata != null) {
@@ -691,7 +692,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
     ensureOrcReader();
     if (metadataReader != null) return;
     long startTime = counters.startTimeCounter();
-    metadataReader = orcReader.metadata();
+    metadataReader = ((ReaderImpl) orcReader).metadata();
     counters.incrTimeCounter(Counter.HDFS_TIME_US, startTime);
   }
 

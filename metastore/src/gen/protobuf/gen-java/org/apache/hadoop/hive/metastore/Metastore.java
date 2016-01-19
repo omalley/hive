@@ -8,10 +8,10 @@ public final class Metastore {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface SplitInfoOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface SplitInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.SplitInfo)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int64 offset = 1;
     /**
      * <code>required int64 offset = 1;</code>
      */
@@ -21,7 +21,6 @@ public final class Metastore {
      */
     long getOffset();
 
-    // required int64 length = 2;
     /**
      * <code>required int64 length = 2;</code>
      */
@@ -31,7 +30,6 @@ public final class Metastore {
      */
     long getLength();
 
-    // required int32 index = 3;
     /**
      * <code>required int32 index = 3;</code>
      */
@@ -45,8 +43,9 @@ public final class Metastore {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.SplitInfo}
    */
   public static final class SplitInfo extends
-      com.google.protobuf.GeneratedMessage
-      implements SplitInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.SplitInfo)
+      SplitInfoOrBuilder {
     // Use SplitInfo.newBuilder() to construct.
     private SplitInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -147,7 +146,6 @@ public final class Metastore {
     }
 
     private int bitField0_;
-    // required int64 offset = 1;
     public static final int OFFSET_FIELD_NUMBER = 1;
     private long offset_;
     /**
@@ -163,7 +161,6 @@ public final class Metastore {
       return offset_;
     }
 
-    // required int64 length = 2;
     public static final int LENGTH_FIELD_NUMBER = 2;
     private long length_;
     /**
@@ -179,7 +176,6 @@ public final class Metastore {
       return length_;
     }
 
-    // required int32 index = 3;
     public static final int INDEX_FIELD_NUMBER = 3;
     private int index_;
     /**
@@ -203,7 +199,8 @@ public final class Metastore {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasOffset()) {
         memoizedIsInitialized = 0;
@@ -336,8 +333,9 @@ public final class Metastore {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.SplitInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.SplitInfo)
+        org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.Metastore.internal_static_org_apache_hadoop_hive_metastore_SplitInfo_descriptor;
@@ -447,15 +445,15 @@ public final class Metastore {
 
       public final boolean isInitialized() {
         if (!hasOffset()) {
-
+          
           return false;
         }
         if (!hasLength()) {
-
+          
           return false;
         }
         if (!hasIndex()) {
-
+          
           return false;
         }
         return true;
@@ -480,7 +478,6 @@ public final class Metastore {
       }
       private int bitField0_;
 
-      // required int64 offset = 1;
       private long offset_ ;
       /**
        * <code>required int64 offset = 1;</code>
@@ -513,7 +510,6 @@ public final class Metastore {
         return this;
       }
 
-      // required int64 length = 2;
       private long length_ ;
       /**
        * <code>required int64 length = 2;</code>
@@ -546,7 +542,6 @@ public final class Metastore {
         return this;
       }
 
-      // required int32 index = 3;
       private int index_ ;
       /**
        * <code>required int32 index = 3;</code>
@@ -590,14 +585,14 @@ public final class Metastore {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.SplitInfo)
   }
 
-  public interface SplitInfosOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface SplitInfosOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.SplitInfos)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;</code>
      */
-    java.util.List<org.apache.hadoop.hive.metastore.Metastore.SplitInfo>
+    java.util.List<org.apache.hadoop.hive.metastore.Metastore.SplitInfo> 
         getInfosList();
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;</code>
@@ -610,7 +605,7 @@ public final class Metastore {
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;</code>
      */
-    java.util.List<? extends org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder>
+    java.util.List<? extends org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder> 
         getInfosOrBuilderList();
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;</code>
@@ -622,8 +617,9 @@ public final class Metastore {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.SplitInfos}
    */
   public static final class SplitInfos extends
-      com.google.protobuf.GeneratedMessage
-      implements SplitInfosOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.SplitInfos)
+      SplitInfosOrBuilder {
     // Use SplitInfos.newBuilder() to construct.
     private SplitInfos(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -719,7 +715,6 @@ public final class Metastore {
       return PARSER;
     }
 
-    // repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;
     public static final int INFOS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.metastore.Metastore.SplitInfo> infos_;
     /**
@@ -731,7 +726,7 @@ public final class Metastore {
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;</code>
      */
-    public java.util.List<? extends org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder>
+    public java.util.List<? extends org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder> 
         getInfosOrBuilderList() {
       return infos_;
     }
@@ -761,7 +756,8 @@ public final class Metastore {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       for (int i = 0; i < getInfosCount(); i++) {
         if (!getInfos(i).isInitialized()) {
@@ -874,8 +870,9 @@ public final class Metastore {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.SplitInfos}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements org.apache.hadoop.hive.metastore.Metastore.SplitInfosOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.SplitInfos)
+        org.apache.hadoop.hive.metastore.Metastore.SplitInfosOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.Metastore.internal_static_org_apache_hadoop_hive_metastore_SplitInfos_descriptor;
@@ -984,7 +981,7 @@ public final class Metastore {
               infosBuilder_ = null;
               infos_ = other.infos_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              infosBuilder_ =
+              infosBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getInfosFieldBuilder() : null;
             } else {
@@ -999,7 +996,7 @@ public final class Metastore {
       public final boolean isInitialized() {
         for (int i = 0; i < getInfosCount(); i++) {
           if (!getInfos(i).isInitialized()) {
-
+            
             return false;
           }
         }
@@ -1025,7 +1022,6 @@ public final class Metastore {
       }
       private int bitField0_;
 
-      // repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;
       private java.util.List<org.apache.hadoop.hive.metastore.Metastore.SplitInfo> infos_ =
         java.util.Collections.emptyList();
       private void ensureInfosIsMutable() {
@@ -1167,7 +1163,8 @@ public final class Metastore {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.Metastore.SplitInfo> values) {
         if (infosBuilder_ == null) {
           ensureInfosIsMutable();
-          super.addAll(values, infos_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, infos_);
           onChanged();
         } else {
           infosBuilder_.addAllMessages(values);
@@ -1220,7 +1217,7 @@ public final class Metastore {
       /**
        * <code>repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;</code>
        */
-      public java.util.List<? extends org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder>
+      public java.util.List<? extends org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder> 
            getInfosOrBuilderList() {
         if (infosBuilder_ != null) {
           return infosBuilder_.getMessageOrBuilderList();
@@ -1246,12 +1243,12 @@ public final class Metastore {
       /**
        * <code>repeated .org.apache.hadoop.hive.metastore.SplitInfo infos = 1;</code>
        */
-      public java.util.List<org.apache.hadoop.hive.metastore.Metastore.SplitInfo.Builder>
+      public java.util.List<org.apache.hadoop.hive.metastore.Metastore.SplitInfo.Builder> 
            getInfosBuilderList() {
         return getInfosFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          org.apache.hadoop.hive.metastore.Metastore.SplitInfo, org.apache.hadoop.hive.metastore.Metastore.SplitInfo.Builder, org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder>
+          org.apache.hadoop.hive.metastore.Metastore.SplitInfo, org.apache.hadoop.hive.metastore.Metastore.SplitInfo.Builder, org.apache.hadoop.hive.metastore.Metastore.SplitInfoOrBuilder> 
           getInfosFieldBuilder() {
         if (infosBuilder_ == null) {
           infosBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -1276,12 +1273,12 @@ public final class Metastore {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.SplitInfos)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_SplitInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_SplitInfo_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_SplitInfos_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -1302,29 +1299,29 @@ public final class Metastore {
       ".hive.metastore.SplitInfo"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_org_apache_hadoop_hive_metastore_SplitInfo_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_org_apache_hadoop_hive_metastore_SplitInfo_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_org_apache_hadoop_hive_metastore_SplitInfo_descriptor,
-              new java.lang.String[] { "Offset", "Length", "Index", });
-          internal_static_org_apache_hadoop_hive_metastore_SplitInfos_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_org_apache_hadoop_hive_metastore_SplitInfos_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_org_apache_hadoop_hive_metastore_SplitInfos_descriptor,
-              new java.lang.String[] { "Infos", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_org_apache_hadoop_hive_metastore_SplitInfo_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_org_apache_hadoop_hive_metastore_SplitInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_org_apache_hadoop_hive_metastore_SplitInfo_descriptor,
+        new java.lang.String[] { "Offset", "Length", "Index", });
+    internal_static_org_apache_hadoop_hive_metastore_SplitInfos_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_org_apache_hadoop_hive_metastore_SplitInfos_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_org_apache_hadoop_hive_metastore_SplitInfos_descriptor,
+        new java.lang.String[] { "Infos", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

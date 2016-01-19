@@ -25,17 +25,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.hadoop.hive.ql.io.AcidInputFormat;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableUtils;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
-import org.apache.orc.FileMetaInfo;
 
 /**
  * OrcFileSplit. Holds file meta info
  *
  */
 public class OrcNewSplit extends FileSplit {
-  private FileMetaInfo fileMetaInfo;
+  private ByteBuffer fileFooter;
   private boolean hasFooter;
   private boolean isOriginal;
   private boolean hasBase;
@@ -52,7 +50,7 @@ public class OrcNewSplit extends FileSplit {
   public OrcNewSplit(OrcSplit inner) throws IOException {
     super(inner.getPath(), inner.getStart(), inner.getLength(),
           inner.getLocations());
-    this.fileMetaInfo = inner.getFileMetaInfo();
+    this.fileFooter = inner.getFileFooter();
     this.hasFooter = inner.hasFooter();
     this.isOriginal = inner.isOriginal();
     this.hasBase = inner.hasBase();
@@ -74,19 +72,10 @@ public class OrcNewSplit extends FileSplit {
     }
     if (hasFooter) {
       // serialize FileMetaInfo fields
-      Text.writeString(out, fileMetaInfo.compressionType);
-      WritableUtils.writeVInt(out, fileMetaInfo.bufferSize);
-      WritableUtils.writeVInt(out, fileMetaInfo.metadataSize);
-
-      // serialize FileMetaInfo field footer
-      ByteBuffer footerBuff = fileMetaInfo.footerBuffer;
-      footerBuff.reset();
-
-      // write length of buffer
-      WritableUtils.writeVInt(out, footerBuff.limit() - footerBuff.position());
-      out.write(footerBuff.array(), footerBuff.position(),
-          footerBuff.limit() - footerBuff.position());
-      WritableUtils.writeVInt(out, fileMetaInfo.writerVersion.getId());
+      int posn = fileFooter.position();
+      int len = fileFooter.limit() - posn;
+      WritableUtils.writeVInt(out, len);
+      out.write(fileFooter.array(), fileFooter.arrayOffset() + posn, len);
     }
   }
 
@@ -108,25 +97,15 @@ public class OrcNewSplit extends FileSplit {
       deltas.add(dmd);
     }
     if (hasFooter) {
-      // deserialize FileMetaInfo fields
-      String compressionType = Text.readString(in);
-      int bufferSize = WritableUtils.readVInt(in);
-      int metadataSize = WritableUtils.readVInt(in);
-
-      // deserialize FileMetaInfo field footer
-      int footerBuffSize = WritableUtils.readVInt(in);
-      ByteBuffer footerBuff = ByteBuffer.allocate(footerBuffSize);
-      in.readFully(footerBuff.array(), 0, footerBuffSize);
-      OrcFile.WriterVersion writerVersion =
-          ReaderImpl.getWriterVersion(WritableUtils.readVInt(in));
-
-      fileMetaInfo = new FileMetaInfo(compressionType, bufferSize,
-          metadataSize, footerBuff, writerVersion);
+      int length = WritableUtils.readVInt(in);
+      fileFooter = ByteBuffer.allocate(length);
+      in.readFully(fileFooter.array(), 0, length);
+      fileFooter.limit(length);
     }
   }
 
-  FileMetaInfo getFileMetaInfo(){
-    return fileMetaInfo;
+  ByteBuffer getFileFooter(){
+    return fileFooter;
   }
 
   public boolean hasFooter() {

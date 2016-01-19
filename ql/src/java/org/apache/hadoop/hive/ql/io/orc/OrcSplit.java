@@ -25,14 +25,10 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.orc.FileMetaInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.ql.io.ColumnarSplit;
 import org.apache.hadoop.hive.ql.io.AcidInputFormat;
 import org.apache.hadoop.hive.ql.io.LlapAwareSplit;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableUtils;
 import org.apache.hadoop.mapred.FileSplit;
 
@@ -43,12 +39,11 @@ import org.apache.hadoop.mapred.FileSplit;
  *
  */
 public class OrcSplit extends FileSplit implements ColumnarSplit, LlapAwareSplit {
-  private FileMetaInfo fileMetaInfo;
+  private ByteBuffer fileFooter;
   private boolean hasFooter;
   private boolean isOriginal;
   private boolean hasBase;
   private final List<AcidInputFormat.DeltaMetaData> deltas = new ArrayList<>();
-  private OrcFile.WriterVersion writerVersion;
   private long projColsUncompressedSize;
   private transient Long fileId;
 
@@ -65,14 +60,14 @@ public class OrcSplit extends FileSplit implements ColumnarSplit, LlapAwareSplit
   }
 
   public OrcSplit(Path path, Long fileId, long offset, long length, String[] hosts,
-      FileMetaInfo fileMetaInfo, boolean isOriginal, boolean hasBase,
+      ByteBuffer fileFooter, boolean isOriginal, boolean hasBase,
       List<AcidInputFormat.DeltaMetaData> deltas, long projectedDataSize) {
     super(path, offset, length, hosts);
     // We could avoid serializing file ID and just replace the path with inode-based path.
     // However, that breaks bunch of stuff because Hive later looks up things by split path.
     this.fileId = fileId;
-    this.fileMetaInfo = fileMetaInfo;
-    hasFooter = this.fileMetaInfo != null;
+    this.fileFooter = fileFooter;
+    hasFooter = this.fileFooter != null;
     this.isOriginal = isOriginal;
     this.hasBase = hasBase;
     this.deltas.addAll(deltas);
@@ -94,20 +89,12 @@ public class OrcSplit extends FileSplit implements ColumnarSplit, LlapAwareSplit
       delta.write(out);
     }
     if (hasFooter) {
-      // serialize FileMetaInfo fields
-      Text.writeString(out, fileMetaInfo.compressionType);
-      WritableUtils.writeVInt(out, fileMetaInfo.bufferSize);
-      WritableUtils.writeVInt(out, fileMetaInfo.metadataSize);
-
-      // serialize FileMetaInfo field footer
-      ByteBuffer footerBuff = fileMetaInfo.footerBuffer;
-      footerBuff.reset();
-
-      // write length of buffer
-      WritableUtils.writeVInt(out, footerBuff.limit() - footerBuff.position());
-      out.write(footerBuff.array(), footerBuff.position(),
-          footerBuff.limit() - footerBuff.position());
-      WritableUtils.writeVInt(out, fileMetaInfo.writerVersion.getId());
+      // serialize footer
+      int posn = fileFooter.position();
+      int length = fileFooter.limit() - posn;
+      WritableUtils.writeVInt(out, length);
+      out.write(fileFooter.array(), fileFooter.arrayOffset() + posn,
+          length);
     }
     if (fileId != null) {
       out.writeLong(fileId.longValue());
@@ -134,27 +121,17 @@ public class OrcSplit extends FileSplit implements ColumnarSplit, LlapAwareSplit
     }
     if (hasFooter) {
       // deserialize FileMetaInfo fields
-      String compressionType = Text.readString(in);
-      int bufferSize = WritableUtils.readVInt(in);
-      int metadataSize = WritableUtils.readVInt(in);
-
-      // deserialize FileMetaInfo field footer
-      int footerBuffSize = WritableUtils.readVInt(in);
-      ByteBuffer footerBuff = ByteBuffer.allocate(footerBuffSize);
-      in.readFully(footerBuff.array(), 0, footerBuffSize);
-      OrcFile.WriterVersion writerVersion =
-          ReaderImpl.getWriterVersion(WritableUtils.readVInt(in));
-
-      fileMetaInfo = new FileMetaInfo(compressionType, bufferSize,
-          metadataSize, footerBuff, writerVersion);
+      int length = WritableUtils.readVInt(in);
+      fileFooter = ByteBuffer.allocate(length);
+      in.readFully(fileFooter.array(), 0, length);
     }
     if (hasFileId) {
       fileId = in.readLong();
     }
   }
 
-  FileMetaInfo getFileMetaInfo(){
-    return fileMetaInfo;
+  ByteBuffer getFileFooter(){
+    return fileFooter;
   }
 
   public boolean hasFooter() {

@@ -19,15 +19,14 @@
 package org.apache.hadoop.hive.ql.io.orc;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
-import org.apache.orc.FileMetadata;
 import org.apache.orc.impl.MemoryManager;
 import org.apache.orc.TypeDescription;
 
@@ -68,8 +67,13 @@ public final class OrcFile extends org.apache.orc.OrcFile {
       return this;
     }
 
-    public ReaderOptions fileMetadata(FileMetadata metadata) {
-      super.fileMetadata(metadata);
+    public ReaderOptions fileFooter(ByteBuffer metadata) {
+      super.fileFooter(metadata);
+      return this;
+    }
+
+    public ReaderOptions stripeStatistics(ByteBuffer serialized) {
+      super.stripeStatistics(serialized);
       return this;
     }
   }

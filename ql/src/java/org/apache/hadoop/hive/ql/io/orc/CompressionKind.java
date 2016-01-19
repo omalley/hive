@@ -38,4 +38,13 @@ public enum CompressionKind {
   }
 
   private final org.apache.orc.CompressionKind underlying;
+
+  /**
+   * Translate from the protobuf compression id to the enum.
+   * @param id the id from the protobuf
+   * @return our enum
+   */
+  public static CompressionKind byId(int id) {
+    return values()[id];
+  }
 }

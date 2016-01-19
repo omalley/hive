@@ -52,11 +52,11 @@ public interface Reader {
   long getRawDataSizeOfColumns(List<String> colNames);
 
   /**
-   * Get the deserialized data size of the specified columns ids
-   * @param colIds - internal column id (check orcfiledump for column ids)
+   * Get the deserialized data size of the specified columns id
+   * @param colId - internal column id (check orcfiledump for column ids)
    * @return raw data size of columns
    */
-  long getRawDataSizeFromColIndices(List<Integer> colIds);
+  long getRawDataSizeFromColumn(int colId);
 
   /**
    * Get the user metadata keys.
@@ -321,11 +321,6 @@ public interface Reader {
   RecordReader rowsOptions(Options options) throws IOException;
 
   /**
-   * @return Metadata reader used to read file metadata.
-   */
-  MetadataReader metadata() throws IOException;
-
-  /**
    * @return List of integers representing version of the file, in order from major to minor.
    */
   List<Integer> getVersionList();
@@ -336,19 +331,9 @@ public interface Reader {
   int getMetadataSize();
 
   /**
-   * @return Stripe statistics, in original protobuf form.
-   */
-  List<OrcProto.StripeStatistics> getOrcProtoStripeStatistics();
-
-  /**
    * @return Stripe statistics.
    */
-  List<StripeStatistics> getStripeStatistics();
-
-  /**
-   * @return File statistics, in original protobuf form.
-   */
-  List<OrcProto.ColumnStatistics> getOrcProtoFileStatistics();
+  List<StripeStatistics> getStripeStatistics() throws IOException;
 
   /**
    * @param useZeroCopy Whether zero-copy read should be used.
@@ -357,7 +342,10 @@ public interface Reader {
   DataReader createDefaultDataReader(boolean useZeroCopy);
 
   /**
+   * Get the serialized file footer (footer, and postscript).
+   * @param includeStripeStatistics should the stripe statistics be included?
    * @return Serialized file metadata read from disk for the purposes of caching, etc.
    */
-  ByteBuffer getSerializedFileFooter();
+  ByteBuffer getSerializedFileFooter(boolean includeStripeStatistics);
+
 }
