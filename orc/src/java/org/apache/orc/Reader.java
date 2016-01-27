@@ -346,6 +346,7 @@ public interface Reader {
    * @param includeStripeStatistics should the stripe statistics be included?
    * @return Serialized file metadata read from disk for the purposes of caching, etc.
    */
-  ByteBuffer getSerializedFileFooter(boolean includeStripeStatistics);
+  ByteBuffer getSerializedFileFooter(boolean includeStripeStatistics
+                                     ) throws IOException;
 
 }

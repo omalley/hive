@@ -90,10 +90,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(enum_scope:org.apache.hadoop.hive.metastore.hbase.PrincipalType)
   }
 
-  public interface AggrStatsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.AggrStats)
-      com.google.protobuf.MessageOrBuilder {
+  public interface AggrStatsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int64 parts_found = 1;
     /**
      * <code>required int64 parts_found = 1;</code>
      */
@@ -103,6 +103,7 @@ public final class HbaseMetastoreProto {
      */
     long getPartsFound();
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.ColumnStats col_stats = 2;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.ColumnStats col_stats = 2;</code>
      */
@@ -131,9 +132,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStats}
    */
   public static final class AggrStats extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.AggrStats)
-      AggrStatsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements AggrStatsOrBuilder {
     // Use AggrStats.newBuilder() to construct.
     private AggrStats(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -235,6 +235,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required int64 parts_found = 1;
     public static final int PARTS_FOUND_FIELD_NUMBER = 1;
     private long partsFound_;
     /**
@@ -250,6 +251,7 @@ public final class HbaseMetastoreProto {
       return partsFound_;
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.ColumnStats col_stats = 2;
     public static final int COL_STATS_FIELD_NUMBER = 2;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats> colStats_;
     /**
@@ -292,8 +294,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasPartsFound()) {
         memoizedIsInitialized = 0;
@@ -417,9 +418,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStats}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.AggrStats)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_descriptor;
@@ -584,6 +584,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required int64 parts_found = 1;
       private long partsFound_ ;
       /**
        * <code>required int64 parts_found = 1;</code>
@@ -616,6 +617,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.ColumnStats col_stats = 2;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats> colStats_ =
         java.util.Collections.emptyList();
       private void ensureColStatsIsMutable() {
@@ -757,8 +759,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats> values) {
         if (colStatsBuilder_ == null) {
           ensureColStatsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, colStats_);
+          super.addAll(values, colStats_);
           onChanged();
         } else {
           colStatsBuilder_.addAllMessages(values);
@@ -867,10 +868,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.AggrStats)
   }
 
-  public interface AggrStatsBloomFilterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter)
-      com.google.protobuf.MessageOrBuilder {
+  public interface AggrStatsBloomFilterOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required bytes db_name = 1;
     /**
      * <code>required bytes db_name = 1;</code>
      */
@@ -880,6 +881,7 @@ public final class HbaseMetastoreProto {
      */
     com.google.protobuf.ByteString getDbName();
 
+    // required bytes table_name = 2;
     /**
      * <code>required bytes table_name = 2;</code>
      */
@@ -889,6 +891,7 @@ public final class HbaseMetastoreProto {
      */
     com.google.protobuf.ByteString getTableName();
 
+    // required .org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter bloom_filter = 3;
     /**
      * <code>required .org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter bloom_filter = 3;</code>
      */
@@ -902,6 +905,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilterOrBuilder getBloomFilterOrBuilder();
 
+    // required int64 aggregated_at = 4;
     /**
      * <code>required int64 aggregated_at = 4;</code>
      */
@@ -915,9 +919,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter}
    */
   public static final class AggrStatsBloomFilter extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter)
-      AggrStatsBloomFilterOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements AggrStatsBloomFilterOrBuilder {
     // Use AggrStatsBloomFilter.newBuilder() to construct.
     private AggrStatsBloomFilter(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1030,10 +1033,10 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
-    public interface BloomFilterOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter)
-        com.google.protobuf.MessageOrBuilder {
+    public interface BloomFilterOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // required int32 num_bits = 1;
       /**
        * <code>required int32 num_bits = 1;</code>
        */
@@ -1043,6 +1046,7 @@ public final class HbaseMetastoreProto {
        */
       int getNumBits();
 
+      // required int32 num_funcs = 2;
       /**
        * <code>required int32 num_funcs = 2;</code>
        */
@@ -1052,6 +1056,7 @@ public final class HbaseMetastoreProto {
        */
       int getNumFuncs();
 
+      // repeated int64 bits = 3;
       /**
        * <code>repeated int64 bits = 3;</code>
        */
@@ -1069,9 +1074,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter}
      */
     public static final class BloomFilter extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter)
-        BloomFilterOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements BloomFilterOrBuilder {
       // Use BloomFilter.newBuilder() to construct.
       private BloomFilter(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -1191,6 +1195,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // required int32 num_bits = 1;
       public static final int NUM_BITS_FIELD_NUMBER = 1;
       private int numBits_;
       /**
@@ -1206,6 +1211,7 @@ public final class HbaseMetastoreProto {
         return numBits_;
       }
 
+      // required int32 num_funcs = 2;
       public static final int NUM_FUNCS_FIELD_NUMBER = 2;
       private int numFuncs_;
       /**
@@ -1221,6 +1227,7 @@ public final class HbaseMetastoreProto {
         return numFuncs_;
       }
 
+      // repeated int64 bits = 3;
       public static final int BITS_FIELD_NUMBER = 3;
       private java.util.List<java.lang.Long> bits_;
       /**
@@ -1251,8 +1258,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (!hasNumBits()) {
           memoizedIsInitialized = 0;
@@ -1386,9 +1392,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilterOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilterOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_descriptor;
@@ -1535,6 +1540,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // required int32 num_bits = 1;
         private int numBits_ ;
         /**
          * <code>required int32 num_bits = 1;</code>
@@ -1567,6 +1573,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // required int32 num_funcs = 2;
         private int numFuncs_ ;
         /**
          * <code>required int32 num_funcs = 2;</code>
@@ -1599,6 +1606,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // repeated int64 bits = 3;
         private java.util.List<java.lang.Long> bits_ = java.util.Collections.emptyList();
         private void ensureBitsIsMutable() {
           if (!((bitField0_ & 0x00000004) == 0x00000004)) {
@@ -1650,8 +1658,7 @@ public final class HbaseMetastoreProto {
         public Builder addAllBits(
             java.lang.Iterable<? extends java.lang.Long> values) {
           ensureBitsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, bits_);
+          super.addAll(values, bits_);
           onChanged();
           return this;
         }
@@ -1677,6 +1684,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required bytes db_name = 1;
     public static final int DB_NAME_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString dbName_;
     /**
@@ -1692,6 +1700,7 @@ public final class HbaseMetastoreProto {
       return dbName_;
     }
 
+    // required bytes table_name = 2;
     public static final int TABLE_NAME_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString tableName_;
     /**
@@ -1707,6 +1716,7 @@ public final class HbaseMetastoreProto {
       return tableName_;
     }
 
+    // required .org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter bloom_filter = 3;
     public static final int BLOOM_FILTER_FIELD_NUMBER = 3;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilter bloomFilter_;
     /**
@@ -1728,6 +1738,7 @@ public final class HbaseMetastoreProto {
       return bloomFilter_;
     }
 
+    // required int64 aggregated_at = 4;
     public static final int AGGREGATED_AT_FIELD_NUMBER = 4;
     private long aggregatedAt_;
     /**
@@ -1752,8 +1763,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasDbName()) {
         memoizedIsInitialized = 0;
@@ -1901,9 +1911,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilterOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilterOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor;
@@ -2072,6 +2081,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required bytes db_name = 1;
       private com.google.protobuf.ByteString dbName_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes db_name = 1;</code>
@@ -2107,6 +2117,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required bytes table_name = 2;
       private com.google.protobuf.ByteString tableName_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes table_name = 2;</code>
@@ -2142,6 +2153,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required .org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter.BloomFilter bloom_filter = 3;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilter bloomFilter_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilter.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilter, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilter.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilterOrBuilder> bloomFilterBuilder_;
@@ -2250,7 +2262,7 @@ public final class HbaseMetastoreProto {
         if (bloomFilterBuilder_ == null) {
           bloomFilterBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilter, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilter.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsBloomFilter.BloomFilterOrBuilder>(
-                  getBloomFilter(),
+                  bloomFilter_,
                   getParentForChildren(),
                   isClean());
           bloomFilter_ = null;
@@ -2258,6 +2270,7 @@ public final class HbaseMetastoreProto {
         return bloomFilterBuilder_;
       }
 
+      // required int64 aggregated_at = 4;
       private long aggregatedAt_ ;
       /**
        * <code>required int64 aggregated_at = 4;</code>
@@ -2301,10 +2314,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.AggrStatsBloomFilter)
   }
 
-  public interface AggrStatsInvalidatorFilterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter)
-      com.google.protobuf.MessageOrBuilder {
+  public interface AggrStatsInvalidatorFilterOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry to_invalidate = 1;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry to_invalidate = 1;</code>
      */
@@ -2329,6 +2342,7 @@ public final class HbaseMetastoreProto {
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilter.EntryOrBuilder getToInvalidateOrBuilder(
         int index);
 
+    // required int64 run_every = 2;
     /**
      * <code>required int64 run_every = 2;</code>
      */
@@ -2338,6 +2352,7 @@ public final class HbaseMetastoreProto {
      */
     long getRunEvery();
 
+    // required int64 max_cache_entry_life = 3;
     /**
      * <code>required int64 max_cache_entry_life = 3;</code>
      */
@@ -2351,9 +2366,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter}
    */
   public static final class AggrStatsInvalidatorFilter extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter)
-      AggrStatsInvalidatorFilterOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements AggrStatsInvalidatorFilterOrBuilder {
     // Use AggrStatsInvalidatorFilter.newBuilder() to construct.
     private AggrStatsInvalidatorFilter(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2459,10 +2473,10 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
-    public interface EntryOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry)
-        com.google.protobuf.MessageOrBuilder {
+    public interface EntryOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // required bytes db_name = 1;
       /**
        * <code>required bytes db_name = 1;</code>
        */
@@ -2472,6 +2486,7 @@ public final class HbaseMetastoreProto {
        */
       com.google.protobuf.ByteString getDbName();
 
+      // required bytes table_name = 2;
       /**
        * <code>required bytes table_name = 2;</code>
        */
@@ -2481,6 +2496,7 @@ public final class HbaseMetastoreProto {
        */
       com.google.protobuf.ByteString getTableName();
 
+      // required bytes part_name = 3;
       /**
        * <code>required bytes part_name = 3;</code>
        */
@@ -2494,9 +2510,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry}
      */
     public static final class Entry extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry)
-        EntryOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements EntryOrBuilder {
       // Use Entry.newBuilder() to construct.
       private Entry(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -2597,6 +2612,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // required bytes db_name = 1;
       public static final int DB_NAME_FIELD_NUMBER = 1;
       private com.google.protobuf.ByteString dbName_;
       /**
@@ -2612,6 +2628,7 @@ public final class HbaseMetastoreProto {
         return dbName_;
       }
 
+      // required bytes table_name = 2;
       public static final int TABLE_NAME_FIELD_NUMBER = 2;
       private com.google.protobuf.ByteString tableName_;
       /**
@@ -2627,6 +2644,7 @@ public final class HbaseMetastoreProto {
         return tableName_;
       }
 
+      // required bytes part_name = 3;
       public static final int PART_NAME_FIELD_NUMBER = 3;
       private com.google.protobuf.ByteString partName_;
       /**
@@ -2650,8 +2668,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (!hasDbName()) {
           memoizedIsInitialized = 0;
@@ -2784,9 +2801,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilter.EntryOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilter.EntryOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_descriptor;
@@ -2929,6 +2945,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // required bytes db_name = 1;
         private com.google.protobuf.ByteString dbName_ = com.google.protobuf.ByteString.EMPTY;
         /**
          * <code>required bytes db_name = 1;</code>
@@ -2964,6 +2981,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // required bytes table_name = 2;
         private com.google.protobuf.ByteString tableName_ = com.google.protobuf.ByteString.EMPTY;
         /**
          * <code>required bytes table_name = 2;</code>
@@ -2999,6 +3017,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // required bytes part_name = 3;
         private com.google.protobuf.ByteString partName_ = com.google.protobuf.ByteString.EMPTY;
         /**
          * <code>required bytes part_name = 3;</code>
@@ -3046,6 +3065,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // repeated .org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry to_invalidate = 1;
     public static final int TO_INVALIDATE_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilter.Entry> toInvalidate_;
     /**
@@ -3081,6 +3101,7 @@ public final class HbaseMetastoreProto {
       return toInvalidate_.get(index);
     }
 
+    // required int64 run_every = 2;
     public static final int RUN_EVERY_FIELD_NUMBER = 2;
     private long runEvery_;
     /**
@@ -3096,6 +3117,7 @@ public final class HbaseMetastoreProto {
       return runEvery_;
     }
 
+    // required int64 max_cache_entry_life = 3;
     public static final int MAX_CACHE_ENTRY_LIFE_FIELD_NUMBER = 3;
     private long maxCacheEntryLife_;
     /**
@@ -3119,8 +3141,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasRunEvery()) {
         memoizedIsInitialized = 0;
@@ -3255,9 +3276,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilterOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilterOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor;
@@ -3435,6 +3455,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter.Entry to_invalidate = 1;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilter.Entry> toInvalidate_ =
         java.util.Collections.emptyList();
       private void ensureToInvalidateIsMutable() {
@@ -3576,8 +3597,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.AggrStatsInvalidatorFilter.Entry> values) {
         if (toInvalidateBuilder_ == null) {
           ensureToInvalidateIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, toInvalidate_);
+          super.addAll(values, toInvalidate_);
           onChanged();
         } else {
           toInvalidateBuilder_.addAllMessages(values);
@@ -3675,6 +3695,7 @@ public final class HbaseMetastoreProto {
         return toInvalidateBuilder_;
       }
 
+      // required int64 run_every = 2;
       private long runEvery_ ;
       /**
        * <code>required int64 run_every = 2;</code>
@@ -3707,6 +3728,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required int64 max_cache_entry_life = 3;
       private long maxCacheEntryLife_ ;
       /**
        * <code>required int64 max_cache_entry_life = 3;</code>
@@ -3750,10 +3772,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.AggrStatsInvalidatorFilter)
   }
 
-  public interface ColumnStatsOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ColumnStats)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ColumnStatsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional int64 last_analyzed = 1;
     /**
      * <code>optional int64 last_analyzed = 1;</code>
      */
@@ -3763,6 +3785,7 @@ public final class HbaseMetastoreProto {
      */
     long getLastAnalyzed();
 
+    // required string column_type = 2;
     /**
      * <code>required string column_type = 2;</code>
      */
@@ -3777,6 +3800,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getColumnTypeBytes();
 
+    // optional int64 num_nulls = 3;
     /**
      * <code>optional int64 num_nulls = 3;</code>
      */
@@ -3786,6 +3810,7 @@ public final class HbaseMetastoreProto {
      */
     long getNumNulls();
 
+    // optional int64 num_distinct_values = 4;
     /**
      * <code>optional int64 num_distinct_values = 4;</code>
      */
@@ -3795,6 +3820,7 @@ public final class HbaseMetastoreProto {
      */
     long getNumDistinctValues();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats bool_stats = 5;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats bool_stats = 5;</code>
      */
@@ -3808,6 +3834,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStatsOrBuilder getBoolStatsOrBuilder();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats long_stats = 6;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats long_stats = 6;</code>
      */
@@ -3821,6 +3848,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStatsOrBuilder getLongStatsOrBuilder();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats double_stats = 7;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats double_stats = 7;</code>
      */
@@ -3834,6 +3862,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStatsOrBuilder getDoubleStatsOrBuilder();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats string_stats = 8;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats string_stats = 8;</code>
      */
@@ -3847,6 +3876,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder getStringStatsOrBuilder();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats binary_stats = 9;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats binary_stats = 9;</code>
      */
@@ -3860,6 +3890,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder getBinaryStatsOrBuilder();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats decimal_stats = 10;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats decimal_stats = 10;</code>
      */
@@ -3873,6 +3904,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStatsOrBuilder getDecimalStatsOrBuilder();
 
+    // optional string column_name = 11;
     /**
      * <code>optional string column_name = 11;</code>
      */
@@ -3891,9 +3923,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats}
    */
   public static final class ColumnStats extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats)
-      ColumnStatsOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ColumnStatsOrBuilder {
     // Use ColumnStats.newBuilder() to construct.
     private ColumnStats(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3945,9 +3976,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              columnType_ = bs;
+              columnType_ = input.readBytes();
               break;
             }
             case 24: {
@@ -4039,9 +4069,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 90: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000400;
-              columnName_ = bs;
+              columnName_ = input.readBytes();
               break;
             }
           }
@@ -4083,10 +4112,10 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
-    public interface BooleanStatsOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats)
-        com.google.protobuf.MessageOrBuilder {
+    public interface BooleanStatsOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // optional int64 num_trues = 1;
       /**
        * <code>optional int64 num_trues = 1;</code>
        */
@@ -4096,6 +4125,7 @@ public final class HbaseMetastoreProto {
        */
       long getNumTrues();
 
+      // optional int64 num_falses = 2;
       /**
        * <code>optional int64 num_falses = 2;</code>
        */
@@ -4109,9 +4139,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats}
      */
     public static final class BooleanStats extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats)
-        BooleanStatsOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements BooleanStatsOrBuilder {
       // Use BooleanStats.newBuilder() to construct.
       private BooleanStats(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -4207,6 +4236,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // optional int64 num_trues = 1;
       public static final int NUM_TRUES_FIELD_NUMBER = 1;
       private long numTrues_;
       /**
@@ -4222,6 +4252,7 @@ public final class HbaseMetastoreProto {
         return numTrues_;
       }
 
+      // optional int64 num_falses = 2;
       public static final int NUM_FALSES_FIELD_NUMBER = 2;
       private long numFalses_;
       /**
@@ -4244,8 +4275,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         memoizedIsInitialized = 1;
         return true;
@@ -4359,9 +4389,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStatsOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStatsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_descriptor;
@@ -4483,6 +4512,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // optional int64 num_trues = 1;
         private long numTrues_ ;
         /**
          * <code>optional int64 num_trues = 1;</code>
@@ -4515,6 +4545,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional int64 num_falses = 2;
         private long numFalses_ ;
         /**
          * <code>optional int64 num_falses = 2;</code>
@@ -4558,10 +4589,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats)
     }
 
-    public interface LongStatsOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats)
-        com.google.protobuf.MessageOrBuilder {
+    public interface LongStatsOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // optional sint64 low_value = 1;
       /**
        * <code>optional sint64 low_value = 1;</code>
        */
@@ -4571,6 +4602,7 @@ public final class HbaseMetastoreProto {
        */
       long getLowValue();
 
+      // optional sint64 high_value = 2;
       /**
        * <code>optional sint64 high_value = 2;</code>
        */
@@ -4584,9 +4616,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats}
      */
     public static final class LongStats extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats)
-        LongStatsOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements LongStatsOrBuilder {
       // Use LongStats.newBuilder() to construct.
       private LongStats(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -4682,6 +4713,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // optional sint64 low_value = 1;
       public static final int LOW_VALUE_FIELD_NUMBER = 1;
       private long lowValue_;
       /**
@@ -4697,6 +4729,7 @@ public final class HbaseMetastoreProto {
         return lowValue_;
       }
 
+      // optional sint64 high_value = 2;
       public static final int HIGH_VALUE_FIELD_NUMBER = 2;
       private long highValue_;
       /**
@@ -4719,8 +4752,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         memoizedIsInitialized = 1;
         return true;
@@ -4834,9 +4866,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStatsOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStatsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_descriptor;
@@ -4958,6 +4989,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // optional sint64 low_value = 1;
         private long lowValue_ ;
         /**
          * <code>optional sint64 low_value = 1;</code>
@@ -4990,6 +5022,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional sint64 high_value = 2;
         private long highValue_ ;
         /**
          * <code>optional sint64 high_value = 2;</code>
@@ -5033,10 +5066,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats)
     }
 
-    public interface DoubleStatsOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats)
-        com.google.protobuf.MessageOrBuilder {
+    public interface DoubleStatsOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // optional double low_value = 1;
       /**
        * <code>optional double low_value = 1;</code>
        */
@@ -5046,6 +5079,7 @@ public final class HbaseMetastoreProto {
        */
       double getLowValue();
 
+      // optional double high_value = 2;
       /**
        * <code>optional double high_value = 2;</code>
        */
@@ -5059,9 +5093,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats}
      */
     public static final class DoubleStats extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats)
-        DoubleStatsOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements DoubleStatsOrBuilder {
       // Use DoubleStats.newBuilder() to construct.
       private DoubleStats(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -5157,6 +5190,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // optional double low_value = 1;
       public static final int LOW_VALUE_FIELD_NUMBER = 1;
       private double lowValue_;
       /**
@@ -5172,6 +5206,7 @@ public final class HbaseMetastoreProto {
         return lowValue_;
       }
 
+      // optional double high_value = 2;
       public static final int HIGH_VALUE_FIELD_NUMBER = 2;
       private double highValue_;
       /**
@@ -5194,8 +5229,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         memoizedIsInitialized = 1;
         return true;
@@ -5309,9 +5343,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStatsOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStatsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_descriptor;
@@ -5433,6 +5466,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // optional double low_value = 1;
         private double lowValue_ ;
         /**
          * <code>optional double low_value = 1;</code>
@@ -5465,6 +5499,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional double high_value = 2;
         private double highValue_ ;
         /**
          * <code>optional double high_value = 2;</code>
@@ -5508,10 +5543,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats)
     }
 
-    public interface StringStatsOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats)
-        com.google.protobuf.MessageOrBuilder {
+    public interface StringStatsOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // optional int64 max_col_length = 1;
       /**
        * <code>optional int64 max_col_length = 1;</code>
        */
@@ -5521,6 +5556,7 @@ public final class HbaseMetastoreProto {
        */
       long getMaxColLength();
 
+      // optional double avg_col_length = 2;
       /**
        * <code>optional double avg_col_length = 2;</code>
        */
@@ -5534,9 +5570,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats}
      */
     public static final class StringStats extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats)
-        StringStatsOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements StringStatsOrBuilder {
       // Use StringStats.newBuilder() to construct.
       private StringStats(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -5632,6 +5667,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // optional int64 max_col_length = 1;
       public static final int MAX_COL_LENGTH_FIELD_NUMBER = 1;
       private long maxColLength_;
       /**
@@ -5647,6 +5683,7 @@ public final class HbaseMetastoreProto {
         return maxColLength_;
       }
 
+      // optional double avg_col_length = 2;
       public static final int AVG_COL_LENGTH_FIELD_NUMBER = 2;
       private double avgColLength_;
       /**
@@ -5669,8 +5706,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         memoizedIsInitialized = 1;
         return true;
@@ -5784,9 +5820,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_descriptor;
@@ -5908,6 +5943,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // optional int64 max_col_length = 1;
         private long maxColLength_ ;
         /**
          * <code>optional int64 max_col_length = 1;</code>
@@ -5940,6 +5976,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional double avg_col_length = 2;
         private double avgColLength_ ;
         /**
          * <code>optional double avg_col_length = 2;</code>
@@ -5983,10 +6020,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats)
     }
 
-    public interface DecimalStatsOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats)
-        com.google.protobuf.MessageOrBuilder {
+    public interface DecimalStatsOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal low_value = 1;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal low_value = 1;</code>
        */
@@ -6000,6 +6037,7 @@ public final class HbaseMetastoreProto {
        */
       org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.DecimalOrBuilder getLowValueOrBuilder();
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal high_value = 2;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal high_value = 2;</code>
        */
@@ -6017,9 +6055,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats}
      */
     public static final class DecimalStats extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats)
-        DecimalStatsOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements DecimalStatsOrBuilder {
       // Use DecimalStats.newBuilder() to construct.
       private DecimalStats(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -6130,10 +6167,10 @@ public final class HbaseMetastoreProto {
         return PARSER;
       }
 
-      public interface DecimalOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal)
-          com.google.protobuf.MessageOrBuilder {
+      public interface DecimalOrBuilder
+          extends com.google.protobuf.MessageOrBuilder {
 
+        // required bytes unscaled = 1;
         /**
          * <code>required bytes unscaled = 1;</code>
          */
@@ -6143,6 +6180,7 @@ public final class HbaseMetastoreProto {
          */
         com.google.protobuf.ByteString getUnscaled();
 
+        // required int32 scale = 2;
         /**
          * <code>required int32 scale = 2;</code>
          */
@@ -6156,9 +6194,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal}
        */
       public static final class Decimal extends
-          com.google.protobuf.GeneratedMessage implements
-          // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal)
-          DecimalOrBuilder {
+          com.google.protobuf.GeneratedMessage
+          implements DecimalOrBuilder {
         // Use Decimal.newBuilder() to construct.
         private Decimal(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
           super(builder);
@@ -6254,6 +6291,7 @@ public final class HbaseMetastoreProto {
         }
 
         private int bitField0_;
+        // required bytes unscaled = 1;
         public static final int UNSCALED_FIELD_NUMBER = 1;
         private com.google.protobuf.ByteString unscaled_;
         /**
@@ -6269,6 +6307,7 @@ public final class HbaseMetastoreProto {
           return unscaled_;
         }
 
+        // required int32 scale = 2;
         public static final int SCALE_FIELD_NUMBER = 2;
         private int scale_;
         /**
@@ -6291,8 +6330,7 @@ public final class HbaseMetastoreProto {
         private byte memoizedIsInitialized = -1;
         public final boolean isInitialized() {
           byte isInitialized = memoizedIsInitialized;
-          if (isInitialized == 1) return true;
-          if (isInitialized == 0) return false;
+          if (isInitialized != -1) return isInitialized == 1;
 
           if (!hasUnscaled()) {
             memoizedIsInitialized = 0;
@@ -6414,9 +6452,8 @@ public final class HbaseMetastoreProto {
          * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal}
          */
         public static final class Builder extends
-            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal)
-            org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.DecimalOrBuilder {
+            com.google.protobuf.GeneratedMessage.Builder<Builder>
+           implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.DecimalOrBuilder {
           public static final com.google.protobuf.Descriptors.Descriptor
               getDescriptor() {
             return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_descriptor;
@@ -6546,6 +6583,7 @@ public final class HbaseMetastoreProto {
           }
           private int bitField0_;
 
+          // required bytes unscaled = 1;
           private com.google.protobuf.ByteString unscaled_ = com.google.protobuf.ByteString.EMPTY;
           /**
            * <code>required bytes unscaled = 1;</code>
@@ -6581,6 +6619,7 @@ public final class HbaseMetastoreProto {
             return this;
           }
 
+          // required int32 scale = 2;
           private int scale_ ;
           /**
            * <code>required int32 scale = 2;</code>
@@ -6625,6 +6664,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal low_value = 1;
       public static final int LOW_VALUE_FIELD_NUMBER = 1;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal lowValue_;
       /**
@@ -6646,6 +6686,7 @@ public final class HbaseMetastoreProto {
         return lowValue_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal high_value = 2;
       public static final int HIGH_VALUE_FIELD_NUMBER = 2;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal highValue_;
       /**
@@ -6674,8 +6715,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (hasLowValue()) {
           if (!getLowValue().isInitialized()) {
@@ -6801,9 +6841,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStatsOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStatsOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor;
@@ -6955,6 +6994,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal low_value = 1;
         private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal lowValue_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.DecimalOrBuilder> lowValueBuilder_;
@@ -7063,7 +7103,7 @@ public final class HbaseMetastoreProto {
           if (lowValueBuilder_ == null) {
             lowValueBuilder_ = new com.google.protobuf.SingleFieldBuilder<
                 org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.DecimalOrBuilder>(
-                    getLowValue(),
+                    lowValue_,
                     getParentForChildren(),
                     isClean());
             lowValue_ = null;
@@ -7071,6 +7111,7 @@ public final class HbaseMetastoreProto {
           return lowValueBuilder_;
         }
 
+        // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats.Decimal high_value = 2;
         private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal highValue_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.DecimalOrBuilder> highValueBuilder_;
@@ -7179,7 +7220,7 @@ public final class HbaseMetastoreProto {
           if (highValueBuilder_ == null) {
             highValueBuilder_ = new com.google.protobuf.SingleFieldBuilder<
                 org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Decimal.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.DecimalOrBuilder>(
-                    getHighValue(),
+                    highValue_,
                     getParentForChildren(),
                     isClean());
             highValue_ = null;
@@ -7199,6 +7240,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // optional int64 last_analyzed = 1;
     public static final int LAST_ANALYZED_FIELD_NUMBER = 1;
     private long lastAnalyzed_;
     /**
@@ -7214,6 +7256,7 @@ public final class HbaseMetastoreProto {
       return lastAnalyzed_;
     }
 
+    // required string column_type = 2;
     public static final int COLUMN_TYPE_FIELD_NUMBER = 2;
     private java.lang.Object columnType_;
     /**
@@ -7256,6 +7299,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional int64 num_nulls = 3;
     public static final int NUM_NULLS_FIELD_NUMBER = 3;
     private long numNulls_;
     /**
@@ -7271,6 +7315,7 @@ public final class HbaseMetastoreProto {
       return numNulls_;
     }
 
+    // optional int64 num_distinct_values = 4;
     public static final int NUM_DISTINCT_VALUES_FIELD_NUMBER = 4;
     private long numDistinctValues_;
     /**
@@ -7286,6 +7331,7 @@ public final class HbaseMetastoreProto {
       return numDistinctValues_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats bool_stats = 5;
     public static final int BOOL_STATS_FIELD_NUMBER = 5;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStats boolStats_;
     /**
@@ -7307,6 +7353,7 @@ public final class HbaseMetastoreProto {
       return boolStats_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats long_stats = 6;
     public static final int LONG_STATS_FIELD_NUMBER = 6;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStats longStats_;
     /**
@@ -7328,6 +7375,7 @@ public final class HbaseMetastoreProto {
       return longStats_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats double_stats = 7;
     public static final int DOUBLE_STATS_FIELD_NUMBER = 7;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStats doubleStats_;
     /**
@@ -7349,6 +7397,7 @@ public final class HbaseMetastoreProto {
       return doubleStats_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats string_stats = 8;
     public static final int STRING_STATS_FIELD_NUMBER = 8;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats stringStats_;
     /**
@@ -7370,6 +7419,7 @@ public final class HbaseMetastoreProto {
       return stringStats_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats binary_stats = 9;
     public static final int BINARY_STATS_FIELD_NUMBER = 9;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats binaryStats_;
     /**
@@ -7391,6 +7441,7 @@ public final class HbaseMetastoreProto {
       return binaryStats_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats decimal_stats = 10;
     public static final int DECIMAL_STATS_FIELD_NUMBER = 10;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats decimalStats_;
     /**
@@ -7412,6 +7463,7 @@ public final class HbaseMetastoreProto {
       return decimalStats_;
     }
 
+    // optional string column_name = 11;
     public static final int COLUMN_NAME_FIELD_NUMBER = 11;
     private java.lang.Object columnName_;
     /**
@@ -7470,8 +7522,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasColumnType()) {
         memoizedIsInitialized = 0;
@@ -7658,9 +7709,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ColumnStats)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStatsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStatsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor;
@@ -7931,6 +7981,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // optional int64 last_analyzed = 1;
       private long lastAnalyzed_ ;
       /**
        * <code>optional int64 last_analyzed = 1;</code>
@@ -7963,6 +8014,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required string column_type = 2;
       private java.lang.Object columnType_ = "";
       /**
        * <code>required string column_type = 2;</code>
@@ -7976,12 +8028,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getColumnType() {
         java.lang.Object ref = columnType_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            columnType_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          columnType_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8039,6 +8088,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 num_nulls = 3;
       private long numNulls_ ;
       /**
        * <code>optional int64 num_nulls = 3;</code>
@@ -8071,6 +8121,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 num_distinct_values = 4;
       private long numDistinctValues_ ;
       /**
        * <code>optional int64 num_distinct_values = 4;</code>
@@ -8103,6 +8154,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.BooleanStats bool_stats = 5;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStats boolStats_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStats.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStatsOrBuilder> boolStatsBuilder_;
@@ -8211,7 +8263,7 @@ public final class HbaseMetastoreProto {
         if (boolStatsBuilder_ == null) {
           boolStatsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.BooleanStatsOrBuilder>(
-                  getBoolStats(),
+                  boolStats_,
                   getParentForChildren(),
                   isClean());
           boolStats_ = null;
@@ -8219,6 +8271,7 @@ public final class HbaseMetastoreProto {
         return boolStatsBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.LongStats long_stats = 6;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStats longStats_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStats.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStatsOrBuilder> longStatsBuilder_;
@@ -8327,7 +8380,7 @@ public final class HbaseMetastoreProto {
         if (longStatsBuilder_ == null) {
           longStatsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.LongStatsOrBuilder>(
-                  getLongStats(),
+                  longStats_,
                   getParentForChildren(),
                   isClean());
           longStats_ = null;
@@ -8335,6 +8388,7 @@ public final class HbaseMetastoreProto {
         return longStatsBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DoubleStats double_stats = 7;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStats doubleStats_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStats.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStatsOrBuilder> doubleStatsBuilder_;
@@ -8443,7 +8497,7 @@ public final class HbaseMetastoreProto {
         if (doubleStatsBuilder_ == null) {
           doubleStatsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DoubleStatsOrBuilder>(
-                  getDoubleStats(),
+                  doubleStats_,
                   getParentForChildren(),
                   isClean());
           doubleStats_ = null;
@@ -8451,6 +8505,7 @@ public final class HbaseMetastoreProto {
         return doubleStatsBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats string_stats = 8;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats stringStats_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder> stringStatsBuilder_;
@@ -8559,7 +8614,7 @@ public final class HbaseMetastoreProto {
         if (stringStatsBuilder_ == null) {
           stringStatsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder>(
-                  getStringStats(),
+                  stringStats_,
                   getParentForChildren(),
                   isClean());
           stringStats_ = null;
@@ -8567,6 +8622,7 @@ public final class HbaseMetastoreProto {
         return stringStatsBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.StringStats binary_stats = 9;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats binaryStats_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder> binaryStatsBuilder_;
@@ -8675,7 +8731,7 @@ public final class HbaseMetastoreProto {
         if (binaryStatsBuilder_ == null) {
           binaryStatsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.StringStatsOrBuilder>(
-                  getBinaryStats(),
+                  binaryStats_,
                   getParentForChildren(),
                   isClean());
           binaryStats_ = null;
@@ -8683,6 +8739,7 @@ public final class HbaseMetastoreProto {
         return binaryStatsBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.ColumnStats.DecimalStats decimal_stats = 10;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats decimalStats_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStatsOrBuilder> decimalStatsBuilder_;
@@ -8791,7 +8848,7 @@ public final class HbaseMetastoreProto {
         if (decimalStatsBuilder_ == null) {
           decimalStatsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStats.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ColumnStats.DecimalStatsOrBuilder>(
-                  getDecimalStats(),
+                  decimalStats_,
                   getParentForChildren(),
                   isClean());
           decimalStats_ = null;
@@ -8799,6 +8856,7 @@ public final class HbaseMetastoreProto {
         return decimalStatsBuilder_;
       }
 
+      // optional string column_name = 11;
       private java.lang.Object columnName_ = "";
       /**
        * <code>optional string column_name = 11;</code>
@@ -8812,12 +8870,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getColumnName() {
         java.lang.Object ref = columnName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            columnName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          columnName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8886,10 +8941,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.ColumnStats)
   }
 
-  public interface DatabaseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.Database)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DatabaseOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string description = 1;
     /**
      * <code>optional string description = 1;</code>
      */
@@ -8904,6 +8959,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getDescriptionBytes();
 
+    // optional string uri = 2;
     /**
      * <code>optional string uri = 2;</code>
      */
@@ -8918,6 +8974,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getUriBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;</code>
      */
@@ -8931,6 +8988,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder getParametersOrBuilder();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 4;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 4;</code>
      */
@@ -8944,6 +9002,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder getPrivilegesOrBuilder();
 
+    // optional string owner_name = 5;
     /**
      * <code>optional string owner_name = 5;</code>
      */
@@ -8958,6 +9017,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getOwnerNameBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 6;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 6;</code>
      */
@@ -8971,9 +9031,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Database}
    */
   public static final class Database extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.Database)
-      DatabaseOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DatabaseOrBuilder {
     // Use Database.newBuilder() to construct.
     private Database(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -9020,15 +9079,13 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              description_ = bs;
+              description_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              uri_ = bs;
+              uri_ = input.readBytes();
               break;
             }
             case 26: {
@@ -9058,9 +9115,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 42: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              ownerName_ = bs;
+              ownerName_ = input.readBytes();
               break;
             }
             case 48: {
@@ -9114,6 +9170,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // optional string description = 1;
     public static final int DESCRIPTION_FIELD_NUMBER = 1;
     private java.lang.Object description_;
     /**
@@ -9156,6 +9213,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional string uri = 2;
     public static final int URI_FIELD_NUMBER = 2;
     private java.lang.Object uri_;
     /**
@@ -9198,6 +9256,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;
     public static final int PARAMETERS_FIELD_NUMBER = 3;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_;
     /**
@@ -9219,6 +9278,7 @@ public final class HbaseMetastoreProto {
       return parameters_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 4;
     public static final int PRIVILEGES_FIELD_NUMBER = 4;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet privileges_;
     /**
@@ -9240,6 +9300,7 @@ public final class HbaseMetastoreProto {
       return privileges_;
     }
 
+    // optional string owner_name = 5;
     public static final int OWNER_NAME_FIELD_NUMBER = 5;
     private java.lang.Object ownerName_;
     /**
@@ -9282,6 +9343,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 6;
     public static final int OWNER_TYPE_FIELD_NUMBER = 6;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType ownerType_;
     /**
@@ -9308,8 +9370,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (hasParameters()) {
         if (!getParameters().isInitialized()) {
@@ -9463,9 +9524,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Database}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.Database)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.DatabaseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.DatabaseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_Database_descriptor;
@@ -9659,6 +9719,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // optional string description = 1;
       private java.lang.Object description_ = "";
       /**
        * <code>optional string description = 1;</code>
@@ -9672,12 +9733,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getDescription() {
         java.lang.Object ref = description_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            description_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          description_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -9735,6 +9793,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string uri = 2;
       private java.lang.Object uri_ = "";
       /**
        * <code>optional string uri = 2;</code>
@@ -9748,12 +9807,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getUri() {
         java.lang.Object ref = uri_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            uri_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          uri_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -9811,6 +9867,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder> parametersBuilder_;
@@ -9919,7 +9976,7 @@ public final class HbaseMetastoreProto {
         if (parametersBuilder_ == null) {
           parametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder>(
-                  getParameters(),
+                  parameters_,
                   getParentForChildren(),
                   isClean());
           parameters_ = null;
@@ -9927,6 +9984,7 @@ public final class HbaseMetastoreProto {
         return parametersBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 4;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet privileges_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder> privilegesBuilder_;
@@ -10035,7 +10093,7 @@ public final class HbaseMetastoreProto {
         if (privilegesBuilder_ == null) {
           privilegesBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder>(
-                  getPrivileges(),
+                  privileges_,
                   getParentForChildren(),
                   isClean());
           privileges_ = null;
@@ -10043,6 +10101,7 @@ public final class HbaseMetastoreProto {
         return privilegesBuilder_;
       }
 
+      // optional string owner_name = 5;
       private java.lang.Object ownerName_ = "";
       /**
        * <code>optional string owner_name = 5;</code>
@@ -10056,12 +10115,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getOwnerName() {
         java.lang.Object ref = ownerName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            ownerName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          ownerName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -10119,6 +10175,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 6;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType ownerType_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType.USER;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 6;</code>
@@ -10165,10 +10222,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.Database)
   }
 
-  public interface DelegationTokenOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.DelegationToken)
-      com.google.protobuf.MessageOrBuilder {
+  public interface DelegationTokenOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string token_str = 1;
     /**
      * <code>required string token_str = 1;</code>
      */
@@ -10187,9 +10244,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.DelegationToken}
    */
   public static final class DelegationToken extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.DelegationToken)
-      DelegationTokenOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements DelegationTokenOrBuilder {
     // Use DelegationToken.newBuilder() to construct.
     private DelegationToken(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10236,9 +10292,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              tokenStr_ = bs;
+              tokenStr_ = input.readBytes();
               break;
             }
           }
@@ -10281,6 +10336,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required string token_str = 1;
     public static final int TOKEN_STR_FIELD_NUMBER = 1;
     private java.lang.Object tokenStr_;
     /**
@@ -10329,8 +10385,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasTokenStr()) {
         memoizedIsInitialized = 0;
@@ -10441,9 +10496,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.DelegationToken}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.DelegationToken)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.DelegationTokenOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.DelegationTokenOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_descriptor;
@@ -10562,6 +10616,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required string token_str = 1;
       private java.lang.Object tokenStr_ = "";
       /**
        * <code>required string token_str = 1;</code>
@@ -10575,12 +10630,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getTokenStr() {
         java.lang.Object ref = tokenStr_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            tokenStr_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          tokenStr_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -10649,10 +10701,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.DelegationToken)
   }
 
-  public interface FieldSchemaOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.FieldSchema)
-      com.google.protobuf.MessageOrBuilder {
+  public interface FieldSchemaOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string name = 1;
     /**
      * <code>required string name = 1;</code>
      */
@@ -10667,6 +10719,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getNameBytes();
 
+    // required string type = 2;
     /**
      * <code>required string type = 2;</code>
      */
@@ -10681,6 +10734,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getTypeBytes();
 
+    // optional string comment = 3;
     /**
      * <code>optional string comment = 3;</code>
      */
@@ -10699,9 +10753,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.FieldSchema}
    */
   public static final class FieldSchema extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.FieldSchema)
-      FieldSchemaOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements FieldSchemaOrBuilder {
     // Use FieldSchema.newBuilder() to construct.
     private FieldSchema(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10748,21 +10801,18 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              name_ = bs;
+              name_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              type_ = bs;
+              type_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              comment_ = bs;
+              comment_ = input.readBytes();
               break;
             }
           }
@@ -10805,6 +10855,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required string name = 1;
     public static final int NAME_FIELD_NUMBER = 1;
     private java.lang.Object name_;
     /**
@@ -10847,6 +10898,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // required string type = 2;
     public static final int TYPE_FIELD_NUMBER = 2;
     private java.lang.Object type_;
     /**
@@ -10889,6 +10941,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional string comment = 3;
     public static final int COMMENT_FIELD_NUMBER = 3;
     private java.lang.Object comment_;
     /**
@@ -10939,8 +10992,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasName()) {
         memoizedIsInitialized = 0;
@@ -11069,9 +11121,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.FieldSchema}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.FieldSchema)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchemaOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchemaOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_descriptor;
@@ -11216,6 +11267,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required string name = 1;
       private java.lang.Object name_ = "";
       /**
        * <code>required string name = 1;</code>
@@ -11229,12 +11281,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            name_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          name_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -11292,6 +11341,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required string type = 2;
       private java.lang.Object type_ = "";
       /**
        * <code>required string type = 2;</code>
@@ -11305,12 +11355,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getType() {
         java.lang.Object ref = type_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            type_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          type_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -11368,6 +11415,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string comment = 3;
       private java.lang.Object comment_ = "";
       /**
        * <code>optional string comment = 3;</code>
@@ -11381,12 +11429,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getComment() {
         java.lang.Object ref = comment_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            comment_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          comment_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -11455,10 +11500,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.FieldSchema)
   }
 
-  public interface FunctionOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.Function)
-      com.google.protobuf.MessageOrBuilder {
+  public interface FunctionOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string class_name = 1;
     /**
      * <code>optional string class_name = 1;</code>
      */
@@ -11473,6 +11518,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getClassNameBytes();
 
+    // optional string owner_name = 2;
     /**
      * <code>optional string owner_name = 2;</code>
      */
@@ -11487,6 +11533,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getOwnerNameBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 3;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 3;</code>
      */
@@ -11496,6 +11543,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType getOwnerType();
 
+    // optional sint64 create_time = 4;
     /**
      * <code>optional sint64 create_time = 4;</code>
      */
@@ -11505,6 +11553,7 @@ public final class HbaseMetastoreProto {
      */
     long getCreateTime();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Function.FunctionType function_type = 5;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.Function.FunctionType function_type = 5;</code>
      */
@@ -11514,6 +11563,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.FunctionType getFunctionType();
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri resource_uris = 6;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri resource_uris = 6;</code>
      */
@@ -11542,9 +11592,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Function}
    */
   public static final class Function extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.Function)
-      FunctionOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements FunctionOrBuilder {
     // Use Function.newBuilder() to construct.
     private Function(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11591,15 +11640,13 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              className_ = bs;
+              className_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              ownerName_ = bs;
+              ownerName_ = input.readBytes();
               break;
             }
             case 24: {
@@ -11752,10 +11799,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(enum_scope:org.apache.hadoop.hive.metastore.hbase.Function.FunctionType)
     }
 
-    public interface ResourceUriOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri)
-        com.google.protobuf.MessageOrBuilder {
+    public interface ResourceUriOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // required .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri.ResourceType resource_type = 1;
       /**
        * <code>required .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri.ResourceType resource_type = 1;</code>
        */
@@ -11765,6 +11812,7 @@ public final class HbaseMetastoreProto {
        */
       org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUri.ResourceType getResourceType();
 
+      // required string uri = 2;
       /**
        * <code>required string uri = 2;</code>
        */
@@ -11783,9 +11831,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri}
      */
     public static final class ResourceUri extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri)
-        ResourceUriOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements ResourceUriOrBuilder {
       // Use ResourceUri.newBuilder() to construct.
       private ResourceUri(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -11843,9 +11890,8 @@ public final class HbaseMetastoreProto {
                 break;
               }
               case 18: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000002;
-                uri_ = bs;
+                uri_ = input.readBytes();
                 break;
               }
             }
@@ -11979,6 +12025,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // required .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri.ResourceType resource_type = 1;
       public static final int RESOURCE_TYPE_FIELD_NUMBER = 1;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUri.ResourceType resourceType_;
       /**
@@ -11994,6 +12041,7 @@ public final class HbaseMetastoreProto {
         return resourceType_;
       }
 
+      // required string uri = 2;
       public static final int URI_FIELD_NUMBER = 2;
       private java.lang.Object uri_;
       /**
@@ -12043,8 +12091,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (!hasResourceType()) {
           memoizedIsInitialized = 0;
@@ -12166,9 +12213,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUriOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUriOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_descriptor;
@@ -12300,6 +12346,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // required .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri.ResourceType resource_type = 1;
         private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUri.ResourceType resourceType_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUri.ResourceType.JAR;
         /**
          * <code>required .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri.ResourceType resource_type = 1;</code>
@@ -12335,6 +12382,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // required string uri = 2;
         private java.lang.Object uri_ = "";
         /**
          * <code>required string uri = 2;</code>
@@ -12348,12 +12396,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getUri() {
           java.lang.Object ref = uri_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              uri_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            uri_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -12423,6 +12468,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // optional string class_name = 1;
     public static final int CLASS_NAME_FIELD_NUMBER = 1;
     private java.lang.Object className_;
     /**
@@ -12465,6 +12511,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional string owner_name = 2;
     public static final int OWNER_NAME_FIELD_NUMBER = 2;
     private java.lang.Object ownerName_;
     /**
@@ -12507,6 +12554,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 3;
     public static final int OWNER_TYPE_FIELD_NUMBER = 3;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType ownerType_;
     /**
@@ -12522,6 +12570,7 @@ public final class HbaseMetastoreProto {
       return ownerType_;
     }
 
+    // optional sint64 create_time = 4;
     public static final int CREATE_TIME_FIELD_NUMBER = 4;
     private long createTime_;
     /**
@@ -12537,6 +12586,7 @@ public final class HbaseMetastoreProto {
       return createTime_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Function.FunctionType function_type = 5;
     public static final int FUNCTION_TYPE_FIELD_NUMBER = 5;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.FunctionType functionType_;
     /**
@@ -12552,6 +12602,7 @@ public final class HbaseMetastoreProto {
       return functionType_;
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri resource_uris = 6;
     public static final int RESOURCE_URIS_FIELD_NUMBER = 6;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUri> resourceUris_;
     /**
@@ -12598,8 +12649,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getResourceUrisCount(); i++) {
         if (!getResourceUris(i).isInitialized()) {
@@ -12747,9 +12797,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Function}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.Function)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FunctionOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FunctionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor;
@@ -12950,6 +12999,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // optional string class_name = 1;
       private java.lang.Object className_ = "";
       /**
        * <code>optional string class_name = 1;</code>
@@ -12963,12 +13013,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getClassName() {
         java.lang.Object ref = className_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            className_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          className_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -13026,6 +13073,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string owner_name = 2;
       private java.lang.Object ownerName_ = "";
       /**
        * <code>optional string owner_name = 2;</code>
@@ -13039,12 +13087,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getOwnerName() {
         java.lang.Object ref = ownerName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            ownerName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          ownerName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -13102,6 +13147,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 3;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType ownerType_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType.USER;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType owner_type = 3;</code>
@@ -13137,6 +13183,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional sint64 create_time = 4;
       private long createTime_ ;
       /**
        * <code>optional sint64 create_time = 4;</code>
@@ -13169,6 +13216,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Function.FunctionType function_type = 5;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.FunctionType functionType_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.FunctionType.JAVA;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.Function.FunctionType function_type = 5;</code>
@@ -13204,6 +13252,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.Function.ResourceUri resource_uris = 6;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUri> resourceUris_ =
         java.util.Collections.emptyList();
       private void ensureResourceUrisIsMutable() {
@@ -13345,8 +13394,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Function.ResourceUri> values) {
         if (resourceUrisBuilder_ == null) {
           ensureResourceUrisIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, resourceUris_);
+          super.addAll(values, resourceUris_);
           onChanged();
         } else {
           resourceUrisBuilder_.addAllMessages(values);
@@ -13455,10 +13503,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.Function)
   }
 
-  public interface MasterKeyOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.MasterKey)
-      com.google.protobuf.MessageOrBuilder {
+  public interface MasterKeyOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string master_key = 1;
     /**
      * <code>required string master_key = 1;</code>
      */
@@ -13477,9 +13525,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.MasterKey}
    */
   public static final class MasterKey extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.MasterKey)
-      MasterKeyOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements MasterKeyOrBuilder {
     // Use MasterKey.newBuilder() to construct.
     private MasterKey(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -13526,9 +13573,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              masterKey_ = bs;
+              masterKey_ = input.readBytes();
               break;
             }
           }
@@ -13571,6 +13617,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required string master_key = 1;
     public static final int MASTER_KEY_FIELD_NUMBER = 1;
     private java.lang.Object masterKey_;
     /**
@@ -13619,8 +13666,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasMasterKey()) {
         memoizedIsInitialized = 0;
@@ -13731,9 +13777,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.MasterKey}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.MasterKey)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.MasterKeyOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.MasterKeyOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_descriptor;
@@ -13852,6 +13897,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required string master_key = 1;
       private java.lang.Object masterKey_ = "";
       /**
        * <code>required string master_key = 1;</code>
@@ -13865,12 +13911,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getMasterKey() {
         java.lang.Object ref = masterKey_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            masterKey_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          masterKey_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -13939,10 +13982,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.MasterKey)
   }
 
-  public interface ParameterEntryOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.ParameterEntry)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ParameterEntryOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string key = 1;
     /**
      * <code>required string key = 1;</code>
      */
@@ -13957,6 +14000,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getKeyBytes();
 
+    // required string value = 2;
     /**
      * <code>required string value = 2;</code>
      */
@@ -13975,9 +14019,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ParameterEntry}
    */
   public static final class ParameterEntry extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.ParameterEntry)
-      ParameterEntryOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ParameterEntryOrBuilder {
     // Use ParameterEntry.newBuilder() to construct.
     private ParameterEntry(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -14024,15 +14067,13 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              key_ = bs;
+              key_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              value_ = bs;
+              value_ = input.readBytes();
               break;
             }
           }
@@ -14075,6 +14116,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required string key = 1;
     public static final int KEY_FIELD_NUMBER = 1;
     private java.lang.Object key_;
     /**
@@ -14117,6 +14159,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // required string value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
     private java.lang.Object value_;
     /**
@@ -14166,8 +14209,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasKey()) {
         memoizedIsInitialized = 0;
@@ -14289,9 +14331,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ParameterEntry}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.ParameterEntry)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParameterEntryOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParameterEntryOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_descriptor;
@@ -14425,6 +14466,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required string key = 1;
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
@@ -14438,12 +14480,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            key_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          key_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -14501,6 +14540,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required string value = 2;
       private java.lang.Object value_ = "";
       /**
        * <code>required string value = 2;</code>
@@ -14514,12 +14554,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            value_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          value_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -14588,10 +14625,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.ParameterEntry)
   }
 
-  public interface ParametersOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.Parameters)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ParametersOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.ParameterEntry parameter = 1;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.ParameterEntry parameter = 1;</code>
      */
@@ -14620,9 +14657,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Parameters}
    */
   public static final class Parameters extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.Parameters)
-      ParametersOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ParametersOrBuilder {
     // Use Parameters.newBuilder() to construct.
     private Parameters(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -14718,6 +14754,7 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.ParameterEntry parameter = 1;
     public static final int PARAMETER_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParameterEntry> parameter_;
     /**
@@ -14759,8 +14796,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getParameterCount(); i++) {
         if (!getParameter(i).isInitialized()) {
@@ -14873,9 +14909,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Parameters}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.Parameters)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_descriptor;
@@ -15025,6 +15060,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.ParameterEntry parameter = 1;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParameterEntry> parameter_ =
         java.util.Collections.emptyList();
       private void ensureParameterIsMutable() {
@@ -15166,8 +15202,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParameterEntry> values) {
         if (parameterBuilder_ == null) {
           ensureParameterIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, parameter_);
+          super.addAll(values, parameter_);
           onChanged();
         } else {
           parameterBuilder_.addAllMessages(values);
@@ -15276,10 +15311,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.Parameters)
   }
 
-  public interface PartitionOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.Partition)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PartitionOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional int64 create_time = 1;
     /**
      * <code>optional int64 create_time = 1;</code>
      */
@@ -15289,6 +15324,7 @@ public final class HbaseMetastoreProto {
      */
     long getCreateTime();
 
+    // optional int64 last_access_time = 2;
     /**
      * <code>optional int64 last_access_time = 2;</code>
      */
@@ -15298,6 +15334,7 @@ public final class HbaseMetastoreProto {
      */
     long getLastAccessTime();
 
+    // optional string location = 3;
     /**
      * <code>optional string location = 3;</code>
      */
@@ -15312,6 +15349,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getLocationBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 4;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 4;</code>
      *
@@ -15337,6 +15375,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder getSdParametersOrBuilder();
 
+    // required bytes sd_hash = 5;
     /**
      * <code>required bytes sd_hash = 5;</code>
      */
@@ -15346,6 +15385,7 @@ public final class HbaseMetastoreProto {
      */
     com.google.protobuf.ByteString getSdHash();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 6;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 6;</code>
      *
@@ -15375,9 +15415,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Partition}
    */
   public static final class Partition extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.Partition)
-      PartitionOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements PartitionOrBuilder {
     // Use Partition.newBuilder() to construct.
     private Partition(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -15434,9 +15473,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              location_ = bs;
+              location_ = input.readBytes();
               break;
             }
             case 34: {
@@ -15510,6 +15548,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // optional int64 create_time = 1;
     public static final int CREATE_TIME_FIELD_NUMBER = 1;
     private long createTime_;
     /**
@@ -15525,6 +15564,7 @@ public final class HbaseMetastoreProto {
       return createTime_;
     }
 
+    // optional int64 last_access_time = 2;
     public static final int LAST_ACCESS_TIME_FIELD_NUMBER = 2;
     private long lastAccessTime_;
     /**
@@ -15540,6 +15580,7 @@ public final class HbaseMetastoreProto {
       return lastAccessTime_;
     }
 
+    // optional string location = 3;
     public static final int LOCATION_FIELD_NUMBER = 3;
     private java.lang.Object location_;
     /**
@@ -15582,6 +15623,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 4;
     public static final int SD_PARAMETERS_FIELD_NUMBER = 4;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters sdParameters_;
     /**
@@ -15615,6 +15657,7 @@ public final class HbaseMetastoreProto {
       return sdParameters_;
     }
 
+    // required bytes sd_hash = 5;
     public static final int SD_HASH_FIELD_NUMBER = 5;
     private com.google.protobuf.ByteString sdHash_;
     /**
@@ -15630,6 +15673,7 @@ public final class HbaseMetastoreProto {
       return sdHash_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 6;
     public static final int PARAMETERS_FIELD_NUMBER = 6;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_;
     /**
@@ -15674,8 +15718,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasSdHash()) {
         memoizedIsInitialized = 0;
@@ -15833,9 +15876,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Partition}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.Partition)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_descriptor;
@@ -16029,6 +16071,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // optional int64 create_time = 1;
       private long createTime_ ;
       /**
        * <code>optional int64 create_time = 1;</code>
@@ -16061,6 +16104,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 last_access_time = 2;
       private long lastAccessTime_ ;
       /**
        * <code>optional int64 last_access_time = 2;</code>
@@ -16093,6 +16137,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string location = 3;
       private java.lang.Object location_ = "";
       /**
        * <code>optional string location = 3;</code>
@@ -16106,12 +16151,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getLocation() {
         java.lang.Object ref = location_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            location_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          location_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -16169,6 +16211,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 4;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters sdParameters_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder> sdParametersBuilder_;
@@ -16313,7 +16356,7 @@ public final class HbaseMetastoreProto {
         if (sdParametersBuilder_ == null) {
           sdParametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder>(
-                  getSdParameters(),
+                  sdParameters_,
                   getParentForChildren(),
                   isClean());
           sdParameters_ = null;
@@ -16321,6 +16364,7 @@ public final class HbaseMetastoreProto {
         return sdParametersBuilder_;
       }
 
+      // required bytes sd_hash = 5;
       private com.google.protobuf.ByteString sdHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes sd_hash = 5;</code>
@@ -16356,6 +16400,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 6;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder> parametersBuilder_;
@@ -16500,7 +16545,7 @@ public final class HbaseMetastoreProto {
         if (parametersBuilder_ == null) {
           parametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder>(
-                  getParameters(),
+                  parameters_,
                   getParentForChildren(),
                   isClean());
           parameters_ = null;
@@ -16519,10 +16564,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.Partition)
   }
 
-  public interface PrincipalPrivilegeSetEntryOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PrincipalPrivilegeSetEntryOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string principal_name = 1;
     /**
      * <code>required string principal_name = 1;</code>
      */
@@ -16537,6 +16582,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getPrincipalNameBytes();
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo privileges = 2;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo privileges = 2;</code>
      */
@@ -16565,9 +16611,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry}
    */
   public static final class PrincipalPrivilegeSetEntry extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry)
-      PrincipalPrivilegeSetEntryOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements PrincipalPrivilegeSetEntryOrBuilder {
     // Use PrincipalPrivilegeSetEntry.newBuilder() to construct.
     private PrincipalPrivilegeSetEntry(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -16614,9 +16659,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              principalName_ = bs;
+              principalName_ = input.readBytes();
               break;
             }
             case 18: {
@@ -16670,6 +16714,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required string principal_name = 1;
     public static final int PRINCIPAL_NAME_FIELD_NUMBER = 1;
     private java.lang.Object principalName_;
     /**
@@ -16712,6 +16757,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo privileges = 2;
     public static final int PRIVILEGES_FIELD_NUMBER = 2;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrivilegeGrantInfo> privileges_;
     /**
@@ -16754,8 +16800,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasPrincipalName()) {
         memoizedIsInitialized = 0;
@@ -16873,9 +16918,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntryOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntryOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_descriptor;
@@ -17036,6 +17080,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required string principal_name = 1;
       private java.lang.Object principalName_ = "";
       /**
        * <code>required string principal_name = 1;</code>
@@ -17049,12 +17094,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getPrincipalName() {
         java.lang.Object ref = principalName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            principalName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          principalName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -17112,6 +17154,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo privileges = 2;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrivilegeGrantInfo> privileges_ =
         java.util.Collections.emptyList();
       private void ensurePrivilegesIsMutable() {
@@ -17253,8 +17296,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrivilegeGrantInfo> values) {
         if (privilegesBuilder_ == null) {
           ensurePrivilegesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, privileges_);
+          super.addAll(values, privileges_);
           onChanged();
         } else {
           privilegesBuilder_.addAllMessages(values);
@@ -17363,10 +17405,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry)
   }
 
-  public interface PrincipalPrivilegeSetOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PrincipalPrivilegeSetOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry users = 1;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry users = 1;</code>
      */
@@ -17391,6 +17433,7 @@ public final class HbaseMetastoreProto {
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntryOrBuilder getUsersOrBuilder(
         int index);
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry roles = 2;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry roles = 2;</code>
      */
@@ -17419,9 +17462,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet}
    */
   public static final class PrincipalPrivilegeSet extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet)
-      PrincipalPrivilegeSetOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements PrincipalPrivilegeSetOrBuilder {
     // Use PrincipalPrivilegeSet.newBuilder() to construct.
     private PrincipalPrivilegeSet(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -17528,6 +17570,7 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry users = 1;
     public static final int USERS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntry> users_;
     /**
@@ -17563,6 +17606,7 @@ public final class HbaseMetastoreProto {
       return users_.get(index);
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry roles = 2;
     public static final int ROLES_FIELD_NUMBER = 2;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntry> roles_;
     /**
@@ -17605,8 +17649,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getUsersCount(); i++) {
         if (!getUsers(i).isInitialized()) {
@@ -17732,9 +17775,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_descriptor;
@@ -17932,6 +17974,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry users = 1;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntry> users_ =
         java.util.Collections.emptyList();
       private void ensureUsersIsMutable() {
@@ -18073,8 +18116,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntry> values) {
         if (usersBuilder_ == null) {
           ensureUsersIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, users_);
+          super.addAll(values, users_);
           onChanged();
         } else {
           usersBuilder_.addAllMessages(values);
@@ -18172,6 +18214,7 @@ public final class HbaseMetastoreProto {
         return usersBuilder_;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSetEntry roles = 2;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntry> roles_ =
         java.util.Collections.emptyList();
       private void ensureRolesIsMutable() {
@@ -18313,8 +18356,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetEntry> values) {
         if (rolesBuilder_ == null) {
           ensureRolesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, roles_);
+          super.addAll(values, roles_);
           onChanged();
         } else {
           rolesBuilder_.addAllMessages(values);
@@ -18423,10 +18465,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet)
   }
 
-  public interface PrivilegeGrantInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PrivilegeGrantInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string privilege = 1;
     /**
      * <code>optional string privilege = 1;</code>
      */
@@ -18441,6 +18483,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getPrivilegeBytes();
 
+    // optional int64 create_time = 2;
     /**
      * <code>optional int64 create_time = 2;</code>
      */
@@ -18450,6 +18493,7 @@ public final class HbaseMetastoreProto {
      */
     long getCreateTime();
 
+    // optional string grantor = 3;
     /**
      * <code>optional string grantor = 3;</code>
      */
@@ -18464,6 +18508,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getGrantorBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 4;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 4;</code>
      */
@@ -18473,6 +18518,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType getGrantorType();
 
+    // optional bool grant_option = 5;
     /**
      * <code>optional bool grant_option = 5;</code>
      */
@@ -18486,9 +18532,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo}
    */
   public static final class PrivilegeGrantInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo)
-      PrivilegeGrantInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements PrivilegeGrantInfoOrBuilder {
     // Use PrivilegeGrantInfo.newBuilder() to construct.
     private PrivilegeGrantInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -18535,9 +18580,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              privilege_ = bs;
+              privilege_ = input.readBytes();
               break;
             }
             case 16: {
@@ -18546,9 +18590,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              grantor_ = bs;
+              grantor_ = input.readBytes();
               break;
             }
             case 32: {
@@ -18607,6 +18650,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // optional string privilege = 1;
     public static final int PRIVILEGE_FIELD_NUMBER = 1;
     private java.lang.Object privilege_;
     /**
@@ -18649,6 +18693,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional int64 create_time = 2;
     public static final int CREATE_TIME_FIELD_NUMBER = 2;
     private long createTime_;
     /**
@@ -18664,6 +18709,7 @@ public final class HbaseMetastoreProto {
       return createTime_;
     }
 
+    // optional string grantor = 3;
     public static final int GRANTOR_FIELD_NUMBER = 3;
     private java.lang.Object grantor_;
     /**
@@ -18706,6 +18752,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 4;
     public static final int GRANTOR_TYPE_FIELD_NUMBER = 4;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType grantorType_;
     /**
@@ -18721,6 +18768,7 @@ public final class HbaseMetastoreProto {
       return grantorType_;
     }
 
+    // optional bool grant_option = 5;
     public static final int GRANT_OPTION_FIELD_NUMBER = 5;
     private boolean grantOption_;
     /**
@@ -18746,8 +18794,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -18882,9 +18929,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrivilegeGrantInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrivilegeGrantInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_descriptor;
@@ -19037,6 +19083,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // optional string privilege = 1;
       private java.lang.Object privilege_ = "";
       /**
        * <code>optional string privilege = 1;</code>
@@ -19050,12 +19097,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getPrivilege() {
         java.lang.Object ref = privilege_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            privilege_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          privilege_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -19113,6 +19157,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 create_time = 2;
       private long createTime_ ;
       /**
        * <code>optional int64 create_time = 2;</code>
@@ -19145,6 +19190,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string grantor = 3;
       private java.lang.Object grantor_ = "";
       /**
        * <code>optional string grantor = 3;</code>
@@ -19158,12 +19204,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getGrantor() {
         java.lang.Object ref = grantor_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            grantor_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          grantor_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -19221,6 +19264,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 4;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType grantorType_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType.USER;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 4;</code>
@@ -19256,6 +19300,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional bool grant_option = 5;
       private boolean grantOption_ ;
       /**
        * <code>optional bool grant_option = 5;</code>
@@ -19299,10 +19344,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.PrivilegeGrantInfo)
   }
 
-  public interface RoleGrantInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RoleGrantInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string principal_name = 1;
     /**
      * <code>required string principal_name = 1;</code>
      */
@@ -19317,6 +19362,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getPrincipalNameBytes();
 
+    // required .org.apache.hadoop.hive.metastore.hbase.PrincipalType principal_type = 2;
     /**
      * <code>required .org.apache.hadoop.hive.metastore.hbase.PrincipalType principal_type = 2;</code>
      */
@@ -19326,6 +19372,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType getPrincipalType();
 
+    // optional int64 add_time = 3;
     /**
      * <code>optional int64 add_time = 3;</code>
      */
@@ -19335,6 +19382,7 @@ public final class HbaseMetastoreProto {
      */
     long getAddTime();
 
+    // optional string grantor = 4;
     /**
      * <code>optional string grantor = 4;</code>
      */
@@ -19349,6 +19397,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getGrantorBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 5;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 5;</code>
      */
@@ -19358,6 +19407,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType getGrantorType();
 
+    // optional bool grant_option = 6;
     /**
      * <code>optional bool grant_option = 6;</code>
      */
@@ -19371,9 +19421,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo}
    */
   public static final class RoleGrantInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo)
-      RoleGrantInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RoleGrantInfoOrBuilder {
     // Use RoleGrantInfo.newBuilder() to construct.
     private RoleGrantInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -19420,9 +19469,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              principalName_ = bs;
+              principalName_ = input.readBytes();
               break;
             }
             case 16: {
@@ -19442,9 +19490,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              grantor_ = bs;
+              grantor_ = input.readBytes();
               break;
             }
             case 40: {
@@ -19503,6 +19550,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required string principal_name = 1;
     public static final int PRINCIPAL_NAME_FIELD_NUMBER = 1;
     private java.lang.Object principalName_;
     /**
@@ -19545,6 +19593,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // required .org.apache.hadoop.hive.metastore.hbase.PrincipalType principal_type = 2;
     public static final int PRINCIPAL_TYPE_FIELD_NUMBER = 2;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType principalType_;
     /**
@@ -19560,6 +19609,7 @@ public final class HbaseMetastoreProto {
       return principalType_;
     }
 
+    // optional int64 add_time = 3;
     public static final int ADD_TIME_FIELD_NUMBER = 3;
     private long addTime_;
     /**
@@ -19575,6 +19625,7 @@ public final class HbaseMetastoreProto {
       return addTime_;
     }
 
+    // optional string grantor = 4;
     public static final int GRANTOR_FIELD_NUMBER = 4;
     private java.lang.Object grantor_;
     /**
@@ -19617,6 +19668,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 5;
     public static final int GRANTOR_TYPE_FIELD_NUMBER = 5;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType grantorType_;
     /**
@@ -19632,6 +19684,7 @@ public final class HbaseMetastoreProto {
       return grantorType_;
     }
 
+    // optional bool grant_option = 6;
     public static final int GRANT_OPTION_FIELD_NUMBER = 6;
     private boolean grantOption_;
     /**
@@ -19658,8 +19711,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasPrincipalName()) {
         memoizedIsInitialized = 0;
@@ -19809,9 +19861,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleGrantInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleGrantInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_descriptor;
@@ -19981,6 +20032,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required string principal_name = 1;
       private java.lang.Object principalName_ = "";
       /**
        * <code>required string principal_name = 1;</code>
@@ -19994,12 +20046,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getPrincipalName() {
         java.lang.Object ref = principalName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            principalName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          principalName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -20057,6 +20106,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required .org.apache.hadoop.hive.metastore.hbase.PrincipalType principal_type = 2;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType principalType_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType.USER;
       /**
        * <code>required .org.apache.hadoop.hive.metastore.hbase.PrincipalType principal_type = 2;</code>
@@ -20092,6 +20142,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 add_time = 3;
       private long addTime_ ;
       /**
        * <code>optional int64 add_time = 3;</code>
@@ -20124,6 +20175,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string grantor = 4;
       private java.lang.Object grantor_ = "";
       /**
        * <code>optional string grantor = 4;</code>
@@ -20137,12 +20189,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getGrantor() {
         java.lang.Object ref = grantor_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            grantor_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          grantor_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -20200,6 +20249,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 5;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType grantorType_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalType.USER;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalType grantor_type = 5;</code>
@@ -20235,6 +20285,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional bool grant_option = 6;
       private boolean grantOption_ ;
       /**
        * <code>optional bool grant_option = 6;</code>
@@ -20278,10 +20329,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo)
   }
 
-  public interface RoleGrantInfoListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfoList)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RoleGrantInfoListOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo grant_info = 1;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo grant_info = 1;</code>
      */
@@ -20310,9 +20361,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.RoleGrantInfoList}
    */
   public static final class RoleGrantInfoList extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfoList)
-      RoleGrantInfoListOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RoleGrantInfoListOrBuilder {
     // Use RoleGrantInfoList.newBuilder() to construct.
     private RoleGrantInfoList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -20408,6 +20458,7 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo grant_info = 1;
     public static final int GRANT_INFO_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleGrantInfo> grantInfo_;
     /**
@@ -20449,8 +20500,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getGrantInfoCount(); i++) {
         if (!getGrantInfo(i).isInitialized()) {
@@ -20563,9 +20613,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.RoleGrantInfoList}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfoList)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleGrantInfoListOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleGrantInfoListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_descriptor;
@@ -20715,6 +20764,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.RoleGrantInfo grant_info = 1;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleGrantInfo> grantInfo_ =
         java.util.Collections.emptyList();
       private void ensureGrantInfoIsMutable() {
@@ -20856,8 +20906,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleGrantInfo> values) {
         if (grantInfoBuilder_ == null) {
           ensureGrantInfoIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, grantInfo_);
+          super.addAll(values, grantInfo_);
           onChanged();
         } else {
           grantInfoBuilder_.addAllMessages(values);
@@ -20966,15 +21015,15 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.RoleGrantInfoList)
   }
 
-  public interface RoleListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.RoleList)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RoleListOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated string role = 1;
     /**
      * <code>repeated string role = 1;</code>
      */
-    com.google.protobuf.ProtocolStringList
-        getRoleList();
+    java.util.List<java.lang.String>
+    getRoleList();
     /**
      * <code>repeated string role = 1;</code>
      */
@@ -20993,9 +21042,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.RoleList}
    */
   public static final class RoleList extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.RoleList)
-      RoleListOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RoleListOrBuilder {
     // Use RoleList.newBuilder() to construct.
     private RoleList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -21042,12 +21090,11 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 role_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000001;
               }
-              role_.add(bs);
+              role_.add(input.readBytes());
               break;
             }
           }
@@ -21059,7 +21106,7 @@ public final class HbaseMetastoreProto {
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          role_ = role_.getUnmodifiableView();
+          role_ = new com.google.protobuf.UnmodifiableLazyStringList(role_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -21092,12 +21139,13 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
+    // repeated string role = 1;
     public static final int ROLE_FIELD_NUMBER = 1;
     private com.google.protobuf.LazyStringList role_;
     /**
      * <code>repeated string role = 1;</code>
      */
-    public com.google.protobuf.ProtocolStringList
+    public java.util.List<java.lang.String>
         getRoleList() {
       return role_;
     }
@@ -21127,8 +21175,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -21240,9 +21287,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.RoleList}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.RoleList)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleListOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_descriptor;
@@ -21305,7 +21351,8 @@ public final class HbaseMetastoreProto {
         org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleList result = new org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleList(this);
         int from_bitField0_ = bitField0_;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          role_ = role_.getUnmodifiableView();
+          role_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              role_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.role_ = role_;
@@ -21361,6 +21408,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // repeated string role = 1;
       private com.google.protobuf.LazyStringList role_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureRoleIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -21371,9 +21419,9 @@ public final class HbaseMetastoreProto {
       /**
        * <code>repeated string role = 1;</code>
        */
-      public com.google.protobuf.ProtocolStringList
+      public java.util.List<java.lang.String>
           getRoleList() {
-        return role_.getUnmodifiableView();
+        return java.util.Collections.unmodifiableList(role_);
       }
       /**
        * <code>repeated string role = 1;</code>
@@ -21426,8 +21474,7 @@ public final class HbaseMetastoreProto {
       public Builder addAllRole(
           java.lang.Iterable<java.lang.String> values) {
         ensureRoleIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, role_);
+        super.addAll(values, role_);
         onChanged();
         return this;
       }
@@ -21465,10 +21512,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.RoleList)
   }
 
-  public interface RoleOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.Role)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RoleOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional int64 create_time = 1;
     /**
      * <code>optional int64 create_time = 1;</code>
      */
@@ -21478,6 +21525,7 @@ public final class HbaseMetastoreProto {
      */
     long getCreateTime();
 
+    // optional string owner_name = 2;
     /**
      * <code>optional string owner_name = 2;</code>
      */
@@ -21496,9 +21544,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Role}
    */
   public static final class Role extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.Role)
-      RoleOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements RoleOrBuilder {
     // Use Role.newBuilder() to construct.
     private Role(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -21550,9 +21597,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              ownerName_ = bs;
+              ownerName_ = input.readBytes();
               break;
             }
           }
@@ -21595,6 +21641,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // optional int64 create_time = 1;
     public static final int CREATE_TIME_FIELD_NUMBER = 1;
     private long createTime_;
     /**
@@ -21610,6 +21657,7 @@ public final class HbaseMetastoreProto {
       return createTime_;
     }
 
+    // optional string owner_name = 2;
     public static final int OWNER_NAME_FIELD_NUMBER = 2;
     private java.lang.Object ownerName_;
     /**
@@ -21659,8 +21707,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -21774,9 +21821,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Role}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.Role)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.RoleOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_Role_descriptor;
@@ -21900,6 +21946,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // optional int64 create_time = 1;
       private long createTime_ ;
       /**
        * <code>optional int64 create_time = 1;</code>
@@ -21932,6 +21979,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string owner_name = 2;
       private java.lang.Object ownerName_ = "";
       /**
        * <code>optional string owner_name = 2;</code>
@@ -21945,12 +21993,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getOwnerName() {
         java.lang.Object ref = ownerName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            ownerName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          ownerName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -22019,10 +22064,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.Role)
   }
 
-  public interface StorageDescriptorOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor)
-      com.google.protobuf.MessageOrBuilder {
+  public interface StorageDescriptorOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema cols = 1;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema cols = 1;</code>
      */
@@ -22047,6 +22092,7 @@ public final class HbaseMetastoreProto {
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchemaOrBuilder getColsOrBuilder(
         int index);
 
+    // optional string input_format = 2;
     /**
      * <code>optional string input_format = 2;</code>
      */
@@ -22061,6 +22107,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getInputFormatBytes();
 
+    // optional string output_format = 3;
     /**
      * <code>optional string output_format = 3;</code>
      */
@@ -22075,6 +22122,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getOutputFormatBytes();
 
+    // optional bool is_compressed = 4;
     /**
      * <code>optional bool is_compressed = 4;</code>
      */
@@ -22084,6 +22132,7 @@ public final class HbaseMetastoreProto {
      */
     boolean getIsCompressed();
 
+    // optional sint32 num_buckets = 5;
     /**
      * <code>optional sint32 num_buckets = 5;</code>
      */
@@ -22093,6 +22142,7 @@ public final class HbaseMetastoreProto {
      */
     int getNumBuckets();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo serde_info = 6;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo serde_info = 6;</code>
      */
@@ -22106,11 +22156,12 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfoOrBuilder getSerdeInfoOrBuilder();
 
+    // repeated string bucket_cols = 7;
     /**
      * <code>repeated string bucket_cols = 7;</code>
      */
-    com.google.protobuf.ProtocolStringList
-        getBucketColsList();
+    java.util.List<java.lang.String>
+    getBucketColsList();
     /**
      * <code>repeated string bucket_cols = 7;</code>
      */
@@ -22125,6 +22176,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getBucketColsBytes(int index);
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order sort_cols = 8;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order sort_cols = 8;</code>
      */
@@ -22149,6 +22201,7 @@ public final class HbaseMetastoreProto {
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.OrderOrBuilder getSortColsOrBuilder(
         int index);
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo skewed_info = 9;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo skewed_info = 9;</code>
      */
@@ -22162,6 +22215,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfoOrBuilder getSkewedInfoOrBuilder();
 
+    // optional bool stored_as_sub_directories = 10;
     /**
      * <code>optional bool stored_as_sub_directories = 10;</code>
      */
@@ -22175,9 +22229,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor}
    */
   public static final class StorageDescriptor extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor)
-      StorageDescriptorOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements StorageDescriptorOrBuilder {
     // Use StorageDescriptor.newBuilder() to construct.
     private StorageDescriptor(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -22232,15 +22285,13 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              inputFormat_ = bs;
+              inputFormat_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              outputFormat_ = bs;
+              outputFormat_ = input.readBytes();
               break;
             }
             case 32: {
@@ -22267,12 +22318,11 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 58: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
                 bucketCols_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000040;
               }
-              bucketCols_.add(bs);
+              bucketCols_.add(input.readBytes());
               break;
             }
             case 66: {
@@ -22313,7 +22363,7 @@ public final class HbaseMetastoreProto {
           cols_ = java.util.Collections.unmodifiableList(cols_);
         }
         if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
-          bucketCols_ = bucketCols_.getUnmodifiableView();
+          bucketCols_ = new com.google.protobuf.UnmodifiableLazyStringList(bucketCols_);
         }
         if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
           sortCols_ = java.util.Collections.unmodifiableList(sortCols_);
@@ -22349,10 +22399,10 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
-    public interface OrderOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order)
-        com.google.protobuf.MessageOrBuilder {
+    public interface OrderOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // required string column_name = 1;
       /**
        * <code>required string column_name = 1;</code>
        */
@@ -22367,6 +22417,7 @@ public final class HbaseMetastoreProto {
       com.google.protobuf.ByteString
           getColumnNameBytes();
 
+      // optional sint32 order = 2 [default = 1];
       /**
        * <code>optional sint32 order = 2 [default = 1];</code>
        */
@@ -22380,9 +22431,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order}
      */
     public static final class Order extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order)
-        OrderOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements OrderOrBuilder {
       // Use Order.newBuilder() to construct.
       private Order(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -22429,9 +22479,8 @@ public final class HbaseMetastoreProto {
                 break;
               }
               case 10: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000001;
-                columnName_ = bs;
+                columnName_ = input.readBytes();
                 break;
               }
               case 16: {
@@ -22479,6 +22528,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // required string column_name = 1;
       public static final int COLUMN_NAME_FIELD_NUMBER = 1;
       private java.lang.Object columnName_;
       /**
@@ -22521,6 +22571,7 @@ public final class HbaseMetastoreProto {
         }
       }
 
+      // optional sint32 order = 2 [default = 1];
       public static final int ORDER_FIELD_NUMBER = 2;
       private int order_;
       /**
@@ -22543,8 +22594,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (!hasColumnName()) {
           memoizedIsInitialized = 0;
@@ -22662,9 +22712,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.OrderOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.OrderOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_descriptor;
@@ -22792,6 +22841,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // required string column_name = 1;
         private java.lang.Object columnName_ = "";
         /**
          * <code>required string column_name = 1;</code>
@@ -22805,12 +22855,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getColumnName() {
           java.lang.Object ref = columnName_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              columnName_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            columnName_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -22868,6 +22915,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional sint32 order = 2 [default = 1];
         private int order_ = 1;
         /**
          * <code>optional sint32 order = 2 [default = 1];</code>
@@ -22911,10 +22959,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order)
     }
 
-    public interface SerDeInfoOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo)
-        com.google.protobuf.MessageOrBuilder {
+    public interface SerDeInfoOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // optional string name = 1;
       /**
        * <code>optional string name = 1;</code>
        */
@@ -22929,6 +22977,7 @@ public final class HbaseMetastoreProto {
       com.google.protobuf.ByteString
           getNameBytes();
 
+      // optional string serialization_lib = 2;
       /**
        * <code>optional string serialization_lib = 2;</code>
        */
@@ -22943,6 +22992,7 @@ public final class HbaseMetastoreProto {
       com.google.protobuf.ByteString
           getSerializationLibBytes();
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;</code>
        */
@@ -22960,9 +23010,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo}
      */
     public static final class SerDeInfo extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo)
-        SerDeInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements SerDeInfoOrBuilder {
       // Use SerDeInfo.newBuilder() to construct.
       private SerDeInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -23009,15 +23058,13 @@ public final class HbaseMetastoreProto {
                 break;
               }
               case 10: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000001;
-                name_ = bs;
+                name_ = input.readBytes();
                 break;
               }
               case 18: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000002;
-                serializationLib_ = bs;
+                serializationLib_ = input.readBytes();
                 break;
               }
               case 26: {
@@ -23073,6 +23120,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // optional string name = 1;
       public static final int NAME_FIELD_NUMBER = 1;
       private java.lang.Object name_;
       /**
@@ -23115,6 +23163,7 @@ public final class HbaseMetastoreProto {
         }
       }
 
+      // optional string serialization_lib = 2;
       public static final int SERIALIZATION_LIB_FIELD_NUMBER = 2;
       private java.lang.Object serializationLib_;
       /**
@@ -23157,6 +23206,7 @@ public final class HbaseMetastoreProto {
         }
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;
       public static final int PARAMETERS_FIELD_NUMBER = 3;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_;
       /**
@@ -23186,8 +23236,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (hasParameters()) {
           if (!getParameters().isInitialized()) {
@@ -23314,9 +23363,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfoOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfoOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_descriptor;
@@ -23466,6 +23514,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // optional string name = 1;
         private java.lang.Object name_ = "";
         /**
          * <code>optional string name = 1;</code>
@@ -23479,12 +23528,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getName() {
           java.lang.Object ref = name_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              name_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            name_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -23542,6 +23588,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional string serialization_lib = 2;
         private java.lang.Object serializationLib_ = "";
         /**
          * <code>optional string serialization_lib = 2;</code>
@@ -23555,12 +23602,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getSerializationLib() {
           java.lang.Object ref = serializationLib_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              serializationLib_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            serializationLib_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -23618,6 +23662,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 3;
         private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder> parametersBuilder_;
@@ -23726,7 +23771,7 @@ public final class HbaseMetastoreProto {
           if (parametersBuilder_ == null) {
             parametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
                 org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder>(
-                    getParameters(),
+                    parameters_,
                     getParentForChildren(),
                     isClean());
             parameters_ = null;
@@ -23745,15 +23790,15 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo)
     }
 
-    public interface SkewedInfoOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo)
-        com.google.protobuf.MessageOrBuilder {
+    public interface SkewedInfoOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // repeated string skewed_col_names = 1;
       /**
        * <code>repeated string skewed_col_names = 1;</code>
        */
-      com.google.protobuf.ProtocolStringList
-          getSkewedColNamesList();
+      java.util.List<java.lang.String>
+      getSkewedColNamesList();
       /**
        * <code>repeated string skewed_col_names = 1;</code>
        */
@@ -23768,6 +23813,7 @@ public final class HbaseMetastoreProto {
       com.google.protobuf.ByteString
           getSkewedColNamesBytes(int index);
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList skewed_col_values = 2;
       /**
        * <code>repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList skewed_col_values = 2;</code>
        */
@@ -23792,6 +23838,7 @@ public final class HbaseMetastoreProto {
       org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueListOrBuilder getSkewedColValuesOrBuilder(
           int index);
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap skewed_col_value_location_maps = 3;
       /**
        * <code>repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap skewed_col_value_location_maps = 3;</code>
        */
@@ -23820,9 +23867,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo}
      */
     public static final class SkewedInfo extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo)
-        SkewedInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements SkewedInfoOrBuilder {
       // Use SkewedInfo.newBuilder() to construct.
       private SkewedInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -23869,12 +23915,11 @@ public final class HbaseMetastoreProto {
                 break;
               }
               case 10: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                   skewedColNames_ = new com.google.protobuf.LazyStringArrayList();
                   mutable_bitField0_ |= 0x00000001;
                 }
-                skewedColNames_.add(bs);
+                skewedColNames_.add(input.readBytes());
                 break;
               }
               case 18: {
@@ -23902,7 +23947,7 @@ public final class HbaseMetastoreProto {
               e.getMessage()).setUnfinishedMessage(this);
         } finally {
           if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-            skewedColNames_ = skewedColNames_.getUnmodifiableView();
+            skewedColNames_ = new com.google.protobuf.UnmodifiableLazyStringList(skewedColNames_);
           }
           if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
             skewedColValues_ = java.util.Collections.unmodifiableList(skewedColValues_);
@@ -23941,15 +23986,15 @@ public final class HbaseMetastoreProto {
         return PARSER;
       }
 
-      public interface SkewedColValueListOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList)
-          com.google.protobuf.MessageOrBuilder {
+      public interface SkewedColValueListOrBuilder
+          extends com.google.protobuf.MessageOrBuilder {
 
+        // repeated string skewed_col_value = 1;
         /**
          * <code>repeated string skewed_col_value = 1;</code>
          */
-        com.google.protobuf.ProtocolStringList
-            getSkewedColValueList();
+        java.util.List<java.lang.String>
+        getSkewedColValueList();
         /**
          * <code>repeated string skewed_col_value = 1;</code>
          */
@@ -23968,9 +24013,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList}
        */
       public static final class SkewedColValueList extends
-          com.google.protobuf.GeneratedMessage implements
-          // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList)
-          SkewedColValueListOrBuilder {
+          com.google.protobuf.GeneratedMessage
+          implements SkewedColValueListOrBuilder {
         // Use SkewedColValueList.newBuilder() to construct.
         private SkewedColValueList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
           super(builder);
@@ -24017,12 +24061,11 @@ public final class HbaseMetastoreProto {
                   break;
                 }
                 case 10: {
-                  com.google.protobuf.ByteString bs = input.readBytes();
                   if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                     skewedColValue_ = new com.google.protobuf.LazyStringArrayList();
                     mutable_bitField0_ |= 0x00000001;
                   }
-                  skewedColValue_.add(bs);
+                  skewedColValue_.add(input.readBytes());
                   break;
                 }
               }
@@ -24034,7 +24077,7 @@ public final class HbaseMetastoreProto {
                 e.getMessage()).setUnfinishedMessage(this);
           } finally {
             if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-              skewedColValue_ = skewedColValue_.getUnmodifiableView();
+              skewedColValue_ = new com.google.protobuf.UnmodifiableLazyStringList(skewedColValue_);
             }
             this.unknownFields = unknownFields.build();
             makeExtensionsImmutable();
@@ -24067,12 +24110,13 @@ public final class HbaseMetastoreProto {
           return PARSER;
         }
 
+        // repeated string skewed_col_value = 1;
         public static final int SKEWED_COL_VALUE_FIELD_NUMBER = 1;
         private com.google.protobuf.LazyStringList skewedColValue_;
         /**
          * <code>repeated string skewed_col_value = 1;</code>
          */
-        public com.google.protobuf.ProtocolStringList
+        public java.util.List<java.lang.String>
             getSkewedColValueList() {
           return skewedColValue_;
         }
@@ -24102,8 +24146,7 @@ public final class HbaseMetastoreProto {
         private byte memoizedIsInitialized = -1;
         public final boolean isInitialized() {
           byte isInitialized = memoizedIsInitialized;
-          if (isInitialized == 1) return true;
-          if (isInitialized == 0) return false;
+          if (isInitialized != -1) return isInitialized == 1;
 
           memoizedIsInitialized = 1;
           return true;
@@ -24215,9 +24258,8 @@ public final class HbaseMetastoreProto {
          * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList}
          */
         public static final class Builder extends
-            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList)
-            org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueListOrBuilder {
+            com.google.protobuf.GeneratedMessage.Builder<Builder>
+           implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueListOrBuilder {
           public static final com.google.protobuf.Descriptors.Descriptor
               getDescriptor() {
             return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_descriptor;
@@ -24280,7 +24322,8 @@ public final class HbaseMetastoreProto {
             org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueList result = new org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueList(this);
             int from_bitField0_ = bitField0_;
             if (((bitField0_ & 0x00000001) == 0x00000001)) {
-              skewedColValue_ = skewedColValue_.getUnmodifiableView();
+              skewedColValue_ = new com.google.protobuf.UnmodifiableLazyStringList(
+                  skewedColValue_);
               bitField0_ = (bitField0_ & ~0x00000001);
             }
             result.skewedColValue_ = skewedColValue_;
@@ -24336,6 +24379,7 @@ public final class HbaseMetastoreProto {
           }
           private int bitField0_;
 
+          // repeated string skewed_col_value = 1;
           private com.google.protobuf.LazyStringList skewedColValue_ = com.google.protobuf.LazyStringArrayList.EMPTY;
           private void ensureSkewedColValueIsMutable() {
             if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -24346,9 +24390,9 @@ public final class HbaseMetastoreProto {
           /**
            * <code>repeated string skewed_col_value = 1;</code>
            */
-          public com.google.protobuf.ProtocolStringList
+          public java.util.List<java.lang.String>
               getSkewedColValueList() {
-            return skewedColValue_.getUnmodifiableView();
+            return java.util.Collections.unmodifiableList(skewedColValue_);
           }
           /**
            * <code>repeated string skewed_col_value = 1;</code>
@@ -24401,8 +24445,7 @@ public final class HbaseMetastoreProto {
           public Builder addAllSkewedColValue(
               java.lang.Iterable<java.lang.String> values) {
             ensureSkewedColValueIsMutable();
-            com.google.protobuf.AbstractMessageLite.Builder.addAll(
-                values, skewedColValue_);
+            super.addAll(values, skewedColValue_);
             onChanged();
             return this;
           }
@@ -24440,15 +24483,15 @@ public final class HbaseMetastoreProto {
         // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList)
       }
 
-      public interface SkewedColValueLocationMapOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap)
-          com.google.protobuf.MessageOrBuilder {
+      public interface SkewedColValueLocationMapOrBuilder
+          extends com.google.protobuf.MessageOrBuilder {
 
+        // repeated string key = 1;
         /**
          * <code>repeated string key = 1;</code>
          */
-        com.google.protobuf.ProtocolStringList
-            getKeyList();
+        java.util.List<java.lang.String>
+        getKeyList();
         /**
          * <code>repeated string key = 1;</code>
          */
@@ -24463,6 +24506,7 @@ public final class HbaseMetastoreProto {
         com.google.protobuf.ByteString
             getKeyBytes(int index);
 
+        // required string value = 2;
         /**
          * <code>required string value = 2;</code>
          */
@@ -24481,9 +24525,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap}
        */
       public static final class SkewedColValueLocationMap extends
-          com.google.protobuf.GeneratedMessage implements
-          // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap)
-          SkewedColValueLocationMapOrBuilder {
+          com.google.protobuf.GeneratedMessage
+          implements SkewedColValueLocationMapOrBuilder {
         // Use SkewedColValueLocationMap.newBuilder() to construct.
         private SkewedColValueLocationMap(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
           super(builder);
@@ -24530,18 +24573,16 @@ public final class HbaseMetastoreProto {
                   break;
                 }
                 case 10: {
-                  com.google.protobuf.ByteString bs = input.readBytes();
                   if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                     key_ = new com.google.protobuf.LazyStringArrayList();
                     mutable_bitField0_ |= 0x00000001;
                   }
-                  key_.add(bs);
+                  key_.add(input.readBytes());
                   break;
                 }
                 case 18: {
-                  com.google.protobuf.ByteString bs = input.readBytes();
                   bitField0_ |= 0x00000001;
-                  value_ = bs;
+                  value_ = input.readBytes();
                   break;
                 }
               }
@@ -24553,7 +24594,7 @@ public final class HbaseMetastoreProto {
                 e.getMessage()).setUnfinishedMessage(this);
           } finally {
             if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-              key_ = key_.getUnmodifiableView();
+              key_ = new com.google.protobuf.UnmodifiableLazyStringList(key_);
             }
             this.unknownFields = unknownFields.build();
             makeExtensionsImmutable();
@@ -24587,12 +24628,13 @@ public final class HbaseMetastoreProto {
         }
 
         private int bitField0_;
+        // repeated string key = 1;
         public static final int KEY_FIELD_NUMBER = 1;
         private com.google.protobuf.LazyStringList key_;
         /**
          * <code>repeated string key = 1;</code>
          */
-        public com.google.protobuf.ProtocolStringList
+        public java.util.List<java.lang.String>
             getKeyList() {
           return key_;
         }
@@ -24616,6 +24658,7 @@ public final class HbaseMetastoreProto {
           return key_.getByteString(index);
         }
 
+        // required string value = 2;
         public static final int VALUE_FIELD_NUMBER = 2;
         private java.lang.Object value_;
         /**
@@ -24665,8 +24708,7 @@ public final class HbaseMetastoreProto {
         private byte memoizedIsInitialized = -1;
         public final boolean isInitialized() {
           byte isInitialized = memoizedIsInitialized;
-          if (isInitialized == 1) return true;
-          if (isInitialized == 0) return false;
+          if (isInitialized != -1) return isInitialized == 1;
 
           if (!hasValue()) {
             memoizedIsInitialized = 0;
@@ -24789,9 +24831,8 @@ public final class HbaseMetastoreProto {
          * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap}
          */
         public static final class Builder extends
-            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap)
-            org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueLocationMapOrBuilder {
+            com.google.protobuf.GeneratedMessage.Builder<Builder>
+           implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueLocationMapOrBuilder {
           public static final com.google.protobuf.Descriptors.Descriptor
               getDescriptor() {
             return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_descriptor;
@@ -24857,7 +24898,8 @@ public final class HbaseMetastoreProto {
             int from_bitField0_ = bitField0_;
             int to_bitField0_ = 0;
             if (((bitField0_ & 0x00000001) == 0x00000001)) {
-              key_ = key_.getUnmodifiableView();
+              key_ = new com.google.protobuf.UnmodifiableLazyStringList(
+                  key_);
               bitField0_ = (bitField0_ & ~0x00000001);
             }
             result.key_ = key_;
@@ -24927,6 +24969,7 @@ public final class HbaseMetastoreProto {
           }
           private int bitField0_;
 
+          // repeated string key = 1;
           private com.google.protobuf.LazyStringList key_ = com.google.protobuf.LazyStringArrayList.EMPTY;
           private void ensureKeyIsMutable() {
             if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -24937,9 +24980,9 @@ public final class HbaseMetastoreProto {
           /**
            * <code>repeated string key = 1;</code>
            */
-          public com.google.protobuf.ProtocolStringList
+          public java.util.List<java.lang.String>
               getKeyList() {
-            return key_.getUnmodifiableView();
+            return java.util.Collections.unmodifiableList(key_);
           }
           /**
            * <code>repeated string key = 1;</code>
@@ -24992,8 +25035,7 @@ public final class HbaseMetastoreProto {
           public Builder addAllKey(
               java.lang.Iterable<java.lang.String> values) {
             ensureKeyIsMutable();
-            com.google.protobuf.AbstractMessageLite.Builder.addAll(
-                values, key_);
+            super.addAll(values, key_);
             onChanged();
             return this;
           }
@@ -25020,6 +25062,7 @@ public final class HbaseMetastoreProto {
             return this;
           }
 
+          // required string value = 2;
           private java.lang.Object value_ = "";
           /**
            * <code>required string value = 2;</code>
@@ -25033,12 +25076,9 @@ public final class HbaseMetastoreProto {
           public java.lang.String getValue() {
             java.lang.Object ref = value_;
             if (!(ref instanceof java.lang.String)) {
-              com.google.protobuf.ByteString bs =
-                  (com.google.protobuf.ByteString) ref;
-              java.lang.String s = bs.toStringUtf8();
-              if (bs.isValidUtf8()) {
-                value_ = s;
-              }
+              java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                  .toStringUtf8();
+              value_ = s;
               return s;
             } else {
               return (java.lang.String) ref;
@@ -25107,12 +25147,13 @@ public final class HbaseMetastoreProto {
         // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap)
       }
 
+      // repeated string skewed_col_names = 1;
       public static final int SKEWED_COL_NAMES_FIELD_NUMBER = 1;
       private com.google.protobuf.LazyStringList skewedColNames_;
       /**
        * <code>repeated string skewed_col_names = 1;</code>
        */
-      public com.google.protobuf.ProtocolStringList
+      public java.util.List<java.lang.String>
           getSkewedColNamesList() {
         return skewedColNames_;
       }
@@ -25136,6 +25177,7 @@ public final class HbaseMetastoreProto {
         return skewedColNames_.getByteString(index);
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList skewed_col_values = 2;
       public static final int SKEWED_COL_VALUES_FIELD_NUMBER = 2;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueList> skewedColValues_;
       /**
@@ -25171,6 +25213,7 @@ public final class HbaseMetastoreProto {
         return skewedColValues_.get(index);
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap skewed_col_value_location_maps = 3;
       public static final int SKEWED_COL_VALUE_LOCATION_MAPS_FIELD_NUMBER = 3;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap> skewedColValueLocationMaps_;
       /**
@@ -25214,8 +25257,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         for (int i = 0; i < getSkewedColValueLocationMapsCount(); i++) {
           if (!getSkewedColValueLocationMaps(i).isInitialized()) {
@@ -25347,9 +25389,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfoOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfoOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor;
@@ -25426,7 +25467,8 @@ public final class HbaseMetastoreProto {
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo result = new org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo(this);
           int from_bitField0_ = bitField0_;
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            skewedColNames_ = skewedColNames_.getUnmodifiableView();
+            skewedColNames_ = new com.google.protobuf.UnmodifiableLazyStringList(
+                skewedColNames_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.skewedColNames_ = skewedColNames_;
@@ -25558,6 +25600,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // repeated string skewed_col_names = 1;
         private com.google.protobuf.LazyStringList skewedColNames_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         private void ensureSkewedColNamesIsMutable() {
           if (!((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -25568,9 +25611,9 @@ public final class HbaseMetastoreProto {
         /**
          * <code>repeated string skewed_col_names = 1;</code>
          */
-        public com.google.protobuf.ProtocolStringList
+        public java.util.List<java.lang.String>
             getSkewedColNamesList() {
-          return skewedColNames_.getUnmodifiableView();
+          return java.util.Collections.unmodifiableList(skewedColNames_);
         }
         /**
          * <code>repeated string skewed_col_names = 1;</code>
@@ -25623,8 +25666,7 @@ public final class HbaseMetastoreProto {
         public Builder addAllSkewedColNames(
             java.lang.Iterable<java.lang.String> values) {
           ensureSkewedColNamesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, skewedColNames_);
+          super.addAll(values, skewedColNames_);
           onChanged();
           return this;
         }
@@ -25651,6 +25693,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueList skewed_col_values = 2;
         private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueList> skewedColValues_ =
           java.util.Collections.emptyList();
         private void ensureSkewedColValuesIsMutable() {
@@ -25792,8 +25835,7 @@ public final class HbaseMetastoreProto {
             java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueList> values) {
           if (skewedColValuesBuilder_ == null) {
             ensureSkewedColValuesIsMutable();
-            com.google.protobuf.AbstractMessageLite.Builder.addAll(
-                values, skewedColValues_);
+            super.addAll(values, skewedColValues_);
             onChanged();
           } else {
             skewedColValuesBuilder_.addAllMessages(values);
@@ -25891,6 +25933,7 @@ public final class HbaseMetastoreProto {
           return skewedColValuesBuilder_;
         }
 
+        // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap skewed_col_value_location_maps = 3;
         private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap> skewedColValueLocationMaps_ =
           java.util.Collections.emptyList();
         private void ensureSkewedColValueLocationMapsIsMutable() {
@@ -26032,8 +26075,7 @@ public final class HbaseMetastoreProto {
             java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.SkewedColValueLocationMap> values) {
           if (skewedColValueLocationMapsBuilder_ == null) {
             ensureSkewedColValueLocationMapsIsMutable();
-            com.google.protobuf.AbstractMessageLite.Builder.addAll(
-                values, skewedColValueLocationMaps_);
+            super.addAll(values, skewedColValueLocationMaps_);
             onChanged();
           } else {
             skewedColValueLocationMapsBuilder_.addAllMessages(values);
@@ -26143,6 +26185,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema cols = 1;
     public static final int COLS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchema> cols_;
     /**
@@ -26178,6 +26221,7 @@ public final class HbaseMetastoreProto {
       return cols_.get(index);
     }
 
+    // optional string input_format = 2;
     public static final int INPUT_FORMAT_FIELD_NUMBER = 2;
     private java.lang.Object inputFormat_;
     /**
@@ -26220,6 +26264,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional string output_format = 3;
     public static final int OUTPUT_FORMAT_FIELD_NUMBER = 3;
     private java.lang.Object outputFormat_;
     /**
@@ -26262,6 +26307,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional bool is_compressed = 4;
     public static final int IS_COMPRESSED_FIELD_NUMBER = 4;
     private boolean isCompressed_;
     /**
@@ -26277,6 +26323,7 @@ public final class HbaseMetastoreProto {
       return isCompressed_;
     }
 
+    // optional sint32 num_buckets = 5;
     public static final int NUM_BUCKETS_FIELD_NUMBER = 5;
     private int numBuckets_;
     /**
@@ -26292,6 +26339,7 @@ public final class HbaseMetastoreProto {
       return numBuckets_;
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo serde_info = 6;
     public static final int SERDE_INFO_FIELD_NUMBER = 6;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfo serdeInfo_;
     /**
@@ -26313,12 +26361,13 @@ public final class HbaseMetastoreProto {
       return serdeInfo_;
     }
 
+    // repeated string bucket_cols = 7;
     public static final int BUCKET_COLS_FIELD_NUMBER = 7;
     private com.google.protobuf.LazyStringList bucketCols_;
     /**
      * <code>repeated string bucket_cols = 7;</code>
      */
-    public com.google.protobuf.ProtocolStringList
+    public java.util.List<java.lang.String>
         getBucketColsList() {
       return bucketCols_;
     }
@@ -26342,6 +26391,7 @@ public final class HbaseMetastoreProto {
       return bucketCols_.getByteString(index);
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order sort_cols = 8;
     public static final int SORT_COLS_FIELD_NUMBER = 8;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.Order> sortCols_;
     /**
@@ -26377,6 +26427,7 @@ public final class HbaseMetastoreProto {
       return sortCols_.get(index);
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo skewed_info = 9;
     public static final int SKEWED_INFO_FIELD_NUMBER = 9;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo skewedInfo_;
     /**
@@ -26398,6 +26449,7 @@ public final class HbaseMetastoreProto {
       return skewedInfo_;
     }
 
+    // optional bool stored_as_sub_directories = 10;
     public static final int STORED_AS_SUB_DIRECTORIES_FIELD_NUMBER = 10;
     private boolean storedAsSubDirectories_;
     /**
@@ -26428,8 +26480,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getColsCount(); i++) {
         if (!getCols(i).isInitialized()) {
@@ -26628,9 +26679,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptorOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptorOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor;
@@ -26765,7 +26815,8 @@ public final class HbaseMetastoreProto {
           result.serdeInfo_ = serdeInfoBuilder_.build();
         }
         if (((bitField0_ & 0x00000040) == 0x00000040)) {
-          bucketCols_ = bucketCols_.getUnmodifiableView();
+          bucketCols_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              bucketCols_);
           bitField0_ = (bitField0_ & ~0x00000040);
         }
         result.bucketCols_ = bucketCols_;
@@ -26944,6 +26995,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema cols = 1;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchema> cols_ =
         java.util.Collections.emptyList();
       private void ensureColsIsMutable() {
@@ -27085,8 +27137,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchema> values) {
         if (colsBuilder_ == null) {
           ensureColsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, cols_);
+          super.addAll(values, cols_);
           onChanged();
         } else {
           colsBuilder_.addAllMessages(values);
@@ -27184,6 +27235,7 @@ public final class HbaseMetastoreProto {
         return colsBuilder_;
       }
 
+      // optional string input_format = 2;
       private java.lang.Object inputFormat_ = "";
       /**
        * <code>optional string input_format = 2;</code>
@@ -27197,12 +27249,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getInputFormat() {
         java.lang.Object ref = inputFormat_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            inputFormat_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          inputFormat_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -27260,6 +27309,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string output_format = 3;
       private java.lang.Object outputFormat_ = "";
       /**
        * <code>optional string output_format = 3;</code>
@@ -27273,12 +27323,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getOutputFormat() {
         java.lang.Object ref = outputFormat_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            outputFormat_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          outputFormat_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -27336,6 +27383,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional bool is_compressed = 4;
       private boolean isCompressed_ ;
       /**
        * <code>optional bool is_compressed = 4;</code>
@@ -27368,6 +27416,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional sint32 num_buckets = 5;
       private int numBuckets_ ;
       /**
        * <code>optional sint32 num_buckets = 5;</code>
@@ -27400,6 +27449,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SerDeInfo serde_info = 6;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfo serdeInfo_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfo, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfo.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfoOrBuilder> serdeInfoBuilder_;
@@ -27508,7 +27558,7 @@ public final class HbaseMetastoreProto {
         if (serdeInfoBuilder_ == null) {
           serdeInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfo, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfo.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SerDeInfoOrBuilder>(
-                  getSerdeInfo(),
+                  serdeInfo_,
                   getParentForChildren(),
                   isClean());
           serdeInfo_ = null;
@@ -27516,6 +27566,7 @@ public final class HbaseMetastoreProto {
         return serdeInfoBuilder_;
       }
 
+      // repeated string bucket_cols = 7;
       private com.google.protobuf.LazyStringList bucketCols_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureBucketColsIsMutable() {
         if (!((bitField0_ & 0x00000040) == 0x00000040)) {
@@ -27526,9 +27577,9 @@ public final class HbaseMetastoreProto {
       /**
        * <code>repeated string bucket_cols = 7;</code>
        */
-      public com.google.protobuf.ProtocolStringList
+      public java.util.List<java.lang.String>
           getBucketColsList() {
-        return bucketCols_.getUnmodifiableView();
+        return java.util.Collections.unmodifiableList(bucketCols_);
       }
       /**
        * <code>repeated string bucket_cols = 7;</code>
@@ -27581,8 +27632,7 @@ public final class HbaseMetastoreProto {
       public Builder addAllBucketCols(
           java.lang.Iterable<java.lang.String> values) {
         ensureBucketColsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, bucketCols_);
+        super.addAll(values, bucketCols_);
         onChanged();
         return this;
       }
@@ -27609,6 +27659,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order sort_cols = 8;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.Order> sortCols_ =
         java.util.Collections.emptyList();
       private void ensureSortColsIsMutable() {
@@ -27750,8 +27801,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.Order> values) {
         if (sortColsBuilder_ == null) {
           ensureSortColsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, sortCols_);
+          super.addAll(values, sortCols_);
           onChanged();
         } else {
           sortColsBuilder_.addAllMessages(values);
@@ -27849,6 +27899,7 @@ public final class HbaseMetastoreProto {
         return sortColsBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.SkewedInfo skewed_info = 9;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo skewedInfo_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfoOrBuilder> skewedInfoBuilder_;
@@ -27957,7 +28008,7 @@ public final class HbaseMetastoreProto {
         if (skewedInfoBuilder_ == null) {
           skewedInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfo.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.StorageDescriptor.SkewedInfoOrBuilder>(
-                  getSkewedInfo(),
+                  skewedInfo_,
                   getParentForChildren(),
                   isClean());
           skewedInfo_ = null;
@@ -27965,6 +28016,7 @@ public final class HbaseMetastoreProto {
         return skewedInfoBuilder_;
       }
 
+      // optional bool stored_as_sub_directories = 10;
       private boolean storedAsSubDirectories_ ;
       /**
        * <code>optional bool stored_as_sub_directories = 10;</code>
@@ -28008,10 +28060,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.StorageDescriptor)
   }
 
-  public interface TableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.Table)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TableOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string owner = 1;
     /**
      * <code>optional string owner = 1;</code>
      */
@@ -28026,6 +28078,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getOwnerBytes();
 
+    // optional int64 create_time = 2;
     /**
      * <code>optional int64 create_time = 2;</code>
      */
@@ -28035,6 +28088,7 @@ public final class HbaseMetastoreProto {
      */
     long getCreateTime();
 
+    // optional int64 last_access_time = 3;
     /**
      * <code>optional int64 last_access_time = 3;</code>
      */
@@ -28044,6 +28098,7 @@ public final class HbaseMetastoreProto {
      */
     long getLastAccessTime();
 
+    // optional int64 retention = 4;
     /**
      * <code>optional int64 retention = 4;</code>
      */
@@ -28053,6 +28108,7 @@ public final class HbaseMetastoreProto {
      */
     long getRetention();
 
+    // optional string location = 5;
     /**
      * <code>optional string location = 5;</code>
      */
@@ -28067,6 +28123,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getLocationBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 6;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 6;</code>
      *
@@ -28092,6 +28149,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder getSdParametersOrBuilder();
 
+    // required bytes sd_hash = 7;
     /**
      * <code>required bytes sd_hash = 7;</code>
      */
@@ -28101,6 +28159,7 @@ public final class HbaseMetastoreProto {
      */
     com.google.protobuf.ByteString getSdHash();
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema partition_keys = 8;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema partition_keys = 8;</code>
      */
@@ -28125,6 +28184,7 @@ public final class HbaseMetastoreProto {
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchemaOrBuilder getPartitionKeysOrBuilder(
         int index);
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 9;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 9;</code>
      */
@@ -28138,6 +28198,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder getParametersOrBuilder();
 
+    // optional string view_original_text = 10;
     /**
      * <code>optional string view_original_text = 10;</code>
      */
@@ -28152,6 +28213,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getViewOriginalTextBytes();
 
+    // optional string view_expanded_text = 11;
     /**
      * <code>optional string view_expanded_text = 11;</code>
      */
@@ -28166,6 +28228,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getViewExpandedTextBytes();
 
+    // optional string table_type = 12;
     /**
      * <code>optional string table_type = 12;</code>
      */
@@ -28180,6 +28243,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getTableTypeBytes();
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 13;
     /**
      * <code>optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 13;</code>
      */
@@ -28193,6 +28257,7 @@ public final class HbaseMetastoreProto {
      */
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder getPrivilegesOrBuilder();
 
+    // optional bool is_temporary = 14;
     /**
      * <code>optional bool is_temporary = 14;</code>
      */
@@ -28206,9 +28271,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Table}
    */
   public static final class Table extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.Table)
-      TableOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements TableOrBuilder {
     // Use Table.newBuilder() to construct.
     private Table(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -28255,9 +28319,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              owner_ = bs;
+              owner_ = input.readBytes();
               break;
             }
             case 16: {
@@ -28276,9 +28339,8 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 42: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              location_ = bs;
+              location_ = input.readBytes();
               break;
             }
             case 50: {
@@ -28321,21 +28383,18 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 82: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000100;
-              viewOriginalText_ = bs;
+              viewOriginalText_ = input.readBytes();
               break;
             }
             case 90: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000200;
-              viewExpandedText_ = bs;
+              viewExpandedText_ = input.readBytes();
               break;
             }
             case 98: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000400;
-              tableType_ = bs;
+              tableType_ = input.readBytes();
               break;
             }
             case 106: {
@@ -28399,6 +28458,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // optional string owner = 1;
     public static final int OWNER_FIELD_NUMBER = 1;
     private java.lang.Object owner_;
     /**
@@ -28441,6 +28501,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional int64 create_time = 2;
     public static final int CREATE_TIME_FIELD_NUMBER = 2;
     private long createTime_;
     /**
@@ -28456,6 +28517,7 @@ public final class HbaseMetastoreProto {
       return createTime_;
     }
 
+    // optional int64 last_access_time = 3;
     public static final int LAST_ACCESS_TIME_FIELD_NUMBER = 3;
     private long lastAccessTime_;
     /**
@@ -28471,6 +28533,7 @@ public final class HbaseMetastoreProto {
       return lastAccessTime_;
     }
 
+    // optional int64 retention = 4;
     public static final int RETENTION_FIELD_NUMBER = 4;
     private long retention_;
     /**
@@ -28486,6 +28549,7 @@ public final class HbaseMetastoreProto {
       return retention_;
     }
 
+    // optional string location = 5;
     public static final int LOCATION_FIELD_NUMBER = 5;
     private java.lang.Object location_;
     /**
@@ -28528,6 +28592,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 6;
     public static final int SD_PARAMETERS_FIELD_NUMBER = 6;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters sdParameters_;
     /**
@@ -28561,6 +28626,7 @@ public final class HbaseMetastoreProto {
       return sdParameters_;
     }
 
+    // required bytes sd_hash = 7;
     public static final int SD_HASH_FIELD_NUMBER = 7;
     private com.google.protobuf.ByteString sdHash_;
     /**
@@ -28576,6 +28642,7 @@ public final class HbaseMetastoreProto {
       return sdHash_;
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema partition_keys = 8;
     public static final int PARTITION_KEYS_FIELD_NUMBER = 8;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchema> partitionKeys_;
     /**
@@ -28611,6 +28678,7 @@ public final class HbaseMetastoreProto {
       return partitionKeys_.get(index);
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 9;
     public static final int PARAMETERS_FIELD_NUMBER = 9;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_;
     /**
@@ -28632,6 +28700,7 @@ public final class HbaseMetastoreProto {
       return parameters_;
     }
 
+    // optional string view_original_text = 10;
     public static final int VIEW_ORIGINAL_TEXT_FIELD_NUMBER = 10;
     private java.lang.Object viewOriginalText_;
     /**
@@ -28674,6 +28743,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional string view_expanded_text = 11;
     public static final int VIEW_EXPANDED_TEXT_FIELD_NUMBER = 11;
     private java.lang.Object viewExpandedText_;
     /**
@@ -28716,6 +28786,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional string table_type = 12;
     public static final int TABLE_TYPE_FIELD_NUMBER = 12;
     private java.lang.Object tableType_;
     /**
@@ -28758,6 +28829,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 13;
     public static final int PRIVILEGES_FIELD_NUMBER = 13;
     private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet privileges_;
     /**
@@ -28779,6 +28851,7 @@ public final class HbaseMetastoreProto {
       return privileges_;
     }
 
+    // optional bool is_temporary = 14;
     public static final int IS_TEMPORARY_FIELD_NUMBER = 14;
     private boolean isTemporary_;
     /**
@@ -28813,8 +28886,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasSdHash()) {
         memoizedIsInitialized = 0;
@@ -29040,9 +29112,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Table}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.Table)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.TableOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.TableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_Table_descriptor;
@@ -29370,6 +29441,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // optional string owner = 1;
       private java.lang.Object owner_ = "";
       /**
        * <code>optional string owner = 1;</code>
@@ -29383,12 +29455,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getOwner() {
         java.lang.Object ref = owner_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            owner_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          owner_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -29446,6 +29515,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 create_time = 2;
       private long createTime_ ;
       /**
        * <code>optional int64 create_time = 2;</code>
@@ -29478,6 +29548,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 last_access_time = 3;
       private long lastAccessTime_ ;
       /**
        * <code>optional int64 last_access_time = 3;</code>
@@ -29510,6 +29581,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional int64 retention = 4;
       private long retention_ ;
       /**
        * <code>optional int64 retention = 4;</code>
@@ -29542,6 +29614,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string location = 5;
       private java.lang.Object location_ = "";
       /**
        * <code>optional string location = 5;</code>
@@ -29555,12 +29628,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getLocation() {
         java.lang.Object ref = location_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            location_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          location_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -29618,6 +29688,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Parameters sd_parameters = 6;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters sdParameters_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder> sdParametersBuilder_;
@@ -29762,7 +29833,7 @@ public final class HbaseMetastoreProto {
         if (sdParametersBuilder_ == null) {
           sdParametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder>(
-                  getSdParameters(),
+                  sdParameters_,
                   getParentForChildren(),
                   isClean());
           sdParameters_ = null;
@@ -29770,6 +29841,7 @@ public final class HbaseMetastoreProto {
         return sdParametersBuilder_;
       }
 
+      // required bytes sd_hash = 7;
       private com.google.protobuf.ByteString sdHash_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes sd_hash = 7;</code>
@@ -29805,6 +29877,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.FieldSchema partition_keys = 8;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchema> partitionKeys_ =
         java.util.Collections.emptyList();
       private void ensurePartitionKeysIsMutable() {
@@ -29946,8 +30019,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.FieldSchema> values) {
         if (partitionKeysBuilder_ == null) {
           ensurePartitionKeysIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, partitionKeys_);
+          super.addAll(values, partitionKeys_);
           onChanged();
         } else {
           partitionKeysBuilder_.addAllMessages(values);
@@ -30045,6 +30117,7 @@ public final class HbaseMetastoreProto {
         return partitionKeysBuilder_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.Parameters parameters = 9;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters parameters_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder> parametersBuilder_;
@@ -30153,7 +30226,7 @@ public final class HbaseMetastoreProto {
         if (parametersBuilder_ == null) {
           parametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.Parameters.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.ParametersOrBuilder>(
-                  getParameters(),
+                  parameters_,
                   getParentForChildren(),
                   isClean());
           parameters_ = null;
@@ -30161,6 +30234,7 @@ public final class HbaseMetastoreProto {
         return parametersBuilder_;
       }
 
+      // optional string view_original_text = 10;
       private java.lang.Object viewOriginalText_ = "";
       /**
        * <code>optional string view_original_text = 10;</code>
@@ -30174,12 +30248,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getViewOriginalText() {
         java.lang.Object ref = viewOriginalText_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            viewOriginalText_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          viewOriginalText_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -30237,6 +30308,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string view_expanded_text = 11;
       private java.lang.Object viewExpandedText_ = "";
       /**
        * <code>optional string view_expanded_text = 11;</code>
@@ -30250,12 +30322,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getViewExpandedText() {
         java.lang.Object ref = viewExpandedText_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            viewExpandedText_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          viewExpandedText_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -30313,6 +30382,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional string table_type = 12;
       private java.lang.Object tableType_ = "";
       /**
        * <code>optional string table_type = 12;</code>
@@ -30326,12 +30396,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getTableType() {
         java.lang.Object ref = tableType_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            tableType_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          tableType_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -30389,6 +30456,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PrincipalPrivilegeSet privileges = 13;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet privileges_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder> privilegesBuilder_;
@@ -30497,7 +30565,7 @@ public final class HbaseMetastoreProto {
         if (privilegesBuilder_ == null) {
           privilegesBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSet.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PrincipalPrivilegeSetOrBuilder>(
-                  getPrivileges(),
+                  privileges_,
                   getParentForChildren(),
                   isClean());
           privileges_ = null;
@@ -30505,6 +30573,7 @@ public final class HbaseMetastoreProto {
         return privilegesBuilder_;
       }
 
+      // optional bool is_temporary = 14;
       private boolean isTemporary_ ;
       /**
        * <code>optional bool is_temporary = 14;</code>
@@ -30548,10 +30617,10 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.Table)
   }
 
-  public interface PartitionKeyComparatorOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator)
-      com.google.protobuf.MessageOrBuilder {
+  public interface PartitionKeyComparatorOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string names = 1;
     /**
      * <code>required string names = 1;</code>
      */
@@ -30566,6 +30635,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getNamesBytes();
 
+    // required string types = 2;
     /**
      * <code>required string types = 2;</code>
      */
@@ -30580,6 +30650,7 @@ public final class HbaseMetastoreProto {
     com.google.protobuf.ByteString
         getTypesBytes();
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator op = 3;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator op = 3;</code>
      */
@@ -30604,6 +30675,7 @@ public final class HbaseMetastoreProto {
     org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.OperatorOrBuilder getOpOrBuilder(
         int index);
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range range = 4;
     /**
      * <code>repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range range = 4;</code>
      */
@@ -30632,9 +30704,8 @@ public final class HbaseMetastoreProto {
    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator}
    */
   public static final class PartitionKeyComparator extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator)
-      PartitionKeyComparatorOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements PartitionKeyComparatorOrBuilder {
     // Use PartitionKeyComparator.newBuilder() to construct.
     private PartitionKeyComparator(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -30681,15 +30752,13 @@ public final class HbaseMetastoreProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              names_ = bs;
+              names_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              types_ = bs;
+              types_ = input.readBytes();
               break;
             }
             case 26: {
@@ -30753,10 +30822,10 @@ public final class HbaseMetastoreProto {
       return PARSER;
     }
 
-    public interface MarkOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark)
-        com.google.protobuf.MessageOrBuilder {
+    public interface MarkOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // required string value = 1;
       /**
        * <code>required string value = 1;</code>
        */
@@ -30771,6 +30840,7 @@ public final class HbaseMetastoreProto {
       com.google.protobuf.ByteString
           getValueBytes();
 
+      // required bool inclusive = 2;
       /**
        * <code>required bool inclusive = 2;</code>
        */
@@ -30784,9 +30854,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark}
      */
     public static final class Mark extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark)
-        MarkOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements MarkOrBuilder {
       // Use Mark.newBuilder() to construct.
       private Mark(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -30833,9 +30902,8 @@ public final class HbaseMetastoreProto {
                 break;
               }
               case 10: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000001;
-                value_ = bs;
+                value_ = input.readBytes();
                 break;
               }
               case 16: {
@@ -30883,6 +30951,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // required string value = 1;
       public static final int VALUE_FIELD_NUMBER = 1;
       private java.lang.Object value_;
       /**
@@ -30925,6 +30994,7 @@ public final class HbaseMetastoreProto {
         }
       }
 
+      // required bool inclusive = 2;
       public static final int INCLUSIVE_FIELD_NUMBER = 2;
       private boolean inclusive_;
       /**
@@ -30947,8 +31017,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (!hasValue()) {
           memoizedIsInitialized = 0;
@@ -31070,9 +31139,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.MarkOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.MarkOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_descriptor;
@@ -31204,6 +31272,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // required string value = 1;
         private java.lang.Object value_ = "";
         /**
          * <code>required string value = 1;</code>
@@ -31217,12 +31286,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getValue() {
           java.lang.Object ref = value_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              value_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            value_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -31280,6 +31346,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // required bool inclusive = 2;
         private boolean inclusive_ ;
         /**
          * <code>required bool inclusive = 2;</code>
@@ -31323,10 +31390,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark)
     }
 
-    public interface RangeOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range)
-        com.google.protobuf.MessageOrBuilder {
+    public interface RangeOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // required string key = 1;
       /**
        * <code>required string key = 1;</code>
        */
@@ -31341,6 +31408,7 @@ public final class HbaseMetastoreProto {
       com.google.protobuf.ByteString
           getKeyBytes();
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark start = 2;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark start = 2;</code>
        */
@@ -31354,6 +31422,7 @@ public final class HbaseMetastoreProto {
        */
       org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.MarkOrBuilder getStartOrBuilder();
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark end = 3;
       /**
        * <code>optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark end = 3;</code>
        */
@@ -31371,9 +31440,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range}
      */
     public static final class Range extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range)
-        RangeOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements RangeOrBuilder {
       // Use Range.newBuilder() to construct.
       private Range(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -31420,9 +31488,8 @@ public final class HbaseMetastoreProto {
                 break;
               }
               case 10: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000001;
-                key_ = bs;
+                key_ = input.readBytes();
                 break;
               }
               case 18: {
@@ -31491,6 +31558,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // required string key = 1;
       public static final int KEY_FIELD_NUMBER = 1;
       private java.lang.Object key_;
       /**
@@ -31533,6 +31601,7 @@ public final class HbaseMetastoreProto {
         }
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark start = 2;
       public static final int START_FIELD_NUMBER = 2;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark start_;
       /**
@@ -31554,6 +31623,7 @@ public final class HbaseMetastoreProto {
         return start_;
       }
 
+      // optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark end = 3;
       public static final int END_FIELD_NUMBER = 3;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark end_;
       /**
@@ -31583,8 +31653,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (!hasKey()) {
           memoizedIsInitialized = 0;
@@ -31721,9 +31790,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.RangeOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.RangeOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_descriptor;
@@ -31890,6 +31958,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // required string key = 1;
         private java.lang.Object key_ = "";
         /**
          * <code>required string key = 1;</code>
@@ -31903,12 +31972,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getKey() {
           java.lang.Object ref = key_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              key_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            key_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -31966,6 +32032,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark start = 2;
         private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark start_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.MarkOrBuilder> startBuilder_;
@@ -32074,7 +32141,7 @@ public final class HbaseMetastoreProto {
           if (startBuilder_ == null) {
             startBuilder_ = new com.google.protobuf.SingleFieldBuilder<
                 org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.MarkOrBuilder>(
-                    getStart(),
+                    start_,
                     getParentForChildren(),
                     isClean());
             start_ = null;
@@ -32082,6 +32149,7 @@ public final class HbaseMetastoreProto {
           return startBuilder_;
         }
 
+        // optional .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Mark end = 3;
         private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark end_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark.getDefaultInstance();
         private com.google.protobuf.SingleFieldBuilder<
             org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.MarkOrBuilder> endBuilder_;
@@ -32190,7 +32258,7 @@ public final class HbaseMetastoreProto {
           if (endBuilder_ == null) {
             endBuilder_ = new com.google.protobuf.SingleFieldBuilder<
                 org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Mark.Builder, org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.MarkOrBuilder>(
-                    getEnd(),
+                    end_,
                     getParentForChildren(),
                     isClean());
             end_ = null;
@@ -32209,10 +32277,10 @@ public final class HbaseMetastoreProto {
       // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range)
     }
 
-    public interface OperatorOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator)
-        com.google.protobuf.MessageOrBuilder {
+    public interface OperatorOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
 
+      // required .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator.Type type = 1;
       /**
        * <code>required .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator.Type type = 1;</code>
        */
@@ -32222,6 +32290,7 @@ public final class HbaseMetastoreProto {
        */
       org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Operator.Type getType();
 
+      // required string key = 2;
       /**
        * <code>required string key = 2;</code>
        */
@@ -32236,6 +32305,7 @@ public final class HbaseMetastoreProto {
       com.google.protobuf.ByteString
           getKeyBytes();
 
+      // required string val = 3;
       /**
        * <code>required string val = 3;</code>
        */
@@ -32254,9 +32324,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator}
      */
     public static final class Operator extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator)
-        OperatorOrBuilder {
+        com.google.protobuf.GeneratedMessage
+        implements OperatorOrBuilder {
       // Use Operator.newBuilder() to construct.
       private Operator(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -32314,15 +32383,13 @@ public final class HbaseMetastoreProto {
                 break;
               }
               case 18: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000002;
-                key_ = bs;
+                key_ = input.readBytes();
                 break;
               }
               case 26: {
-                com.google.protobuf.ByteString bs = input.readBytes();
                 bitField0_ |= 0x00000004;
-                val_ = bs;
+                val_ = input.readBytes();
                 break;
               }
             }
@@ -32447,6 +32514,7 @@ public final class HbaseMetastoreProto {
       }
 
       private int bitField0_;
+      // required .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator.Type type = 1;
       public static final int TYPE_FIELD_NUMBER = 1;
       private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Operator.Type type_;
       /**
@@ -32462,6 +32530,7 @@ public final class HbaseMetastoreProto {
         return type_;
       }
 
+      // required string key = 2;
       public static final int KEY_FIELD_NUMBER = 2;
       private java.lang.Object key_;
       /**
@@ -32504,6 +32573,7 @@ public final class HbaseMetastoreProto {
         }
       }
 
+      // required string val = 3;
       public static final int VAL_FIELD_NUMBER = 3;
       private java.lang.Object val_;
       /**
@@ -32554,8 +32624,7 @@ public final class HbaseMetastoreProto {
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
+        if (isInitialized != -1) return isInitialized == 1;
 
         if (!hasType()) {
           memoizedIsInitialized = 0;
@@ -32688,9 +32757,8 @@ public final class HbaseMetastoreProto {
        * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator}
        */
       public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator)
-          org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.OperatorOrBuilder {
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.OperatorOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
           return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_descriptor;
@@ -32837,6 +32905,7 @@ public final class HbaseMetastoreProto {
         }
         private int bitField0_;
 
+        // required .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator.Type type = 1;
         private org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Operator.Type type_ = org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Operator.Type.LIKE;
         /**
          * <code>required .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator.Type type = 1;</code>
@@ -32872,6 +32941,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // required string key = 2;
         private java.lang.Object key_ = "";
         /**
          * <code>required string key = 2;</code>
@@ -32885,12 +32955,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getKey() {
           java.lang.Object ref = key_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              key_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            key_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -32948,6 +33015,7 @@ public final class HbaseMetastoreProto {
           return this;
         }
 
+        // required string val = 3;
         private java.lang.Object val_ = "";
         /**
          * <code>required string val = 3;</code>
@@ -32961,12 +33029,9 @@ public final class HbaseMetastoreProto {
         public java.lang.String getVal() {
           java.lang.Object ref = val_;
           if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            if (bs.isValidUtf8()) {
-              val_ = s;
-            }
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
+            val_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
@@ -33036,6 +33101,7 @@ public final class HbaseMetastoreProto {
     }
 
     private int bitField0_;
+    // required string names = 1;
     public static final int NAMES_FIELD_NUMBER = 1;
     private java.lang.Object names_;
     /**
@@ -33078,6 +33144,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // required string types = 2;
     public static final int TYPES_FIELD_NUMBER = 2;
     private java.lang.Object types_;
     /**
@@ -33120,6 +33187,7 @@ public final class HbaseMetastoreProto {
       }
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator op = 3;
     public static final int OP_FIELD_NUMBER = 3;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Operator> op_;
     /**
@@ -33155,6 +33223,7 @@ public final class HbaseMetastoreProto {
       return op_.get(index);
     }
 
+    // repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range range = 4;
     public static final int RANGE_FIELD_NUMBER = 4;
     private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Range> range_;
     /**
@@ -33199,8 +33268,7 @@ public final class HbaseMetastoreProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasNames()) {
         memoizedIsInitialized = 0;
@@ -33348,9 +33416,8 @@ public final class HbaseMetastoreProto {
      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator)
-        org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparatorOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparatorOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor;
@@ -33580,6 +33647,7 @@ public final class HbaseMetastoreProto {
       }
       private int bitField0_;
 
+      // required string names = 1;
       private java.lang.Object names_ = "";
       /**
        * <code>required string names = 1;</code>
@@ -33593,12 +33661,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getNames() {
         java.lang.Object ref = names_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            names_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          names_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -33656,6 +33721,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // required string types = 2;
       private java.lang.Object types_ = "";
       /**
        * <code>required string types = 2;</code>
@@ -33669,12 +33735,9 @@ public final class HbaseMetastoreProto {
       public java.lang.String getTypes() {
         java.lang.Object ref = types_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            types_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          types_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -33732,6 +33795,7 @@ public final class HbaseMetastoreProto {
         return this;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Operator op = 3;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Operator> op_ =
         java.util.Collections.emptyList();
       private void ensureOpIsMutable() {
@@ -33873,8 +33937,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Operator> values) {
         if (opBuilder_ == null) {
           ensureOpIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, op_);
+          super.addAll(values, op_);
           onChanged();
         } else {
           opBuilder_.addAllMessages(values);
@@ -33972,6 +34035,7 @@ public final class HbaseMetastoreProto {
         return opBuilder_;
       }
 
+      // repeated .org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator.Range range = 4;
       private java.util.List<org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Range> range_ =
         java.util.Collections.emptyList();
       private void ensureRangeIsMutable() {
@@ -34113,8 +34177,7 @@ public final class HbaseMetastoreProto {
           java.lang.Iterable<? extends org.apache.hadoop.hive.metastore.hbase.HbaseMetastoreProto.PartitionKeyComparator.Range> values) {
         if (rangeBuilder_ == null) {
           ensureRangeIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, range_);
+          super.addAll(values, range_);
           onChanged();
         } else {
           rangeBuilder_.addAllMessages(values);
@@ -34223,197 +34286,197 @@ public final class HbaseMetastoreProto {
     // @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.metastore.hbase.PartitionKeyComparator)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_Database_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_Database_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_Function_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_Role_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_Role_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_Table_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_Table_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -34587,251 +34650,251 @@ public final class HbaseMetastoreProto {
       "Type\022\010\n\004USER\020\000\022\010\n\004ROLE\020\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_descriptor,
+              new java.lang.String[] { "PartsFound", "ColStats", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor,
+              new java.lang.String[] { "DbName", "TableName", "BloomFilter", "AggregatedAt", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_descriptor,
+              new java.lang.String[] { "NumBits", "NumFuncs", "Bits", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor,
+              new java.lang.String[] { "ToInvalidate", "RunEvery", "MaxCacheEntryLife", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_descriptor,
+              new java.lang.String[] { "DbName", "TableName", "PartName", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor,
+              new java.lang.String[] { "LastAnalyzed", "ColumnType", "NumNulls", "NumDistinctValues", "BoolStats", "LongStats", "DoubleStats", "StringStats", "BinaryStats", "DecimalStats", "ColumnName", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_descriptor,
+              new java.lang.String[] { "NumTrues", "NumFalses", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(1);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_descriptor,
+              new java.lang.String[] { "LowValue", "HighValue", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(2);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_descriptor,
+              new java.lang.String[] { "LowValue", "HighValue", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(3);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_descriptor,
+              new java.lang.String[] { "MaxColLength", "AvgColLength", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(4);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor,
+              new java.lang.String[] { "LowValue", "HighValue", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_descriptor,
+              new java.lang.String[] { "Unscaled", "Scale", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Database_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Database_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_Database_descriptor,
+              new java.lang.String[] { "Description", "Uri", "Parameters", "Privileges", "OwnerName", "OwnerType", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_descriptor,
+              new java.lang.String[] { "TokenStr", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_descriptor,
+              new java.lang.String[] { "Name", "Type", "Comment", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Function_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor,
+              new java.lang.String[] { "ClassName", "OwnerName", "OwnerType", "CreateTime", "FunctionType", "ResourceUris", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_descriptor,
+              new java.lang.String[] { "ResourceType", "Uri", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_descriptor,
+              new java.lang.String[] { "MasterKey", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_descriptor =
+            getDescriptor().getMessageTypes().get(9);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_descriptor,
+              new java.lang.String[] { "Key", "Value", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_descriptor =
+            getDescriptor().getMessageTypes().get(10);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_descriptor,
+              new java.lang.String[] { "Parameter", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_descriptor =
+            getDescriptor().getMessageTypes().get(11);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_descriptor,
+              new java.lang.String[] { "CreateTime", "LastAccessTime", "Location", "SdParameters", "SdHash", "Parameters", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_descriptor =
+            getDescriptor().getMessageTypes().get(12);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_descriptor,
+              new java.lang.String[] { "PrincipalName", "Privileges", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_descriptor =
+            getDescriptor().getMessageTypes().get(13);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_descriptor,
+              new java.lang.String[] { "Users", "Roles", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_descriptor =
+            getDescriptor().getMessageTypes().get(14);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_descriptor,
+              new java.lang.String[] { "Privilege", "CreateTime", "Grantor", "GrantorType", "GrantOption", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_descriptor =
+            getDescriptor().getMessageTypes().get(15);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_descriptor,
+              new java.lang.String[] { "PrincipalName", "PrincipalType", "AddTime", "Grantor", "GrantorType", "GrantOption", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_descriptor =
+            getDescriptor().getMessageTypes().get(16);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_descriptor,
+              new java.lang.String[] { "GrantInfo", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_descriptor =
+            getDescriptor().getMessageTypes().get(17);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_descriptor,
+              new java.lang.String[] { "Role", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Role_descriptor =
+            getDescriptor().getMessageTypes().get(18);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Role_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_Role_descriptor,
+              new java.lang.String[] { "CreateTime", "OwnerName", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor =
+            getDescriptor().getMessageTypes().get(19);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor,
+              new java.lang.String[] { "Cols", "InputFormat", "OutputFormat", "IsCompressed", "NumBuckets", "SerdeInfo", "BucketCols", "SortCols", "SkewedInfo", "StoredAsSubDirectories", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_descriptor,
+              new java.lang.String[] { "ColumnName", "Order", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor.getNestedTypes().get(1);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_descriptor,
+              new java.lang.String[] { "Name", "SerializationLib", "Parameters", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor.getNestedTypes().get(2);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor,
+              new java.lang.String[] { "SkewedColNames", "SkewedColValues", "SkewedColValueLocationMaps", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_descriptor,
+              new java.lang.String[] { "SkewedColValue", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor.getNestedTypes().get(1);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_descriptor,
+              new java.lang.String[] { "Key", "Value", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Table_descriptor =
+            getDescriptor().getMessageTypes().get(20);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_Table_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_Table_descriptor,
+              new java.lang.String[] { "Owner", "CreateTime", "LastAccessTime", "Retention", "Location", "SdParameters", "SdHash", "PartitionKeys", "Parameters", "ViewOriginalText", "ViewExpandedText", "TableType", "Privileges", "IsTemporary", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor =
+            getDescriptor().getMessageTypes().get(21);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor,
+              new java.lang.String[] { "Names", "Types", "Op", "Range", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor.getNestedTypes().get(0);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_descriptor,
+              new java.lang.String[] { "Value", "Inclusive", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor.getNestedTypes().get(1);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_descriptor,
+              new java.lang.String[] { "Key", "Start", "End", });
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_descriptor =
+            internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor.getNestedTypes().get(2);
+          internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_descriptor,
+              new java.lang.String[] { "Type", "Key", "Val", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStats_descriptor,
-        new java.lang.String[] { "PartsFound", "ColStats", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor,
-        new java.lang.String[] { "DbName", "TableName", "BloomFilter", "AggregatedAt", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsBloomFilter_BloomFilter_descriptor,
-        new java.lang.String[] { "NumBits", "NumFuncs", "Bits", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor,
-        new java.lang.String[] { "ToInvalidate", "RunEvery", "MaxCacheEntryLife", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_AggrStatsInvalidatorFilter_Entry_descriptor,
-        new java.lang.String[] { "DbName", "TableName", "PartName", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor,
-        new java.lang.String[] { "LastAnalyzed", "ColumnType", "NumNulls", "NumDistinctValues", "BoolStats", "LongStats", "DoubleStats", "StringStats", "BinaryStats", "DecimalStats", "ColumnName", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_BooleanStats_descriptor,
-        new java.lang.String[] { "NumTrues", "NumFalses", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(1);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_LongStats_descriptor,
-        new java.lang.String[] { "LowValue", "HighValue", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(2);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DoubleStats_descriptor,
-        new java.lang.String[] { "LowValue", "HighValue", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(3);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_StringStats_descriptor,
-        new java.lang.String[] { "MaxColLength", "AvgColLength", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_descriptor.getNestedTypes().get(4);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor,
-        new java.lang.String[] { "LowValue", "HighValue", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ColumnStats_DecimalStats_Decimal_descriptor,
-        new java.lang.String[] { "Unscaled", "Scale", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Database_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Database_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_Database_descriptor,
-        new java.lang.String[] { "Description", "Uri", "Parameters", "Privileges", "OwnerName", "OwnerType", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_DelegationToken_descriptor,
-        new java.lang.String[] { "TokenStr", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_FieldSchema_descriptor,
-        new java.lang.String[] { "Name", "Type", "Comment", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Function_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor,
-        new java.lang.String[] { "ClassName", "OwnerName", "OwnerType", "CreateTime", "FunctionType", "ResourceUris", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_Function_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_Function_ResourceUri_descriptor,
-        new java.lang.String[] { "ResourceType", "Uri", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_MasterKey_descriptor,
-        new java.lang.String[] { "MasterKey", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_descriptor =
-      getDescriptor().getMessageTypes().get(9);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_ParameterEntry_descriptor,
-        new java.lang.String[] { "Key", "Value", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_descriptor =
-      getDescriptor().getMessageTypes().get(10);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_Parameters_descriptor,
-        new java.lang.String[] { "Parameter", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_descriptor =
-      getDescriptor().getMessageTypes().get(11);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_Partition_descriptor,
-        new java.lang.String[] { "CreateTime", "LastAccessTime", "Location", "SdParameters", "SdHash", "Parameters", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_descriptor =
-      getDescriptor().getMessageTypes().get(12);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSetEntry_descriptor,
-        new java.lang.String[] { "PrincipalName", "Privileges", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_descriptor =
-      getDescriptor().getMessageTypes().get(13);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_PrincipalPrivilegeSet_descriptor,
-        new java.lang.String[] { "Users", "Roles", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_descriptor =
-      getDescriptor().getMessageTypes().get(14);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_PrivilegeGrantInfo_descriptor,
-        new java.lang.String[] { "Privilege", "CreateTime", "Grantor", "GrantorType", "GrantOption", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_descriptor =
-      getDescriptor().getMessageTypes().get(15);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfo_descriptor,
-        new java.lang.String[] { "PrincipalName", "PrincipalType", "AddTime", "Grantor", "GrantorType", "GrantOption", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_descriptor =
-      getDescriptor().getMessageTypes().get(16);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_RoleGrantInfoList_descriptor,
-        new java.lang.String[] { "GrantInfo", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_descriptor =
-      getDescriptor().getMessageTypes().get(17);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_RoleList_descriptor,
-        new java.lang.String[] { "Role", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Role_descriptor =
-      getDescriptor().getMessageTypes().get(18);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Role_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_Role_descriptor,
-        new java.lang.String[] { "CreateTime", "OwnerName", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor =
-      getDescriptor().getMessageTypes().get(19);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor,
-        new java.lang.String[] { "Cols", "InputFormat", "OutputFormat", "IsCompressed", "NumBuckets", "SerdeInfo", "BucketCols", "SortCols", "SkewedInfo", "StoredAsSubDirectories", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_Order_descriptor,
-        new java.lang.String[] { "ColumnName", "Order", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor.getNestedTypes().get(1);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SerDeInfo_descriptor,
-        new java.lang.String[] { "Name", "SerializationLib", "Parameters", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_descriptor.getNestedTypes().get(2);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor,
-        new java.lang.String[] { "SkewedColNames", "SkewedColValues", "SkewedColValueLocationMaps", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueList_descriptor,
-        new java.lang.String[] { "SkewedColValue", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_descriptor.getNestedTypes().get(1);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_StorageDescriptor_SkewedInfo_SkewedColValueLocationMap_descriptor,
-        new java.lang.String[] { "Key", "Value", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Table_descriptor =
-      getDescriptor().getMessageTypes().get(20);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_Table_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_Table_descriptor,
-        new java.lang.String[] { "Owner", "CreateTime", "LastAccessTime", "Retention", "Location", "SdParameters", "SdHash", "PartitionKeys", "Parameters", "ViewOriginalText", "ViewExpandedText", "TableType", "Privileges", "IsTemporary", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor =
-      getDescriptor().getMessageTypes().get(21);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor,
-        new java.lang.String[] { "Names", "Types", "Op", "Range", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor.getNestedTypes().get(0);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Mark_descriptor,
-        new java.lang.String[] { "Value", "Inclusive", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor.getNestedTypes().get(1);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Range_descriptor,
-        new java.lang.String[] { "Key", "Start", "End", });
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_descriptor =
-      internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_descriptor.getNestedTypes().get(2);
-    internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_org_apache_hadoop_hive_metastore_hbase_PartitionKeyComparator_Operator_descriptor,
-        new java.lang.String[] { "Type", "Key", "Val", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

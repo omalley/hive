@@ -67,13 +67,8 @@ public final class OrcFile extends org.apache.orc.OrcFile {
       return this;
     }
 
-    public ReaderOptions fileFooter(ByteBuffer metadata) {
-      super.fileFooter(metadata);
-      return this;
-    }
-
-    public ReaderOptions stripeStatistics(ByteBuffer serialized) {
-      super.stripeStatistics(serialized);
+    public ReaderOptions fileTail(ByteBuffer metadata) {
+      super.fileTail(metadata);
       return this;
     }
   }

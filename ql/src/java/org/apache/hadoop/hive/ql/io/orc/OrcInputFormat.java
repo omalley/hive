@@ -974,15 +974,10 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     private final long blockSize;
     private final TreeMap<Long, BlockLocation> locations;
     private final FileInfo fileInfo;
-    private List<StripeInformation> stripes;
-    private ByteBuffer fileFooter;
-    private List<StripeStatistics> stripeStats;
-    private List<OrcProto.Type> types;
     private boolean[] includedCols;
     private final boolean isOriginal;
     private final List<DeltaMetaData> deltas;
     private final boolean hasBase;
-    private OrcFile.WriterVersion writerVersion;
     private long projColsUncompressedSize;
     private final List<OrcSplit> deltaSplits;
 
@@ -1206,10 +1201,10 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
         writerVersion = orcReader.getWriterVersion();
         stripeStats = orcReader.getStripeStatistics();
         fileFooter = context.footerInSplits ?
-            orcReader.getSerializedFileFooter() : null;
+            orcReader.getSerializedFileFooter(false) : null;
         if (context.cacheStripeDetails) {
           Long fileId = fileWithId.getFileId();
-          context.footerCache.put(fileId, file, fileFooter, orcReader);
+          context.footerCache.put(fileId, file, orcReader);
         }
       }
       includedCols = genIncludedColumns(types, context.conf, isOriginal);
@@ -1421,27 +1416,14 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     private final long modificationTime;
     private final long size;
     private final Long fileId;
-    private final List<StripeInformation> stripeInfos;
-    private ByteBuffer fileMetaInfo;
-    private final List<StripeStatistics> stripeStats;
-    private final ColumnStatistics[] fileStats;
-    private final List<OrcProto.Type> types;
-    private final OrcFile.WriterVersion writerVersion;
+    private final Reader reader;
 
 
-    FileInfo(long modificationTime, long size, List<StripeInformation> stripeInfos,
-             List<StripeStatistics> stripeStats, List<OrcProto.Type> types,
-             ColumnStatistics[] fileStats, ByteBuffer fileMetaInfo,
-             OrcFile.WriterVersion writerVersion, Long fileId) {
+    FileInfo(long modificationTime, long size, Reader reader, Long fileId) {
       this.modificationTime = modificationTime;
       this.size = size;
       this.fileId = fileId;
-      this.stripeInfos = stripeInfos;
-      this.fileMetaInfo = fileMetaInfo;
-      this.stripeStats = stripeStats;
-      this.types = types;
-      this.fileStats = fileStats;
-      this.writerVersion = writerVersion;
+      this.reader = reader;
     }
   }
 
@@ -1799,8 +1781,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
   public interface FooterCache {
     FileInfo[] getAndValidate(List<HdfsFileStatusWithId> files) throws IOException;
     boolean isBlocking();
-    void put(Long fileId, FileStatus file, ByteBuffer fileMetaInfo, Reader orcReader)
-        throws IOException;
+    void put(Long fileId, FileStatus file, Reader orcReader) throws IOException;
   }
 
   /** Local footer cache using Guava. Stores convoluted Java objects. */
@@ -1854,12 +1835,10 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     }
 
     @Override
-    public void put(Long fileId, FileStatus file, ByteBuffer fileMetaInfo, Reader orcReader)
+    public void put(Long fileId, FileStatus file, Reader orcReader)
         throws IOException {
       cache.put(file.getPath(), new FileInfo(file.getModificationTime(), file.getLen(),
-          orcReader.getStripes(), orcReader.getStripeStatistics(), orcReader.getTypes(),
-          orcReader.getStatistics(), fileMetaInfo, orcReader.getWriterVersion(),
-          fileId));
+          orcReader, fileId));
     }
 
     @Override
@@ -1915,7 +1894,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
         assert result[ix] == null;
         HdfsFileStatusWithId file = files.get(ix);
         assert file.getFileId() == e.getKey();
-        result[ix] = createFileInfoFromMs(file, e.getValue());
+        result[ix] = createFileInfoFromMs(conf, file, e.getValue());
         if (result[ix] == null) {
           if (corruptIds == null) {
             corruptIds = new ArrayList<>();
@@ -1943,14 +1922,17 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
       return Hive.getWithFastCheck(conf);
     }
 
-    private static FileInfo createFileInfoFromMs(
-        HdfsFileStatusWithId file, ByteBuffer bb) throws IOException {
+    private static FileInfo createFileInfoFromMs(Configuration conf,
+                                                 HdfsFileStatusWithId file,
+                                                 ByteBuffer bb
+                                                 ) throws IOException {
       FileStatus fs = file.getFileStatus();
-      ReaderImpl.FooterInfo fi = null;
       ByteBuffer original = bb.duplicate();
       try {
-        fi = ReaderImpl.extractMetaInfoFromFooter(bb, fs.getPath());
-
+        Reader reader = OrcFile.createReader(fs.getPath(),
+            OrcFile.readerOptions(conf).fileTail(bb));
+        return new FileInfo(fs.getModificationTime(), fs.getLen(), reader,
+            file.getFileId());
       } catch (Exception ex) {
         byte[] data = new byte[original.remaining()];
         System.arraycopy(original.array(), original.arrayOffset() + original.position(),
@@ -1960,19 +1942,16 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
         LOG.error(msg, ex);
         return null;
       }
-      return new FileInfo(fs.getModificationTime(), fs.getLen(), fi.getStripes(), fi.getMetadata(),
-          fi.getFooter().getTypesList(), fi.getFooter().getStatisticsList(), fi.getFileMetaInfo(),
-          fi.getFileMetaInfo().writerVersion, file.getFileId());
     }
 
     @Override
-    public void put(Long fileId, FileStatus file, ByteBuffer fileMetaInfo, Reader orcReader)
+    public void put(Long fileId, FileStatus file, Reader orcReader)
         throws IOException {
-      localCache.put(fileId, file, fileMetaInfo, orcReader);
+      localCache.put(fileId, file, orcReader);
       if (fileId != null) {
         try {
           getHive().putFileMetadata(Lists.newArrayList(fileId),
-              Lists.newArrayList(orcReader.getSerializedFileFooter()));
+              Lists.newArrayList(orcReader.getSerializedFileFooter(true)));
         } catch (HiveException e) {
           throw new IOException(e);
         }

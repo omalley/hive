@@ -162,8 +162,7 @@ public class OrcFile {
     private final Configuration conf;
     private FileSystem filesystem;
     private long maxLength = Long.MAX_VALUE;
-    private ByteBuffer fileFooter;
-    private ByteBuffer stripeStatistics;
+    private ByteBuffer fileTail;
 
     public ReaderOptions(Configuration conf) {
       this.conf = conf;
@@ -179,13 +178,8 @@ public class OrcFile {
       return this;
     }
 
-    public ReaderOptions fileFooter(ByteBuffer metadata) {
-      this.fileFooter = metadata;
-      return this;
-    }
-
-    public ReaderOptions stripeStatistics(ByteBuffer serialized) {
-      this.stripeStatistics = serialized;
+    public ReaderOptions fileTail(ByteBuffer metadata) {
+      this.fileTail = metadata;
       return this;
     }
 
@@ -201,13 +195,10 @@ public class OrcFile {
       return maxLength;
     }
 
-    public ByteBuffer getFileFooter() {
-      return fileFooter;
+    public ByteBuffer getFileTail() {
+      return fileTail;
     }
 
-    public ByteBuffer getStripeStatistics() {
-      return stripeStatistics;
-    }
   }
 
   public static ReaderOptions readerOptions(Configuration conf) {

@@ -60,8 +60,8 @@ public class ReaderImpl implements Reader {
   protected final FileSystem fileSystem;
   private final long maxLength;
   protected final Path path;
-  protected CompressionKind compressionKind;
-  protected CompressionCodec codec;
+  protected final CompressionKind compressionKind;
+  protected final CompressionCodec codec;
   protected final int bufferSize;
   private final List<StripeInformation> stripes;
   private final OrcProto.FileTail fileTail;
@@ -310,29 +310,23 @@ public class ReaderImpl implements Reader {
     this.conf = options.getConfiguration();
     this.maxLength = options.getMaxLength();
 
-    ByteBuffer metaBuffer = options.getFileFooter();
-    if (metaBuffer == null) {
+    ByteBuffer tailBuffer = options.getFileTail();
+    if (tailBuffer == null) {
       this.fileTail = parseFooter(fs, path, options.getMaxLength());
     } else {
-      int posn = metaBuffer.position();
-      int length = metaBuffer.limit() - posn;
-      this.fileTail = OrcProto.FileTail.parseFrom
-          (CodedInputStream.newInstance(metaBuffer.array(),
-              metaBuffer.arrayOffset() + posn, length));
-      this.compressionKind =
-          CompressionKind.byId(fileTail.getPostscript().getCompression().getNumber());
-      this.codec = WriterImpl.createCodec(compressionKind.getUnderlying());
+      int posn = tailBuffer.position();
+      int length = tailBuffer.limit() - posn;
+      this.fileTail = OrcProto.FileTail.parseFrom(
+          CodedInputStream.newInstance(tailBuffer.array(),
+              tailBuffer.arrayOffset() + posn, length));
     }
-
-    // If the user gave us the stripe stats, use it.
-    ByteBuffer stripeStatsBuffer = options.getStripeStatistics();
-    if (stripeStatsBuffer != null) {
-      int posn = stripeStatsBuffer.position();
-      int length =stripeStatsBuffer.limit() - posn;
-      this.stripeStatistics = OrcProto.Metadata.parseFrom
-          (CodedInputStream.newInstance(stripeStatsBuffer.array(),
-              stripeStatsBuffer.arrayOffset() + posn, length));
+    if (fileTail.hasMetadata()) {
+      this.stripeStatistics = fileTail.getMetadata();
     }
+    this.compressionKind =
+        CompressionKind.byId(fileTail.getPostscript().getCompression()
+            .getNumber());
+    this.codec = WriterImpl.createCodec(compressionKind.getUnderlying());
     this.stripes = convertProtoStripesToStripes(fileTail.getFooter().getStripesList());
     this.writerVersion = extractWriterVersion(fileTail.getPostscript());
     this.bufferSize = (int) fileTail.getPostscript().getCompressionBlockSize();
@@ -458,15 +452,16 @@ public class ReaderImpl implements Reader {
     }
     file.close();
 
-    this.compressionKind = CompressionKind.byId(ps.getCompression().getNumber());
-        org.apache.orc.CompressionKind.valueOf(ps.getCompression().toString());
+    CompressionKind compressionKind =
+        CompressionKind.byId(ps.getCompression().getNumber());
     int bufferSize = (int) ps.getCompressionBlockSize();
-    this.codec = WriterImpl.createCodec(compressionKind.getUnderlying());
+    CompressionCodec codec =
+        WriterImpl.createCodec(compressionKind.getUnderlying());
     result.setFooter(extractFooter(buffer, footerOffset, footerSize,
         codec, bufferSize));
     if (metadataOffset != -1) {
-      stripeStatistics = extractMetadata(buffer, metadataOffset, metadataSize,
-          codec, bufferSize);
+      result.setMetadata(extractMetadata(buffer, metadataOffset, metadataSize,
+          codec, bufferSize));
     }
 
     return result.build();
@@ -488,8 +483,23 @@ public class ReaderImpl implements Reader {
   }
 
   @Override
-  public ByteBuffer getSerializedFileFooter(boolean includeStripeStats) {
-    return ByteBuffer.wrap(fileTail.toByteArray());
+  public ByteBuffer getSerializedFileFooter(boolean includeStripeStats) throws IOException {
+    if (includeStripeStats != fileTail.hasMetadata()) {
+      if (includeStripeStats) {
+        // force the loading of the Metadata
+        getOrcProtoStripeStatistics();
+        // serialize the whole blob
+        return ByteBuffer.wrap(fileTail.toBuilder()
+            .setMetadata(stripeStatistics).build().toByteArray());
+      } else {
+        // clear the metadata from the fileTail
+        return ByteBuffer.wrap(fileTail.toBuilder()
+            .clearMetadata().build().toByteArray());
+      }
+    } else {
+      // just serialize the object we have
+      return ByteBuffer.wrap(fileTail.toByteArray());
+    }
   }
 
   @Override
