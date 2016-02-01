@@ -31,7 +31,7 @@ import org.apache.hadoop.hive.ql.parse.SemanticException;
  * hive.auto.convert.join, but is only applicable to joins which have been automatically
  * converted to sort-merge joins. For hive.auto.convert.join, the backup task is the
  * map-reduce join, whereas here, the backup task is the sort-merge join.
- *
+ *                                                       N
  * Depending on the inputs, a sort-merge join may be faster or slower than the map-side join.
  * The other advantage of sort-merge join is that the output is also bucketed and sorted.
  * Consider a very big table, say 1TB with 10 buckets being joined with a very small table, say

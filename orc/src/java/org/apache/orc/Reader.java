@@ -133,6 +133,17 @@ public interface Reader {
   OrcFile.WriterVersion getWriterVersion();
 
   /**
+   * Pick the set of stripes that satisfy the sarg.
+   * @param sarg the search argument
+   * @param columnNames the names of top level columns that are mentioned in
+   *                    the sarg. columnNames[c] is the name of column c in
+   *                    the ORC file.
+   * @return a new boolean array the length of the number of stripes in the
+   *    file. result[s] is true if some rows in stripe s satisfy the sarg.
+   */
+  boolean[] pickStripes(SearchArgument sarg, String[] columnNames);
+
+  /**
    * Options for creating a RecordReader.
    */
   public static class Options {

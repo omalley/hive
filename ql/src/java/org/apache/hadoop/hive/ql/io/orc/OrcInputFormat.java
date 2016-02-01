@@ -1173,13 +1173,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     }
 
     private void populateAndCacheStripeDetails() throws IOException {
-      // Only create OrcReader if we are missing some information.
-      ColumnStatistics[] colStatsLocal;
-      List<OrcProto.Type> typesLocal;
       if (fileInfo != null) {
-        stripes = fileInfo.stripeInfos;
-        stripeStats = fileInfo.stripeStats;
-        fileFooter = fileInfo.fileMetaInfo;
         typesLocal = types = fileInfo.types;
         colStatsLocal = fileInfo.fileStats;
         writerVersion = fileInfo.writerVersion;
@@ -1208,26 +1202,14 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
         }
       }
       includedCols = genIncludedColumns(types, context.conf, isOriginal);
-      projColsUncompressedSize = computeProjectionSize(typesLocal, colStatsLocal, includedCols, isOriginal);
+      for(int c=0; c < includedCols.length; ++c) {
+        projColsUncompressedSize += fileInfo.reader.getRawDataSizeFromColumn(c);
+      }
     }
 
     private Reader createOrcReader() throws IOException {
       return OrcFile.createReader(file.getPath(),
           OrcFile.readerOptions(context.conf).filesystem(fs));
-    }
-
-    private long computeProjectionSize(List<OrcProto.Type> types,
-        List<OrcProto.ColumnStatistics> stats, boolean[] includedCols, boolean isOriginal) {
-      final int rootIdx = getRootColumn(isOriginal);
-      long result = 0;
-      if (includedCols != null) {
-        for (int i = 0; i < includedCols.length; i++) {
-          if (includedCols[i]) {
-            internalColIds.add(rootIdx + i);
-          }
-        }
-      }
-      return ReaderImpl.getRawDataSizeFromColIndices(internalColIds, types, stats);
     }
   }
 
