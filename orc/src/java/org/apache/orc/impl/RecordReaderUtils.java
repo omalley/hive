@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.hadoop.hive.ql.io.orc;
+package org.apache.orc.impl;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -33,33 +33,23 @@ import org.apache.hadoop.hive.common.io.DiskRange;
 import org.apache.hadoop.hive.common.io.DiskRangeList;
 import org.apache.hadoop.hive.common.io.DiskRangeList.CreateHelper;
 import org.apache.hadoop.hive.common.io.DiskRangeList.MutateHelper;
-import org.apache.hadoop.hive.shims.HadoopShims;
-import org.apache.hadoop.hive.shims.ShimLoader;
-import org.apache.hadoop.hive.shims.HadoopShims.ByteBufferPoolShim;
-import org.apache.hadoop.hive.shims.HadoopShims.ZeroCopyReaderShim;
-import org.apache.orc.StripeInformation;
-import org.apache.orc.impl.BufferChunk;
 import org.apache.orc.CompressionCodec;
 import org.apache.orc.DataReader;
-import org.apache.orc.impl.DataReaderProperties;
-import org.apache.orc.impl.DirectDecompressionCodec;
 import org.apache.orc.OrcProto;
 
 import com.google.common.collect.ComparisonChain;
-import org.apache.orc.impl.InStream;
-import org.apache.orc.impl.OrcIndex;
-import org.apache.orc.impl.OutStream;
+import org.apache.orc.StripeInformation;
 
 /**
  * Stateless methods shared between RecordReaderImpl and EncodedReaderImpl.
  */
 public class RecordReaderUtils {
-  private static final HadoopShims SHIMS = ShimLoader.getHadoopShims();
+  private static final HadoopShims SHIMS = HadoopShims.Factory.get();
 
   private static class DefaultDataReader implements DataReader {
     private FSDataInputStream file = null;
     private final ByteBufferAllocatorPool pool;
-    private ZeroCopyReaderShim zcr = null;
+    private HadoopShims.ZeroCopyReaderShim zcr = null;
     private final FileSystem fs;
     private final Path path;
     private final boolean useZeroCopy;
@@ -402,7 +392,7 @@ public class RecordReaderUtils {
    * @throws IOException
    */
   static DiskRangeList readDiskRanges(FSDataInputStream file,
-                                 ZeroCopyReaderShim zcr,
+                                      HadoopShims.ZeroCopyReaderShim zcr,
                                  long base,
                                  DiskRangeList range,
                                  boolean doForceDirect) throws IOException {
@@ -494,19 +484,19 @@ public class RecordReaderUtils {
     return buffers;
   }
 
-  static ZeroCopyReaderShim createZeroCopyShim(FSDataInputStream file,
+  static HadoopShims.ZeroCopyReaderShim createZeroCopyShim(FSDataInputStream file,
       CompressionCodec codec, ByteBufferAllocatorPool pool) throws IOException {
     if ((codec == null || ((codec instanceof DirectDecompressionCodec)
             && ((DirectDecompressionCodec) codec).isAvailable()))) {
       /* codec is null or is available */
-      return ShimLoader.getHadoopShims().getZeroCopyReader(file, pool);
+      return SHIMS.getZeroCopyReader(file, pool);
     }
     return null;
   }
 
   // this is an implementation copied from ElasticByteBufferPool in hadoop-2,
   // which lacks a clear()/clean() operation
-  public final static class ByteBufferAllocatorPool implements ByteBufferPoolShim {
+  public final static class ByteBufferAllocatorPool implements HadoopShims.ByteBufferPoolShim {
     private static final class Key implements Comparable<Key> {
       private final int capacity;
       private final long insertionGeneration;
