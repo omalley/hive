@@ -198,6 +198,8 @@ enum CompressionKind {
   ZLIB = 1;
   SNAPPY = 2;
   LZO = 3;
+  LZ4 = 4;
+  ZSTD = 5;
 }
 
 // Serialized length must be less that 255 bytes
@@ -219,4 +221,12 @@ message PostScript {
   optional uint32 writerVersion = 6;
   // Leave this last in the record
   optional string magic = 8000;
+}
+
+// The contents of the file tail that must be serialized.
+message FileTail {
+  optional PostScript postscript = 1;
+  optional Footer footer = 2;
+  optional uint64 fileLength = 3;
+  optional uint64 postscriptLength = 4;
 }

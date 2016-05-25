@@ -154,7 +154,7 @@ public class RecordReaderImpl implements RecordReader {
     this.schema = treeReaderSchema.getReaderSchema();
     this.path = fileReader.path;
     this.codec = fileReader.codec;
-    this.types = fileReader.types;
+    this.types = fileReader.getTypes();
     this.bufferSize = fileReader.bufferSize;
     this.rowIndexStride = fileReader.rowIndexStride;
     SearchArgument sarg = options.getSearchArgument();

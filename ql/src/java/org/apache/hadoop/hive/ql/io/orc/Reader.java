@@ -19,6 +19,7 @@
 package org.apache.hadoop.hive.ql.io.orc;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
@@ -98,4 +99,11 @@ public interface Reader extends org.apache.orc.Reader {
                     boolean[] include, SearchArgument sarg,
                     String[] neededColumns) throws IOException;
 
+  /**
+   * Return the serialized file tail for distribution to the workers.
+   * @return a serialized file tail that will allow reading of a split without
+   *    looking at the file system
+   * @throws IOException
+   */
+  ByteBuffer getSerializedFileTail() throws IOException;
 }

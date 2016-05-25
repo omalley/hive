@@ -19,6 +19,7 @@
 package org.apache.orc;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
@@ -160,21 +161,21 @@ public class OrcFile {
   public static class ReaderOptions {
     private final Configuration conf;
     private FileSystem filesystem;
-    private FileMetaInfo fileMetaInfo; // TODO: this comes from some place.
     private long maxLength = Long.MAX_VALUE;
+    private ByteBuffer fileTail;
     private FileMetadata fullFileMetadata; // Propagate from LLAP cache.
 
     public ReaderOptions(Configuration conf) {
       this.conf = conf;
     }
 
-    public ReaderOptions fileMetaInfo(FileMetaInfo info) {
-      fileMetaInfo = info;
+    public ReaderOptions filesystem(FileSystem fs) {
+      this.filesystem = fs;
       return this;
     }
 
-    public ReaderOptions filesystem(FileSystem fs) {
-      this.filesystem = fs;
+    public ReaderOptions fileTail(ByteBuffer value) {
+      this.fileTail = value;
       return this;
     }
 
@@ -196,16 +197,16 @@ public class OrcFile {
       return filesystem;
     }
 
-    public FileMetaInfo getFileMetaInfo() {
-      return fileMetaInfo;
-    }
-
     public long getMaxLength() {
       return maxLength;
     }
 
     public FileMetadata getFileMetadata() {
       return fullFileMetadata;
+    }
+
+    public ByteBuffer getFileTail() {
+      return fileTail;
     }
   }
 
