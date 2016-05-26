@@ -63,17 +63,13 @@ public class ReaderImpl implements Reader {
   protected final FileSystem fileSystem;
   private final long maxLength;
   protected final Path path;
-  protected final org.apache.orc.CompressionKind compressionKind;
+  protected final CompressionKind compressionKind;
   protected final CompressionCodec codec;
   protected final int bufferSize;
   private List<OrcProto.StripeStatistics> stripeStats = null;
-  private final int metadataSize;
   protected final OrcProto.FileTail fileTail;
   private final List<StripeInformation> stripes;
-  private final TypeDescription schema;
-  protected final int rowIndexStride;
-  private final long contentLength, numberOfRows;
-
+  private final TypeDescription schema;;
 
   private long deserializedSize = -1;
   protected final Configuration conf;
@@ -128,7 +124,7 @@ public class ReaderImpl implements Reader {
 
   @Override
   public long getNumberOfRows() {
-    return numberOfRows;
+    return fileTail.getFooter().getNumberOfRows();
   }
 
   @Override
@@ -176,7 +172,7 @@ public class ReaderImpl implements Reader {
 
   @Override
   public long getContentLength() {
-    return contentLength;
+    return fileTail.getFooter().getContentLength();
   }
 
   @Override
@@ -203,7 +199,7 @@ public class ReaderImpl implements Reader {
 
   @Override
   public int getRowIndexStride() {
-    return rowIndexStride;
+    return fileTail.getFooter().getRowIndexStride();
   }
 
   @Override
@@ -314,41 +310,22 @@ public class ReaderImpl implements Reader {
     this.conf = options.getConfiguration();
     this.maxLength = options.getMaxLength();
 
-    FileMetadata fileMetadata = options.getFileMetadata();
-    if (fileMetadata != null) {
-      this.compressionKind = fileMetadata.getCompressionKind();
-      this.bufferSize = fileMetadata.getCompressionBufferSize();
-      this.codec = WriterImpl.createCodec(compressionKind);
-      this.metadataSize = fileMetadata.getMetadataSize();
-      this.stripeStats = fileMetadata.getStripeStats();
-      this.versionList = fileMetadata.getVersionList();
-      this.writerVersion =
-          OrcFile.WriterVersion.from(fileMetadata.getWriterVersionNum());
-      this.rowIndexStride = fileMetadata.getRowIndexStride();
-      this.contentLength = fileMetadata.getContentLength();
-      this.numberOfRows = fileMetadata.getNumberOfRows();
-      this.stripes = fileMetadata.getStripes();
+    ByteBuffer fileTailBuffer = options.getFileTail();
+    if (fileTailBuffer != null) {
+      fileTail = null;
     } else {
-      if (options.getFileTail() != null) {
-        fileTail = options.getFileTail();
-      } else {
-        fileTail = extractMetaInfoFromFooter(fs, path,
+      fileTail = extractMetaInfoFromFooter(fs, path,
             options.getMaxLength());
-      }
-      this.compressionKind = CompressionKind.valueOf(fileTail.getPostscript()
-          .getCompression().name());
-      this.codec = WriterImpl.createCodec(compressionKind);
-      this.bufferSize = (int) fileTail.getPostscript().getCompressionBlockSize();
-      this.metadataSize = (int) fileTail.getPostscript().getMetadataLength();
-      this.stripeStats = null;
-      this.rowIndexStride = fileTail.getFooter().getRowIndexStride();
-      this.contentLength = fileTail.getFooter().getContentLength();
-      this.numberOfRows = fileTail.getFooter().getNumberOfRows();
-      this.versionList = fileTail.getPostscript().getVersionList();
-      this.writerVersion =
-          OrcFile.WriterVersion.from(fileTail.getPostscript().getWriterVersion());
-      this.stripes = convertProtoStripesToStripes(fileTail.getFooter().getStripesList());
     }
+    this.compressionKind = CompressionKind.valueOf(fileTail.getPostscript()
+          .getCompression().name());
+    this.codec = WriterImpl.createCodec(compressionKind);
+    this.bufferSize = (int) fileTail.getPostscript().getCompressionBlockSize();
+    this.stripeStats = null;
+    this.versionList = fileTail.getPostscript().getVersionList();
+    this.writerVersion =
+          OrcFile.WriterVersion.from(fileTail.getPostscript().getWriterVersion());
+    this.stripes = convertProtoStripesToStripes(fileTail.getFooter().getStripesList());
     this.schema = OrcUtils.convertTypeFromProtobuf(fileTail.getFooter()
                                                      .getTypesList(), 0);
   }
@@ -519,7 +496,7 @@ public class ReaderImpl implements Reader {
   }
 
   @Override
-  public ByteBuffer getSerializedFileFooter() {
+  public ByteBuffer getSerializedFileTail(boolean includeStripeStats) {
     return fileTail.toByteString().asReadOnlyByteBuffer();
   }
 
@@ -710,7 +687,7 @@ public class ReaderImpl implements Reader {
 
   @Override
   public int getMetadataSize() {
-    return metadataSize;
+    return (int) fileTail.getPostscript().getMetadataLength();
   }
 
   @Override

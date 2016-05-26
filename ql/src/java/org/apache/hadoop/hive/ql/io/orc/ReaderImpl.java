@@ -306,48 +306,14 @@ public class ReaderImpl extends org.apache.orc.impl.ReaderImpl
     }
   }
 
-  public FileMetaInfo getFileMetaInfo() {
-    return new FileMetaInfo(compressionKind.toString(), bufferSize,
-        getMetadataSize(), footerByteBuffer, getVersionList(),
-        getWriterVersion(), footerMetaAndPsBuffer);
-  }
-
-  /** Same as FileMetaInfo, but with extra fields. FileMetaInfo is serialized for splits
-   * and so we don't just add fields to it, it's already messy and confusing. */
-  public static final class FooterInfo {
-    private final OrcProto.Footer footer;
-    private final List<StripeStatistics> metadata;
-    private final List<StripeInformation> stripes;
-    private final FileMetaInfo fileMetaInfo;
-
-    private FooterInfo(
-        List<StripeStatistics> metadata, OrcProto.Footer footer, FileMetaInfo fileMetaInfo) {
-      this.metadata = metadata;
-      this.footer = footer;
-      this.fileMetaInfo = fileMetaInfo;
-      this.stripes = convertProtoStripesToStripes(footer.getStripesList());
-    }
-
-    public OrcProto.Footer getFooter() {
-      return footer;
-    }
-
-    public List<StripeStatistics> getMetadata() {
-      return metadata;
-    }
-
-    public FileMetaInfo getFileMetaInfo() {
-      return fileMetaInfo;
-    }
-
-    public List<StripeInformation> getStripes() {
-      return stripes;
-    }
-  }
-
   @Override
-  public ByteBuffer getSerializedFileFooter() {
-    return footerMetaAndPsBuffer;
+  public ByteBuffer getSerializedFileFooter(boolean includeStripeStats) {
+    if (includeStripeStats == fileTail.hasMetadata()) {
+      return fileTail.toByteString().asReadOnlyByteBuffer();
+    }
+    if (includeStripeStats) {
+      OrcProto.FileTail extended = fileTail.toBuilder().setMetadata(getOrcProtoStripeStatistics())
+    }
   }
 
   @Override
@@ -361,7 +327,7 @@ public class ReaderImpl extends org.apache.orc.impl.ReaderImpl
     boolean[] include = options.getInclude();
     // if included columns is null, then include all columns
     if (include == null) {
-      include = new boolean[types.size()];
+      include = new boolean[getSchema().getMaximumId() + 1];
       Arrays.fill(include, true);
       options.include(include);
     }

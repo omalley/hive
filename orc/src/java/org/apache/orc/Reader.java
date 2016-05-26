@@ -362,7 +362,11 @@ public interface Reader {
   List<OrcProto.ColumnStatistics> getOrcProtoFileStatistics();
 
   /**
-   * @return Serialized file metadata read from disk for the purposes of caching, etc.
+   * Get the file tail (footer and postscript) of this ORC file.
+   * @return Serialized file metadata read from disk for the purposes of
+   * caching, etc.
+   * @param includeStripeStatistics should the buffer include the stripe
+   *                                statistics
    */
-  ByteBuffer getSerializedFileFooter();
+  ByteBuffer getSerializedFileTail(boolean includeStripeStatistics);
 }

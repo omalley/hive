@@ -163,7 +163,6 @@ public class OrcFile {
     private FileSystem filesystem;
     private long maxLength = Long.MAX_VALUE;
     private ByteBuffer fileTail;
-    private FileMetadata fullFileMetadata; // Propagate from LLAP cache.
 
     public ReaderOptions(Configuration conf) {
       this.conf = conf;
@@ -184,11 +183,6 @@ public class OrcFile {
       return this;
     }
 
-    public ReaderOptions fileMetadata(FileMetadata metadata) {
-      this.fullFileMetadata = metadata;
-      return this;
-    }
-
     public Configuration getConfiguration() {
       return conf;
     }
@@ -199,10 +193,6 @@ public class OrcFile {
 
     public long getMaxLength() {
       return maxLength;
-    }
-
-    public FileMetadata getFileMetadata() {
-      return fullFileMetadata;
     }
 
     public ByteBuffer getFileTail() {

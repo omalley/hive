@@ -19008,6 +19008,20 @@ public final class OrcProto {
      * <code>optional uint64 postscriptLength = 4;</code>
      */
     long getPostscriptLength();
+
+    // optional .orc.proto.Metadata metadata = 5;
+    /**
+     * <code>optional .orc.proto.Metadata metadata = 5;</code>
+     */
+    boolean hasMetadata();
+    /**
+     * <code>optional .orc.proto.Metadata metadata = 5;</code>
+     */
+    org.apache.orc.OrcProto.Metadata getMetadata();
+    /**
+     * <code>optional .orc.proto.Metadata metadata = 5;</code>
+     */
+    org.apache.orc.OrcProto.MetadataOrBuilder getMetadataOrBuilder();
   }
   /**
    * Protobuf type {@code orc.proto.FileTail}
@@ -19098,6 +19112,19 @@ public final class OrcProto {
             case 32: {
               bitField0_ |= 0x00000008;
               postscriptLength_ = input.readUInt64();
+              break;
+            }
+            case 42: {
+              org.apache.orc.OrcProto.Metadata.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000010) == 0x00000010)) {
+                subBuilder = metadata_.toBuilder();
+              }
+              metadata_ = input.readMessage(org.apache.orc.OrcProto.Metadata.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(metadata_);
+                metadata_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000010;
               break;
             }
           }
@@ -19216,11 +19243,34 @@ public final class OrcProto {
       return postscriptLength_;
     }
 
+    // optional .orc.proto.Metadata metadata = 5;
+    public static final int METADATA_FIELD_NUMBER = 5;
+    private org.apache.orc.OrcProto.Metadata metadata_;
+    /**
+     * <code>optional .orc.proto.Metadata metadata = 5;</code>
+     */
+    public boolean hasMetadata() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional .orc.proto.Metadata metadata = 5;</code>
+     */
+    public org.apache.orc.OrcProto.Metadata getMetadata() {
+      return metadata_;
+    }
+    /**
+     * <code>optional .orc.proto.Metadata metadata = 5;</code>
+     */
+    public org.apache.orc.OrcProto.MetadataOrBuilder getMetadataOrBuilder() {
+      return metadata_;
+    }
+
     private void initFields() {
       postscript_ = org.apache.orc.OrcProto.PostScript.getDefaultInstance();
       footer_ = org.apache.orc.OrcProto.Footer.getDefaultInstance();
       fileLength_ = 0L;
       postscriptLength_ = 0L;
+      metadata_ = org.apache.orc.OrcProto.Metadata.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -19246,6 +19296,9 @@ public final class OrcProto {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeUInt64(4, postscriptLength_);
       }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeMessage(5, metadata_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -19270,6 +19323,10 @@ public final class OrcProto {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(4, postscriptLength_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, metadata_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -19385,6 +19442,7 @@ public final class OrcProto {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getPostscriptFieldBuilder();
           getFooterFieldBuilder();
+          getMetadataFieldBuilder();
         }
       }
       private static Builder create() {
@@ -19409,6 +19467,12 @@ public final class OrcProto {
         bitField0_ = (bitField0_ & ~0x00000004);
         postscriptLength_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000008);
+        if (metadataBuilder_ == null) {
+          metadata_ = org.apache.orc.OrcProto.Metadata.getDefaultInstance();
+        } else {
+          metadataBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -19461,6 +19525,14 @@ public final class OrcProto {
           to_bitField0_ |= 0x00000008;
         }
         result.postscriptLength_ = postscriptLength_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        if (metadataBuilder_ == null) {
+          result.metadata_ = metadata_;
+        } else {
+          result.metadata_ = metadataBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -19488,6 +19560,9 @@ public final class OrcProto {
         }
         if (other.hasPostscriptLength()) {
           setPostscriptLength(other.getPostscriptLength());
+        }
+        if (other.hasMetadata()) {
+          mergeMetadata(other.getMetadata());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -19816,6 +19891,123 @@ public final class OrcProto {
         return this;
       }
 
+      // optional .orc.proto.Metadata metadata = 5;
+      private org.apache.orc.OrcProto.Metadata metadata_ = org.apache.orc.OrcProto.Metadata.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          org.apache.orc.OrcProto.Metadata, org.apache.orc.OrcProto.Metadata.Builder, org.apache.orc.OrcProto.MetadataOrBuilder> metadataBuilder_;
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public boolean hasMetadata() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public org.apache.orc.OrcProto.Metadata getMetadata() {
+        if (metadataBuilder_ == null) {
+          return metadata_;
+        } else {
+          return metadataBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public Builder setMetadata(org.apache.orc.OrcProto.Metadata value) {
+        if (metadataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          metadata_ = value;
+          onChanged();
+        } else {
+          metadataBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public Builder setMetadata(
+          org.apache.orc.OrcProto.Metadata.Builder builderForValue) {
+        if (metadataBuilder_ == null) {
+          metadata_ = builderForValue.build();
+          onChanged();
+        } else {
+          metadataBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public Builder mergeMetadata(org.apache.orc.OrcProto.Metadata value) {
+        if (metadataBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+              metadata_ != org.apache.orc.OrcProto.Metadata.getDefaultInstance()) {
+            metadata_ =
+              org.apache.orc.OrcProto.Metadata.newBuilder(metadata_).mergeFrom(value).buildPartial();
+          } else {
+            metadata_ = value;
+          }
+          onChanged();
+        } else {
+          metadataBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public Builder clearMetadata() {
+        if (metadataBuilder_ == null) {
+          metadata_ = org.apache.orc.OrcProto.Metadata.getDefaultInstance();
+          onChanged();
+        } else {
+          metadataBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public org.apache.orc.OrcProto.Metadata.Builder getMetadataBuilder() {
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return getMetadataFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      public org.apache.orc.OrcProto.MetadataOrBuilder getMetadataOrBuilder() {
+        if (metadataBuilder_ != null) {
+          return metadataBuilder_.getMessageOrBuilder();
+        } else {
+          return metadata_;
+        }
+      }
+      /**
+       * <code>optional .orc.proto.Metadata metadata = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          org.apache.orc.OrcProto.Metadata, org.apache.orc.OrcProto.Metadata.Builder, org.apache.orc.OrcProto.MetadataOrBuilder> 
+          getMetadataFieldBuilder() {
+        if (metadataBuilder_ == null) {
+          metadataBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              org.apache.orc.OrcProto.Metadata, org.apache.orc.OrcProto.Metadata.Builder, org.apache.orc.OrcProto.MetadataOrBuilder>(
+                  metadata_,
+                  getParentForChildren(),
+                  isClean());
+          metadata_ = null;
+        }
+        return metadataBuilder_;
+      }
+
       // @@protoc_insertion_point(builder_scope:orc.proto.FileTail)
     }
 
@@ -20027,13 +20219,14 @@ public final class OrcProto {
       "ression\030\002 \001(\0162\032.orc.proto.CompressionKin" +
       "d\022\034\n\024compressionBlockSize\030\003 \001(\004\022\023\n\007versi",
       "on\030\004 \003(\rB\002\020\001\022\026\n\016metadataLength\030\005 \001(\004\022\025\n\r" +
-      "writerVersion\030\006 \001(\r\022\016\n\005magic\030\300> \001(\t\"\206\001\n\010" +
+      "writerVersion\030\006 \001(\r\022\016\n\005magic\030\300> \001(\t\"\255\001\n\010" +
       "FileTail\022)\n\npostscript\030\001 \001(\0132\025.orc.proto" +
       ".PostScript\022!\n\006footer\030\002 \001(\0132\021.orc.proto." +
       "Footer\022\022\n\nfileLength\030\003 \001(\004\022\030\n\020postscript" +
-      "Length\030\004 \001(\004*M\n\017CompressionKind\022\010\n\004NONE\020" +
-      "\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003\022\007\n\003LZ4\020" +
-      "\004\022\010\n\004ZSTD\020\005B\020\n\016org.apache.orc"
+      "Length\030\004 \001(\004\022%\n\010metadata\030\005 \001(\0132\023.orc.pro" +
+      "to.Metadata*M\n\017CompressionKind\022\010\n\004NONE\020\000" +
+      "\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003\022\007\n\003LZ4\020\004" +
+      "\022\010\n\004ZSTD\020\005B\020\n\016org.apache.orc"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -20183,7 +20376,7 @@ public final class OrcProto {
           internal_static_orc_proto_FileTail_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_orc_proto_FileTail_descriptor,
-              new java.lang.String[] { "Postscript", "Footer", "FileLength", "PostscriptLength", });
+              new java.lang.String[] { "Postscript", "Footer", "FileLength", "PostscriptLength", "Metadata", });
           return null;
         }
       };
