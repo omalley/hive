@@ -44,8 +44,6 @@ import org.apache.orc.StripeInformation;
 import org.apache.orc.TimestampColumnStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.common.io.DiskRange;
 import org.apache.hadoop.hive.common.io.DiskRangeList;
@@ -63,13 +61,12 @@ import org.apache.hadoop.io.Text;
 import org.apache.orc.OrcProto;
 
 public class RecordReaderImpl implements RecordReader {
-  static final Logger LOG = LoggerFactory.getLogger(RecordReaderImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(RecordReaderImpl.class);
   private static final boolean isLogDebugEnabled = LOG.isDebugEnabled();
   private static final Object UNKNOWN_VALUE = new Object();
   protected final Path path;
   private final long firstRow;
-  private final List<StripeInformation> stripes =
-      new ArrayList<StripeInformation>();
+  private final List<StripeInformation> stripes = new ArrayList<>();
   private OrcProto.StripeFooter stripeFooter;
   private final long totalRowCount;
   private final CompressionCodec codec;
@@ -82,9 +79,8 @@ public class RecordReaderImpl implements RecordReader {
   private int currentStripe = -1;
   private long rowBaseInStripe = 0;
   private long rowCountInStripe = 0;
-  private final Map<StreamName, InStream> streams =
-      new HashMap<StreamName, InStream>();
-  DiskRangeList bufferChunks = null;
+  private final Map<StreamName, InStream> streams = new HashMap<>();
+  private DiskRangeList bufferChunks = null;
   private final TreeReaderFactory.TreeReader reader;
   private final OrcProto.RowIndex[] indexes;
   private final OrcProto.BloomFilterIndex[] bloomFilterIndices;
@@ -101,9 +97,9 @@ public class RecordReaderImpl implements RecordReader {
    * @param rootColumn  offset the result with the rootColumn
    * @return the column number or -1 if the column wasn't found
    */
-  static int findColumns(String[] columnNames,
-                         String columnName,
-                         int rootColumn) {
+  private static int findColumns(String[] columnNames,
+                                 String columnName,
+                                 int rootColumn) {
     for(int i=0; i < columnNames.length; ++i) {
       if (columnName.equals(columnNames[i])) {
         return i + rootColumn;
@@ -156,7 +152,7 @@ public class RecordReaderImpl implements RecordReader {
     this.codec = fileReader.codec;
     this.types = fileReader.getTypes();
     this.bufferSize = fileReader.bufferSize;
-    this.rowIndexStride = fileReader.rowIndexStride;
+    this.rowIndexStride = fileReader.getRowIndexStride();
     SearchArgument sarg = options.getSearchArgument();
     if (sarg != null && rowIndexStride != 0) {
       sargApp = new SargApplier(
@@ -220,7 +216,7 @@ public class RecordReaderImpl implements RecordReader {
       this(entry, 0);
     }
 
-    public PositionProviderImpl(OrcProto.RowIndexEntry entry, int startPos) {
+    PositionProviderImpl(OrcProto.RowIndexEntry entry, int startPos) {
       this.entry = entry;
       this.index = startPos;
     }

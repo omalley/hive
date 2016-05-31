@@ -24,10 +24,8 @@ import java.util.Properties;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
-import org.apache.orc.FileMetadata;
 import org.apache.orc.impl.MemoryManager;
 import org.apache.orc.TypeDescription;
 
@@ -51,27 +49,6 @@ public final class OrcFile extends org.apache.orc.OrcFile {
     ReaderOptions opts = new ReaderOptions(new Configuration());
     opts.filesystem(fs);
     return new ReaderImpl(path, opts);
-  }
-
-  public static class ReaderOptions extends org.apache.orc.OrcFile.ReaderOptions {
-    public ReaderOptions(Configuration conf) {
-      super(conf);
-    }
-
-    public ReaderOptions filesystem(FileSystem fs) {
-      super.filesystem(fs);
-      return this;
-    }
-
-    public ReaderOptions maxLength(long val) {
-      super.maxLength(val);
-      return this;
-    }
-
-    public ReaderOptions fileMetadata(FileMetadata metadata) {
-      super.fileMetadata(metadata);
-      return this;
-    }
   }
 
   public static ReaderOptions readerOptions(Configuration conf) {

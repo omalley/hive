@@ -38,19 +38,11 @@ import org.apache.hadoop.hive.ql.io.StatsProvidingRecordWriter;
 import org.apache.hadoop.hive.ql.io.orc.OrcSerde.OrcSerdeRow;
 import org.apache.hadoop.hive.serde2.SerDeStats;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.StructField;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
-import org.apache.hadoop.hive.serde2.typeinfo.BaseCharTypeInfo;
-import org.apache.hadoop.hive.serde2.typeinfo.DecimalTypeInfo;
-import org.apache.hadoop.hive.serde2.typeinfo.ListTypeInfo;
-import org.apache.hadoop.hive.serde2.typeinfo.MapTypeInfo;
-import org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo;
-import org.apache.hadoop.hive.serde2.typeinfo.StructTypeInfo;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfo;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
-import org.apache.hadoop.hive.serde2.typeinfo.UnionTypeInfo;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
@@ -143,13 +135,13 @@ public class OrcOutputFormat extends FileOutputFormat<NullWritable, OrcSerdeRow>
         List<TypeInfo> columnTypes;
 
         if (columnNameProperty.length() == 0) {
-          columnNames = new ArrayList<String>();
+          columnNames = new ArrayList<>();
         } else {
           columnNames = Arrays.asList(columnNameProperty.split(","));
         }
 
         if (columnTypeProperty.length() == 0) {
-          columnTypes = new ArrayList<TypeInfo>();
+          columnTypes = new ArrayList<>();
         } else {
           columnTypes =
               TypeInfoUtils.getTypeInfosFromTypeString(columnTypeProperty);

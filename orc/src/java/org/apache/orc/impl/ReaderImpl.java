@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.protobuf.ByteString;
 import org.apache.orc.CompressionKind;
 import org.apache.orc.OrcFile;
 import org.apache.orc.OrcUtils;
@@ -36,8 +37,6 @@ import org.apache.orc.TypeDescription;
 import org.apache.orc.ColumnStatistics;
 import org.apache.orc.CompressionCodec;
 import org.apache.orc.FileFormatException;
-import org.apache.orc.FileMetaInfo;
-import org.apache.orc.FileMetadata;
 import org.apache.orc.StripeInformation;
 import org.apache.orc.StripeStatistics;
 import org.slf4j.Logger;
@@ -69,7 +68,7 @@ public class ReaderImpl implements Reader {
   private List<OrcProto.StripeStatistics> stripeStats = null;
   protected final OrcProto.FileTail fileTail;
   private final List<StripeInformation> stripes;
-  private final TypeDescription schema;;
+  private final TypeDescription schema;
 
   private long deserializedSize = -1;
   protected final Configuration conf;
@@ -129,7 +128,7 @@ public class ReaderImpl implements Reader {
 
   @Override
   public List<String> getMetadataKeys() {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     for(OrcProto.UserMetadataItem item: fileTail.getFooter().getMetadataList()) {
       result.add(item.getName());
     }
@@ -312,7 +311,7 @@ public class ReaderImpl implements Reader {
 
     ByteBuffer fileTailBuffer = options.getFileTail();
     if (fileTailBuffer != null) {
-      fileTail = null;
+      fileTail = OrcProto.FileTail.parseFrom(ByteString.copyFrom(fileTailBuffer));
     } else {
       fileTail = extractMetaInfoFromFooter(fs, path,
             options.getMaxLength());
@@ -344,20 +343,10 @@ public class ReaderImpl implements Reader {
     return OrcFile.WriterVersion.FUTURE;
   }
 
-  private static OrcProto.Footer extractFooter(ByteBuffer bb, int footerAbsPos,
-      int footerSize, CompressionCodec codec, int bufferSize) throws IOException {
-    bb.position(footerAbsPos);
-    bb.limit(footerAbsPos + footerSize);
+  private OrcProto.Footer extractFooter(ByteBuffer bb) throws IOException {
     return OrcProto.Footer.parseFrom(InStream.createCodedInputStream("footer",
-        Lists.<DiskRange>newArrayList(new BufferChunk(bb, 0)), footerSize, codec, bufferSize));
-  }
-
-  private static OrcProto.Metadata extractMetadata(ByteBuffer bb, int metadataAbsPos,
-      int metadataSize, CompressionCodec codec, int bufferSize) throws IOException {
-    bb.position(metadataAbsPos);
-    bb.limit(metadataAbsPos + metadataSize);
-    return OrcProto.Metadata.parseFrom(InStream.createCodedInputStream("metadata",
-        Lists.<DiskRange>newArrayList(new BufferChunk(bb, 0)), metadataSize, codec, bufferSize));
+        Lists.<DiskRange>newArrayList(new BufferChunk(bb, 0)), bb.remaining(), codec,
+        bufferSize));
   }
 
   private static OrcProto.PostScript extractPostScript(ByteBuffer bb, Path path,
@@ -385,12 +374,12 @@ public class ReaderImpl implements Reader {
     return ps;
   }
 
-  private static OrcProto.FileTail extractMetaInfoFromFooter(FileSystem fs,
-                                                             Path path,
-                                                             long maxFileLength
-                                                             ) throws IOException {
+  private OrcProto.FileTail extractMetaInfoFromFooter(FileSystem fs,
+                                                      Path path,
+                                                      long maxFileLength
+                                                      ) throws IOException {
     ByteBuffer buffer;
-    OrcProto.PostScript ps = null;
+    OrcProto.PostScript ps;
     try (FSDataInputStream file = fs.open(path)){
       // figure out the size of the file using the option or filesystem
       long size;
@@ -441,7 +430,7 @@ public class ReaderImpl implements Reader {
           .setFileLength(size)
           .setPostscriptLength(psLen)
           .setPostscript(ps)
-          .setFooter();
+          .setFooter(extractFooter(buffer)).build();
     } catch (IOException ex) {
       throw new IOException("Problem reading ORC footer in " + path, ex);
     }
@@ -452,47 +441,13 @@ public class ReaderImpl implements Reader {
         ? getWriterVersion(ps.getWriterVersion()) : OrcFile.WriterVersion.ORIGINAL);
   }
 
-  protected static List<StripeInformation> convertProtoStripesToStripes(
+  private static List<StripeInformation> convertProtoStripesToStripes(
       List<OrcProto.StripeInformation> stripes) {
-    List<StripeInformation> result = new ArrayList<StripeInformation>(stripes.size());
+    List<StripeInformation> result = new ArrayList<>(stripes.size());
     for (OrcProto.StripeInformation info : stripes) {
       result.add(new StripeInformationImpl(info));
     }
     return result;
-  }
-
-  /**
-   * MetaInfoObjExtractor - has logic to create the values for the fields in ReaderImpl
-   *  from serialized fields.
-   * As the fields are final, the fields need to be initialized in the constructor and
-   *  can't be done in some helper function. So this helper class is used instead.
-   *
-   */
-  private static class MetaInfoObjExtractor{
-    final org.apache.orc.CompressionKind compressionKind;
-    final CompressionCodec codec;
-    final int bufferSize;
-    final int metadataSize;
-    final OrcProto.Metadata metadata;
-    final OrcProto.Footer footer;
-
-    MetaInfoObjExtractor(String codecStr, int bufferSize, int metadataSize, 
-        ByteBuffer footerBuffer) throws IOException {
-
-      this.compressionKind = org.apache.orc.CompressionKind.valueOf(codecStr.toUpperCase());
-      this.bufferSize = bufferSize;
-      this.codec = WriterImpl.createCodec(compressionKind);
-      this.metadataSize = metadataSize;
-
-      int position = footerBuffer.position();
-      int footerBufferSize = footerBuffer.limit() - footerBuffer.position() - metadataSize;
-
-      this.metadata = extractMetadata(footerBuffer, position, metadataSize, codec, bufferSize);
-      this.footer = extractFooter(
-          footerBuffer, position + metadataSize, footerBufferSize, codec, bufferSize);
-
-      footerBuffer.position(position);
-    }
   }
 
   @Override

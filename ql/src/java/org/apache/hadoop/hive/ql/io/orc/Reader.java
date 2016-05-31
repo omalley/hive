@@ -98,12 +98,4 @@ public interface Reader extends org.apache.orc.Reader {
   RecordReader rows(long offset, long length,
                     boolean[] include, SearchArgument sarg,
                     String[] neededColumns) throws IOException;
-
-  /**
-   * Return the serialized file tail for distribution to the workers.
-   * @return a serialized file tail that will allow reading of a split without
-   *    looking at the file system
-   * @throws IOException
-   */
-  ByteBuffer getSerializedFileTail() throws IOException;
 }

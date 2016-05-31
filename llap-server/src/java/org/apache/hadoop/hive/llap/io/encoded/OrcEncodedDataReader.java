@@ -61,7 +61,6 @@ import org.apache.hadoop.hive.ql.io.HdfsUtils;
 import org.apache.orc.CompressionKind;
 import org.apache.orc.DataReader;
 import org.apache.hadoop.hive.ql.io.orc.OrcFile;
-import org.apache.hadoop.hive.ql.io.orc.OrcFile.ReaderOptions;
 import org.apache.orc.OrcConf;
 import org.apache.hadoop.hive.ql.io.orc.OrcInputFormat;
 import org.apache.hadoop.hive.ql.io.orc.OrcSplit;
@@ -143,7 +142,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
 
   // Read state.
   private int stripeIxFrom;
-  private OrcFileMetadata fileMetadata;
+  private ByteBuffer fileTail;
   private Path path;
   private Reader orcReader;
   private DataReader metadataReader;
@@ -574,7 +573,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
     }
     LlapIoImpl.ORC_LOGGER.trace("Creating reader for {} ({})", path, split.getPath());
     long startTime = counters.startTimeCounter();
-    ReaderOptions opts = OrcFile.readerOptions(conf).filesystem(fs).fileMetadata(fileMetadata);
+    OrcFile.ReaderOptions opts = OrcFile.readerOptions(conf).filesystem(fs).fileTail(fileTail);
     orcReader = EncodedOrcFile.createReader(path, opts);
     counters.incrTimeCounter(LlapIOCounters.HDFS_TIME_NS, startTime);
   }

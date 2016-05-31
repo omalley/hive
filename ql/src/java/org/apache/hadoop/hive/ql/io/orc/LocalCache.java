@@ -27,7 +27,6 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.ql.io.orc.OrcInputFormat.FileInfo;
 import org.apache.hadoop.hive.ql.io.orc.OrcInputFormat.FooterCache;
 import org.apache.hadoop.hive.shims.HadoopShims.HdfsFileStatusWithId;
-import org.apache.orc.FileMetaInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,12 +91,10 @@ class LocalCache implements FooterCache {
   }
 
   @Override
-  public void put(Long fileId, FileStatus file, FileMetaInfo fileMetaInfo, Reader orcReader)
+  public void put(Long fileId, FileStatus file, ByteBuffer fileTail, Reader orcReader)
       throws IOException {
     cache.put(file.getPath(), new FileInfo(file.getModificationTime(), file.getLen(),
-        orcReader.getStripes(), orcReader.getStripeStatistics(), orcReader.getTypes(),
-        orcReader.getOrcProtoFileStatistics(), fileMetaInfo, orcReader.getWriterVersion(),
-        fileId));
+        fileTail, fileId));
   }
 
   @Override

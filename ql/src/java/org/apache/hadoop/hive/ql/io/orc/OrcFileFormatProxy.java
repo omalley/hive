@@ -26,6 +26,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.metastore.FileFormatProxy;
 import org.apache.hadoop.hive.metastore.Metastore.SplitInfo;
 import org.apache.hadoop.hive.metastore.Metastore.SplitInfos;
+import org.apache.hadoop.hive.ql.io.HdfsUtils;
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
 import org.apache.orc.OrcProto;
 import org.apache.orc.StripeInformation;
@@ -38,10 +39,10 @@ public class OrcFileFormatProxy implements FileFormatProxy {
 
   @Override
   public SplitInfos applySargToMetadata(
-      SearchArgument sarg, ByteBuffer fileMetadata) throws IOException {
+      SearchArgument sarg, long fileId, ByteBuffer fileTail) throws IOException {
     // TODO: ideally we should store shortened representation of only the necessary fields
     //       in HBase; it will probably require custom SARG application code.
-    ReaderImpl.FooterInfo fi = ReaderImpl.extractMetaInfoFromFooter(fileMetadata, null);
+    Reader fi = OrcFile.createReader(HdfsUtils.getFileIdPath())
     OrcProto.Footer footer = fi.getFooter();
     int stripeCount = footer.getStripesCount();
     boolean[] result = OrcInputFormat.pickStripesViaTranslatedSarg(
@@ -75,6 +76,6 @@ public class OrcFileFormatProxy implements FileFormatProxy {
   public ByteBuffer getMetadataToCache(
       FileSystem fs, Path path, ByteBuffer[] addedVals) throws IOException {
     // For now, there's nothing special to return in addedVals. Just return the footer.
-    return OrcFile.createReader(fs, path).getSerializedFileFooter();
+    return OrcFile.createReader(fs, path).getSerializedFileTail(true);
   }
 }

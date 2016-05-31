@@ -20,11 +20,11 @@ package org.apache.hadoop.hive.ql.io.orc.encoded;
 import java.io.IOException;
 
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hive.ql.io.orc.OrcFile.ReaderOptions;
+import org.apache.orc.OrcFile;
 
 public class EncodedOrcFile {
   public static Reader createReader(
-      Path path, ReaderOptions options) throws IOException {
+      Path path, OrcFile.ReaderOptions options) throws IOException {
     return new ReaderImpl(path, options);
   }
 }

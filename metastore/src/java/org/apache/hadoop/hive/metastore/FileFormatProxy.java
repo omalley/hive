@@ -34,10 +34,11 @@ public interface FileFormatProxy {
   /**
    * Applies SARG to file metadata, and produces some result for this file.
    * @param sarg SARG
+   * @param fileId the id of the underlying file
    * @param fileMetadata File metadata from metastore cache.
    * @return The result to return to client for this file, or null if file is eliminated.
    */
-  SplitInfos applySargToMetadata(SearchArgument sarg, ByteBuffer fileMetadata) throws IOException;
+  SplitInfos applySargToMetadata(SearchArgument sarg, long fileId, ByteBuffer fileMetadata) throws IOException;
 
   /**
    * @param fs The filesystem of the file.

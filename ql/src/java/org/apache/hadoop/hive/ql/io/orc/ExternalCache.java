@@ -44,7 +44,6 @@ import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgumentFactory;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.shims.HadoopShims.HdfsFileStatusWithId;
-import org.apache.orc.FileMetaInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,13 +73,14 @@ public class ExternalCache implements FooterCache {
   }
 
   @Override
-  public void put(Long fileId, FileStatus file, FileMetaInfo fileMetaInfo, Reader orcReader)
+  public void put(Long fileId, FileStatus file, ByteBuffer fileTail,
+                  Reader orcReader)
       throws IOException {
-    localCache.put(fileId, file, fileMetaInfo, orcReader);
+    localCache.put(fileId, file, fileTail, orcReader);
     if (fileId != null) {
       try {
         externalCacheSrc.getCache(conf).putFileMetadata(Lists.newArrayList(fileId),
-            Lists.newArrayList(((ReaderImpl)orcReader).getSerializedFileFooter()));
+            Lists.newArrayList((orcReader.getSerializedFileTail(true))));
       } catch (HiveException e) {
         throw new IOException(e);
       }
@@ -297,21 +297,8 @@ public class ExternalCache implements FooterCache {
       HdfsFileStatusWithId file, ByteBuffer bb) throws IOException {
     if (bb == null) return null;
     FileStatus fs = file.getFileStatus();
-    ReaderImpl.FooterInfo fi = null;
-    ByteBuffer copy = bb.duplicate();
-    try {
-      fi = ReaderImpl.extractMetaInfoFromFooter(copy, fs.getPath());
-    } catch (Exception ex) {
-      byte[] data = new byte[bb.remaining()];
-      System.arraycopy(bb.array(), bb.arrayOffset() + bb.position(), data, 0, data.length);
-      String msg = "Failed to parse the footer stored in cache for file ID "
-          + file.getFileId() + " " + bb + " [ " + Hex.encodeHexString(data) + " ]";
-      LOG.error(msg, ex);
-      return null;
-    }
-    return new FileInfo(fs.getModificationTime(), fs.getLen(), fi.getStripes(), fi.getMetadata(),
-        fi.getFooter().getTypesList(), fi.getFooter().getStatisticsList(), fi.getFileMetaInfo(),
-        fi.getFileMetaInfo().writerVersion, file.getFileId());
+    return new FileInfo(fs.getModificationTime(), fs.getLen(), bb,
+        file.getFileId());
   }
 
   private static final class Baos extends ByteArrayOutputStream {

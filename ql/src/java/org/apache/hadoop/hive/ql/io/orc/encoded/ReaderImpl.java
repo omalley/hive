@@ -23,19 +23,19 @@ import java.io.IOException;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.common.io.DataCache;
 import org.apache.orc.DataReader;
-import org.apache.hadoop.hive.ql.io.orc.OrcFile.ReaderOptions;
+import org.apache.orc.OrcFile;
 
 
 class ReaderImpl extends org.apache.hadoop.hive.ql.io.orc.ReaderImpl implements Reader {
 
-  public ReaderImpl(Path path, ReaderOptions options) throws IOException {
+  public ReaderImpl(Path path, OrcFile.ReaderOptions options) throws IOException {
     super(path, options);
   }
 
   @Override
   public EncodedReader encodedReader(
       Object fileKey, DataCache dataCache, DataReader dataReader, PoolFactory pf) throws IOException {
-    return new EncodedReaderImpl(fileKey, types,
-        codec, bufferSize, rowIndexStride, dataCache, dataReader, pf);
+    return new EncodedReaderImpl(fileKey, getTypes(),
+        codec, bufferSize, getRowIndexStride(), dataCache, dataReader, pf);
   }
 }
