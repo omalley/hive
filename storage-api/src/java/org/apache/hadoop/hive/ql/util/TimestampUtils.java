@@ -41,31 +41,33 @@ public class TimestampUtils {
   }
 
   public static Timestamp doubleToTimestamp(double f) {
-    long seconds = (long) f;
-
-    // We must ensure the exactness of the double's fractional portion.
-    // 0.6 as the fraction part will be converted to 0.59999... and
-    // significantly reduce the savings from binary serialization
-    BigDecimal bd;
     try {
-      bd = new BigDecimal(String.valueOf(f));
+      long seconds = (long) f;
+
+      // We must ensure the exactness of the double's fractional portion.
+      // 0.6 as the fraction part will be converted to 0.59999... and
+      // significantly reduce the savings from binary serialization
+      BigDecimal bd = new BigDecimal(String.valueOf(f));
+
+      bd = bd.subtract(new BigDecimal(seconds)).multiply(new BigDecimal(1000000000));
+      int nanos = bd.intValue();
+
+      // Convert to millis
+      long millis = seconds * 1000;
+      if (nanos < 0) {
+        millis -= 1000;
+        nanos += 1000000000;
+      }
+      Timestamp t = new Timestamp(millis);
+
+      // Set remaining fractional portion to nanos
+      t.setNanos(nanos);
+      return t;
     } catch (NumberFormatException nfe) {
       return null;
+    } catch (IllegalArgumentException iae) {
+      return null;
     }
-    bd = bd.subtract(new BigDecimal(seconds)).multiply(new BigDecimal(1000000000));
-    int nanos = bd.intValue();
-
-    // Convert to millis
-    long millis = seconds * 1000;
-    if (nanos < 0) {
-      millis -= 1000;
-      nanos += 1000000000;
-    }
-    Timestamp t = new Timestamp(millis);
-
-    // Set remaining fractional portion to nanos
-    t.setNanos(nanos);
-    return t;
   }
 
   /**
@@ -74,32 +76,24 @@ public class TimestampUtils {
    * @param dec
    * @return
    */
-  public static Timestamp decimalToTimestamp(HiveDecimal dec) {
+  public static Timestamp decimalToTimestamp(HiveDecimal d) {
+    try {
+      BigDecimal nanoInstant = d.bigDecimalValue().multiply(BILLION_BIG_DECIMAL);
+      int nanos = nanoInstant.remainder(BILLION_BIG_DECIMAL).intValue();
+      if (nanos < 0) {
+        nanos += 1000000000;
+      }
+      long seconds =
+          nanoInstant.subtract(new BigDecimal(nanos)).divide(BILLION_BIG_DECIMAL).longValue();
+      Timestamp t = new Timestamp(seconds * 1000);
+      t.setNanos(nanos);
 
-    HiveDecimalWritable nanosWritable = new HiveDecimalWritable(dec);
-    nanosWritable.mutateFractionPortion();               // Clip off seconds portion.
-    nanosWritable.mutateScaleByPowerOfTen(9);            // Bring nanoseconds into integer portion.
-    if (!nanosWritable.isSet() || !nanosWritable.isInt()) {
+      return t;
+    } catch (NumberFormatException nfe) {
+      return null;
+    } catch (IllegalArgumentException iae) {
       return null;
     }
-    int nanos = nanosWritable.intValue();
-    if (nanos < 0) {
-      nanos += 1000000000;
-    }
-    nanosWritable.setFromLong(nanos);
-
-    HiveDecimalWritable nanoInstant = new HiveDecimalWritable(dec);
-    nanoInstant.mutateScaleByPowerOfTen(9);
-
-    nanoInstant.mutateSubtract(nanosWritable);
-    nanoInstant.mutateScaleByPowerOfTen(-9);              // Back to seconds.
-    if (!nanoInstant.isSet() || !nanoInstant.isLong()) {
-      return null;
-    }
-    long seconds = nanoInstant.longValue();
-    Timestamp t = new Timestamp(seconds * 1000);
-    t.setNanos(nanos);
-    return t;
   }
 
   /**
