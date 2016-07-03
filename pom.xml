@@ -1193,6 +1193,15 @@
 
   <profiles>
     <profile>
+      <activation>
+         <activeByDefault>false</activeByDefault>
+      </activation>
+      <id>itests</id>
+      <modules>
+        <module>itests</module>
+      </modules>
+    </profile>
+    <profile>
       <id>thriftif</id>
       <build>
         <plugins>
