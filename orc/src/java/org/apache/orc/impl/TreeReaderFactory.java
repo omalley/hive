@@ -1251,6 +1251,7 @@ public class TreeReaderFactory {
         BytesColumnVector result, final int batchSize) throws IOException {
       // Read lengths
       scratchlcv.isNull = result.isNull;  // Notice we are replacing the isNull vector here...
+      scratchlcv.ensureSize(batchSize, false);
       lengths.nextVector(scratchlcv, scratchlcv.vector, batchSize);
       int totalLength = 0;
       if (!scratchlcv.isRepeating) {
