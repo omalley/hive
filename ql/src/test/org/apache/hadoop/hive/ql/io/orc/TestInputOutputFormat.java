@@ -25,6 +25,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.PrivilegedExceptionAction;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -42,6 +45,7 @@ import org.apache.hadoop.fs.LocatedFileStatus;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.RemoteIterator;
 import org.apache.hadoop.fs.permission.FsPermission;
+import org.apache.hadoop.hive.common.ValidTxnList;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars;
@@ -53,6 +57,7 @@ import org.apache.hadoop.hive.ql.exec.vector.BytesColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.DecimalColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.DoubleColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.LongColumnVector;
+import org.apache.hadoop.hive.ql.exec.vector.StructColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.TimestampColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatchCtx;
@@ -63,6 +68,9 @@ import org.apache.hadoop.hive.ql.io.HiveInputFormat;
 import org.apache.hadoop.hive.ql.io.HiveOutputFormat;
 import org.apache.hadoop.hive.ql.io.IOConstants;
 import org.apache.hadoop.hive.ql.io.InputFormatChecker;
+import org.apache.hadoop.hive.ql.io.RecordIdentifier;
+import org.apache.hadoop.hive.ql.io.RecordUpdater;
+import org.apache.hadoop.hive.ql.io.orc.OrcInputFormat.Context;
 import org.apache.hadoop.hive.ql.io.orc.OrcInputFormat.SplitStrategy;
 import org.apache.hadoop.hive.ql.io.sarg.PredicateLeaf;
 import org.apache.hadoop.hive.ql.io.sarg.SearchArgument;
@@ -82,9 +90,12 @@ import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.IntObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.StringObjectInspector;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfo;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
 import org.apache.hadoop.hive.shims.CombineHiveKey;
 import org.apache.hadoop.io.DataOutputBuffer;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
@@ -1952,7 +1963,7 @@ public class TestInputOutputFormat {
         .setBlocks(new MockBlock("host0", "host1"));
 
     // call getsplits
-    HiveInputFormat<?,?> inputFormat =
+    HiveInputFormat<?, ?> inputFormat =
         new HiveInputFormat<WritableComparable, Writable>();
     InputSplit[] splits = inputFormat.getSplits(conf, 10);
     assertEquals(1, splits.length);
@@ -1962,7 +1973,7 @@ public class TestInputOutputFormat {
     HiveConf.setBoolVar(conf, HiveConf.ConfVars.HIVE_TRANSACTIONAL_TABLE_SCAN, true);
 
     org.apache.hadoop.mapred.RecordReader<NullWritable, VectorizedRowBatch>
-          reader = inputFormat.getRecordReader(splits[0], conf, Reporter.NULL);
+        reader = inputFormat.getRecordReader(splits[0], conf, Reporter.NULL);
     NullWritable key = reader.createKey();
     VectorizedRowBatch value = reader.createValue();
     assertEquals(true, reader.next(key, value));
@@ -3418,5 +3429,182 @@ public class TestInputOutputFormat {
       // this means that nothing was set for default stripe size previously, so we should unset it.
       conf.unset(HiveConf.ConfVars.MAPREDMAXSPLITSIZE.varname);
     }
+  }
+
+  /**
+   * Test schema evolution when using the reader directly.
+   */
+  @Test
+  public void testSchemaEvolution() throws Exception {
+    String typeStr = "struct<a:int,b:struct<c:int>,d:string>";
+    TypeInfo typeInfo = TypeInfoUtils.getTypeInfoFromTypeString(typeStr);
+    Writer writer = OrcFile.createWriter(testFilePath,
+        OrcFile.writerOptions(conf)
+            .fileSystem(fs)
+            .inspector(OrcStruct.createObjectInspector(typeInfo))
+            .compress(CompressionKind.NONE));
+    OrcStruct row = new OrcStruct(3);
+    IntWritable a = new IntWritable();
+    row.setFieldValue(0, a);
+    OrcStruct b = new OrcStruct(1);
+    row.setFieldValue(1, b);
+    IntWritable c= new IntWritable();
+    b.setFieldValue(0, c);
+    Text d = new Text();
+    row.setFieldValue(2, d);
+    for(int r=0; r < 1000; r++) {
+      a.set(r * 42);
+      c.set(r * 10001);
+      d.set(Integer.toHexString(r));
+      writer.addRow(row);
+    }
+    writer.close();
+    TypeDescription readerSchema = TypeDescription.fromString(
+        "struct<a:int,b:struct<c:int,future1:int>,d:string,future2:int>");
+    Reader reader = OrcFile.createReader(testFilePath,
+        OrcFile.readerOptions(conf).filesystem(fs));
+    RecordReader rows = reader.rowsOptions(new Reader.Options()
+        .schema(readerSchema));
+    row = null;
+    for(int r=0; r < 1000; ++r) {
+      assertEquals("hasNext " + r, true, rows.hasNext());
+      row = (OrcStruct) rows.next(row);
+      assertEquals("row " + r, r * 42, ((IntWritable) row.getFieldValue(0)).get());
+      OrcStruct inner = (OrcStruct) row.getFieldValue(1);
+      assertEquals("row " + r, r * 10001, ((IntWritable) inner.getFieldValue(0)).get());
+      assertEquals("row " + r, null, inner.getFieldValue(1));
+      assertEquals("row " + r, Integer.toHexString(r), row.getFieldValue(2).toString());
+      assertEquals("row " + r, null, row.getFieldValue(3));
+    }
+    assertEquals(false, rows.hasNext());
+    rows.close();
+
+    // try it again with an include vector
+    rows = reader.rowsOptions(new Reader.Options()
+        .schema(readerSchema)
+        .include(new boolean[]{false, true, true, true, false, false, true}));
+    row = null;
+    for(int r=0; r < 1000; ++r) {
+      assertEquals("row " + r, true, rows.hasNext());
+      row = (OrcStruct) rows.next(row);
+      assertEquals("row " + r, r * 42, ((IntWritable) row.getFieldValue(0)).get());
+      OrcStruct inner = (OrcStruct) row.getFieldValue(1);
+      assertEquals("row " + r, r * 10001, ((IntWritable) inner.getFieldValue(0)).get());
+      assertEquals("row " + r, null, inner.getFieldValue(1));
+      assertEquals("row " + r, null, row.getFieldValue(2));
+      assertEquals("row " + r, null, row.getFieldValue(3));
+    }
+    assertEquals(false, rows.hasNext());
+    rows.close();
+  }
+
+  /**
+   * Test column projection when using ACID.
+   */
+  @Test
+  public void testColumnProjectionWithAcid() throws Exception {
+    Path baseDir = new Path(workDir, "base_00100");
+    testFilePath = new Path(baseDir, "bucket_00000");
+    fs.mkdirs(baseDir);
+    fs.delete(testFilePath, true);
+    String typeStr = "struct<operation:int," +
+        "originalTransaction:bigint,bucket:int,rowId:bigint," +
+        "currentTransaction:bigint," +
+        "row:struct<a:int,b:struct<c:int>,d:string>>";
+    TypeInfo typeInfo = TypeInfoUtils.getTypeInfoFromTypeString(typeStr);
+    Writer writer = OrcFile.createWriter(testFilePath,
+        OrcFile.writerOptions(conf)
+            .fileSystem(fs)
+            .inspector(OrcStruct.createObjectInspector(typeInfo))
+            .compress(CompressionKind.NONE));
+    OrcStruct row = new OrcStruct(6);
+    row.setFieldValue(0, new IntWritable(0));
+    row.setFieldValue(1, new LongWritable(1));
+    row.setFieldValue(2, new IntWritable(0));
+    LongWritable rowId = new LongWritable();
+    row.setFieldValue(3, rowId);
+    row.setFieldValue(4, new LongWritable(1));
+    OrcStruct rowField = new OrcStruct(3);
+    row.setFieldValue(5, rowField);
+    IntWritable a = new IntWritable();
+    rowField.setFieldValue(0, a);
+    OrcStruct b = new OrcStruct(1);
+    rowField.setFieldValue(1, b);
+    IntWritable c = new IntWritable();
+    b.setFieldValue(0, c);
+    Text d = new Text();
+    rowField.setFieldValue(2, d);
+    for(int r=0; r < 1000; r++) {
+      // row id
+      rowId.set(r);
+      // a
+      a.set(r * 42);
+      // b.c
+      c.set(r * 10001);
+      // d
+      d.set(Integer.toHexString(r));
+      writer.addRow(row);
+    }
+    writer.addUserMetadata(OrcRecordUpdater.ACID_KEY_INDEX_NAME,
+        ByteBuffer.wrap("0,0,999".getBytes(StandardCharsets.UTF_8)));
+    writer.close();
+    long fileLength = fs.getFileStatus(testFilePath).getLen();
+
+    // test with same schema with include
+    conf.set(ValidTxnList.VALID_TXNS_KEY, "100:99:");
+    conf.set(IOConstants.SCHEMA_EVOLUTION_COLUMNS, "a,b,d");
+    conf.set(IOConstants.SCHEMA_EVOLUTION_COLUMNS_TYPES, "int,struct<c:int>,string");
+    conf.set(ColumnProjectionUtils.READ_ALL_COLUMNS, "false");
+    conf.set(ColumnProjectionUtils.READ_COLUMN_IDS_CONF_STR, "0,2");
+    OrcSplit split = new OrcSplit(testFilePath, 0, fileLength,
+        new String[0], null, false, true,
+        new ArrayList<AcidInputFormat.DeltaMetaData>(), fileLength, fileLength);
+    OrcInputFormat inputFormat = new OrcInputFormat();
+    AcidInputFormat.RowReader<OrcStruct> reader = inputFormat.getReader(split,
+        new AcidInputFormat.Options(conf));
+    int record = 0;
+    RecordIdentifier id = reader.createKey();
+    OrcStruct struct = reader.createValue();
+    while (reader.next(id, struct)) {
+      assertEquals("id " + record, record, id.getRowId());
+      assertEquals("bucket " + record, 0, id.getBucketId());
+      assertEquals("trans " + record, 1, id.getTransactionId());
+      assertEquals("a " + record,
+          42 * record, ((IntWritable) struct.getFieldValue(0)).get());
+      assertEquals(null, struct.getFieldValue(1));
+      assertEquals("d " + record,
+          Integer.toHexString(record), struct.getFieldValue(2).toString());
+      record += 1;
+    }
+    assertEquals(1000, record);
+    reader.close();
+
+    // test with schema evolution and include
+    conf.set(IOConstants.SCHEMA_EVOLUTION_COLUMNS, "a,b,d,f");
+    conf.set(IOConstants.SCHEMA_EVOLUTION_COLUMNS_TYPES, "int,struct<c:int,e:string>,string,int");
+    conf.set(ColumnProjectionUtils.READ_ALL_COLUMNS, "false");
+    conf.set(ColumnProjectionUtils.READ_COLUMN_IDS_CONF_STR, "0,2,3");
+    split = new OrcSplit(testFilePath, 0, fileLength,
+        new String[0], null, false, true,
+        new ArrayList<AcidInputFormat.DeltaMetaData>(), fileLength, fileLength);
+    inputFormat = new OrcInputFormat();
+    reader = inputFormat.getReader(split, new AcidInputFormat.Options(conf));
+    record = 0;
+    id = reader.createKey();
+    struct = reader.createValue();
+    while (reader.next(id, struct)) {
+      assertEquals("id " + record, record, id.getRowId());
+      assertEquals("bucket " + record, 0, id.getBucketId());
+      assertEquals("trans " + record, 1, id.getTransactionId());
+      assertEquals("a " + record,
+          42 * record, ((IntWritable) struct.getFieldValue(0)).get());
+      assertEquals(null, struct.getFieldValue(1));
+      assertEquals("d " + record,
+          Integer.toHexString(record), struct.getFieldValue(2).toString());
+      assertEquals("f " + record, null, struct.getFieldValue(3));
+      record += 1;
+    }
+    assertEquals(1000, record);
+    reader.close();
   }
 }

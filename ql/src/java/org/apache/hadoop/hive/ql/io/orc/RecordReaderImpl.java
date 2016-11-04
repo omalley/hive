@@ -71,6 +71,7 @@ class RecordReaderImpl implements RecordReader {
   private final List<OrcProto.Type> types;
   private final int bufferSize;
   private final SchemaEvolution evolution;
+  // the file included columns indexed by the file's column ids.
   private final boolean[] included;
   private final long rowIndexStride;
   private long rowInStripe = 0;
@@ -116,17 +117,20 @@ class RecordReaderImpl implements RecordReader {
 
   /**
    * Given a list of column names, find the given column and return the index.
-   * @param columnNames the list of potential column names
-   * @param columnName the column name to look for
-   * @param rootColumn offset the result with the rootColumn
-   * @return the column number or -1 if the column wasn't found
+   *
+   * @param evolution the mapping from reader to file schema
+   * @param columnName  the column name to look for
+   * @return the file column id or -1 if the column wasn't found
    */
-  static int findColumns(String[] columnNames,
-                         String columnName,
-                         int rootColumn) {
-    for(int i=0; i < columnNames.length; ++i) {
-      if (columnName.equals(columnNames[i])) {
-        return i + rootColumn;
+  static int findColumns(SchemaEvolution evolution,
+                         String columnName) {
+    TypeDescription readerSchema = evolution.getReaderBaseSchema();
+    List<String> fieldNames = readerSchema.getFieldNames();
+    List<TypeDescription> children = readerSchema.getChildren();
+    for (int i = 0; i < fieldNames.size(); ++i) {
+      if (columnName.equals(fieldNames.get(i))) {
+        TypeDescription result = evolution.getFileType(children.get(i).getId());
+        return result == null ? -1 : result.getId();
       }
     }
     return -1;
@@ -135,40 +139,36 @@ class RecordReaderImpl implements RecordReader {
   /**
    * Find the mapping from predicate leaves to columns.
    * @param sargLeaves the search argument that we need to map
-   * @param columnNames the names of the columns
-   * @param rootColumn the offset of the top level row, which offsets the
-   *                   result
-   * @return an array mapping the sarg leaves to concrete column numbers
+   * @param evolution the mapping from reader to file schema
+   * @return an array mapping the sarg leaves to file column ids
    */
   public static int[] mapSargColumns(List<PredicateLeaf> sargLeaves,
-                             String[] columnNames,
-                             int rootColumn) {
+                                     SchemaEvolution evolution) {
     int[] result = new int[sargLeaves.size()];
     Arrays.fill(result, -1);
     for(int i=0; i < result.length; ++i) {
       String colName = sargLeaves.get(i).getColumnName();
-      result[i] = findColumns(columnNames, colName, rootColumn);
+      result[i] = findColumns(evolution, colName);
     }
     return result;
   }
 
   protected RecordReaderImpl(ReaderImpl fileReader,
                              Reader.Options options) throws IOException {
-    this.included = options.getInclude();
-    this.included[0] = true;
+    boolean[] readerIncluded = options.getInclude();
     if (options.getSchema() == null) {
       if (LOG.isInfoEnabled()) {
         LOG.info("Reader schema not provided -- using file schema " +
             fileReader.getSchema());
       }
-      evolution = new SchemaEvolution(fileReader.getSchema(), included);
+      evolution = new SchemaEvolution(fileReader.getSchema(), readerIncluded);
     } else {
 
       // Now that we are creating a record reader for a file, validate that the schema to read
       // is compatible with the file schema.
       //
       evolution = new SchemaEvolution(fileReader.getSchema(),
-          options.getSchema(),included);
+          options.getSchema(), readerIncluded);
       if (LOG.isDebugEnabled() && evolution.hasConversion()) {
         LOG.debug("ORC file " + fileReader.path.toString() +
             " has data type conversion --\n" +
@@ -189,9 +189,8 @@ class RecordReaderImpl implements RecordReader {
     // We want to use the sarg for predicate evaluation but we have data type conversion
     // (i.e Schema Evolution), so we currently ignore it.
     if (sarg != null && rowIndexStride != 0 && !evolution.hasConversion()) {
-      sargApp = new SargApplier(
-          sarg, options.getColumnNames(), rowIndexStride, types,
-          included.length);
+      sargApp = new SargApplier(sarg, options.getColumnNames(), rowIndexStride,
+                                evolution);
     } else {
       sargApp = null;
       if (evolution.hasConversion()) {
@@ -223,9 +222,11 @@ class RecordReaderImpl implements RecordReader {
     firstRow = skippedRows;
     totalRowCount = rows;
     boolean skipCorrupt = HiveConf.getBoolVar(conf, HiveConf.ConfVars.HIVE_ORC_SKIP_CORRUPT_DATA);
-    reader = TreeReaderFactory.createTreeReader(evolution.getReaderSchema(), evolution, included, skipCorrupt);
+    reader = TreeReaderFactory.createTreeReader(evolution.getReaderSchema(),
+                                                evolution, readerIncluded, skipCorrupt);
     indexes = new OrcProto.RowIndex[types.size()];
     bloomFilterIndices = new OrcProto.BloomFilterIndex[types.size()];
+    this.included = evolution.getFileIncluded();
     advanceToNextRow(reader, 0L, true);
   }
 
@@ -708,14 +709,15 @@ class RecordReaderImpl implements RecordReader {
     private final long rowIndexStride;
     // same as the above array, but indices are set to true
     private final boolean[] sargColumns;
-    public SargApplier(SearchArgument sarg, String[] columnNames, long rowIndexStride,
-        List<OrcProto.Type> types, int includedCount) {
+    public SargApplier(SearchArgument sarg, String[] columnNames,
+                       long rowIndexStride,
+                       SchemaEvolution evolution) {
       this.sarg = sarg;
       sargLeaves = sarg.getLeaves();
-      filterColumns = mapSargColumns(sargLeaves, columnNames, 0);
+      filterColumns = mapSargColumns(sargLeaves, evolution);
       this.rowIndexStride = rowIndexStride;
       // included will not be null, row options will fill the array with trues if null
-      sargColumns = new boolean[includedCount];
+      sargColumns = new boolean[evolution.getFileIncluded().length];
       for (int i : filterColumns) {
         // filter columns may have -1 as index which could be partition column in SARG.
         if (i > 0) {

@@ -868,6 +868,7 @@
           <reuseForks>false</reuseForks>
           <failIfNoTests>false</failIfNoTests>
           <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
+          <trimStackTrace>false</trimStackTrace>
           <additionalClasspathElements>
             <additionalClasspathElement>${test.tmp.dir}/conf</additionalClasspathElement>
             <additionalClasspathElement>${basedir}/${hive.path.to.root}/conf</additionalClasspathElement>
