@@ -286,8 +286,11 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
     Reader.Options options = new Reader.Options().range(offset, length);
     options.schema(schema);
     boolean isOriginal = isOriginal(file);
-    List<OrcProto.Type> types = file.getTypes();
-    options.include(genIncludedColumns(types, conf, isOriginal));
+    if (schema == null) {
+      schema = file.getSchema();
+    }
+    List<OrcProto.Type> types = OrcUtils.getOrcTypes(schema);
+    options.include(genIncludedColumns(schema, conf));
     setSearchArgument(options, types, conf, isOriginal);
     return file.rowsOptions(options);
   }
@@ -315,32 +318,33 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
     }
   }
 
-  public static boolean[] genIncludedColumns(
-      List<OrcProto.Type> types, List<Integer> included, boolean isOriginal) {
-    int rootColumn = getRootColumn(isOriginal);
-    int numColumns = types.size() - rootColumn;
-    boolean[] result = new boolean[numColumns];
+  public static boolean[] genIncludedColumns(TypeDescription readerSchema,
+                                             List<Integer> included) {
+
+    boolean[] result = new boolean[readerSchema.getMaximumId() + 1];
     result[0] = true;
-    OrcProto.Type root = types.get(rootColumn);
-    for(int i=0; i < root.getSubtypesCount(); ++i) {
-      if (included.contains(i)) {
-        includeColumnRecursive(types, result, root.getSubtypes(i),
-            rootColumn);
+    List<TypeDescription> children = readerSchema.getChildren();
+    for (int columnNumber = 0; columnNumber < children.size(); ++columnNumber) {
+      if (included.contains(columnNumber)) {
+        TypeDescription child = children.get(columnNumber);
+        for(int col = child.getId(); col <= child.getMaximumId(); ++col) {
+          result[col] = true;
+        }
       }
     }
     return result;
   }
+
   /**
    * Take the configuration and figure out which columns we need to include.
-   * @param types the types for the file
+   * @param readerSchema the types for the reader
    * @param conf the configuration
-   * @param isOriginal is the file in the original format?
    */
-  public static boolean[] genIncludedColumns(
-      List<OrcProto.Type> types, Configuration conf, boolean isOriginal) {
-     if (!ColumnProjectionUtils.isReadAllColumns(conf)) {
+  public static boolean[] genIncludedColumns(TypeDescription readerSchema,
+                                             Configuration conf) {
+    if (!ColumnProjectionUtils.isReadAllColumns(conf)) {
       List<Integer> included = ColumnProjectionUtils.getReadColumnIDs(conf);
-      return genIncludedColumns(types, included, isOriginal);
+      return genIncludedColumns(readerSchema, included);
     } else {
       return null;
     }
@@ -1024,7 +1028,7 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
             SearchArgument sarg = options.getSearchArgument();
             List<PredicateLeaf> sargLeaves = sarg.getLeaves();
             int[] filterColumns = RecordReaderImpl.mapSargColumns(sargLeaves,
-                options.getColumnNames(), getRootColumn(isOriginal));
+                evolution);
 
             if (stripeStats != null) {
               // eliminate stripes that doesn't satisfy the predicate condition
@@ -1111,20 +1115,12 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
       fileTypes = orcTail.getTypes();
       TypeDescription fileSchema = OrcUtils.convertTypeFromProtobuf(fileTypes, 0);
       if (readerTypes == null) {
-        included = genIncludedColumns(fileTypes, context.conf, isOriginal);
-        evolution = new SchemaEvolution(fileSchema, included);
-        readerIncluded = included;
+        readerIncluded = genIncludedColumns(fileSchema, context.conf);
+        evolution = new SchemaEvolution(fileSchema, readerIncluded);
       } else {
-        // The reader schema always comes in without ACID columns.
-        included = genIncludedColumns(readerTypes, context.conf, /* isOriginal */ true);
-        if (included != null && !isOriginal) {
-          // We shift the include columns here because the SchemaEvolution constructor will
-          // add the ACID event metadata the readerSchema...
-          readerIncluded = shiftReaderIncludedForAcid(included);
-        } else {
-          readerIncluded = included;
-        }
         TypeDescription readerSchema = OrcUtils.convertTypeFromProtobuf(readerTypes, 0);
+        // The readerSchema always comes in without ACID columns.
+        readerIncluded = genIncludedColumns(readerSchema, context.conf);
         evolution = new SchemaEvolution(fileSchema, readerSchema, readerIncluded);
         if (!isOriginal) {
           // The SchemaEvolution class has added the ACID metadata columns.  Let's update our
@@ -1169,17 +1165,6 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
         }
       }
       return ReaderImpl.getRawDataSizeFromColIndices(internalColIds, fileTypes, stats);
-    }
-
-    private boolean[] shiftReaderIncludedForAcid(boolean[] included) {
-      // We always need the base row
-      included[0] = true;
-      boolean[] newIncluded = new boolean[included.length + OrcRecordUpdater.FIELDS];
-      Arrays.fill(newIncluded, 0, OrcRecordUpdater.FIELDS, true);
-      for(int i= 0; i < included.length; ++i) {
-        newIncluded[i + OrcRecordUpdater.FIELDS] = included[i];
-      }
-      return newIncluded;
     }
 
     private boolean isStripeSatisfyPredicate(StripeStatistics stripeStatistics,
@@ -1429,7 +1414,7 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
 
     // TODO: Convert genIncludedColumns and setSearchArgument to use TypeDescription.
     final List<Type> schemaTypes = OrcUtils.getOrcTypes(schema);
-    readOptions.include(genIncludedColumns(schemaTypes, conf, SCHEMA_TYPES_IS_ORIGINAL));
+    readOptions.include(genIncludedColumns(schema, conf));
     setSearchArgument(readOptions, schemaTypes, conf, SCHEMA_TYPES_IS_ORIGINAL);
 
     if (split.hasBase()) {

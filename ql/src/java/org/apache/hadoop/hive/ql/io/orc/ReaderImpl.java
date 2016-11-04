@@ -19,10 +19,8 @@
 package org.apache.hadoop.hive.ql.io.orc;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -478,14 +476,6 @@ public class ReaderImpl implements Reader {
   @Override
   public RecordReader rowsOptions(Options options) throws IOException {
     LOG.info("Reading ORC rows from " + path + " with " + options);
-    boolean[] include = options.getInclude();
-    // if included columns is null, then include all columns
-    if (include == null) {
-      options = options.clone();
-      include = new boolean[footer.getTypesCount()];
-      Arrays.fill(include, true);
-      options.include(include);
-    }
     return new RecordReaderImpl(this, options);
   }
 
