@@ -19,7 +19,6 @@
 package org.apache.hadoop.hive.ql.io.orc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
@@ -28,12 +27,10 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars;
-import org.apache.hadoop.hive.ql.ErrorMsg;
 import org.apache.hadoop.hive.ql.exec.Utilities;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedInputFormatInterface;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatchCtx;
-import org.apache.hadoop.hive.ql.io.AcidUtils;
 import org.apache.hadoop.hive.ql.io.InputFormatChecker;
 import org.apache.hadoop.hive.ql.io.SelfDescribingInputFormatInterface;
 import org.apache.hadoop.io.NullWritable;
@@ -73,11 +70,25 @@ public class VectorizedOrcInputFormat extends FileInputFormat<NullWritable, Vect
       /**
        * Do we have schema on read in the configuration variables?
        */
-      TypeDescription schema = OrcUtils.getDesiredRowTypeDescr(conf, /* isAcidRead */ false);
+      int dataColumns = rbCtx.getDataColumnCount();
+      TypeDescription schema =
+          OrcUtils.getDesiredRowTypeDescr(conf, isAcidRead);
+      if (schema == null) {
+        schema = file.getSchema();
+        // Even if the user isn't doing schema evolution, cut the schema
+        // to the desired size.
+        if (schema.getCategory() == TypeDescription.Category.STRUCT &&
+            schema.getChildren().size() > dataColumns) {
+          schema = schema.clone();
+          List<TypeDescription> children = schema.getChildren();
+          for(int c = children.size() - 1; c >= dataColumns; --c) {
+            children.remove(c);
+          }
+        }
+      }
+      List<OrcProto.Type> types = OrcUtils.getOrcTypes(schema);
+      Reader.Options options = new Reader.Options().schema(schema);
 
-      List<OrcProto.Type> types = file.getTypes();
-      Reader.Options options = new Reader.Options();
-      options.schema(schema);
       this.offset = fileSplit.getStart();
       this.length = fileSplit.getLength();
       options.range(offset, length);

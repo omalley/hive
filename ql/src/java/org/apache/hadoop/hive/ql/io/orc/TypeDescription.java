@@ -26,6 +26,7 @@ import org.apache.hadoop.hive.ql.exec.vector.LongColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.TimestampColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,12 +34,61 @@ import java.util.List;
 /**
  * This is the description of the types in an ORC file.
  */
-public class TypeDescription {
+public class TypeDescription
+  implements Comparable<TypeDescription>, Serializable {
   private static final int MAX_PRECISION = 38;
   private static final int MAX_SCALE = 38;
   private static final int DEFAULT_PRECISION = 38;
   private static final int DEFAULT_SCALE = 10;
   private static final int DEFAULT_LENGTH = 256;
+
+  @Override
+  public int compareTo(TypeDescription other) {
+    if (this == other) {
+      return 0;
+    } else if (other == null) {
+      return -1;
+    } else {
+      int result = category.compareTo(other.category);
+      if (result == 0) {
+        switch (category) {
+          case CHAR:
+          case VARCHAR:
+            return maxLength - other.maxLength;
+          case DECIMAL:
+            if (precision != other.precision) {
+              return precision - other.precision;
+            }
+            return scale - other.scale;
+          case UNION:
+          case LIST:
+          case MAP:
+            if (children.size() != other.children.size()) {
+              return children.size() - other.children.size();
+            }
+            for(int c=0; result == 0 && c < children.size(); ++c) {
+              result = children.get(c).compareTo(other.children.get(c));
+            }
+            break;
+          case STRUCT:
+            if (children.size() != other.children.size()) {
+              return children.size() - other.children.size();
+            }
+            for(int c=0; result == 0 && c < children.size(); ++c) {
+              result = fieldNames.get(c).compareTo(other.fieldNames.get(c));
+              if (result == 0) {
+                result = children.get(c).compareTo(other.children.get(c));
+              }
+            }
+            break;
+          default:
+            // PASS
+        }
+      }
+      return result;
+    }
+  }
+
   public enum Category {
     BOOLEAN("boolean", true),
     BYTE("tinyint", true),
@@ -122,6 +172,191 @@ public class TypeDescription {
 
   public static TypeDescription createDecimal() {
     return new TypeDescription(Category.DECIMAL);
+  }
+
+  static class StringPosition {
+    final String value;
+    int position;
+    final int length;
+
+    StringPosition(String value) {
+      this.value = value;
+      position = 0;
+      length = value.length();
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder buffer = new StringBuilder();
+      buffer.append('\'');
+      buffer.append(value.substring(0, position));
+      buffer.append('^');
+      buffer.append(value.substring(position));
+      buffer.append('\'');
+      return buffer.toString();
+    }
+  }
+
+  static Category parseCategory(StringPosition source) {
+    int start = source.position;
+    while (source.position < source.length) {
+      char ch = source.value.charAt(source.position);
+      if (!Character.isLetter(ch)) {
+        break;
+      }
+      source.position += 1;
+    }
+    if (source.position != start) {
+      String word = source.value.substring(start, source.position).toLowerCase();
+      for (Category cat : Category.values()) {
+        if (cat.getName().equals(word)) {
+          return cat;
+        }
+      }
+    }
+    throw new IllegalArgumentException("Can't parse category at " + source);
+  }
+
+  static int parseInt(StringPosition source) {
+    int start = source.position;
+    int result = 0;
+    while (source.position < source.length) {
+      char ch = source.value.charAt(source.position);
+      if (!Character.isDigit(ch)) {
+        break;
+      }
+      result = result * 10 + (ch - '0');
+      source.position += 1;
+    }
+    if (source.position == start) {
+      throw new IllegalArgumentException("Missing integer at " + source);
+    }
+    return result;
+  }
+
+  static String parseName(StringPosition source) {
+    int start = source.position;
+    while (source.position < source.length) {
+      char ch = source.value.charAt(source.position);
+      if (!Character.isLetterOrDigit(ch) && ch != '.' && ch != '_') {
+        break;
+      }
+      source.position += 1;
+    }
+    if (source.position == start) {
+      throw new IllegalArgumentException("Missing name at " + source);
+    }
+    return source.value.substring(start, source.position);
+  }
+
+  static void requireChar(StringPosition source, char required) {
+    if (source.position >= source.length ||
+        source.value.charAt(source.position) != required) {
+      throw new IllegalArgumentException("Missing required char '" +
+          required + "' at " + source);
+    }
+    source.position += 1;
+  }
+
+  static boolean consumeChar(StringPosition source, char ch) {
+    boolean result = source.position < source.length &&
+        source.value.charAt(source.position) == ch;
+    if (result) {
+      source.position += 1;
+    }
+    return result;
+  }
+
+  static void parseUnion(TypeDescription type, StringPosition source) {
+    requireChar(source, '<');
+    do {
+      type.addUnionChild(parseType(source));
+    } while (consumeChar(source, ','));
+    requireChar(source, '>');
+  }
+
+  static void parseStruct(TypeDescription type, StringPosition source) {
+    requireChar(source, '<');
+    do {
+      String fieldName = parseName(source);
+      requireChar(source, ':');
+      type.addField(fieldName, parseType(source));
+    } while (consumeChar(source, ','));
+    requireChar(source, '>');
+  }
+
+  static TypeDescription parseType(StringPosition source) {
+    TypeDescription result = new TypeDescription(parseCategory(source));
+    switch (result.getCategory()) {
+      case BINARY:
+      case BOOLEAN:
+      case BYTE:
+      case DATE:
+      case DOUBLE:
+      case FLOAT:
+      case INT:
+      case LONG:
+      case SHORT:
+      case STRING:
+      case TIMESTAMP:
+        break;
+      case CHAR:
+      case VARCHAR:
+        requireChar(source, '(');
+        result.withMaxLength(parseInt(source));
+        requireChar(source, ')');
+        break;
+      case DECIMAL: {
+        requireChar(source, '(');
+        int precision = parseInt(source);
+        requireChar(source, ',');
+        result.withScale(parseInt(source));
+        result.withPrecision(precision);
+        requireChar(source, ')');
+        break;
+      }
+      case LIST:
+        requireChar(source, '<');
+        result.children.add(parseType(source));
+        requireChar(source, '>');
+        break;
+      case MAP:
+        requireChar(source, '<');
+        result.children.add(parseType(source));
+        requireChar(source, ',');
+        result.children.add(parseType(source));
+        requireChar(source, '>');
+        break;
+      case UNION:
+        parseUnion(result, source);
+        break;
+      case STRUCT:
+        parseStruct(result, source);
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown type " +
+            result.getCategory() + " at " + source);
+    }
+    return result;
+  }
+
+  /**
+   * Parse TypeDescription from the Hive type names. This is the inverse
+   * of TypeDescription.toString()
+   * @param typeName the name of the type
+   * @return a new TypeDescription or null if typeName was null
+   * @throws IllegalArgumentException if the string is badly formed
+   */
+  public static TypeDescription fromString(String typeName) {
+    if (typeName == null) {
+      return null;
+    }
+    StringPosition source = new StringPosition(typeName);
+    TypeDescription result = parseType(source);
+    if (source.position != source.length) {
+      throw new IllegalArgumentException("Extra characters at " + source);
+    }
+    return result;
   }
 
   /**
@@ -274,12 +509,18 @@ public class TypeDescription {
 
   @Override
   public int hashCode() {
-    return getId();
+    long result = category.ordinal() * 4241 + maxLength + precision * 13 + scale;
+    if (children != null) {
+      for(TypeDescription child: children) {
+        result = result * 6959 + child.hashCode();
+      }
+    }
+    return (int) result;
   }
 
   @Override
   public boolean equals(Object other) {
-    if (other == null || other.getClass() != TypeDescription.class) {
+    if (other == null || other.getClass() != getClass()) {
       return false;
     }
     if (other == this) {
@@ -287,8 +528,6 @@ public class TypeDescription {
     }
     TypeDescription castOther = (TypeDescription) other;
     if (category != castOther.category ||
-        getId() != castOther.getId() ||
-        getMaximumId() != castOther.getMaximumId() ||
         maxLength != castOther.maxLength ||
         scale != castOther.scale ||
         precision != castOther.precision) {
@@ -572,5 +811,31 @@ public class TypeDescription {
     StringBuilder buffer = new StringBuilder();
     printJsonToBuffer("", buffer, 0);
     return buffer.toString();
+  }
+
+  /**
+   * Locate a subtype by its id.
+   * @param goal the column id to look for
+   * @return the subtype
+   */
+  public TypeDescription findSubtype(int goal) {
+    // call getId method to make sure the ids are assigned
+    int id = getId();
+    if (goal < id || goal > maxId) {
+      throw new IllegalArgumentException("Unknown type id " + id + " in " +
+          toJson());
+    }
+    if (goal == id) {
+      return this;
+    } else {
+      TypeDescription prev = null;
+      for(TypeDescription next: children) {
+        if (next.id > goal) {
+          return prev.findSubtype(goal);
+        }
+        prev = next;
+      }
+      return prev.findSubtype(goal);
+    }
   }
 }

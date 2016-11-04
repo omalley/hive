@@ -2395,8 +2395,7 @@ public class TreeReaderFactory {
                                             boolean skipCorrupt
                                             ) throws IOException {
     TypeDescription fileType = evolution.getFileType(readerType);
-    if (fileType == null ||
-        (included != null && !included[readerType.getId()])) {
+    if (fileType == null || !evolution.includeReaderColumn(readerType.getId())) {
       Class<? extends ColumnVector> cls;
       switch (readerType.getCategory()) {
         case STRING:
