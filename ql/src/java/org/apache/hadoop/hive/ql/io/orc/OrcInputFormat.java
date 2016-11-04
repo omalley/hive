@@ -308,7 +308,10 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     Reader.Options options = new Reader.Options().range(offset, length);
     options.schema(schema);
     boolean isOriginal = isOriginal(file);
-    List<OrcProto.Type> types = file.getTypes();
+    if (schema == null) {
+      schema = file.getSchema();
+    }
+    List<OrcProto.Type> types = OrcUtils.getOrcTypes(schema);
     options.include(genIncludedColumns(types, conf, isOriginal));
     setSearchArgument(options, types, conf, isOriginal);
     return (RecordReader) file.rowsOptions(options);
@@ -1272,7 +1275,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
           if (colNames == null) {
             LOG.warn("Skipping split elimination for {} as column names is null", file.getPath());
           } else {
-            includeStripe = pickStripes(context.sarg, colNames, writerVersion, isOriginal,
+            includeStripe = pickStripes(context.sarg, writerVersion,
                 stripeStats, stripes.size(), file.getPath(), evolution);
           }
         }
@@ -1898,8 +1901,9 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     return pickStripesInternal(sarg, filterColumns, stripeStats, stripeCount, null, evolution);
   }
 
-  private static boolean[] pickStripes(SearchArgument sarg, String[] sargColNames,
-      OrcFile.WriterVersion writerVersion, boolean isOriginal, List<StripeStatistics> stripeStats,
+  private static boolean[] pickStripes(SearchArgument sarg,
+                                       OrcFile.WriterVersion writerVersion,
+                                       List<StripeStatistics> stripeStats,
       int stripeCount, Path filePath, final SchemaEvolution evolution) {
     if (sarg == null || stripeStats == null || writerVersion == OrcFile.WriterVersion.ORIGINAL) {
       return null; // only do split pruning if HIVE-8732 has been fixed in the writer
@@ -1907,7 +1911,7 @@ public class OrcInputFormat implements InputFormat<NullWritable, OrcStruct>,
     // eliminate stripes that doesn't satisfy the predicate condition
     List<PredicateLeaf> sargLeaves = sarg.getLeaves();
     int[] filterColumns = RecordReaderImpl.mapSargColumnsToOrcInternalColIdx(sargLeaves,
-        sargColNames, getRootColumn(isOriginal));
+        evolution);
     return pickStripesInternal(sarg, filterColumns, stripeStats, stripeCount, filePath, evolution);
   }
 
