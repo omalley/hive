@@ -286,7 +286,10 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
     Reader.Options options = new Reader.Options().range(offset, length);
     options.schema(schema);
     boolean isOriginal = isOriginal(file);
-    List<OrcProto.Type> types = file.getTypes();
+    if (schema == null) {
+      schema = file.getSchema();
+    }
+    List<OrcProto.Type> types = OrcUtils.getOrcTypes(schema);
     options.include(genIncludedColumns(types, conf, isOriginal));
     setSearchArgument(options, types, conf, isOriginal);
     return file.rowsOptions(options);
@@ -1024,7 +1027,7 @@ public class OrcInputFormat  implements InputFormat<NullWritable, OrcStruct>,
             SearchArgument sarg = options.getSearchArgument();
             List<PredicateLeaf> sargLeaves = sarg.getLeaves();
             int[] filterColumns = RecordReaderImpl.mapSargColumns(sargLeaves,
-                options.getColumnNames(), getRootColumn(isOriginal));
+                evolution);
 
             if (stripeStats != null) {
               // eliminate stripes that doesn't satisfy the predicate condition
