@@ -143,6 +143,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
   private final OrcEncodedDataConsumer consumer;
   private final QueryFragmentCounters counters;
   private final UserGroupInformation ugi;
+  private final SchemaEvolution evolution;
 
   // Read state.
   private int stripeIxFrom;
@@ -167,7 +168,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
   public OrcEncodedDataReader(LowLevelCache lowLevelCache, BufferUsageManager bufferManager,
       OrcMetadataCache metadataCache, Configuration conf, FileSplit split, List<Integer> columnIds,
       SearchArgument sarg, String[] columnNames, OrcEncodedDataConsumer consumer,
-      QueryFragmentCounters counters) throws IOException {
+      QueryFragmentCounters counters, TypeDescription readerSchema) throws IOException {
     this.lowLevelCache = lowLevelCache;
     this.metadataCache = metadataCache;
     this.bufferManager = bufferManager;
@@ -196,9 +197,15 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
     fileKey = determineFileId(fs, split,
         HiveConf.getBoolVar(conf, ConfVars.LLAP_CACHE_ALLOW_SYNTHETIC_FILEID));
     fileMetadata = getOrReadFileMetadata();
-    globalIncludes = OrcInputFormat.genIncludedColumns(fileMetadata.getTypes(), columnIds, true);
+    TypeDescription fileSchema = OrcUtils.convertTypeFromProtobuf(fileMetadata.getTypes(), 0);
+    if (readerSchema == null) {
+      readerSchema = fileSchema;
+    }
+    globalIncludes = OrcInputFormat.genIncludedColumns(readerSchema, columnIds);
+    evolution = new SchemaEvolution(fileSchema, readerSchema, globalIncludes);
     consumer.setFileMetadata(fileMetadata);
     consumer.setIncludedColumns(globalIncludes);
+    consumer.setReaderSchema(readerSchema);
   }
 
   @Override
@@ -267,8 +274,11 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
     try {
       if (sarg != null && stride != 0) {
         // TODO: move this to a common method
+        TypeDescription schema = OrcUtils.convertTypeFromProtobuf(fileMetadata.getTypes(), 0);
+        SchemaEvolution evolution = new SchemaEvolution(schema,
+            null, globalIncludes);
         int[] filterColumns = RecordReaderImpl.mapSargColumnsToOrcInternalColIdx(
-          sarg.getLeaves(), columnNames, 0);
+          sarg.getLeaves(), evolution);
         // included will not be null, row options will fill the array with trues if null
         sargColumns = new boolean[globalIncludes.length];
         for (int i : filterColumns) {
@@ -359,7 +369,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
         } else {
           // We are reading subset of the original columns, remove unnecessary bitmasks/etc.
           // This will never happen w/o high-level cache.
-          stripeIncludes = OrcInputFormat.genIncludedColumns(fileMetadata.getTypes(), cols, true);
+          stripeIncludes = OrcInputFormat.genIncludedColumns(evolution.getReaderBaseSchema(), cols);
           colRgs = genStripeColRgs(cols, colRgs);
         }
 
@@ -713,7 +723,7 @@ public class OrcEncodedDataReader extends CallableWithNdc<Void>
       TypeDescription schema = OrcUtils.convertTypeFromProtobuf(types, 0);
       SchemaEvolution schemaEvolution = new SchemaEvolution(schema, globalIncludes);
       sargApp = new RecordReaderImpl.SargApplier(sarg, colNamesForSarg,
-          rowIndexStride, globalIncludes.length, schemaEvolution);
+          rowIndexStride, schemaEvolution);
     }
     boolean hasAnyData = false;
     // readState should have been initialized by this time with an empty array.
