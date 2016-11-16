@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivilegedExceptionAction;
 import java.sql.Date;
@@ -3479,8 +3480,9 @@ public class TestInputOutputFormat {
       assertEquals("row " + r, r * 42, ((LongColumnVector) batch.cols[0]).vector[r]);
       assertEquals("row " + r, r * 10001, lcv.vector[r]);
       assertEquals("row " + r, r * 10001, lcv.vector[r]);
-      assertEquals("row " + r, Integer.toHexString(r),
-          ((BytesColumnVector) batch.cols[2]).toString(r));
+      BytesColumnVector bcv = (BytesColumnVector) batch.cols[2];
+      String value = new String(bcv.vector[r], bcv.start[r], bcv.length[r], StandardCharsets.UTF_8);
+      assertEquals("row " + r, Integer.toHexString(r), value);
     }
     assertEquals(false, rows.nextBatch(batch));
     rows.close();
