@@ -12,7 +12,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.apache</groupId>
@@ -21,7 +21,7 @@
   </parent>
   <groupId>org.apache.hive</groupId>
   <artifactId>hive</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.1000.2.5.3.0-15</version>
   <packaging>pom</packaging>
 
   <name>Hive</name>
@@ -64,7 +64,7 @@
     <checkstyle.conf.dir>${hive.path.to.root}/checkstyle</checkstyle.conf.dir>
 
     <!-- Test Properties -->
-    <test.extra.path></test.extra.path>
+    <test.extra.path />
     <test.hive.hadoop.classpath>${maven.test.classpath}</test.hive.hadoop.classpath>
     <test.log4j.scheme>file://</test.log4j.scheme>
     <test.tmp.dir>${project.build.directory}/tmp</test.tmp.dir>
@@ -73,11 +73,11 @@
     <test.warehouse.scheme>pfile://</test.warehouse.scheme>
 
     <!-- To add additional exclude patterns set this property -->
-    <test.excludes.additional></test.excludes.additional>
-    <skip.spark.file1></skip.spark.file1>
-    <skip.spark.file2></skip.spark.file2>
-    <skip.spark.file3></skip.spark.file3>
-    <skip.spark.file4></skip.spark.file4>
+    <test.excludes.additional />
+    <skip.spark.file1 />
+    <skip.spark.file2 />
+    <skip.spark.file3 />
+    <skip.spark.file4 />
 
     <!-- Plugin and Plugin Dependency Versions -->
     <ant.contrib.version>1.0b3</ant.contrib.version>
@@ -99,16 +99,16 @@
     <maven.build-helper.plugin.version>1.8</maven.build-helper.plugin.version>
 
     <!-- Library Dependency Versions -->
-    <accumulo.version>1.6.0</accumulo.version>
+    <accumulo.version>1.7.0.2.5.3.0-15</accumulo.version>
     <activemq.version>5.5.0</activemq.version>
     <ant.version>1.9.1</ant.version>
     <antlr.version>3.4</antlr.version>
-    <avatica.version>1.7.2-SNAPSHOT</avatica.version>
+    <avatica.version>1.8.0.2.5.3.0-15</avatica.version>
     <avro.version>1.7.5</avro.version>
     <apache-directory-server.version>1.5.6</apache-directory-server.version>
     <apache-directory-clientapi.version>0.1</apache-directory-clientapi.version>
     <bonecp.version>0.8.0.RELEASE</bonecp.version>
-    <calcite.version>1.2.0-incubating</calcite.version>
+    <calcite.version>1.2.0.2.5.3.0-15</calcite.version>
     <datanucleus-api-jdo.version>4.2.1</datanucleus-api-jdo.version>
     <datanucleus-core.version>4.1.6</datanucleus-core.version>
     <datanucleus-rdbms.version>4.1.7</datanucleus-rdbms.version>
@@ -130,10 +130,10 @@
     <guava.version>14.0.1</guava.version>
     <groovy.version>2.4.4</groovy.version>
     <hadoop-20S.version>1.2.1</hadoop-20S.version>
-    <hadoop-23.version>2.6.0</hadoop-23.version>
+    <hadoop-23.version>2.7.3.2.5.3.0-15</hadoop-23.version>
     <hadoop.bin.path>${basedir}/${hive.path.to.root}/testutils/hadoop</hadoop.bin.path>
     <hbase.hadoop1.version>0.98.9-hadoop1</hbase.hadoop1.version>
-    <hbase.hadoop2.version>0.98.9-hadoop2</hbase.hadoop2.version>
+    <hbase.hadoop2.version>1.1.2.2.5.3.0-15</hbase.hadoop2.version>
     <hikaricp.version>1.3.9</hikaricp.version>
     <!-- httpcomponents are not always in version sync -->
     <httpcomponents.client.version>4.4</httpcomponents.client.version>
@@ -168,7 +168,7 @@
     <stax.version>1.0.1</stax.version>
     <slf4j.version>1.7.5</slf4j.version>
     <ST4.version>4.0.4</ST4.version>
-    <tez.version>0.5.4</tez.version>
+    <tez.version>0.7.0.2.5.3.0-15</tez.version>
     <super-csv.version>2.2.0</super-csv.version>
     <spark.version>1.3.1</spark.version>
     <scala.binary.version>2.10</scala.binary.version>
@@ -178,7 +178,7 @@
     <wadl-resourcedoc-doclet.version>1.4</wadl-resourcedoc-doclet.version>
     <velocity.version>1.5</velocity.version>
     <xerces.version>2.9.1</xerces.version>
-    <zookeeper.version>3.4.6</zookeeper.version>
+    <zookeeper.version>3.4.6.2.5.3.0-15</zookeeper.version>
     <jpam.version>1.1</jpam.version>
     <felix.version>2.4.0</felix.version>
     <curator.version>2.6.0</curator.version>
@@ -772,7 +772,7 @@
             <configuration>
               <exportAntProperties>true</exportAntProperties>
               <target>
-                <property name="maven.test.classpath" refid="maven.test.classpath"/>
+                <property name="maven.test.classpath" refid="maven.test.classpath" />
               </target>
             </configuration>
           </execution>
@@ -791,7 +791,7 @@
                 <mkdir dir="${test.tmp.dir}/conf" />
                 <!-- copies hive-site.xml so it can be modified -->
                 <copy todir="${test.tmp.dir}/conf/">
-                  <fileset dir="${basedir}/${hive.path.to.root}/data/conf/"/>
+                  <fileset dir="${basedir}/${hive.path.to.root}/data/conf/" />
                 </copy>
               </target>
             </configuration>
@@ -989,19 +989,18 @@
                 <phase>generate-sources</phase>
                 <configuration>
                   <target>
-                    <taskdef name="for" classname="net.sf.antcontrib.logic.ForTask"
-                      classpathref="maven.plugin.classpath" />
-                    <property name="thrift.args" value="-I ${thrift.home} --gen java:beans,hashcode,generated_annotations=undated --gen cpp --gen php --gen py --gen rb"/>
-                    <property name="thrift.gen.dir" value="${basedir}/src/gen/thrift"/>
-                    <delete dir="${thrift.gen.dir}"/>
-                    <mkdir dir="${thrift.gen.dir}"/>
+                    <taskdef classname="net.sf.antcontrib.logic.ForTask" classpathref="maven.plugin.classpath" name="for" />
+                    <property name="thrift.args" value="-I ${thrift.home} --gen java:beans,hashcode,generated_annotations=undated --gen cpp --gen php --gen py --gen rb" />
+                    <property name="thrift.gen.dir" value="${basedir}/src/gen/thrift" />
+                    <delete dir="${thrift.gen.dir}" />
+                    <mkdir dir="${thrift.gen.dir}" />
                     <for param="thrift.file">
                       <path>
                         <fileset dir="." includes="if/*.thrift,if/test/*.thrift" />
                       </path>
                       <sequential>
-                        <echo message="Generating Thrift code for @{thrift.file}"/>
-                        <exec executable="${thrift.home}/bin/thrift"  failonerror="true" dir=".">
+                        <echo message="Generating Thrift code for @{thrift.file}" />
+                        <exec dir="." executable="${thrift.home}/bin/thrift" failonerror="true">
                           <arg line="${thrift.args} -I ${basedir}/include -I ${basedir}/.. -o ${thrift.gen.dir} @{thrift.file} " />
                         </exec>
                       </sequential>
