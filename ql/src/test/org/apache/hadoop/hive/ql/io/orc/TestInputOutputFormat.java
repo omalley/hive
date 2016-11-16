@@ -48,7 +48,6 @@ import org.apache.hadoop.hive.common.ValidTxnList;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars;
-import org.apache.hadoop.hive.llap.TypeDesc;
 import org.apache.hadoop.hive.metastore.api.hive_metastoreConstants;
 import org.apache.hadoop.hive.ql.exec.Utilities;
 import org.apache.hadoop.hive.ql.exec.mr.ExecMapper;
@@ -92,6 +91,8 @@ import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.IntObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.StringObjectInspector;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfo;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
 import org.apache.hadoop.hive.shims.CombineHiveKey;
 import org.apache.hadoop.io.DataOutputBuffer;
 import org.apache.hadoop.io.IntWritable;
@@ -1951,7 +1952,7 @@ public class TestInputOutputFormat {
     Path partDir = new Path(conf.get("mapred.input.dir"));
     OrcRecordUpdater writer = new OrcRecordUpdater(partDir,
         new AcidOutputFormat.Options(conf).maximumTransactionId(10)
-            .writingBase(true).bucket(0).inspector(inspector).finalDestination(partDir));
+            .writingBase(true).bucket(0).inspector(inspector));
     for (int i = 0; i < 100; ++i) {
       BigRow row = new BigRow(i);
       writer.insert(10, row);
@@ -3435,23 +3436,28 @@ public class TestInputOutputFormat {
    */
   @Test
   public void testSchemaEvolution() throws Exception {
-    TypeDescription fileSchema =
-        TypeDescription.fromString("struct<a:int,b:struct<c:int>,d:string>");
+    String typeStr = "struct<a:int,b:struct<c:int>,d:string>";
+    TypeInfo typeInfo = TypeInfoUtils.getTypeInfoFromTypeString(typeStr);
     Writer writer = OrcFile.createWriter(testFilePath,
         OrcFile.writerOptions(conf)
             .fileSystem(fs)
-            .setSchema(fileSchema)
-            .compress(org.apache.orc.CompressionKind.NONE));
-    VectorizedRowBatch batch = fileSchema.createRowBatch(1000);
-    batch.size = 1000;
-    LongColumnVector lcv = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[0]);
+            .inspector(OrcStruct.createObjectInspector(typeInfo))
+            .compress(CompressionKind.NONE));
+    OrcStruct row = new OrcStruct(3);
+    IntWritable a = new IntWritable();
+    row.setFieldValue(0, a);
+    OrcStruct b = new OrcStruct(1);
+    row.setFieldValue(1, b);
+    IntWritable c= new IntWritable();
+    b.setFieldValue(0, c);
+    Text d = new Text();
+    row.setFieldValue(2, d);
     for(int r=0; r < 1000; r++) {
-      ((LongColumnVector) batch.cols[0]).vector[r] = r * 42;
-      lcv.vector[r] = r * 10001;
-      ((BytesColumnVector) batch.cols[2]).setVal(r,
-          Integer.toHexString(r).getBytes(StandardCharsets.UTF_8));
+      a.set(r * 42);
+      c.set(r * 10001);
+      d.set(Integer.toHexString(r));
+      writer.addRow(row);
     }
-    writer.addRowBatch(batch);
     writer.close();
     TypeDescription readerSchema = TypeDescription.fromString(
         "struct<a:int,b:struct<c:int,future1:int>,d:string,future2:int>");
@@ -3519,8 +3525,8 @@ public class TestInputOutputFormat {
         OrcFile.writerOptions(conf)
             .fileSystem(fs)
             .setSchema(fileSchema)
-            .compress(org.apache.orc.CompressionKind.NONE));
-    VectorizedRowBatch batch = fileSchema.createRowBatch(1000);
+            .compress(CompressionKind.NONE));
+    VectorizedRowBatch batch = fileSchema.createRowBatch();
     batch.size = 1000;
     StructColumnVector scv = (StructColumnVector)batch.cols[5];
     // operation
@@ -3556,15 +3562,14 @@ public class TestInputOutputFormat {
     long fileLength = fs.getFileStatus(testFilePath).getLen();
 
     // test with same schema with include
-    conf.set(ConfVars.HIVE_TXN_OPERATIONAL_PROPERTIES.toString(), "1");
     conf.set(ValidTxnList.VALID_TXNS_KEY, "100:99:");
     conf.set(IOConstants.SCHEMA_EVOLUTION_COLUMNS, "a,b,d");
     conf.set(IOConstants.SCHEMA_EVOLUTION_COLUMNS_TYPES, "int,struct<c:int>,string");
     conf.set(ColumnProjectionUtils.READ_ALL_COLUMNS, "false");
     conf.set(ColumnProjectionUtils.READ_COLUMN_IDS_CONF_STR, "0,2");
-    OrcSplit split = new OrcSplit(testFilePath, null, 0, fileLength,
+    OrcSplit split = new OrcSplit(testFilePath, 0, fileLength,
         new String[0], null, false, true,
-        new ArrayList<AcidInputFormat.DeltaMetaData>(), fileLength, fileLength);
+        new ArrayList<Long>(), fileLength, fileLength);
     OrcInputFormat inputFormat = new OrcInputFormat();
     AcidInputFormat.RowReader<OrcStruct> reader = inputFormat.getReader(split,
         new AcidInputFormat.Options(conf));
@@ -3590,9 +3595,9 @@ public class TestInputOutputFormat {
     conf.set(IOConstants.SCHEMA_EVOLUTION_COLUMNS_TYPES, "int,struct<c:int,e:string>,string,int");
     conf.set(ColumnProjectionUtils.READ_ALL_COLUMNS, "false");
     conf.set(ColumnProjectionUtils.READ_COLUMN_IDS_CONF_STR, "0,2,3");
-    split = new OrcSplit(testFilePath, null, 0, fileLength,
+    split = new OrcSplit(testFilePath, 0, fileLength,
         new String[0], null, false, true,
-        new ArrayList<AcidInputFormat.DeltaMetaData>(), fileLength, fileLength);
+        new ArrayList<Long>(), fileLength, fileLength);
     inputFormat = new OrcInputFormat();
     reader = inputFormat.getReader(split, new AcidInputFormat.Options(conf));
     record = 0;

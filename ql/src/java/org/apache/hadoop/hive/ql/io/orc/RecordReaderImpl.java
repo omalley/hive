@@ -189,7 +189,7 @@ class RecordReaderImpl implements RecordReader {
     // (i.e Schema Evolution), so we currently ignore it.
     if (sarg != null && rowIndexStride != 0 && !evolution.hasConversion()) {
       sargApp = new SargApplier(sarg, options.getColumnNames(), rowIndexStride,
-                                types, evolution);
+                                evolution);
     } else {
       sargApp = null;
       if (evolution.hasConversion()) {
