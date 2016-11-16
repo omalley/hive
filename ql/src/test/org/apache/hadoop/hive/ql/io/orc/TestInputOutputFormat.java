@@ -96,6 +96,7 @@ import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
 import org.apache.hadoop.hive.shims.CombineHiveKey;
 import org.apache.hadoop.io.DataOutputBuffer;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
@@ -3465,8 +3466,8 @@ public class TestInputOutputFormat {
         OrcFile.readerOptions(conf).filesystem(fs));
     RecordReader rows = reader.rowsOptions(new Reader.Options()
         .schema(readerSchema));
-    batch = readerSchema.createRowBatch();
-    lcv = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[0]);
+    VectorizedRowBatch batch = readerSchema.createRowBatch();
+    LongColumnVector lcv = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[0]);
     LongColumnVector future1 = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[1]);
     assertEquals(true, rows.nextBatch(batch));
     assertEquals(1000, batch.size);
@@ -3516,46 +3517,44 @@ public class TestInputOutputFormat {
     testFilePath = new Path(baseDir, "bucket_00000");
     fs.mkdirs(baseDir);
     fs.delete(testFilePath, true);
-    TypeDescription fileSchema =
-        TypeDescription.fromString("struct<operation:int," +
-            "originalTransaction:bigint,bucket:int,rowId:bigint," +
-            "currentTransaction:bigint," +
-            "row:struct<a:int,b:struct<c:int>,d:string>>");
+    String typeStr = "struct<operation:int," +
+        "originalTransaction:bigint,bucket:int,rowId:bigint," +
+        "currentTransaction:bigint," +
+        "row:struct<a:int,b:struct<c:int>,d:string>>";
+    TypeInfo typeInfo = TypeInfoUtils.getTypeInfoFromTypeString(typeStr);
     Writer writer = OrcFile.createWriter(testFilePath,
         OrcFile.writerOptions(conf)
             .fileSystem(fs)
-            .setSchema(fileSchema)
+            .inspector(OrcStruct.createObjectInspector(typeInfo))
             .compress(CompressionKind.NONE));
-    VectorizedRowBatch batch = fileSchema.createRowBatch();
-    batch.size = 1000;
-    StructColumnVector scv = (StructColumnVector)batch.cols[5];
-    // operation
-    batch.cols[0].isRepeating = true;
-    ((LongColumnVector) batch.cols[0]).vector[0] = 0;
-    // original transaction
-    batch.cols[1].isRepeating = true;
-    ((LongColumnVector) batch.cols[1]).vector[0] = 1;
-    // bucket
-    batch.cols[2].isRepeating = true;
-    ((LongColumnVector) batch.cols[2]).vector[0] = 0;
-    // current transaction
-    batch.cols[4].isRepeating = true;
-    ((LongColumnVector) batch.cols[4]).vector[0] = 1;
-
-    LongColumnVector lcv = (LongColumnVector)
-        ((StructColumnVector) scv.fields[1]).fields[0];
+    OrcStruct row = new OrcStruct(6);
+    row.setFieldValue(0, new IntWritable(0));
+    row.setFieldValue(1, new LongWritable(1));
+    row.setFieldValue(2, new IntWritable(0));
+    LongWritable rowId = new LongWritable();
+    row.setFieldValue(3, rowId);
+    row.setFieldValue(4, new LongWritable(1));
+    OrcStruct rowField = new OrcStruct(3);
+    row.setFieldValue(5, rowField);
+    IntWritable a = new IntWritable();
+    rowField.setFieldValue(0, a);
+    OrcStruct b = new OrcStruct(1);
+    rowField.setFieldValue(1, b);
+    IntWritable c = new IntWritable();
+    b.setFieldValue(0, c);
+    Text d = new Text();
+    rowField.setFieldValue(2, d);
     for(int r=0; r < 1000; r++) {
       // row id
-      ((LongColumnVector) batch.cols[3]).vector[r] = r;
+      rowId.set(r);
       // a
-      ((LongColumnVector) scv.fields[0]).vector[r] = r * 42;
+      a.set(r * 42);
       // b.c
-      lcv.vector[r] = r * 10001;
+      c.set(r * 10001);
       // d
-      ((BytesColumnVector) scv.fields[2]).setVal(r,
-          Integer.toHexString(r).getBytes(StandardCharsets.UTF_8));
+      d.set(Integer.toHexString(r));
+      writer.addRow(row);
     }
-    writer.addRowBatch(batch);
     writer.addUserMetadata(OrcRecordUpdater.ACID_KEY_INDEX_NAME,
         ByteBuffer.wrap("0,0,999".getBytes(StandardCharsets.UTF_8)));
     writer.close();
