@@ -70,23 +70,9 @@ public class VectorizedOrcInputFormat extends FileInputFormat<NullWritable, Vect
       /**
        * Do we have schema on read in the configuration variables?
        */
-      int dataColumns = rbCtx.getDataColumnCount();
-      TypeDescription schema =
-          OrcUtils.getDesiredRowTypeDescr(conf, isAcidRead);
-      if (schema == null) {
-        schema = file.getSchema();
-        // Even if the user isn't doing schema evolution, cut the schema
-        // to the desired size.
-        if (schema.getCategory() == TypeDescription.Category.STRUCT &&
-            schema.getChildren().size() > dataColumns) {
-          schema = schema.clone();
-          List<TypeDescription> children = schema.getChildren();
-          for(int c = children.size() - 1; c >= dataColumns; --c) {
-            children.remove(c);
-          }
-        }
-      }
-      List<OrcProto.Type> types = OrcUtils.getOrcTypes(schema);
+      TypeDescription schema = OrcUtils.getDesiredRowTypeDescr(conf,
+          /* isAcidRead */ false);
+      List<OrcProto.Type> types = schema == null ? file.getTypes() : OrcUtils.getOrcTypes(schema);
       Reader.Options options = new Reader.Options().schema(schema);
 
       this.offset = fileSplit.getStart();

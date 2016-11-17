@@ -3467,46 +3467,36 @@ public class TestInputOutputFormat {
         OrcFile.readerOptions(conf).filesystem(fs));
     RecordReader rows = reader.rowsOptions(new Reader.Options()
         .schema(readerSchema));
-    VectorizedRowBatch batch = readerSchema.createRowBatch();
-    LongColumnVector lcv = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[0]);
-    LongColumnVector future1 = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[1]);
-    assertEquals(true, rows.nextBatch(batch));
-    assertEquals(1000, batch.size);
-    assertEquals(true, future1.isRepeating);
-    assertEquals(true, future1.isNull[0]);
-    assertEquals(true, batch.cols[3].isRepeating);
-    assertEquals(true, batch.cols[3].isNull[0]);
-    for(int r=0; r < batch.size; ++r) {
-      assertEquals("row " + r, r * 42, ((LongColumnVector) batch.cols[0]).vector[r]);
-      assertEquals("row " + r, r * 10001, lcv.vector[r]);
-      assertEquals("row " + r, r * 10001, lcv.vector[r]);
-      BytesColumnVector bcv = (BytesColumnVector) batch.cols[2];
-      String value = new String(bcv.vector[r], bcv.start[r], bcv.length[r], StandardCharsets.UTF_8);
-      assertEquals("row " + r, Integer.toHexString(r), value);
+    row = null;
+    for(int r=0; r < 1000; ++r) {
+      assertEquals("hasNext " + r, true, rows.hasNext());
+      row = (OrcStruct) rows.next(row);
+      assertEquals("row " + r, r * 42, ((IntWritable) row.getFieldValue(0)).get());
+      OrcStruct inner = (OrcStruct) row.getFieldValue(1);
+      assertEquals("row " + r, r * 10001, ((IntWritable) inner.getFieldValue(0)).get());
+      assertEquals("row " + r, null, inner.getFieldValue(1));
+      assertEquals("row " + r, Integer.toHexString(r), row.getFieldValue(2).toString());
+      assertEquals("row " + r, null, row.getFieldValue(3));
     }
-    assertEquals(false, rows.nextBatch(batch));
+    assertEquals(false, rows.hasNext());
     rows.close();
 
     // try it again with an include vector
     rows = reader.rowsOptions(new Reader.Options()
         .schema(readerSchema)
         .include(new boolean[]{false, true, true, true, false, false, true}));
-    batch = readerSchema.createRowBatch();
-    lcv = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[0]);
-    future1 = ((LongColumnVector) ((StructColumnVector) batch.cols[1]).fields[1]);
-    assertEquals(true, rows.nextBatch(batch));
-    assertEquals(1000, batch.size);
-    assertEquals(true, future1.isRepeating);
-    assertEquals(true, future1.isNull[0]);
-    assertEquals(true, batch.cols[3].isRepeating);
-    assertEquals(true, batch.cols[3].isNull[0]);
-    assertEquals(true, batch.cols[2].isRepeating);
-    assertEquals(true, batch.cols[2].isNull[0]);
-    for(int r=0; r < batch.size; ++r) {
-      assertEquals("row " + r, r * 42, ((LongColumnVector) batch.cols[0]).vector[r]);
-      assertEquals("row " + r, r * 10001, lcv.vector[r]);
+    row = null;
+    for(int r=0; r < 1000; ++r) {
+      assertEquals("row " + r, true, rows.hasNext());
+      row = (OrcStruct) rows.next(row);
+      assertEquals("row " + r, r * 42, ((IntWritable) row.getFieldValue(0)).get());
+      OrcStruct inner = (OrcStruct) row.getFieldValue(1);
+      assertEquals("row " + r, r * 10001, ((IntWritable) inner.getFieldValue(0)).get());
+      assertEquals("row " + r, null, inner.getFieldValue(1));
+      assertEquals("row " + r, null, row.getFieldValue(2));
+      assertEquals("row " + r, null, row.getFieldValue(3));
     }
-    assertEquals(false, rows.nextBatch(batch));
+    assertEquals(false, rows.hasNext());
     rows.close();
   }
 
