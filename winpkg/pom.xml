@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive</artifactId>
-        <version>0.3.0.2.0.6.0-1111</version>
+        <version>1.2.1000.2.5.3.0-13</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>org.apache.hive</groupId>
