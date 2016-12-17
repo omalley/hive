@@ -189,6 +189,7 @@
     <spark.version>1.6.0</spark.version>
     <scala.binary.version>2.10</scala.binary.version>
     <scala.version>2.10.4</scala.version>
+    <storage-api.version>2.3.0-SNAPSHOT</storage-api.version>
     <tempus-fugit.version>1.1</tempus-fugit.version>
     <snappy.version>0.2</snappy.version>
     <wadl-resourcedoc-doclet.version>1.4</wadl-resourcedoc-doclet.version>
@@ -506,6 +507,11 @@
         <groupId>stax</groupId>
         <artifactId>stax-api</artifactId>
         <version>${stax.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hive</groupId>
+        <artifactId>hive-storage-api</artifactId>
+        <version>${storage-api.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.pig</groupId>
@@ -982,7 +988,7 @@
                   <onlyWhenRelease>true</onlyWhenRelease>
                 </requireReleaseDeps>
               </rules>
-              <fail>true</fail>
+              <fail>false</fail>
             </configuration>
           </execution>
           <execution>
