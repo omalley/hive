@@ -79,20 +79,21 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hive.common.util.HiveTestUtils;
-import org.apache.hive.orc.BinaryColumnStatistics;
-import org.apache.hive.orc.BooleanColumnStatistics;
-import org.apache.hive.orc.ColumnStatistics;
-import org.apache.hive.orc.DecimalColumnStatistics;
-import org.apache.hive.orc.DoubleColumnStatistics;
-import org.apache.hive.orc.IntegerColumnStatistics;
-import org.apache.hive.orc.impl.MemoryManager;
-import org.apache.hive.orc.OrcProto;
+import org.apache.orc.BinaryColumnStatistics;
+import org.apache.orc.BooleanColumnStatistics;
+import org.apache.orc.ColumnStatistics;
+import org.apache.orc.DecimalColumnStatistics;
+import org.apache.orc.DoubleColumnStatistics;
+import org.apache.orc.IntegerColumnStatistics;
+import org.apache.orc.OrcConf;
+import org.apache.orc.impl.MemoryManager;
+import org.apache.orc.OrcProto;
 
-import org.apache.hive.orc.OrcUtils;
-import org.apache.hive.orc.StringColumnStatistics;
-import org.apache.hive.orc.StripeInformation;
-import org.apache.hive.orc.StripeStatistics;
-import org.apache.hive.orc.TypeDescription;
+import org.apache.orc.OrcUtils;
+import org.apache.orc.StringColumnStatistics;
+import org.apache.orc.StripeInformation;
+import org.apache.orc.StripeStatistics;
+import org.apache.orc.TypeDescription;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -247,7 +248,7 @@ public class TestOrcFile {
   public void openFileSystem () throws Exception {
     conf = new Configuration();
     if(zeroCopy) {
-      conf.setBoolean(HiveConf.ConfVars.HIVE_ORC_ZEROCOPY.varname, zeroCopy);
+      conf.setBoolean(OrcConf.USE_ZEROCOPY.getHiveConfName(), zeroCopy);
     }
     fs = FileSystem.getLocal(conf);
     testFilePath = new Path(workDir, "TestOrcFile." +
@@ -587,9 +588,6 @@ public class TestOrcFile {
     assertEquals(2, stats[0].getNumberOfValues());
     assertEquals(0, stats[1].getNumberOfValues());
     assertEquals(true, stats[1].hasNull());
-    assertNull(((DecimalColumnStatistics)stats[1]).getMinimum());
-    assertNull(((DecimalColumnStatistics)stats[1]).getMaximum());
-    assertEquals(new HiveDecimalWritable(0).getHiveDecimal(), ((DecimalColumnStatistics)stats[1]).getSum());
   }
 
   @Test
@@ -1820,7 +1818,7 @@ public class TestOrcFile {
     assertEquals(COUNT, reader.getNumberOfRows());
     /* enable zero copy record reader */
     Configuration conf = new Configuration();
-    HiveConf.setBoolVar(conf, HiveConf.ConfVars.HIVE_ORC_ZEROCOPY, true);
+    conf.setBoolean(OrcConf.USE_ZEROCOPY.getHiveConfName(), true);
     RecordReader rows = reader.rows();
     /* all tests are identical to the other seek() tests */
     OrcStruct row = null;

@@ -27,15 +27,16 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
-import org.apache.hive.orc.FileMetadata;
-import org.apache.hive.orc.impl.MemoryManager;
-import org.apache.hive.orc.TypeDescription;
-import org.apache.hive.orc.impl.OrcTail;
+import org.apache.orc.FileMetadata;
+import org.apache.orc.PhysicalWriter;
+import org.apache.orc.impl.MemoryManager;
+import org.apache.orc.TypeDescription;
+import org.apache.orc.impl.OrcTail;
 
 /**
  * Contains factory methods to read or write ORC files.
  */
-public final class OrcFile extends org.apache.hive.orc.OrcFile {
+public final class OrcFile extends org.apache.orc.OrcFile {
 
   // unused
   protected OrcFile() {}
@@ -54,7 +55,7 @@ public final class OrcFile extends org.apache.hive.orc.OrcFile {
     return new ReaderImpl(path, opts);
   }
 
-  public static class ReaderOptions extends org.apache.hive.orc.OrcFile.ReaderOptions {
+  public static class ReaderOptions extends org.apache.orc.OrcFile.ReaderOptions {
     public ReaderOptions(Configuration conf) {
       super(conf);
     }
@@ -92,7 +93,7 @@ public final class OrcFile extends org.apache.hive.orc.OrcFile {
   /**
    * Options for creating ORC file writers.
    */
-  public static class WriterOptions extends org.apache.hive.orc.OrcFile.WriterOptions {
+  public static class WriterOptions extends org.apache.orc.OrcFile.WriterOptions {
     private boolean explicitSchema = false;
     private ObjectInspector inspector = null;
     // Setting the default batch size to 1000 makes the memory check at 5000
@@ -231,7 +232,7 @@ public final class OrcFile extends org.apache.hive.orc.OrcFile {
     /**
      * Sets the generic compression that is used to compress the data.
      */
-    public WriterOptions compress(org.apache.hive.orc.CompressionKind value) {
+    public WriterOptions compress(org.apache.orc.CompressionKind value) {
       super.compress(value);
       return this;
     }
@@ -264,6 +265,11 @@ public final class OrcFile extends org.apache.hive.orc.OrcFile {
 
     protected WriterOptions batchSize(int maxSize) {
       batchSize = maxSize;
+      return this;
+    }
+
+    public WriterOptions physicalWriter(PhysicalWriter writer) {
+      super.physicalWriter(writer);
       return this;
     }
 

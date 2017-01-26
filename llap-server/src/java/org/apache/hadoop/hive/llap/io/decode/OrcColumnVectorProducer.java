@@ -43,7 +43,8 @@ import org.apache.hadoop.mapred.FileSplit;
 import org.apache.hadoop.mapred.InputFormat;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.Reporter;
-import org.apache.hive.orc.TypeDescription;
+import org.apache.orc.TypeDescription;
+import org.apache.orc.OrcConf;
 
 public class OrcColumnVectorProducer implements ColumnVectorProducer {
 
@@ -64,7 +65,7 @@ public class OrcColumnVectorProducer implements ColumnVectorProducer {
     this.lowLevelCache = lowLevelCache;
     this.bufferManager = bufferManager;
     this.conf = conf;
-    this._skipCorrupt = HiveConf.getBoolVar(conf, HiveConf.ConfVars.HIVE_ORC_SKIP_CORRUPT_DATA);
+    this._skipCorrupt = OrcConf.SKIP_CORRUPT_DATA.getBoolean(conf);
     this.cacheMetrics = cacheMetrics;
     this.ioMetrics = ioMetrics;
   }
@@ -74,13 +75,13 @@ public class OrcColumnVectorProducer implements ColumnVectorProducer {
       Consumer<ColumnVectorBatch> consumer, FileSplit split, List<Integer> columnIds,
       SearchArgument sarg, String[] columnNames, QueryFragmentCounters counters,
       TypeDescription readerSchema, InputFormat<?, ?> unused0, Deserializer unused1,
-      Reporter reporter, JobConf job, Map<String, PartitionDesc> unused2) throws IOException {
+      Reporter reporter, JobConf job, Map<Path, PartitionDesc> unused2) throws IOException {
     cacheMetrics.incrCacheReadRequests();
     OrcEncodedDataConsumer edc = new OrcEncodedDataConsumer(consumer, columnIds.size(),
         _skipCorrupt, counters, ioMetrics);
-    OrcEncodedDataReader reader = new OrcEncodedDataReader(
-        lowLevelCache, bufferManager, metadataCache, conf, job, split, columnIds, sarg,
-        columnNames, edc, counters, readerSchema);
+    // Note: we use global conf here and ignore JobConf.
+    OrcEncodedDataReader reader = new OrcEncodedDataReader(lowLevelCache, bufferManager,
+        metadataCache, conf, split, columnIds, sarg, columnNames, edc, counters, readerSchema);
     edc.init(reader, reader);
     return edc;
   }

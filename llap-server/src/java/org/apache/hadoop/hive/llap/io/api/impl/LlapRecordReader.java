@@ -55,8 +55,8 @@ import org.apache.hadoop.mapred.InputFormat;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
-import org.apache.hive.orc.TypeDescription;
-import org.apache.hive.orc.impl.SchemaEvolution;
+import org.apache.orc.TypeDescription;
+import org.apache.orc.impl.SchemaEvolution;
 import org.apache.tez.common.counters.TezCounters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +91,7 @@ class LlapRecordReader
   private final ExecutorService executor;
   private final int columnCount;
 
-  private TypeDescription fileSchema;
+  private SchemaEvolution evolution;
 
   public LlapRecordReader(JobConf job, FileSplit split, List<Integer> includedCols,
       String hostName, ColumnVectorProducer cvp, ExecutorService executor,
@@ -147,7 +147,7 @@ class LlapRecordReader
     feedback = rp = cvp.createReadPipeline(this, split, columnIds, sarg, columnNames,
         counters, schema, sourceInputFormat, sourceSerDe, reporter, job,
         mapWork.getPathToPartitionInfo());
-    fileSchema = rp.getFileSchema();
+    evolution = rp.getSchemaEvolution();
     includedColumns = rp.getIncludedColumns();
   }
 
@@ -168,14 +168,9 @@ class LlapRecordReader
   }
 
   private boolean checkOrcSchemaEvolution() {
-    boolean isAcidScan = HiveConf.getBoolVar(jobConf, ConfVars.HIVE_TRANSACTIONAL_TABLE_SCAN);
-    TypeDescription readerSchema = OrcInputFormat.getDesiredRowTypeDescr(jobConf, isAcidScan,
-        Integer.MAX_VALUE);
-
-    SchemaEvolution schemaEvolution = new SchemaEvolution(
-        fileSchema, readerSchema, includedColumns);
     for (int i = 0; i < columnCount; ++i) {
-      if (!schemaEvolution.isPPDSafeConversion(columnIds.get(i))) {
+      int colId = columnIds == null ? i : columnIds.get(i);
+      if (!evolution.isPPDSafeConversion(colId)) {
         LlapIoImpl.LOG.warn("Unsupported schema evolution! Disabling Llap IO for {}", split);
         return false;
       }
