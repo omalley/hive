@@ -51,6 +51,7 @@ public class SchemaEvolution {
                          TypeDescription readerSchema,
                          boolean[] includeCols) {
     this.readerIncluded = includeCols == null ? null : Arrays.copyOf(includeCols, includeCols.length);
+    this.fileIncluded = new boolean[fileSchema.getMaximumId() + 1];
     this.hasConversion = false;
     this.fileSchema = fileSchema;
     boolean isAcid = checkAcidSchema(fileSchema);
@@ -68,12 +69,10 @@ public class SchemaEvolution {
             readerIncluded.length);
       }
       this.readerFileTypes = new TypeDescription[this.readerSchema.getMaximumId() + 1];
-      this.fileIncluded = new boolean[fileSchema.getMaximumId() + 1];
       buildConversionFileTypesArray(fileSchema, this.readerSchema);
     } else {
       this.readerSchema = fileSchema;
       this.readerFileTypes = new TypeDescription[this.readerSchema.getMaximumId() + 1];
-      this.fileIncluded = readerIncluded;
       if (readerIncluded != null &&
           readerIncluded.length + readerColumnOffset != this.readerSchema.getMaximumId() + 1) {
         throw new IllegalArgumentException("Include vector the wrong length: " +
@@ -354,6 +353,7 @@ public class SchemaEvolution {
       throw new RuntimeException("reader to file type entry already assigned");
     }
     readerFileTypes[id] = readerType;
+    fileIncluded[id] = true;
     List<TypeDescription> children = readerType.getChildren();
     if (children != null) {
       for (TypeDescription child : children) {
