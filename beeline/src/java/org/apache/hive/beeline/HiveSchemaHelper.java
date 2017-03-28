@@ -20,7 +20,6 @@ package org.apache.hive.beeline;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,7 +39,6 @@ public class HiveSchemaHelper {
   public static final String DB_MYSQL = "mysql";
   public static final String DB_POSTGRACE = "postgres";
   public static final String DB_ORACLE = "oracle";
-  public static final String DB_AZURE = "azuredb";
 
   /***
    * Get JDBC connection to metastore db
@@ -102,15 +100,7 @@ public class HiveSchemaHelper {
 
     static final String DEFAUTL_DELIMITER = ";";
 
-    /***
-     * Build sql command from sql script
-     * @param scriptDir the directory that contains sql script
-     * @param scriptFile sql script from which to build sql command
-     */
-    public String buildCommand(String scriptDir, String scriptFile)
-        throws IllegalArgumentException, IOException;
-
-    /***
+    /**
      * Find the type of given command
      *
      * @param dbCommand
@@ -163,6 +153,16 @@ public class HiveSchemaHelper {
      * @return
      */
     public boolean needsQuotedIdentifier();
+
+    /**
+     * Flatten the nested upgrade script into a buffer
+     *
+     * @param scriptDir  upgrade script directory
+     * @param scriptFile upgrade script file
+     * @return string of sql commands
+     */
+    public String buildCommand(String scriptDir, String scriptFile)
+        throws IllegalFormatException, IOException;
   }
 
   /***
@@ -249,7 +249,6 @@ public class HiveSchemaHelper {
         // if this is a valid executable command then add it to the buffer
         if (!isNonExecCommand(currentCommand)) {
           currentCommand = cleanseCommand(currentCommand);
-
           if (isNestedScript(currentCommand)) {
             // if this is a nested sql script then flatten it
             String currScript = getScriptName(currentCommand);
@@ -529,8 +528,6 @@ public class HiveSchemaHelper {
       return new PostgresCommandParser(dbOpts, msUsername, msPassword, hiveConf);
     } else if (dbName.equalsIgnoreCase(DB_ORACLE)) {
       return new OracleCommandParser(dbOpts, msUsername, msPassword, hiveConf);
-    } else if (dbName.equalsIgnoreCase(DB_AZURE)) {
-      return new AzureDBCommandParser(dbOpts, msUsername, msPassword, hiveConf);
     } else {
       throw new IllegalArgumentException("Unknown dbType " + dbName);
     }
