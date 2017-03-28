@@ -17,6 +17,11 @@
  */
 package org.apache.hive.beeline;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Lists;
+import org.apache.hadoop.hive.conf.HiveConf;
+import org.apache.hadoop.hive.metastore.HiveMetaException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,12 +31,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.IllegalFormatException;
 import java.util.List;
-
-import org.apache.hadoop.hive.conf.HiveConf;
-import org.apache.hadoop.hive.metastore.HiveMetaException;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Lists;
 
 public class HiveSchemaHelper {
   public static final String DB_DERBY = "derby";
@@ -172,9 +171,9 @@ public class HiveSchemaHelper {
    */
   private static abstract class AbstractCommandParser implements NestedScriptParser {
     private List<String> dbOpts;
-    private final String msUsername;
-    private final String msPassword;
-    private final HiveConf hiveConf;
+    private String msUsername;
+    private String msPassword;
+    private HiveConf hiveConf;
 
     public AbstractCommandParser(String dbOpts, String msUsername, String msPassword,
         HiveConf hiveConf) {
@@ -493,17 +492,12 @@ public class HiveSchemaHelper {
         currLine = currLine.trim();
         if (currLine.isEmpty())
           continue; //skip empty lines
-        if(currLine.contains("_STATEMENT_BREAK_")){
-          // have the rest in another line
-          sb.append(System.getProperty("line.separator"));
-          continue;
-        }
+
         if (isNonExecCommand(currLine))
           currLine = "/*" + currLine + "*/"; //enclose comments within '/*' and '*/'
 
         sb.append(currLine);
         sb.append(" ");
-
       }
       sb.append(System.getProperty("line.separator"));
       bfReader.close();
