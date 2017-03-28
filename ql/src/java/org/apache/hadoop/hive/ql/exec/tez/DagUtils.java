@@ -43,8 +43,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.tez.runtime.library.cartesianproduct.CartesianProductConfig;
-import org.apache.tez.runtime.library.cartesianproduct.CartesianProductEdgeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.hadoop.conf.Configuration;
@@ -134,7 +132,6 @@ import org.apache.tez.runtime.library.conf.OrderedPartitionedKVEdgeConfig;
 import org.apache.tez.runtime.library.conf.UnorderedKVEdgeConfig;
 import org.apache.tez.runtime.library.conf.UnorderedPartitionedKVEdgeConfig;
 import org.apache.tez.runtime.library.input.ConcatenatedMergedKeyValueInput;
-import org.apache.tez.runtime.library.cartesianproduct.CartesianProductVertexManager;
 
 /**
  * DagUtils. DagUtils is a collection of helper methods to convert
@@ -264,7 +261,7 @@ public class DagUtils {
    */
   @SuppressWarnings("rawtypes")
   public GroupInputEdge createEdge(VertexGroup group, JobConf vConf, Vertex w,
-      TezEdgeProperty edgeProp, BaseWork work, TezWork tezWork)
+      TezEdgeProperty edgeProp, VertexType vertexType)
     throws IOException {
 
     Class mergeInputClass;
@@ -279,8 +276,7 @@ public class DagUtils {
     case CUSTOM_EDGE: {
       mergeInputClass = ConcatenatedMergedKeyValueInput.class;
       int numBuckets = edgeProp.getNumBuckets();
-      CustomVertexConfiguration vertexConf
-              = new CustomVertexConfiguration(numBuckets, tezWork.getVertexType(work));
+      CustomVertexConfiguration vertexConf = new CustomVertexConfiguration(numBuckets, vertexType);
       DataOutputBuffer dob = new DataOutputBuffer();
       vertexConf.write(dob);
       VertexManagerPluginDescriptor desc =
@@ -296,9 +292,6 @@ public class DagUtils {
       mergeInputClass = ConcatenatedMergedKeyValueInput.class;
       break;
 
-    case XPROD_EDGE:
-      // fall through
-
     case SIMPLE_EDGE:
       setupAutoReducerParallelism(edgeProp, w);
       // fall through
@@ -308,7 +301,7 @@ public class DagUtils {
       break;
     }
 
-    return GroupInputEdge.create(group, w, createEdgeProperty(w, edgeProp, vConf, work, tezWork),
+    return GroupInputEdge.create(group, w, createEdgeProperty(edgeProp, vConf),
         InputDescriptor.create(mergeInputClass.getName()));
   }
 
@@ -322,14 +315,13 @@ public class DagUtils {
    * @return
    */
   public Edge createEdge(JobConf vConf, Vertex v, Vertex w, TezEdgeProperty edgeProp,
-      BaseWork work, TezWork tezWork)
+      VertexType vertexType)
     throws IOException {
 
     switch(edgeProp.getEdgeType()) {
     case CUSTOM_EDGE: {
       int numBuckets = edgeProp.getNumBuckets();
-      CustomVertexConfiguration vertexConf =
-              new CustomVertexConfiguration(numBuckets, tezWork.getVertexType(work));
+      CustomVertexConfiguration vertexConf = new CustomVertexConfiguration(numBuckets, vertexType);
       DataOutputBuffer dob = new DataOutputBuffer();
       vertexConf.write(dob);
       VertexManagerPluginDescriptor desc = VertexManagerPluginDescriptor.create(
@@ -340,9 +332,6 @@ public class DagUtils {
       w.setVertexManagerPlugin(desc);
       break;
     }
-    case XPROD_EDGE:
-      break;
-
     case SIMPLE_EDGE: {
       setupAutoReducerParallelism(edgeProp, w);
       break;
@@ -351,15 +340,14 @@ public class DagUtils {
       // nothing
     }
 
-    return Edge.create(v, w, createEdgeProperty(w, edgeProp, vConf, work, tezWork));
+    return Edge.create(v, w, createEdgeProperty(edgeProp, vConf));
   }
 
   /*
    * Helper function to create an edge property from an edge type.
    */
-  private EdgeProperty createEdgeProperty(Vertex w, TezEdgeProperty edgeProp,
-                                          Configuration conf, BaseWork work, TezWork tezWork)
-          throws IOException {
+  private EdgeProperty createEdgeProperty(TezEdgeProperty edgeProp, Configuration conf)
+      throws IOException {
     MRHelpers.translateMRConfToTez(conf);
     String keyClass = conf.get(TezRuntimeConfiguration.TEZ_RUNTIME_KEY_CLASS);
     String valClass = conf.get(TezRuntimeConfiguration.TEZ_RUNTIME_VALUE_CLASS);
@@ -404,22 +392,7 @@ public class DagUtils {
           .setValueSerializationClass(TezBytesWritableSerialization.class.getName(), null)
           .build();
       return et3Conf.createDefaultEdgeProperty();
-    case XPROD_EDGE:
-      EdgeManagerPluginDescriptor edgeManagerDescriptor =
-        EdgeManagerPluginDescriptor.create(CartesianProductEdgeManager.class.getName());
-      List<String> crossProductSources = new ArrayList<>();
-      for (BaseWork parentWork : tezWork.getParents(work)) {
-        if (EdgeType.XPROD_EDGE == tezWork.getEdgeType(parentWork, work)) {
-          crossProductSources.add(parentWork.getName());
-        }
-      }
-      CartesianProductConfig cpConfig = new CartesianProductConfig(crossProductSources);
-      edgeManagerDescriptor.setUserPayload(cpConfig.toUserPayload(null));
-      UnorderedKVEdgeConfig cpEdgeConf =
-        UnorderedKVEdgeConfig.newBuilder(keyClass, valClass).build();
-      return cpEdgeConf.createDefaultCustomEdgeProperty(edgeManagerDescriptor);
     case SIMPLE_EDGE:
-      // fallthrough
     default:
       assert partitionerClassName != null;
       partitionerConf = createPartitionerConf(partitionerClassName, conf);
@@ -1181,21 +1154,6 @@ public class DagUtils {
     } else if (work instanceof MergeJoinWork) {
       v = createVertex(conf, (MergeJoinWork) work, appJarLr, additionalLr, fileSystem, scratchDir,
               ctx, vertexType);
-      // set VertexManagerPlugin if whether it's a cross product destination vertex
-      List<String> crossProductSources = new ArrayList<>();
-      for (BaseWork parentWork : tezWork.getParents(work)) {
-        if (tezWork.getEdgeType(parentWork, work) == EdgeType.XPROD_EDGE) {
-          crossProductSources.add(parentWork.getName());
-        }
-      }
-
-      if (!crossProductSources.isEmpty()) {
-        CartesianProductConfig cpConfig = new CartesianProductConfig(crossProductSources);
-        v.setVertexManagerPlugin(
-          VertexManagerPluginDescriptor.create(CartesianProductVertexManager.class.getName())
-            .setUserPayload(cpConfig.toUserPayload(null)));
-        // parallelism shouldn't be set for cartesian product vertex
-      }
     } else {
       // something is seriously wrong if this is happening
       throw new HiveException(ErrorMsg.GENERIC_ERROR.getErrorCodedMsg());

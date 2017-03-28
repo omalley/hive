@@ -323,9 +323,4 @@
   <description> </description>
 </property>
 
-<property>
-  <name>hive.tez.cartesian-product.enabled</name>
-  <value>true</value>
-</property>
-
 </configuration>

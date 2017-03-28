@@ -29,7 +29,6 @@ import java.util.TreeMap;
 
 import org.apache.hadoop.hive.common.jsonexplain.tez.Op.OpType;
 import org.apache.hadoop.util.hash.Hash;
-import org.apache.thrift.ProcessFunction;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONArray;
@@ -69,7 +68,7 @@ public final class Vertex implements Comparable<Vertex>{
   public VertexType vertexType;
 
   public static enum EdgeType {
-    BROADCAST, SHUFFLE, MULTICAST, PARTITION_ONLY_SHUFFLE, XPROD_EDGE, UNKNOWN
+    BROADCAST, SHUFFLE, MULTICAST, PARTITION_ONLY_SHUFFLE, UNKNOWN
   };
   public EdgeType edgeType;
 
@@ -299,9 +298,6 @@ public final class Vertex implements Comparable<Vertex>{
       break;
     case "CUSTOM_EDGE":
       this.edgeType = EdgeType.MULTICAST;
-      break;
-    case "XPROD_EDGE":
-      this.edgeType = EdgeType.XPROD_EDGE;
       break;
     default:
       this.edgeType = EdgeType.UNKNOWN;
