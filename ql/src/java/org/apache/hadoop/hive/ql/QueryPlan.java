@@ -106,9 +106,6 @@ public class QueryPlan implements Serializable {
   private transient Long queryStartTime;
   private final HiveOperation operation;
   private Boolean autoCommitValue;
-  private String sessionId;
-  private String threadName;
-  private String userProvidedContext;
 
   public QueryPlan() {
     this.reducerTimeStatsPerJobList = new ArrayList<ReducerTimeStatsPerJob>();
@@ -116,8 +113,7 @@ public class QueryPlan implements Serializable {
   }
 
   public QueryPlan(String queryString, BaseSemanticAnalyzer sem, Long startTime, String queryId,
-                   HiveOperation operation, Schema resultSchema,
-                   String sessionId, String threadName, String userProvidedContext) {
+                  HiveOperation operation, Schema resultSchema) {
     this.queryString = queryString;
 
     rootTasks = new ArrayList<Task<? extends Serializable>>(sem.getAllRootTasks());
@@ -140,9 +136,6 @@ public class QueryPlan implements Serializable {
     this.operation = operation;
     this.autoCommitValue = sem.getAutoCommitValue();
     this.resultSchema = resultSchema;
-    this.setSessionId(sessionId);
-    this.setThreadName(threadName);
-    this.setUserProvidedContext(userProvidedContext);
   }
 
   public String getQueryStr() {
@@ -616,6 +609,7 @@ public class QueryPlan implements Serializable {
     try {
       q.write(oprot);
     } catch (TException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
       return q.toString();
     }
@@ -629,6 +623,7 @@ public class QueryPlan implements Serializable {
     try {
       q.write(oprot);
     } catch (TException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
       return q.toString();
     }
@@ -806,29 +801,5 @@ public class QueryPlan implements Serializable {
   }
   public Boolean getAutoCommitValue() {
     return autoCommitValue;
-  }
-
-  public String getSessionId() {
-    return sessionId;
-  }
-
-  public void setSessionId(String sessionId) {
-    this.sessionId = sessionId;
-  }
-
-  public String getThreadName() {
-    return threadName;
-  }
-
-  public void setThreadName(String threadName) {
-    this.threadName = threadName;
-  }
-
-  public String getUserProvidedContext() {
-    return userProvidedContext;
-  }
-
-  public void setUserProvidedContext(String userProvidedContext) {
-    this.userProvidedContext = userProvidedContext;
   }
 }

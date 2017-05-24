@@ -79,8 +79,8 @@ public class ATSHook implements ExecuteWithHookContext {
   private static final String DEFAULT_ATS_DOMAIN = "hive_default_ats";
 
   private enum OtherInfoTypes {
-    QUERY, STATUS, TEZ, MAPRED, INVOKER_INFO, SESSION_ID, LOG_TRACE_ID, THREAD_NAME, VERSION,
-    CLIENT_IP_ADDRESS, HIVE_ADDRESS, HIVE_INSTANCE_TYPE, CONF, PERF, LLAP_APP_ID
+    QUERY, STATUS, TEZ, MAPRED, INVOKER_INFO, SESSION_ID, THREAD_NAME, VERSION,
+    CLIENT_IP_ADDRESS, HIVE_ADDRESS, HIVE_INSTANCE_TYPE, CONF, PERF,
   };
   private enum ExecutionMode {
     MR, TEZ, LLAP, SPARK, NONE
@@ -360,10 +360,8 @@ public class ATSHook implements ExecuteWithHookContext {
   TimelineEntity createPreHookEvent(String queryId, String query, JSONObject explainPlan,
       long startTime, String user, String requestuser, int numMrJobs, int numTezJobs, String opId,
       String clientIpAddress, String hiveInstanceAddress, String hiveInstanceType,
-      String sessionID, String logTraceId, String threadId, String executionMode,
-      List<String> tablesRead, List<String> tablesWritten, HiveConf conf, ApplicationId llapAppId,
-      String domainId)
-          throws Exception {
+      String sessionID, String logID, String threadId, String executionMode,
+      List<String> tablesRead, List<String> tablesWritten, HiveConf conf) throws Exception {
 
     JSONObject queryObj = new JSONObject(new LinkedHashMap<>());
     queryObj.put("queryText", query);
@@ -410,10 +408,8 @@ public class ATSHook implements ExecuteWithHookContext {
     atsEntity.addOtherInfo(OtherInfoTypes.TEZ.name(), numTezJobs > 0);
     atsEntity.addOtherInfo(OtherInfoTypes.MAPRED.name(), numMrJobs > 0);
     atsEntity.addOtherInfo(OtherInfoTypes.SESSION_ID.name(), sessionID);
+    atsEntity.addOtherInfo(OtherInfoTypes.INVOKER_INFO.name(), logID);
     atsEntity.addOtherInfo(OtherInfoTypes.THREAD_NAME.name(), threadId);
-    if ((logTraceId != null) && (logTraceId.equals("") == false)) {
-      atsEntity.addOtherInfo(OtherInfoTypes.LOG_TRACE_ID.name(), logTraceId);
-    }
     atsEntity.addOtherInfo(OtherInfoTypes.VERSION.name(), VERSION);
     if (clientIpAddress != null) {
       atsEntity.addOtherInfo(OtherInfoTypes.CLIENT_IP_ADDRESS.name(), clientIpAddress);
