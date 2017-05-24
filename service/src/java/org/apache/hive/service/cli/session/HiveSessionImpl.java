@@ -368,7 +368,7 @@ public class HiveSessionImpl implements HiveSession {
     // set the log context for debugging
     LOG.info("We are setting the hadoop caller context to " + sessionState.getSessionId()
         + " for thread " + Thread.currentThread().getName());
-    ShimLoader.getHadoopShims().setHadoopSessionContext(sessionState.getSessionId());
+    ShimLoader.getHadoopShims().setHadoopCallerContext(sessionState.getSessionId());
     Hive.set(sessionHive);
   }
 

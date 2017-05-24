@@ -78,6 +78,7 @@ import org.apache.hadoop.hive.ql.processors.CommandProcessorFactory;
 import org.apache.hadoop.hive.ql.processors.CommandProcessorResponse;
 import org.apache.hadoop.hive.ql.session.SessionState;
 import org.apache.hadoop.hive.ql.session.SessionState.LogHelper;
+import org.apache.hadoop.hive.shims.ShimLoader;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hive.common.util.ShutdownHookManager;
 import org.slf4j.Logger;
@@ -119,6 +120,8 @@ public class CliDriver {
     ss.setLastCommand(cmd);
 
     ss.updateThreadName();
+    String callerInfo = ss.getConf().getLogIdVar(ss.getSessionId());
+    ShimLoader.getHadoopShims().setHadoopCallerContext(callerInfo);
 
     // Flush the print stream, so it doesn't include output from the last command
     ss.err.flush();

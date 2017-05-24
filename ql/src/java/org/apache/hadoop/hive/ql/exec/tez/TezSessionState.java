@@ -223,12 +223,13 @@ public class TezSessionState {
     LOG.info("Opening the session with id " + sessionId + " for thread "
         + Thread.currentThread().getName() + " log trace id - " + conf.getLogIdVar(SessionState.get().getSessionId())
         + " query id - " + conf.getVar(HiveConf.ConfVars.HIVEQUERYID));
-    String queryId = conf.getVar(HiveConf.ConfVars.HIVEQUERYID);
-    if ((queryId == null) || (queryId.isEmpty())) {
-      ShimLoader.getHadoopShims().setHadoopSessionContext(sessionId);
-    } else {
-      ShimLoader.getHadoopShims().setHadoopQueryContext(queryId);
+    String callerContext = conf.getVar(HiveConf.ConfVars.HIVEQUERYID);
+    String prefix = "HIVE_QUERY_ID:";
+    if ((callerContext == null) || (callerContext == "")) {
+      prefix = "HIVE_SSN_ID:";
+      callerContext = sessionId;
     }
+    ShimLoader.getHadoopShims().setHadoopCallerContext(prefix, callerContext);
 
     this.conf = conf;
     // TODO Why is the queue name set again. It has already been setup via setQueueName. Do only one of the two.

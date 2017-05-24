@@ -674,12 +674,7 @@ public interface HadoopShims {
   public String getHadoopCallerContext();
 
   /*
-   * Set up context specific caller context with query prefix.
+   * Set up context specific caller context with prefix.
    */
-  void setHadoopQueryContext(String queryId);
-
-  /*
-   * Set up context specific caller context with session prefix.
-   */
-  void setHadoopSessionContext(String sessionId);
+  void setHadoopCallerContext(String prefix, String callerContext);
 }
