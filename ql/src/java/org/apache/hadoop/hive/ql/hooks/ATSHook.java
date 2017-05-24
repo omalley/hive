@@ -152,7 +152,7 @@ public class ATSHook implements ExecuteWithHookContext {
     timelineClient.putDomain(timelineDomain);
     LOG.info("ATS domain created:" + domainId + "(" + readers + "," + writers + ")");
   }
- 
+
   private String createOrGetDomain(final HookContext hookContext) throws Exception {
     final String domainId;
     String domainReaders = null;
@@ -287,6 +287,7 @@ public class ATSHook implements ExecuteWithHookContext {
                                                           hiveInstanceAddress = InetAddress
                                                                           .getLocalHost().getHostAddress();
                                                   }
+                                                  String logID = conf.getLogIdVar(hookContext.getSessionId());
                                                   String hiveInstanceType = hookContext
                                                                   .isHiveServerQuery() ? "HS2" : "CLI";
                                                   ApplicationId llapId = determineLlapId(conf, plan);
@@ -296,9 +297,8 @@ public class ATSHook implements ExecuteWithHookContext {
                                                                   hookContext.getIpAddress(),
                                                                   hiveInstanceAddress, hiveInstanceType,
                                                                   hookContext.getSessionId(),
-                                                                  plan.getUserProvidedContext(),
-                                                                  hookContext.getThreadId(), executionMode,
-                                                                  tablesRead, tablesWritten, conf, llapId, domainId));
+                                                                  logID, hookContext.getThreadId(), executionMode,
+                                                                  tablesRead, tablesWritten, conf));
                                                   break;
                                           case POST_EXEC_HOOK:
                                                   fireAndForget(createPostHookEvent(queryId,
@@ -417,10 +417,6 @@ public class ATSHook implements ExecuteWithHookContext {
     atsEntity.addOtherInfo(OtherInfoTypes.HIVE_ADDRESS.name(), hiveInstanceAddress);
     atsEntity.addOtherInfo(OtherInfoTypes.HIVE_INSTANCE_TYPE.name(), hiveInstanceType);
     atsEntity.addOtherInfo(OtherInfoTypes.CONF.name(), confObj.toString());
-    if (llapAppId != null) {
-      atsEntity.addOtherInfo(OtherInfoTypes.LLAP_APP_ID.name(), llapAppId.toString());
-    }
-    atsEntity.setDomainId(domainId);
 
     return atsEntity;
   }

@@ -662,9 +662,4 @@ public interface HadoopShims {
 
   /** Clones the UGI and the Subject. */
   UserGroupInformation cloneUgi(UserGroupInformation baseUgi) throws IOException;
-
-  /*
-   * Set up the caller context for HDFS and Yarn.
-   */
-  public void setHadoopCallerContext(String callerContext);
 }

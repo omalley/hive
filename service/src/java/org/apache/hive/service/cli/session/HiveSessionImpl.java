@@ -365,8 +365,6 @@ public class HiveSessionImpl implements HiveSession {
     }
     // set the thread name with the logging prefix.
     sessionState.updateThreadName();
-    String logPrefix = getHiveConf().getLogIdVar(sessionState.getSessionId());
-    ShimLoader.getHadoopShims().setHadoopCallerContext(logPrefix);
     Hive.set(sessionHive);
   }
 
@@ -392,8 +390,6 @@ public class HiveSessionImpl implements HiveSession {
       // can be null in-case of junit tests. skip reset.
       // reset thread name at release time.
       sessionState.resetThreadName();
-      // reset the HDFS caller context.
-      ShimLoader.getHadoopShims().setHadoopCallerContext("");
     }
 
     SessionState.detachSession();

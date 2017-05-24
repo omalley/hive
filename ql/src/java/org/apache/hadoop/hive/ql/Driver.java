@@ -1664,7 +1664,7 @@ public class Driver implements CommandProcessor {
     maxthreads = HiveConf.getIntVar(conf, HiveConf.ConfVars.EXECPARALLETHREADNUMBER);
 
     HookContext hookContext = null;
-
+    boolean executionError = false;
     try {
       LOG.info("Executing command(queryId=" + queryId + "): " + queryStr);
       // compile and execute can get called from different threads in case of HS2
