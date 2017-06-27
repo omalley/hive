@@ -380,10 +380,4 @@ public class TableScanDesc extends AbstractOperatorDesc {
     }
     return rtn;
   }
-
-  @Override
-  @Explain(displayName = "properties", explainLevels = { Level.DEFAULT, Level.USER, Level.EXTENDED })
-  public Map<String, String> getOpProps() {
-    return opProps;
-  }
 }
