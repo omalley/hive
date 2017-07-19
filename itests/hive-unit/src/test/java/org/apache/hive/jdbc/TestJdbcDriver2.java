@@ -1211,13 +1211,7 @@ public class TestJdbcDriver2 {
     String tableType = rs.getString("TABLE_TYPE");
     assertEquals(TableType.EXTERNAL_TABLE.toString(), tableType);
 
-    if (rs.next()) {
-      do {
-        System.err.println("OOM tbl = " + rs.getString("TABLE_SCHEM") + "." + rs.getString("TABLE_NAME"));
-      } while (rs.next());
-      assertFalse(true);
-    }
-    // assertFalse("Unexpected table", rs.next());
+    assertFalse("Unexpected table", rs.next());
   }
 
   /**
