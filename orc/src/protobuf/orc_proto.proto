@@ -18,7 +18,7 @@
 
 package orc.proto;
 
-option java_package = "org.apache.hive.orc";
+option java_package = "org.apache.orc";
 
 message IntegerStatistics  {
   optional sint64 minimum = 1;
