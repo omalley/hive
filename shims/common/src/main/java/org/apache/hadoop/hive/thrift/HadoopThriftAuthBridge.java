@@ -218,7 +218,7 @@ public class HadoopThriftAuthBridge {
               names[0], names[1],
               saslProps, null,
               underlyingTransport);
-          return new TUGIAssumingTransport(saslTransport, UserGroupInformation.getCurrentUser());
+          return new TUGIAssumingTransport(saslTransport, UserGroupInformation.getLoginUser());
         } catch (SaslException se) {
           throw new IOException("Could not instantiate SASL transport", se);
         }
