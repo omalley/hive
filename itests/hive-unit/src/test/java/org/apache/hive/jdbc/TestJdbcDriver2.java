@@ -3008,4 +3008,17 @@ public class TestJdbcDriver2 {
     stmt.execute("drop table " + tblName);
     stmt.close();
   }
+
+  @Test
+  public void testGetQueryId() throws Exception {
+    HiveStatement stmt = (HiveStatement) con.createStatement();
+
+    // Returns null if no query is running.
+    String queryId = stmt.getQueryId();
+    assertTrue(queryId == null);
+
+    stmt.executeAsync("create database query_id_test");
+    queryId = stmt.getQueryId();
+    assertFalse(queryId.isEmpty());
+  }
 }
