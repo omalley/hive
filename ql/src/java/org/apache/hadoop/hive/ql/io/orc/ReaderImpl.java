@@ -56,6 +56,7 @@ public class ReaderImpl implements Reader {
 
   protected final FileSystem fileSystem;
   protected final Path path;
+  private FSDataInputStream file;
   protected final CompressionKind compressionKind;
   protected final CompressionCodec codec;
   protected final int bufferSize;
@@ -152,6 +153,10 @@ public class ReaderImpl implements Reader {
       }
     }
     return false;
+  }
+
+  public FSDataInputStream getFile() {
+    return file;
   }
 
   @Override
@@ -348,17 +353,16 @@ public class ReaderImpl implements Reader {
     return OrcFile.WriterVersion.ORIGINAL;
   }
 
-  private static OrcTail extractFileTail(FileSystem fs,
+  private OrcTail extractFileTail(FileSystem fs,
                                                         Path path,
                                                         long maxFileLength
                                                         ) throws IOException {
-    FSDataInputStream file = fs.open(path);
-
     OrcProto.FileTail.Builder fileTailBuilder = OrcProto.FileTail.newBuilder();
     // figure out the size of the file using the option or filesystem
     long size;
     long modificationTime;
     ByteBuffer buffer;
+    file = fs.open(path);
     try {
       if (maxFileLength == Long.MAX_VALUE) {
         FileStatus fileStatus = fs.getFileStatus(path);
@@ -438,12 +442,14 @@ public class ReaderImpl implements Reader {
       OrcProto.Footer footer = extractFooter(footerBuffer, 0, footerSize,
               codec, bufferSize);
       fileTailBuilder.setFooter(footer);
-    } finally {
+    } catch (Throwable thr) {
       try {
-        file.close();
-      } catch (IOException ex) {
-        LOG.error("Failed to close the file after another error", ex);
+        close();
+      } catch (IOException ignore) {
+        LOG.info("Ignoring secondary exception in close of " + path, ignore);
       }
+      throw thr instanceof IOException ? (IOException) thr :
+                new IOException("Problem reading file footer " + path, thr);
     }
 
     return new OrcTail(fileTailBuilder.build(), buffer.slice(), modificationTime);
@@ -660,5 +666,24 @@ public class ReaderImpl implements Reader {
   @Override
   public MetadataReader metadata() throws IOException {
     return new MetadataReader(fileSystem, path, codec, bufferSize, footer.getTypesCount());
+  }
+
+  @Override
+  public void close() throws IOException {
+    if (file != null) {
+      file.close();
+    }
+  }
+
+  /**
+   * Take the file from the reader.
+   * This allows the first RecordReader to use the same file, but additional
+   * RecordReaders will open new handles.
+   * @return a file handle, if one is available
+   */
+  FSDataInputStream takeFile() {
+    FSDataInputStream result = file;
+    file = null;
+    return result;
   }
 }
