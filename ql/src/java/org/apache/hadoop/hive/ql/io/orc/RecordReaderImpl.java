@@ -187,7 +187,7 @@ class RecordReaderImpl implements RecordReader {
     this.bufferSize = fileReader.bufferSize;
     this.conf = fileReader.conf;
     this.rowIndexStride = fileReader.getRowIndexStride();
-    this.metadata = new MetadataReader(file, codec, bufferSize, types.size());
+    this.metadata = new MetadataReader(this.file, codec, bufferSize, types.size());
     SearchArgument sarg = options.getSearchArgument();
     // We want to use the sarg for predicate evaluation but we have data type conversion
     // (i.e Schema Evolution), so we currently ignore it.
