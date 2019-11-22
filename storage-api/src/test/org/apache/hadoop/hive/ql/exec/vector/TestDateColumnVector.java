@@ -73,6 +73,8 @@ public class TestDateColumnVector {
 
     dateColumnVector.changeCalendar(newUseProleptic, true);
 
-    Assert.assertEquals(expectedDateString, dateColumnVector.formatDate(0));
+    Assert.assertEquals("original = " + originalUseProleptic +
+                        " new = " + newUseProleptic,
+                        expectedDateString, dateColumnVector.formatDate(0));
   }
 }

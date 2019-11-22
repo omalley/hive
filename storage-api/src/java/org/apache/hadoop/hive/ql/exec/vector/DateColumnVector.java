@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * DateColumnVector, the elements of vector[] represent the days since 1970-01-01
  */
 public class DateColumnVector extends LongColumnVector {
+  private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
   private static final GregorianCalendar PROLEPTIC_GREGORIAN_CALENDAR = new GregorianCalendar();
   private static final GregorianCalendar GREGORIAN_CALENDAR = new GregorianCalendar();
 
@@ -42,7 +43,9 @@ public class DateColumnVector extends LongColumnVector {
   private static final int CUTOVER_DAY_EPOCH = -141427; // it's 1582-10-15 in both calendars
 
   static {
+    GREGORIAN_CALENDAR.setTimeZone(UTC);
     PROLEPTIC_GREGORIAN_CALENDAR.setGregorianChange(new java.util.Date(Long.MIN_VALUE));
+    PROLEPTIC_GREGORIAN_CALENDAR.setTimeZone(UTC);
 
     PROLEPTIC_GREGORIAN_DATE_FORMATTER.setCalendar(PROLEPTIC_GREGORIAN_CALENDAR);
     GREGORIAN_DATE_FORMATTER.setCalendar(GREGORIAN_CALENDAR);
