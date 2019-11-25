@@ -17,9 +17,11 @@
  */
 package org.apache.orc;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 import org.apache.hadoop.conf.Configuration;
@@ -287,4 +289,56 @@ public class TestStringDictionary {
 
   }
 
+  @Test
+  public void testForcedNonDictionary() throws Exception {
+    // Set the row stride to 16k so that it is a multiple of the batch size
+    final int INDEX_STRIDE = 16 * 1024;
+    final int NUM_BATCHES = 50;
+    // Explicitly turn off dictionary encoding.
+    conf.setDouble(OrcConf.DICTIONARY_KEY_SIZE_THRESHOLD.getAttribute(), 0.0);
+    TypeDescription schema = TypeDescription.fromString("struct<str:string>");
+    Writer writer = OrcFile.createWriter(testFilePath,
+        OrcFile.writerOptions(conf)
+            .setSchema(schema)
+            .rowIndexStride(INDEX_STRIDE));
+    // Write 50 batches where each batch has a single value for str.
+    VectorizedRowBatch batch = schema.createRowBatch();
+    BytesColumnVector col = (BytesColumnVector) batch.cols[0];
+    for(int b=0; b < NUM_BATCHES; ++b) {
+      batch.reset();
+      batch.size = 1024;
+      col.setVal(0, ("Value for " + b).getBytes(StandardCharsets.UTF_8));
+      col.isRepeating = true;
+      writer.addRowBatch(batch);
+    }
+    writer.close();
+
+    Reader reader = OrcFile.createReader(testFilePath,
+                                         OrcFile.readerOptions(conf));
+    RecordReaderImpl rows = (RecordReaderImpl) reader.rows();
+    batch = reader.getSchema().createRowBatch();
+    col = (BytesColumnVector) batch.cols[0];
+
+    // Get the index for the str column
+    OrcProto.RowIndex index = rows.readRowIndex(0, null, null)
+                                    .getRowGroupIndex()[1];
+    // We assume that it fits in a single stripe
+    assertEquals(1, reader.getStripes().size());
+    // There are 4 entries, because ceil(NUM_BATCHES * 1024 / INDEX_STRIDE) = 4.
+    assertEquals(4, index.getEntryCount());
+    for(int e=0; e < index.getEntryCount(); ++e) {
+      OrcProto.RowIndexEntry entry = index.getEntry(e);
+      // For a string column with direct encoding, compression & no nulls, we
+      // should have 5 positions in each entry.
+      assertEquals("position count entry " + e, 5, entry.getPositionsCount());
+      // make sure we can seek and get the right data
+      int row = e * INDEX_STRIDE;
+      rows.seekToRow(row);
+      assertTrue("entry " + e, rows.nextBatch(batch));
+      assertEquals("entry " + e, 1024, batch.size);
+      assertEquals("entry " + e, true, col.noNulls);
+      assertEquals("entry " + e, "Value for " + (row / 1024), col.toString(0));
+    }
+    rows.close();
+  }
 }

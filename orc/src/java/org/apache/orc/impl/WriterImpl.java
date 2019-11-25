@@ -970,8 +970,14 @@ public class WriterImpl implements Writer, MemoryManager.Callback {
           OrcConf.DICTIONARY_KEY_SIZE_THRESHOLD.getDouble(conf);
       strideDictionaryCheck =
           OrcConf.ROW_INDEX_STRIDE_DICTIONARY_CHECK.getBoolean(conf);
-      useDictionaryEncoding =  dictionaryKeySizeThreshold >= 0.000001; // Epsilon.
-      doneDictionaryCheck = !useDictionaryEncoding;
+      if (dictionaryKeySizeThreshold >= 0.000001) {
+        useDictionaryEncoding = true;
+        doneDictionaryCheck = false;
+      } else {
+        useDictionaryEncoding = false;
+        doneDictionaryCheck = true;
+        recordDirectStreamPosition();
+      }
     }
 
     private boolean checkDictionaryEncoding() {
