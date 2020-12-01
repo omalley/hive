@@ -633,7 +633,7 @@ public class TestConvertAstToSearchArg {
         " (not leaf-4) leaf-5 leaf-6 leaf-7)" +
         " (or leaf-0 (not leaf-1) leaf-2 (not leaf-3)" +
         " (not leaf-4) leaf-5 leaf-6 leaf-8))",
-        sarg.getExpression().toString());
+        sarg.getExpression().toOldString());
     assertNoSharedNodes(sarg.getExpression(),
         Sets.<ExpressionTree>newIdentityHashSet());
   }
@@ -883,7 +883,7 @@ public class TestConvertAstToSearchArg {
     assertEquals(4L, leaf.getLiteral());
 
     assertEquals("(or leaf-0 (not leaf-1) (not leaf-2) leaf-3)",
-        sarg.getExpression().toString());
+        sarg.getExpression().toOldString());
     assertNoSharedNodes(sarg.getExpression(),
         Sets.<ExpressionTree>newIdentityHashSet());
     assertEquals(TruthValue.NO,
@@ -1311,7 +1311,7 @@ public class TestConvertAstToSearchArg {
     assertEquals("smith", leaf.getLiteral());
 
     assertEquals("(and leaf-0 leaf-1 leaf-2)",
-        sarg.getExpression().toString());
+        sarg.getExpression().toOldString());
     assertNoSharedNodes(sarg.getExpression(),
         Sets.<ExpressionTree>newIdentityHashSet());
   }
@@ -1536,7 +1536,7 @@ public class TestConvertAstToSearchArg {
     assertEquals(50L, leaf.getLiteralList().get(1));
 
     assertEquals("(and (not leaf-0) leaf-1 leaf-2)",
-        sarg.getExpression().toString());
+        sarg.getExpression().toOldString());
     assertNoSharedNodes(sarg.getExpression(),
         Sets.<ExpressionTree>newIdentityHashSet());
     assertEquals(TruthValue.YES,
@@ -1784,7 +1784,7 @@ public class TestConvertAstToSearchArg {
     assertEquals("first_name", leaves.get(0).getColumnName());
 
     assertEquals("leaf-0",
-        sarg.getExpression().toString());
+        sarg.getExpression().toOldString());
     assertNoSharedNodes(sarg.getExpression(),
         Sets.<ExpressionTree>newIdentityHashSet());
   }
@@ -2351,7 +2351,7 @@ public class TestConvertAstToSearchArg {
         " (or leaf-0 leaf-1 leaf-7 leaf-8)" +
         " (or leaf-0 leaf-4 leaf-7 leaf-8)" +
         " (or leaf-0 leaf-5 leaf-7 leaf-8))",
-        sarg.getExpression().toString());
+        sarg.getExpression().toOldString());
   }
 
   @Test
@@ -2684,7 +2684,7 @@ public class TestConvertAstToSearchArg {
     assertEquals(10L, leaves.get(0).getLiteral());
 
     assertEquals("(and (not leaf-0) (not leaf-0))",
-        sarg.getExpression().toString());
+        sarg.getExpression().toOldString());
     assertNoSharedNodes(sarg.getExpression(),
         Sets.<ExpressionTree>newIdentityHashSet());
     assertEquals(TruthValue.NO, sarg.evaluate(values(TruthValue.YES)));
@@ -2717,7 +2717,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.TIMESTAMP, leaf.getType());
@@ -2736,7 +2736,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.DATE, leaf.getType());
@@ -2756,7 +2756,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.DECIMAL, leaf.getType());
@@ -2776,7 +2776,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.STRING, leaf.getType());
@@ -2796,7 +2796,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.STRING, leaf.getType());
@@ -2815,7 +2815,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.LONG, leaf.getType());
@@ -2836,7 +2836,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("(and leaf-0 leaf-1)", sarg.getExpression().toString());
+    assertEquals("(and leaf-0 leaf-1)", sarg.getExpression().toOldString());
     assertEquals(2, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.BOOLEAN, leaf.getType());
@@ -2858,7 +2858,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.FLOAT, leaf.getType());
@@ -2877,7 +2877,7 @@ public class TestConvertAstToSearchArg {
     SearchArgument sarg =
         new ConvertAstToSearchArg(conf, SerializationUtilities.deserializeExpression(serialAst))
             .buildSearchArgument();
-    assertEquals("leaf-0", sarg.getExpression().toString());
+    assertEquals("leaf-0", sarg.getExpression().toOldString());
     assertEquals(1, sarg.getLeaves().size());
     PredicateLeaf leaf = sarg.getLeaves().get(0);
     assertEquals(PredicateLeaf.Type.FLOAT, leaf.getType());
