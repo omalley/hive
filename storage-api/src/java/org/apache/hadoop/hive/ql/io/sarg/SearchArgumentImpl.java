@@ -240,7 +240,7 @@ public final class SearchArgumentImpl implements SearchArgument {
   }
 
   @Override
-  public ExpressionTree getUnexpandedExpression() {
+  public ExpressionTree getCompactExpression() {
     return unexpandedExpression;
   }
 
