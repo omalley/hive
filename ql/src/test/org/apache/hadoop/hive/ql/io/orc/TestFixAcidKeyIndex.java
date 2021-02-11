@@ -31,7 +31,7 @@ import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.orc.OrcFile.WriterContext;
+import org.apache.orc.core.OrcFile.WriterContext;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

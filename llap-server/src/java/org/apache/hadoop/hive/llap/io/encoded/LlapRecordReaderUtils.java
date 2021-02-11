@@ -18,7 +18,6 @@
 
 package org.apache.hadoop.hive.llap.io.encoded;
 
-import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.common.io.DiskRangeList;
@@ -38,6 +37,7 @@ import org.apache.orc.impl.InStream;
 import org.apache.orc.impl.OrcCodecPool;
 import org.apache.orc.impl.OrcIndex;
 import org.apache.orc.impl.RecordReaderUtils;
+import org.apache.orc.shims.SeekableInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +51,7 @@ public class LlapRecordReaderUtils {
   private static final HadoopShims SHIMS = HadoopShimsFactory.get();
   private static final Logger LOG = LoggerFactory.getLogger(LlapRecordReaderUtils.class);
 
-  static HadoopShims.ZeroCopyReaderShim createZeroCopyShim(FSDataInputStream file, CompressionCodec codec,
+  static HadoopShims.ZeroCopyReaderShim createZeroCopyShim(SeekableInputStream file, CompressionCodec codec,
       RecordReaderUtils.ByteBufferAllocatorPool pool) throws IOException {
     return codec == null || (codec instanceof DirectDecompressionCodec && ((DirectDecompressionCodec) codec)
         .isAvailable()) ? SHIMS.getZeroCopyReader(file, pool): null;
@@ -70,7 +70,7 @@ public class LlapRecordReaderUtils {
    *    ranges
    * @throws IOException
    */
-  static DiskRangeList readDiskRanges(FSDataInputStream file,
+  static DiskRangeList readDiskRanges(SeekableInputStream file,
       HadoopShims.ZeroCopyReaderShim zcr,
       long base,
       DiskRangeList range,
@@ -230,7 +230,7 @@ public class LlapRecordReaderUtils {
   }
 
   private static class DefaultLLapDataReader implements LlapDataReader {
-    private FSDataInputStream file;
+    private SeekableInputStream file;
     private RecordReaderUtils.ByteBufferAllocatorPool pool;
     private HadoopShims.ZeroCopyReaderShim zcr = null;
     private final Supplier<FileSystem> fileSystemSupplier;
@@ -256,7 +256,9 @@ public class LlapRecordReaderUtils {
     @Override
     public void open() throws IOException {
       if (file == null) {
-        this.file = fileSystemSupplier.get().open(path);
+        this.file = HadoopShimsFactory.get()
+            .createFileIO((Supplier) fileSystemSupplier)
+            .createInputFile(path.toString());
       }
       if (useZeroCopy) {
         // ZCR only uses codec for boolean checks.

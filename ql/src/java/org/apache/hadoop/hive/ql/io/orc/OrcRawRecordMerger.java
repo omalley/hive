@@ -240,7 +240,7 @@ public class OrcRawRecordMerger implements AcidInputFormat.RawReader<OrcStruct>{
     @VisibleForTesting
     ReaderPairAcid(ReaderKey key, Reader reader,
       RecordIdentifier minKey, RecordIdentifier maxKey,
-      ReaderImpl.Options options, final Configuration conf) throws IOException {
+      Reader.Options options, final Configuration conf) throws IOException {
       this.reader = reader;
       this.key = key;
       // TODO use stripe statistics to jump over stripes

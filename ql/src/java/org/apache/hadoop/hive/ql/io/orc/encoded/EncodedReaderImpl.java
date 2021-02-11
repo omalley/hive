@@ -44,7 +44,7 @@ import org.apache.hadoop.hive.common.io.encoded.EncodedColumnBatch.ColumnStreamD
 import org.apache.hadoop.hive.common.io.encoded.MemoryBuffer;
 import org.apache.orc.CompressionCodec;
 import org.apache.orc.OrcConf;
-import org.apache.orc.OrcFile.WriterVersion;
+import org.apache.orc.core.OrcFile.WriterVersion;
 import org.apache.orc.OrcProto.ColumnEncoding;
 import org.apache.orc.OrcProto.Stream;
 import org.apache.orc.OrcProto.Stream.Kind;

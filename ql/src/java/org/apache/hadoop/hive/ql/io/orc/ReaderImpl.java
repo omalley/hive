@@ -69,16 +69,16 @@ public class ReaderImpl extends org.apache.orc.impl.ReaderImpl
 
   @Override
   public RecordReader rows() throws IOException {
-    return rowsOptions(new Options());
+    return rowsOptions(new Reader.Options());
   }
 
   @Override
-  public RecordReader rowsOptions(Options options) throws IOException {
+  public RecordReader rowsOptions(Reader.Options options) throws IOException {
     return rowsOptions(options, null);
   }
 
   @Override
-  public RecordReader rowsOptions(Options options, Configuration conf) throws IOException {
+  public RecordReader rowsOptions(Reader.Options options, Configuration conf) throws IOException {
     LOG.info("Reading ORC rows from " + path + " with " + options);
     return new RecordReaderImpl(this, options, conf);
   }
@@ -87,20 +87,20 @@ public class ReaderImpl extends org.apache.orc.impl.ReaderImpl
 
   @Override
   public RecordReader rows(boolean[] include) throws IOException {
-    return rowsOptions(new Options().include(include));
+    return rowsOptions(new Reader.Options().include(include));
   }
 
   @Override
   public RecordReader rows(long offset, long length, boolean[] include
                            ) throws IOException {
-    return rowsOptions(new Options().include(include).range(offset, length));
+    return rowsOptions(new Reader.Options().include(include).range(offset, length));
   }
 
   @Override
   public RecordReader rows(long offset, long length, boolean[] include,
                            SearchArgument sarg, String[] columnNames
                            ) throws IOException {
-    return rowsOptions(new Options().include(include).range(offset, length)
+    return rowsOptions(new Reader.Options().include(include).range(offset, length)
         .searchArgument(sarg, columnNames));
   }
 

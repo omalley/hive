@@ -61,11 +61,12 @@ import org.apache.orc.impl.TreeReaderFactory.StructTreeReader;
 import org.apache.orc.impl.TreeReaderFactory.TreeReader;
 import org.apache.orc.impl.WriterImpl;
 import org.apache.orc.OrcProto;
+import org.apache.orc.impl.reader.tree.TypeReader;
 
 
 public class OrcEncodedDataConsumer
   extends EncodedDataConsumer<OrcBatchKey, OrcEncodedColumnBatch> {
-  private TreeReaderFactory.TreeReader[] columnReaders;
+  private TypeReader[] columnReaders;
   private int previousStripeIndex = -1;
   private ConsumerFileMetadata fileMetadata; // We assume one request is only for one file.
   private CompressionCodec codec;
@@ -191,9 +192,9 @@ public class OrcEncodedDataConsumer
            *     it doesn't get confused.
            *
            */
-          TreeReader reader = columnReaders[idx];
+          TypeReader reader = columnReaders[idx];
           ColumnVector cv = prepareColumnVector(cvb, idx, batchSize);
-          reader.nextVector(cv, null, batchSize);
+          reader.nextVector(cv, null, batchSize, cvb.filterContext);
         }
 
         // we are done reading a batch, send it to consumer for processing
@@ -299,7 +300,7 @@ public class OrcEncodedDataConsumer
     }
   }
 
-  private void positionInStreams(TreeReaderFactory.TreeReader[] columnReaders,
+  private void positionInStreams(TypeReader[] columnReaders,
       OrcBatchKey batchKey, ConsumerStripeMetadata stripeMetadata) throws IOException {
     PositionProvider[] pps = createPositionProviders(columnReaders, batchKey, stripeMetadata);
     if (pps == null) return;
@@ -310,7 +311,7 @@ public class OrcEncodedDataConsumer
     }
   }
 
-  private void repositionInStreams(TreeReaderFactory.TreeReader[] columnReaders,
+  private void repositionInStreams(TypeReader[] columnReaders,
       EncodedColumnBatch<OrcBatchKey> batch, boolean sameStripe,
       ConsumerStripeMetadata stripeMetadata) throws IOException {
     PositionProvider[] pps = createPositionProviders(
@@ -320,7 +321,7 @@ public class OrcEncodedDataConsumer
     }
     if (pps == null) return;
     for (int i = 0; i < columnReaders.length; i++) {
-      TreeReader reader = columnReaders[i];
+      TypeReader reader = columnReaders[i];
       if (reader == null) continue;
       // Note: we assume this never happens for SerDe reader - the batch would never have vectors.
       // That is always true now; but it wasn't some day, the below would throw in getColumnData.
@@ -352,7 +353,7 @@ public class OrcEncodedDataConsumer
   }
 
   private PositionProvider[] createPositionProviders(
-      TreeReaderFactory.TreeReader[] columnReaders, OrcBatchKey batchKey,
+      TypeReader[] columnReaders, OrcBatchKey batchKey,
       ConsumerStripeMetadata stripeMetadata) throws IOException {
     if (columnReaders.length == 0) return null;
     PositionProvider[] pps = null;
